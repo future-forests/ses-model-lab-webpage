@@ -60,17 +60,19 @@ def io_rows(items, arrow):
     return "".join(rows)
 
 def card(g):
-    ckey    = get_cluster(g)
-    c       = CLUSTERS[ckey]
-    accent  = c['accent']
-    bg      = c['bg']
-    lid     = g['id']
-    topic   = g.get('topic', '')
-    pi      = g.get('pi', '')
-    model   = g.get('model_name', '')
-    methods = g.get('methods', '')
-    desc    = g.get('short_description', '')
-    is_conceptual = ckey == 'conceptual'
+    ckey           = get_cluster(g)
+    c              = CLUSTERS[ckey]
+    accent         = c['accent']
+    bg             = c['bg']
+    lid            = g['id']
+    topic          = g.get('topic', '')
+    pi             = g.get('pi', '')
+    model          = g.get('model_name', '')
+    methods        = g.get('methods', '')
+    desc           = g.get('short_description', '')
+    title_short    = g.get('title_short', '')
+    model_software = g.get('model_software', '')
+    objectives     = g.get('objectives', [])
 
     collab = ""
     for field in ["pi_applicants","pi_collaborators"]:
@@ -84,12 +86,41 @@ def card(g):
         f'Methods: {methods}</span>'
     ) if methods else ''
 
+    software_html = (
+        f'<span style="background:#e0f2fe;color:#0369a1;border-radius:3px;'
+        f'padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">'
+        f'{model_software}</span>'
+    ) if model_software else ''
+
     topic_html = (
-        f'<div style="font-size:18px;font-weight:700;color:{accent};letter-spacing:-.01em;margin-bottom:3px;">{topic}</div>'
+        f'<div style="font-size:18px;font-weight:700;color:{accent};letter-spacing:-.01em;margin-bottom:2px;">{topic}</div>'
     ) if topic else ''
 
-    pi_size   = '13px'
-    pi_weight = '400'
+    title_short_html = (
+        f'<div style="font-size:11px;color:#64748b;font-style:italic;margin-bottom:4px;">{title_short}</div>'
+    ) if title_short else ''
+
+    # Render description as <ul> if list, otherwise as <p>
+    if isinstance(desc, list):
+        items = ''.join(f'<li style="margin-bottom:3px;">{d}</li>' for d in desc)
+        desc_html = (
+            f'<ul style="margin:10px 0 0 0;padding-left:18px;font-size:12px;'
+            f'color:#475569;line-height:1.55;list-style-type:disc;">{items}</ul>'
+        )
+    else:
+        desc_html = f'<div style="font-size:12px;color:#475569;margin-top:10px;line-height:1.55;">{desc}</div>'
+
+    objectives_html = ''
+    if objectives:
+        items = ''.join(
+            f'<li style="margin-bottom:3px;">{obj}</li>'
+            for obj in objectives
+        )
+        objectives_html = f"""
+<div style="margin-top:12px;">
+  <div class="col-head">Research objectives</div>
+  <ol style="margin:0;padding-left:18px;font-size:11px;color:#475569;line-height:1.6;">{items}</ol>
+</div>"""
 
     return f"""
 <div class="card" id="card-{lid}"
@@ -99,14 +130,18 @@ def card(g):
   <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">
     <div style="flex:1;min-width:0;">
       {topic_html}
-      <div style="font-size:{pi_size};font-weight:{pi_weight};color:#1e293b;">
-        {pi}<span style="font-size:12px;font-weight:400;color:#64748b;margin-left:6px">{model}</span>
+      {title_short_html}
+      <div style="font-size:13px;font-weight:400;color:#1e293b;">
+        {pi}<span style="font-size:12px;color:#64748b;margin-left:6px">{model}</span>
       </div>
       {collab}
-      {f'<div style="margin-top:5px;">{methods_html}</div>' if methods_html else ''}
+      <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;">
+        {methods_html}{software_html}
+      </div>
     </div>
   </div>
-  <div style="font-size:12px;color:#475569;margin-top:10px;line-height:1.55;">{desc}</div>
+  {desc_html}
+  {objectives_html}
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
     <div>
       <div class="col-head">Inputs</div>
