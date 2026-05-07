@@ -73,6 +73,7 @@ def card(g):
     title_short    = g.get('title_short', '')
     model_software = g.get('model_software', '')
     objectives     = g.get('objectives', [])
+    hiring         = g.get('hiring_status', '')
 
     collab = ""
     for field in ["pi_applicants","pi_collaborators"]:
@@ -142,6 +143,10 @@ def card(g):
   </div>
   {desc_html}
   {objectives_html}
+  {f'''<div style="margin-top:8px;padding-top:6px;border-top:1px solid #f1f5f9;">
+  <span style="font-family:IBM Plex Mono,monospace;font-size:8px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">Researcher</span>
+  <div style="font-size:10.5px;color:{"#1a7a4a" if hiring and "vacant" not in hiring.lower() and "pending" not in hiring.lower() and not hiring.startswith("TBD") else "#94a3b8"};margin-top:2px;">{hiring}</div>
+  </div>''' if hiring else ''}
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
     <div>
       <div class="col-head">Inputs</div>
