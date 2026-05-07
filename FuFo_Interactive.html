@@ -177,7 +177,7 @@ const NODES = [
   { id:'jung', layer:1,
     title:'CLIMATE ANALYSIS AND MODELLING',
     leads:['Stahl','Schindler','Christen','Orth'], contributors:[],
-    detail:['Statistical downscaling of ERA5-Land reanalysis and CMIP6 models to 100 m × 100 m','Tree-ensemble ML for bias correction — T, precip, VPD, radiation, wind speed','Historical conditions and future warming levels (1.5 °C, 2 °C, 3 °C+)'],
+    detail:['Statistical downscaling of ERA5-Land reanalysis and CMIP6 models to 100 m × 100 m','Tree-ensemble ML for bias correction — T, precip, VPD, radiation, wind speed','Historical conditions and future climate under multiple CMIP6 warming levels'],
     hire:'Dr. Christopher Jung (PostDoc)', hireOk:true, stroke:'#6bcf9e', inkColor:'#1a7a4a',
     desc:['Prepares regionalized reanalysis and future climate forcing for the entire cluster','Tree-ensemble ML for bias correction and statistical downscaling from 10–120 km to 100 m resolution','Covers historical conditions and future CMIP6 warming levels'],
     connects:[] },
@@ -195,7 +195,7 @@ const NODES = [
   { id:'christen', layer:1,
     title:'SENSOR NETWORK, FOREST MEASUREMENTS',
     leads:['Christen','Weiler','Schnabel'], contributors:[],
-    detail:['Adaptive sensor network (~300 plots, 100–150 stands) — self-optimising after year one','ML hindcasting of in-canopy microclimates over 30 years','Transferable regional model for below-canopy temperature at any FuFo site'],
+    detail:['Adaptive sensor network (200 below-canopy stations) — self-optimising after year one','ML hindcasting of in-canopy microclimates over 30 years','Transferable regional model for below-canopy temperature at any FuFo site'],
     hire:'Tabea Wörner (PhD) · Start: 01.04.2026', hireOk:true, stroke:'#6bcf9e', inkColor:'#1a7a4a',
     desc:['Combines adaptive sensor network with ML to reconstruct fine-scale hydro-climatic conditions','Network self-optimising — redundant sites progressively replaced after year one','Hindcasts in-canopy conditions over 30 years; extends into a transferable regional prediction tool'],
     connects:[] },
@@ -276,7 +276,7 @@ const NODES = [
   { id:'landclim', layer:2,
     title:'LANDSCAPE VEGETATION MODELLING',
     leads:['Albrecht','Haug'], contributors:[],
-    detail:['LandClim: landscape-scale DVM — species composition, density, biomass over centuries at 250 m','Coarser grain than iLAND but larger spatial extent; suited to regional species projections','Normative runs: native-only vs. including non-native species (e.g. Douglas fir) — co-developed with B3'],
+    detail:['LandClim: landscape-scale DVM — species composition, density, biomass over centuries at 250 m','250 m resolution, landscape to regional scale (Baden-Württemberg); transient climate runs up to 250 years','Normative runs: native-only vs. including non-native species (e.g. Douglas fir) — co-developed with B3'],
     hire:'TBD', hireOk:false, stroke:'#60a5fa', inkColor:'#1a4f8a',
     desc:['Simulates forest species composition, density, and biomass at landscape scale under varying climate and management','Coarser grain than iLAND but covers larger areas and longer time horizons — suited to regional species projections','Normative runs compare scenarios with/without non-native tree species — inputs co-developed with Haug and B3','Outputs feed Hanewinkel economic model and Brown CRAFTY-EU'],
     connects:[] },
@@ -359,7 +359,7 @@ const CONNECTIONS = [
   ['seifert','iland','data'],   ['seifert','kattenborn','lateral'],
   // Kattenborn traits → Orth (data); mortality → Hanewinkel (data)
   ['kattenborn','orth','data'], ['kattenborn','iland','validation'],
-  ['kattenborn','hanewinkel','data'],
+  ['kattenborn','hanewinkel','lateral'],
   // Orth drought functions → iLAND (data, not validation)
   ['orth','iland','data'],
   // Yannek evaluation → forest models
