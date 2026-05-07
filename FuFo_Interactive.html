@@ -151,218 +151,179 @@ const CANVAS_H = 910;
 const CANVAS_W = 1920;
 
 // ══════════════════════════════════════════════════════════
-// NODE DATA
-// detail = bullet points shown on the node card
-// desc   = bullet points shown in the info panel on click
+// NODE DATA  (leads/contributors from FF_pp proposals and workshop pitches)
+// detail = bullet points on node card  |  desc = bullet points in info panel
 // ══════════════════════════════════════════════════════════
 const NODES = [
+  // c1 — no standalone FF_pp in uploaded materials; names not sourced
   { id:'c1', layer:0, banner:true,
     title:'SES CONCEPTUAL FRAMEWORK',
-    sub:'Prof. Dr. Stefan Pauliuk · Prof. Dr. Tanja Mölders',
-    leads:['Pauliuk', 'Mölders'],
-    contributors:['Schlüter', 'Kruse', 'Baumgärtner', 'Pregernig'],
+    leads:[], contributors:[],
     detail:['Shared SES definitions, indicators, system boundaries & terminology for the whole cluster','Conceptual foundation for A&TPs and governance innovations (C4)','Consistent depiction of future forests as novel SESs'],
-    pi:'Schlüter · Kruse · Baumgärtner · Pregernig',
-    hire:'TBD', hireOk:false, stroke:'#a78bfa', inkColor:'#5b50c4',
-    desc:['Theoretical backbone of the entire Future Forests cluster','Develops shared SES definitions, indicators, and terminology so biophysical and social models can be meaningfully connected','Provides conceptual foundation for A&TPs and investigating novel forest SESs'],
+    hire:'Esther Sophia Rust (PhD)', hireOk:true, stroke:'#a78bfa', inkColor:'#5b50c4',
+    desc:['Theoretical backbone of the entire Future Forests cluster','Shared SES vocabulary, indicator set, and accounting framework','Conceptual foundation for A&TP definition across all C3 groups'],
     connects:[] },
 
+  // c2_scenarios — user-specified leads/contributors
   { id:'c2_scenarios', layer:0, banner:true,
     title:'TRANSDISCIPLINARY REGIONALISED SCENARIOS',
-    sub:'Prof. Dr. Kerstin Stahl · Prof. Dr. Dirk Schindler · Prof. Dr. Andreas Christen · Prof. Dr. René Orth',
-    leads:['Hanewinkel', 'Stahl'],
-    contributors:['Brown', 'Christen', 'Pauliuk', 'Orth', 'Schindler', 'Weiler'],
+    leads:['Hanewinkel','Stahl'], contributors:['Brown','Christen','Pauliuk','Orth','Schindler','Weiler'],
     detail:['Consistent, stakeholder-verified hydro-climatic and socio-economic scenarios for future forests','Combines downscaled climate projections with extreme event storylines and co-created regional narratives','Feeds all C3 modelling groups and C4 governance work'],
-    pi:'Brown · Pauliuk · Weiler',
     hire:'Dr. Christopher Jung (PostDoc)', hireOk:true, stroke:'#60a5fa', inkColor:'#1e40af',
-    desc:['Produces the scenario infrastructure all C3 models run on','Translates global frameworks (SSPs, RCPs, NFF) into high-resolution, locally relevant inputs for FuFo study regions','Climate focus: downscaled projections with explicit treatment of extreme events and compound droughts','Socio-economic focus: narratives and pathways co-created with stakeholders and partner institutions'],
+    desc:['Produces the scenario infrastructure all C3 models run on','Translates global frameworks (SSPs, RCPs, NFF) into high-resolution, locally relevant inputs','Climate focus: downscaled projections with explicit treatment of extreme events','Socio-economic focus: narratives co-created with stakeholders and partner institutions'],
     connects:[] },
 
+  // jung — HyClimScenarios pitch: "Stahl, Schindler, Christen, Orth (project applicants)"; Jung = project postdoc (hire)
   { id:'jung', layer:1,
     title:'CLIMATE ANALYSIS AND MODELLING',
-    sub:'Dr. Christopher Jung / Prof. Dr. Dirk Schindler',
-    leads:['Schindler'],
-    contributors:['Jung', 'Stahl', 'Christen', 'Orth'],
+    leads:['Stahl','Schindler','Christen','Orth'], contributors:[],
     detail:['Statistical downscaling of ERA5-Land reanalysis and CMIP6 models to 100 m × 100 m','Tree-ensemble ML for bias correction — T, precip, VPD, radiation, wind speed','Historical conditions and future warming levels (1.5 °C, 2 °C, 3 °C+)'],
-    pi:'Prof. Dr. Dirk Schindler · Dr. Christopher Jung',
     hire:'Dr. Christopher Jung (PostDoc)', hireOk:true, stroke:'#6bcf9e', inkColor:'#1a7a4a',
-    desc:['Prepares regionalized reanalysis and future climate forcing for the entire cluster','Tree-ensemble ML for bias correction and statistical downscaling from 10–120 km to 100 m resolution','Covers historical conditions and future CMIP6 warming levels','Primary computational output of C2, feeding all C3 biophysical models'],
+    desc:['Prepares regionalized reanalysis and future climate forcing for the entire cluster','Tree-ensemble ML for bias correction and statistical downscaling from 10–120 km to 100 m resolution','Covers historical conditions and future CMIP6 warming levels'],
     connects:[] },
 
+  // stahl — WaterLegacy FF_pp: "Kerstin Stahl, PI; Sebastian Gnann; Markus Weiler, PI"
   { id:'stahl', layer:1,
     title:'HYDRO-MODELLING, EXTREME EVENTS',
-    sub:'Prof. Dr. Kerstin Stahl',
-    leads:['Stahl'],
-    contributors:['Gnann', 'Weiler'],
-    detail:['Extreme event storylines — what if the 2018–2022 drought recurs under 2050 climate?','Couples RoGeR with MODFLOW for surface-groundwater dynamics','C2 co-lead; connected to six C3 groups'],
-    pi:'Prof. Dr. Kerstin Stahl',
-    hire:'TBD', hireOk:false, stroke:'#6bcf9e', inkColor:'#1a7a4a',
-    desc:['Develops extreme event storylines and stress-test scenarios for forest SESs','Extends RoGeR with MODFLOW groundwater coupling to assess how groundwater disconnection intensifies drought stress','Co-leads C2 with Hanewinkel'],
+    leads:['Stahl','Gnann','Weiler'], contributors:[],
+    detail:['Develops extreme event and stress-test scenarios for forest-relevant aspects of the water balance, including compound droughts','Couples RoGeR with a groundwater model for surface-groundwater dynamics','C2 co-lead (with Hanewinkel)'],
+    hire:'Johanna von Drachenfels (PhD)', hireOk:true, stroke:'#6bcf9e', inkColor:'#1a7a4a',
+    desc:['Investigates legacy effects of forest changes on catchment water balance and hydrological extremes such as floods and droughts','Extends RoGeR with groundwater model coupling for subsurface water dynamics','Co-leads C2 with Hanewinkel'],
     connects:[] },
 
+  // christen — AdaptiveSensorNetwork FF_pp: "Christen, PI; Weiler co-PI; Schnabel, co-PI"
   { id:'christen', layer:1,
     title:'SENSOR NETWORK, FOREST MEASUREMENTS',
-    sub:'Prof. Dr. Andreas Christen',
-    leads:['Christen'],
-    contributors:['Weiler', 'Schnabel'],
+    leads:['Christen','Weiler','Schnabel'], contributors:[],
     detail:['Adaptive sensor network (~300 plots, 100–150 stands) — self-optimising after year one','ML hindcasting of in-canopy microclimates over 30 years','Transferable regional model for below-canopy temperature at any FuFo site'],
-    pi:'Prof. Dr. Andreas Christen · Dr. Florian Schnabel · Prof. Dr. Markus Weiler',
     hire:'Tabea Wörner (PhD) · Start: 01.04.2026', hireOk:true, stroke:'#6bcf9e', inkColor:'#1a7a4a',
     desc:['Combines adaptive sensor network with ML to reconstruct fine-scale hydro-climatic conditions','Network self-optimising — redundant sites progressively replaced after year one','Hindcasts in-canopy conditions over 30 years; extends into a transferable regional prediction tool'],
     connects:[] },
 
+  // weiler_gis — Pitch_Water_Redistribution: "Markus Weiler" only
   { id:'weiler_gis', layer:1,
     title:'HYDROLOGY, GENERAL HYDRO-MODELLING',
-    sub:'Prof. Dr. Markus Weiler (GIS)',
-    leads:['Weiler'],
-    contributors:[],
+    leads:['Weiler'], contributors:[],
     detail:['Soil properties (BÜK200), forest structure (BWI, LiDAR), hydrology network — all at 100 m','Catchment delineations for hydrological routing','Static spatial backbone consumed by all C3 biophysical models'],
-    pi:'Prof. Dr. Markus Weiler',
     hire:'TBD', hireOk:false, stroke:'#6bcf9e', inkColor:'#1a7a4a',
-    desc:['Provides the static spatial data backbone for the entire C3 framework at 100 m resolution','Covers soil texture, depth, field capacity (BÜK200); forest structure and canopy height (LiDAR); hydrology networks and catchment delineations','Harmonised inputs consumed by iLAND, RoGeR, LandClim, and Stritih'],
+    desc:['Provides the static spatial data backbone for the entire C3 framework at 100 m resolution','Covers soil texture, depth, field capacity (BÜK200); forest structure and canopy height (LiDAR); catchment delineations','Harmonised inputs consumed by iLAND, RoGeR, LandClim, and Stritih'],
     connects:[] },
 
+  // seifert — Forest Growth workshop: "Seifert, Albrecht, Hanewinkel, Weiler" (all equal)
   { id:'seifert', layer:1,
     title:'LIDAR SCANS AND FOREST STRUCTURE',
-    sub:'Prof. Dr. Thomas Seifert',
-    leads:['Seifert'],
-    contributors:['Albrecht', 'Hanewinkel', 'Weiler'],
-    detail:['TLS/ULS laser scanning: individual tree positions, DBH, height, species','Dendrochronological records — decades of annual growth response','iLAND initialisation files and digital twin 3D stand reconstructions'],
-    pi:'Prof. Dr. Thomas Seifert · Dr. Axel Albrecht · Prof. Dr. Marc Hanewinkel · Prof. Dr. Markus Weiler',
+    leads:['Seifert','Albrecht','Hanewinkel','Weiler'], contributors:[],
+    detail:['TLS/ULS laser scanning: individual tree positions, DBH, height, species','iLAND initialisation files and digital twin 3D stand reconstructions','Provides spatial data on trees and inventory data including ULS-based 3D trees'],
     hire:'TBD', hireOk:false, stroke:'#6bcf9e', inkColor:'#1a7a4a',
-    desc:['Provides iLAND initialisation data via TLS and drone (ULS) laser scanning','Dendrochronology adds decades of annual growth response as long-term calibration reference','Produces digital twin 3D models of forest stands','Scale: individual tree to catchments up to 10 000 ha'],
+    desc:['Provides iLAND initialisation data via TLS and drone (ULS) laser scanning','Produces digital twin 3D models of forest stands','Scale: individual tree to small catchments up to 10 000 ha'],
     connects:[] },
 
+  // kattenborn — DroughtModelling FF_pp: Kattenborn co-PI; workshop slide: "Orth, Kattenborn, Müller"
   { id:'kattenborn', layer:1,
     title:'TREE TRAITS, DEAD TREES',
-    sub:'Prof. Dr. Teja Kattenborn',
-    leads:['Kattenborn'],
-    contributors:['Orth', 'Müller'],
+    leads:['Kattenborn'], contributors:['Orth','Müller'],
     detail:['CNN-based tree mortality mapping from drone imagery (deadtree.earth)','Plant functional traits (LAI, chlorophyll, crown area) from Sentinel-2 time series','Trait maps feed Orth drought response functions and iLAND calibration'],
-    pi:'Prof. Dr. Teja Kattenborn · Prof. Dr. René Orth · Dr. Pia Müller',
-    hire:'TBD', hireOk:false, stroke:'#6bcf9e', inkColor:'#1a7a4a',
-    desc:['Maps tree mortality at landscape scale using CNNs on drone and satellite imagery (deadtree.earth)','Derives spatially continuous plant functional trait maps from Sentinel-2 time series','Trait maps supply Orth with spatially varying plant trait data for QUINCY improvement','Scale: drone at stand level, Sentinel-2 at landscape to regional level'],
+    hire:'Mattis Pfenning (PhD)', hireOk:true, stroke:'#6bcf9e', inkColor:'#1a7a4a',
+    desc:['Maps tree mortality at landscape scale using CNNs on drone and satellite imagery (deadtree.earth)','Derives spatially continuous plant functional trait maps from Sentinel-2 time series','Trait maps supply spatially varying plant trait data for QUINCY improvement and iLAND calibration'],
     connects:[] },
 
+  // orth — DroughtModelling FF_pp: "Rene Orth, PI; Teja Kattenborn, co-PI"
   { id:'orth', layer:1,
     title:'DROUGHT MODELLING',
-    sub:'Prof. Dr. René Orth',
-    leads:['Orth'],
-    contributors:['Kattenborn', 'Müller'],
+    leads:['Orth','Kattenborn'], contributors:[],
     detail:['Species-specific response functions: vegetation function vs soil moisture & VPD','Calibrated from ICOS/AmeriFlux flux towers and TRY plant trait database','Response functions embedded into iLAND to constrain drought mortality'],
-    pi:'Prof. Dr. René Orth · Prof. Dr. Teja Kattenborn · Dr. Pia Müller',
-    hire:'TBD', hireOk:false, stroke:'#6bcf9e', inkColor:'#1a7a4a',
+    hire:'Pia Müller (PhD) · 01.04.2026', hireOk:true, stroke:'#6bcf9e', inkColor:'#1a7a4a',
     desc:['Quantifies emergent forest response to dryness using global satellite and flux tower data','Generates species-specific functions relating photosynthesis and transpiration to soil moisture and VPD','Response functions embedded into iLAND to constrain its drought mortality representation','Reference: Lusk et al. 2025 (bioRxiv)'],
     connects:[] },
 
+  // yannek — B1 FF_pp: "Carsten Dormann (PI); Yannek Käber (Assist. Prof.); Michael Pregernig (PI)"
   { id:'yannek', layer:1,
     title:'FOREST MODEL EVALUATION',
-    sub:'Jun.-Prof. Dr. Yannek Käber · Prof. Dr. Carsten Dormann',
-    leads:['Käber'],
-    contributors:['Dormann', 'Pregernig'],
+    leads:['Dormann','Käber','Pregernig'], contributors:[],
     detail:['Level-of-Evidence scheme applied to C3 forest models','Catalogues represented processes: drought response, mortality, regeneration, CO₂/N limitations','Improves open-source code where gaps found; primary targets: iLAND, QUINCY'],
-    pi:'Jun.-Prof. Dr. Yannek Käber · Prof. Dr. Carsten Dormann · Prof. Dr. Michael Pregernig',
     hire:'TBD', hireOk:false, stroke:'#6bcf9e', inkColor:'#1a7a4a',
-    desc:['Evaluates C3 forest growth models against current scientific evidence using Level-of-Evidence scheme from evidence-based medicine','Catalogues which processes each model represents and reviews literature to assess adequacy','Improves open-source model code where gaps found; iLAND and QUINCY are primary candidates','Decision context defined with RA B; biological evidence drawn from RA A'],
+    desc:['Evaluates C3 forest growth models against current scientific evidence using Level-of-Evidence scheme','Catalogues which processes each model represents and reviews literature to assess adequacy','Improves open-source model code where gaps found; iLAND and QUINCY are primary candidates'],
     connects:[] },
 
+  // christen_ml — A1 ML FF_pp: "Andreas Christen, co-PI; Rene Orth, co-PI"
   { id:'christen_ml', layer:1,
     title:'IN-CANOPY CLIMATE PROJECTIONS',
-    sub:'Prof. Dr. Andreas Christen / Prof. Dr. René Orth',
-    leads:['Christen', 'Orth'],
-    contributors:[],
+    leads:['Christen','Orth'], contributors:[],
     detail:['Extends sensor network (A1 WP1) with QUINCY forest physiology (leaf area, stomatal conductance)','Projects future in-canopy microclimates at all forested FuFo sites using ML','Starts 2028 — quantifies canopy buffering against heat and drought extremes'],
-    pi:'Prof. Dr. Andreas Christen · Prof. Dr. René Orth',
     hire:'TBD · Start: 2028', hireOk:false, stroke:'#6bcf9e', inkColor:'#1a7a4a',
-    desc:['Projects in-canopy temperatures and humidity future forests will experience — not just above-canopy atmosphere','Combines sensor network measurements, C2 climate projections (Jung), and QUINCY physiology (Orth) using ML','Quantifies how much forest canopies buffer trees from climate extremes','Starts 2028, building on completed sensor network hindcast'],
+    desc:['Projects in-canopy temperatures and humidity — not just above-canopy atmosphere','Combines sensor network measurements, C2 climate projections (Jung), and QUINCY physiology (Orth) using ML','Quantifies how much forest canopies buffer trees from climate extremes; starts 2028'],
     connects:[] },
 
+  // iland — Forest Growth workshop: "Seifert, Albrecht, Hanewinkel, Weiler" + Stritih (participatory pitch)
   { id:'iland', layer:2, wide:true,
     title:'FOREST GROWTH AND MANAGEMENT',
-    sub:'Prof. Dr. Thomas Seifert · Jun.-Prof. Dr. Ana Stritih',
-    leads:['Seifert', 'Stritih'],
-    contributors:['Albrecht', 'Hanewinkel', 'Weiler'],
+    leads:['Seifert','Albrecht','Hanewinkel','Weiler','Stritih'], contributors:[],
     detail:['Individual tree-based forest landscape model — growth, mortality, regeneration, disturbance (wind, bark beetle, fire)','Scale: individual tree to ~10 000 ha at 100 m × 100 m resolution','Agent-Based Engine (ABE) — direct interface to Stritih participatory management scenarios','Bidirectionally coupled with RoGeR'],
-    pi:'Prof. Dr. Thomas Seifert · Jun.-Prof. Dr. Ana Stritih · Dr. Axel Albrecht · Prof. Dr. Marc Hanewinkel · Prof. Dr. Markus Weiler',
     hire:'TBD', hireOk:false, stroke:'#93c5fd', inkColor:'#1a4f8a',
     desc:['Central biophysical engine of C3 — open-source, process-based individual-tree model','Simulates forest dynamics from individual tree to catchment scale','ABE module handles silvicultural management — direct interface to Stritih participatory work','Bidirectionally coupled with RoGeR for water dynamics','Reference: Rammer et al. (2024), Ecological Modelling 495, 110785'],
     connects:[] },
 
+  // roger — Pitch_Water_Redistribution: "Markus Weiler" only
   { id:'roger', layer:2,
     title:'HYDROLOGY, GENERAL HYDRO-MODELLING',
-    sub:'Prof. Dr. Markus Weiler (RoGeR)',
-    leads:['Weiler'],
-    contributors:[],
+    leads:['Weiler'], contributors:[],
     detail:['Process-based hydrology across three topographic settings: plateau, hillslope, riparian/valley','No calibration — all parameters are physically measurable','Explains tree-to-tree drought mortality differences via lateral subsurface flow','Bidirectionally coupled with iLAND'],
-    pi:'Prof. Dr. Markus Weiler',
-    hire:'TBD', hireOk:false, stroke:'#93c5fd', inkColor:'#1a4f8a',
+    hire:'Sheikh Muhammad Asad (PhD) · 01.05.2026', hireOk:true, stroke:'#93c5fd', inkColor:'#1a4f8a',
     desc:['Models water redistribution at the surface and subsurface, mediating local transpiration and drought vulnerability','Three topographic contexts: plateau (vertical only), hillslope (lateral subsurface), riparian (groundwater + capillary rise)','All parameters physically measurable — no calibration required','Being extended with MODFLOW groundwater coupling (Stahl)'],
     connects:[] },
 
+  // landclim — LandClim FF_pp: "Axel Albrecht, PI; Michaela Haug, PI (collaborator)"
   { id:'landclim', layer:2,
     title:'LANDSCAPE VEGETATION MODELLING',
-    sub:'Dr. Axel Albrecht / Jun.-Prof. Dr. Michaela Haug',
-    leads:['Albrecht'],
-    contributors:['Haug'],
+    leads:['Albrecht','Haug'], contributors:[],
     detail:['LandClim: landscape-scale DVM — species composition, density, biomass over centuries at 250 m','Coarser grain than iLAND but larger spatial extent; suited to regional species projections','Normative runs: native-only vs. including non-native species (e.g. Douglas fir) — co-developed with B3'],
-    pi:'Dr. Axel Albrecht (FVA-BW) · Jun.-Prof. Dr. Michaela Haug',
     hire:'TBD', hireOk:false, stroke:'#60a5fa', inkColor:'#1a4f8a',
     desc:['Simulates forest species composition, density, and biomass at landscape scale under varying climate and management','Coarser grain than iLAND but covers larger areas and longer time horizons — suited to regional species projections','Normative runs compare scenarios with/without non-native tree species — inputs co-developed with Haug and B3','Outputs feed Hanewinkel economic model and Brown CRAFTY-EU'],
     connects:[] },
 
+  // stritih — Participatory workshop: "Stritih" only
   { id:'stritih', layer:3,
     title:'PARTICIPATORY SCENARIO DEVELOPMENT',
-    sub:'Jun.-Prof. Dr. Ana Stritih',
-    leads:['Stritih'],
-    contributors:[],
+    leads:['Stritih'], contributors:[],
     detail:['Co-designs realistic management scenarios with forest managers and stakeholders','Scenarios feed iLAND\'s ABE module and travel downstream to Brown (CRAFTY-EU) and Pauliuk (Wood Cascade)','Evaluates model credibility and legitimacy through Observe–Plan–Act participation cycle'],
-    pi:'Jun.-Prof. Dr. Ana Stritih',
     hire:'Christina Dollinger (PostDoc, MvW) · 01.05.2026', hireOk:true, stroke:'#fbbf24', inkColor:'#92400e',
     desc:['Brings forest managers, ecologists, and stakeholders together to co-design management scenarios','Scenarios feed iLAND\'s ABE module and downstream to Brown\'s CRAFTY-EU and Pauliuk\'s wood cascade','Central connector between the participatory process and the quantitative modelling chain','Evaluates credibility and legitimacy of scenarios alongside modelling results'],
     connects:[] },
 
+  // hanewinkel — EconomicModel FF_pp applicants: "Hanewinkel; Pauliuk; Stritih (PI); Seifert" — all co-applicants
   { id:'hanewinkel', layer:3,
     title:'ECONOMIC MODELLING',
-    sub:'Prof. Dr. Marc Hanewinkel',
-    leads:['Hanewinkel'],
-    contributors:['Pauliuk'],
+    leads:['Hanewinkel','Pauliuk','Stritih','Seifert'], contributors:[],
     detail:['GFPM partial equilibrium model for SW Germany, implemented in GAMS','Optimises management strategies using Value at Risk (VaR) and CVaR under uncertainty','Takes ecosystem service outputs from iLAND and RoGeR; links to Pauliuk and Schanz'],
-    pi:'Prof. Dr. Marc Hanewinkel · Prof. Dr. Stefan Pauliuk',
     hire:'TBD', hireOk:false, stroke:'#fbbf24', inkColor:'#92400e',
     desc:['Economic modelling and evaluation framework for ecosystem services under risk and uncertainty','Adapts GFPM (Buongiorno et al.) for Southwest Germany as a partial equilibrium model in GAMS','Applies VaR and CVaR metrics to produce optimised robust management strategies','Contributes preliminary A&TPs for SW Germany forests as economic input to C4'],
     connects:[] },
 
+  // pauliuk — WoodCascade FF_pp: "Main applicant: Pauliuk; Collaborators: Hanewinkel, Stritih, Schlüter, Schanz, Gingrich"
   { id:'pauliuk', layer:3,
     title:'WOOD CASCADE AND CARBON',
-    sub:'Prof. Dr. Stefan Pauliuk',
-    leads:['Pauliuk'],
-    contributors:['Hanewinkel', 'Stritih', 'Schlüter', 'Schanz'],
+    leads:['Pauliuk'], contributors:['Hanewinkel','Stritih','Schlüter','Schanz','Gingrich'],
     detail:['Material flow analysis (MFA) and LCA of wood products from harvest through cascading to end-of-life','Carbon balance: material substitution and avoided emissions; up to 200-year horizon','Co-creation with RA B and SES-CaseLab required'],
-    pi:'Prof. Dr. Stefan Pauliuk · Dr. Simon Schulte',
     hire:'Dr. Simon Schulte', hireOk:true, stroke:'#fbbf24', inkColor:'#92400e',
-    desc:['Material flow analysis and LCA of wood products from harvest through cascading to end-of-life','Evaluates carbon balance impact of different wood use pathways over up to 200-year horizons','Three steps: map option space; identify pathways combining data and stakeholder input; assess achievability under uncertainty','Co-creation with RA B and SES-CaseLab required for steps 2 and 3'],
+    desc:['Material flow analysis and LCA of wood products from harvest through cascading to end-of-life','Three steps: map option space; identify pathways combining data and stakeholder input; assess achievability under uncertainty','Co-creation with RA B and SES-CaseLab required for steps 2 and 3'],
     connects:[] },
 
+  // schanz — FESMarkets FF_pp: "Prof. Dr. Heiner Schanz" only (single applicant); Peuckert = hire
   { id:'schanz', layer:3,
     title:'FOREST MARKETS MODELLING',
-    sub:'Prof. Dr. Heiner Schanz',
-    leads:['Schanz'],
-    contributors:[],
+    leads:['Schanz'], contributors:[],
     detail:['NoMFES: Network of Markets for Forest Ecosystem Services (expanded from NoMWood)','Macro-level: system dynamics model of stocks & flows as function of forest condition','Micro-level: Causal Loop Diagrams for actor perspectives and governance interventions'],
-    pi:'Prof. Dr. Heiner Schanz',
     hire:'Steffi Peuckert (PhD) · 01.04.2026', hireOk:true, stroke:'#fbbf24', inkColor:'#92400e',
-    desc:['Analyses structural architecture of Forest Ecosystem Service market networks (water, recreation, protection, timber)','Macro-level: system dynamics model of stocks and flows as function of forest condition/quality','Micro-level: Causal Loop Diagrams for actor perspectives and governance interventions','Provides governance dynamics for regulatory simulations'],
+    desc:['Analyses structural architecture of Forest Ecosystem Service market networks (water, recreation, protection, timber)','Macro-level: system dynamics model of stocks and flows as function of forest condition/quality','Micro-level: Causal Loop Diagrams for actor perspectives and governance interventions'],
     connects:[] },
 
+  // brown — LargeScaleABM FF_pp: "PI: Calum Brown; Collaborators: Stritih, Schlüter, Hanewinkel, Pauliuk"
   { id:'brown', layer:3,
     title:'LANDSCAPE ANALYSIS AND MODELLING',
-    sub:'Dr. Calum Brown',
-    leads:['Brown'],
-    contributors:['Stritih', 'Schlüter', 'Hanewinkel', 'Pauliuk'],
+    leads:['Brown'], contributors:['Stritih','Schlüter','Hanewinkel','Pauliuk'],
     detail:['CRAFTY-EU agent-based model at EU27+3 scale, 1 km resolution (within LandSyMM)','Couples land use decisions with macroeconomics, trade, ecosystem processes, and climate','Key open challenge: 1 km (CRAFTY-EU) vs 100 m (iLAND) scale mismatch'],
-    pi:'Dr. Calum Brown · Jun.-Prof. Dr. Stritih · Prof. Dr. Schlüter · Prof. Dr. Hanewinkel · Prof. Dr. Pauliuk',
     hire:'TBD', hireOk:false, stroke:'#fbbf24', inkColor:'#92400e',
-    desc:['CRAFTY-EU agent-based model at EU27+3 scale, 1 km resolution, embedded in LandSyMM global framework','Couples land use decisions with macroeconomics, global trade, ecosystem processes, biodiversity, and climate','Provides continental-scale context for C3 models under SSP/RCP/NFF scenarios','Key open challenge: bridging 1 km (CRAFTY-EU) vs 100 m (iLAND) scale mismatch'],
+    desc:['CRAFTY-EU agent-based model at EU27+3 scale, 1 km resolution, embedded in LandSyMM global framework','Couples land use decisions with macroeconomics, global trade, ecosystem processes, biodiversity, and climate','Provides continental-scale context for C3 models under SSP/RCP/NFF scenarios'],
     connects:[] },
 ];
 
@@ -379,70 +340,54 @@ const CONN_STYLES = {
 };
 
 const CONNECTIONS = [
-  // ── Climate forcing → biophysical models ──
+  // Climate forcing → biophysical models
   ['jung','iland','data'],      ['jung','roger','data'],
   ['jung','orth','data'],       ['jung','brown','data'],
   ['jung','stahl','data'],      ['jung','landclim','data'],
   ['jung','christen_ml','data'],
-
-  // ── Stahl extreme events & groundwater ──
+  // Stahl extreme events & groundwater
   ['stahl','roger','data'],     ['stahl','iland','data'],
-  ['stahl','brown','lateral'],  ['stahl','weiler_gis','lateral'],
-
-  // ── Christen sensor network ──
+  ['stahl','brown','lateral'],
+  // Christen sensor network
   ['christen','iland','data'],  ['christen','roger','data'],
   ['christen','christen_ml','data'],
   ['christen','seifert','lateral'], ['christen','weiler_gis','lateral'],
-
-  // ── Weiler GIS spatial backbone ──
+  // Weiler GIS spatial backbone
   ['weiler_gis','iland','data'], ['weiler_gis','roger','data'],
   ['weiler_gis','landclim','data'],
-
-  // ── Seifert LiDAR → iLAND initialisation ──
+  // Seifert LiDAR → iLAND initialisation (data, not validation)
   ['seifert','iland','data'],   ['seifert','kattenborn','lateral'],
-
-  // ── Kattenborn traits → Orth; mortality → Hanewinkel ──
+  // Kattenborn traits → Orth (data); mortality → Hanewinkel (data)
   ['kattenborn','orth','data'], ['kattenborn','iland','validation'],
   ['kattenborn','hanewinkel','data'],
-
-  // ── Orth drought functions → iLAND ──
-  ['orth','iland','data'],      ['orth','christen_ml','lateral'],
-
-  // ── Yannek evaluation → forest models ──
+  // Orth drought functions → iLAND (data, not validation)
+  ['orth','iland','data'],
+  // Yannek evaluation → forest models
   ['yannek','iland','lateral'], ['yannek','roger','lateral'],
   ['yannek','landclim','lateral'],
-
-  // ── christen_ml → improved forcing ──
+  // christen_ml → improved forcing
   ['christen_ml','iland','data'], ['christen_ml','roger','data'],
-
-  // ── iLAND ↔ RoGeR bidirectional coupling ──
+  // iLAND ↔ RoGeR bidirectional coupling
   ['iland','roger','coupling'], ['roger','iland','coupling'],
-
-  // ── LandClim → economic and land use models ──
+  // LandClim → economic and land use models
   ['landclim','hanewinkel','data'], ['landclim','brown','data'],
-
-  // ── iLAND outputs → socio-economic layer ──
+  // iLAND outputs → socio-economic layer
   ['iland','brown','data'],     ['iland','stritih','data'],
   ['iland','hanewinkel','data'],['iland','pauliuk','data'],
-
-  // ── Stritih scenarios → downstream models ──
+  // Stritih scenarios → downstream models
   ['stritih','iland','data'],   ['stritih','brown','data'],
   ['stritih','pauliuk','data'],
-
-  // ── Socio-economic lateral connections ──
+  // Socio-economic lateral connections
   ['pauliuk','hanewinkel','lateral'], ['hanewinkel','pauliuk','lateral'],
   ['pauliuk','schanz','lateral'],     ['schanz','brown','lateral'],
   ['pauliuk','brown','lateral'],
-
-  // ── Feedback from land use and economic models ──
-  ['hanewinkel','iland','feedback'], ['brown','iland','feedback'],
-
-  // ── C1 conceptual → all socio-economic ──
+  // Feedback from land use and economic models
+  ['hanewinkel','iland','lateral'], ['brown','iland','lateral'],
+  // C1 conceptual → socio-economic
   ['c1','iland','conceptual'],  ['c1','stritih','conceptual'],
   ['c1','brown','conceptual'],  ['c1','hanewinkel','conceptual'],
   ['c1','pauliuk','conceptual'],['c1','schanz','conceptual'],
-
-  // ── C2 scenarios → all C3 models ──
+  // C2 scenarios → all C3 models
   ['c2_scenarios','iland','data'],    ['c2_scenarios','roger','data'],
   ['c2_scenarios','brown','data'],    ['c2_scenarios','hanewinkel','data'],
   ['c2_scenarios','stritih','data'],  ['c2_scenarios','pauliuk','data'],
@@ -542,19 +487,21 @@ function renderNodes() {
 
     const hireColor = n.hire.includes('⚠') ? '#c0392b' : (n.hireOk ? '#1a7a4a' : '#94a3b8');
 
-    const detailHtml = Array.isArray(n.detail)
-      ? '<ul class="node-detail" style="padding-left:14px;list-style:disc;">' + n.detail.map(d => '<li>' + d + '</li>').join('') + '</ul>'
-      : '<div class="node-detail">' + (n.detail||'') + '</div>';
-
-    const leadsHtml = n.leads && n.leads.length
-      ? '<span style="font-family:\'IBM Plex Mono\',monospace;font-size:8px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">Lead</span> '
-        + n.leads.join(', ')
+    // Build names line from leads/contributors
+    const leadsStr = n.leads && n.leads.length ? n.leads.join(', ') : '';
+    const contribStr = n.contributors && n.contributors.length ? n.contributors.join(', ') : '';
+    const leadsHtml = leadsStr
+      ? '<span style="font-family:\'IBM Plex Mono\',monospace;font-size:8px;font-weight:700;color:#94a3b8;letter-spacing:.08em;text-transform:uppercase;">Lead</span> ' + leadsStr
       : '';
-    const contribHtml = n.contributors && n.contributors.length
-      ? '  <span style="font-family:\'IBM Plex Mono\',monospace;font-size:8px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">Contributors</span> '
-        + n.contributors.join(', ')
+    const contribHtml = contribStr
+      ? (leadsStr ? '&emsp;' : '') + '<span style="font-family:\'IBM Plex Mono\',monospace;font-size:8px;font-weight:700;color:#94a3b8;letter-spacing:.08em;text-transform:uppercase;">Contributors</span> ' + contribStr
       : '';
     const namesHtml = '<div class="node-sub" style="margin-top:3px;font-size:10px;line-height:1.5;">' + leadsHtml + contribHtml + '</div>';
+
+    // Render detail as <ul> if array
+    const detailHtml = Array.isArray(n.detail)
+      ? '<ul class="node-detail" style="padding-left:14px;list-style:disc;">' + n.detail.map(d => '<li>' + d + '</li>').join('') + '</ul>'
+      : '<div class="node-detail">' + (n.detail || '') + '</div>';
 
     if (n.banner) {
       div.innerHTML = `
@@ -679,31 +626,37 @@ function onNodeClick(id) {
   });
 
   const node = NODES.find(n=>n.id===id);
-
-  // Group connections by type
-  const byType = {data:[], validation:[], coupling:[], feedback:[], lateral:[], conceptual:[]};
-  CONNECTIONS.forEach(([f,t,type]) => {
-    if (f===id) { const cn = NODES.find(n=>n.id===t); if(cn) byType[type].push('→ '+cn.title); }
-    else if (t===id && type!=='coupling') { const cn = NODES.find(n=>n.id===f); if(cn) byType[type].push('← '+cn.title); }
-  });
-  const typeLabels = {data:'Data flow', validation:'Validation', coupling:'Bidirectional coupling', feedback:'Feedback', lateral:'Lateral', conceptual:'Conceptual'};
-  const connHtml = Object.entries(byType)
-    .filter(([,arr]) => arr.length)
-    .map(([type,arr]) => '<span style="color:' + CONN_STYLES[type].stroke + ';font-weight:600;">' + typeLabels[type] + ':</span> ' + arr.join('  ·  '))
-    .join('&emsp;&ensp;');
+  const connNames = [...connected].map(cid => {
+    const cn = NODES.find(n=>n.id===cid);
+    return cn ? cn.title.split('—')[0].trim() : cid;
+  }).join('  ·  ');
 
   document.getElementById('info-title').textContent = node.title;
-  const leadsStr = node.leads && node.leads.length ? 'Lead: ' + node.leads.join(', ') : '';
-  const contribStr = node.contributors && node.contributors.length ? '  ·  Contributors: ' + node.contributors.join(', ') : '';
-  document.getElementById('info-pi').textContent = leadsStr + contribStr;
 
+  // Names line
+  const leadsLine = node.leads && node.leads.length ? 'Lead: ' + node.leads.join(', ') : '';
+  const contribLine = node.contributors && node.contributors.length ? '  ·  Contributors: ' + node.contributors.join(', ') : '';
+  document.getElementById('info-pi').textContent = leadsLine + contribLine;
+
+  // Desc as bullets if array
   const descEl = document.getElementById('info-desc');
   if (Array.isArray(node.desc)) {
     descEl.innerHTML = '<ul style="margin:4px 0 0 0;padding-left:16px;list-style:disc;">' + node.desc.map(d => '<li>' + d + '</li>').join('') + '</ul>';
   } else {
-    descEl.textContent = node.desc;
+    descEl.textContent = node.desc || '';
   }
 
+  // Connections grouped by type with colour labels
+  const byType = {data:[],validation:[],coupling:[],feedback:[],lateral:[],conceptual:[]};
+  CONNECTIONS.forEach(([f,t,type]) => {
+    if (f===id) { const cn = NODES.find(n=>n.id===t); if(cn) byType[type].push('\u2192 '+cn.title); }
+    else if (t===id && type!=='coupling') { const cn = NODES.find(n=>n.id===f); if(cn) byType[type].push('\u2190 '+cn.title); }
+  });
+  const typeLabels = {data:'Data flow',validation:'Validation',coupling:'Bidirectional coupling',feedback:'Feedback',lateral:'Lateral',conceptual:'Conceptual'};
+  const connHtml = Object.entries(byType)
+    .filter(([,arr]) => arr.length)
+    .map(([type,arr]) => '<span style="color:' + CONN_STYLES[type].stroke + ';font-weight:600;">' + typeLabels[type] + ':</span> ' + arr.join('  \u00b7  '))
+    .join('&emsp;');
   document.getElementById('info-connects').innerHTML = connHtml || '';
   const hireEl = document.getElementById('info-hire');
   hireEl.textContent = (node.hire && !node.hire.startsWith('TBD')) ? node.hire : '';
