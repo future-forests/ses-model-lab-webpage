@@ -236,14 +236,7 @@ const NODES = [
     desc:['Quantifies emergent forest response to dryness using global satellite and flux tower data','Generates species-specific functions relating photosynthesis and transpiration to soil moisture and VPD','Response functions embedded into iLAND to constrain its drought mortality representation','Reference: Lusk et al. 2025 (bioRxiv)'],
     connects:[] },
 
-  // yannek — B1 FF_pp: "Carsten Dormann (PI); Yannek Käber (Assist. Prof.); Michael Pregernig (PI)"
-  { id:'yannek', layer:1,
-    title:'FOREST MODEL EVALUATION',
-    leads:['Dormann','Käber','Pregernig'], contributors:[],
-    detail:['Level-of-Evidence scheme applied to C3 forest models','Catalogues represented processes: drought response, mortality, regeneration, CO₂/N limitations','Improves open-source code where gaps found; primary targets: iLAND, QUINCY'],
-    hire:'TBD', hireOk:false, stroke:'#6bcf9e', inkColor:'#1a7a4a',
-    desc:['Evaluates C3 forest growth models against current scientific evidence using Level-of-Evidence scheme','Catalogues which processes each model represents and reviews literature to assess adequacy','Improves open-source model code where gaps found; iLAND and QUINCY are primary candidates'],
-    connects:[] },
+
 
   // christen_ml — A1 ML FF_pp: "Andreas Christen, co-PI; Rene Orth, co-PI"
   { id:'christen_ml', layer:1,
@@ -363,8 +356,6 @@ const CONNECTIONS = [
   // Orth drought functions → iLAND (data, not validation)
   ['orth','iland','data'],
   // Yannek evaluation → forest models
-  ['yannek','iland','lateral'], ['yannek','roger','lateral'],
-  ['yannek','landclim','lateral'],
   // christen_ml → improved forcing
   ['christen_ml','iland','data'], ['christen_ml','roger','data'],
   // iLAND ↔ RoGeR bidirectional coupling
@@ -487,16 +478,16 @@ function renderNodes() {
 
     const hireColor = n.hire.includes('⚠') ? '#c0392b' : (n.hireOk ? '#1a7a4a' : '#94a3b8');
 
-    // Build names line from leads/contributors
+    // Build names — Lead on one line, Contributors on next line
     const leadsStr = n.leads && n.leads.length ? n.leads.join(', ') : '';
     const contribStr = n.contributors && n.contributors.length ? n.contributors.join(', ') : '';
     const leadsHtml = leadsStr
-      ? '<span style="font-family:\'IBM Plex Mono\',monospace;font-size:8px;font-weight:700;color:#94a3b8;letter-spacing:.08em;text-transform:uppercase;">Lead</span> ' + leadsStr
+      ? '<div style="font-size:10px;line-height:1.5;margin-top:2px;"><span style="font-family:\'IBM Plex Mono\',monospace;font-size:8px;font-weight:700;color:#94a3b8;letter-spacing:.08em;text-transform:uppercase;">Lead</span> ' + leadsStr + '</div>'
       : '';
     const contribHtml = contribStr
-      ? (leadsStr ? '&emsp;' : '') + '<span style="font-family:\'IBM Plex Mono\',monospace;font-size:8px;font-weight:700;color:#94a3b8;letter-spacing:.08em;text-transform:uppercase;">Contributors</span> ' + contribStr
+      ? '<div style="font-size:10px;line-height:1.5;"><span style="font-family:\'IBM Plex Mono\',monospace;font-size:8px;font-weight:700;color:#94a3b8;letter-spacing:.08em;text-transform:uppercase;">Contributors</span> ' + contribStr + '</div>'
       : '';
-    const namesHtml = '<div class="node-sub" style="margin-top:3px;font-size:10px;line-height:1.5;">' + leadsHtml + contribHtml + '</div>';
+    const namesHtml = '<div style="margin-top:3px;">' + leadsHtml + contribHtml + '</div>';
 
     // Render detail as <ul> if array
     const detailHtml = Array.isArray(n.detail)
@@ -635,8 +626,8 @@ function onNodeClick(id) {
 
   // Names line
   const leadsLine = node.leads && node.leads.length ? 'Lead: ' + node.leads.join(', ') : '';
-  const contribLine = node.contributors && node.contributors.length ? '  ·  Contributors: ' + node.contributors.join(', ') : '';
-  document.getElementById('info-pi').textContent = leadsLine + contribLine;
+  const contribLine = node.contributors && node.contributors.length ? 'Contributors: ' + node.contributors.join(', ') : '';
+  document.getElementById('info-pi').textContent = leadsLine + (leadsLine && contribLine ? '  ·  ' : '') + contribLine;
 
   // Desc as bullets if array
   const descEl = document.getElementById('info-desc');
