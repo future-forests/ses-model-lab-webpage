@@ -106,11 +106,6 @@ groups:
 - id: jung_schindler
   layer: 1
   pi: Prof. Dr. Kerstin Stahl · Prof. Dr. Dirk Schindler · Prof. Dr. Andreas Christen · Prof. Dr. René Orth
-  pi_applicants:
-  - Prof. Dr. Kerstin Stahl
-  - Prof. Dr. Dirk Schindler
-  - Prof. Dr. Andreas Christen
-  - Prof. Dr. René Orth
   model_name: HyClimScenarios
   title_short: High-resolution climate scenario downscaling for the FuFo domain
   model_software: Statistical downscaling with tree-ensemble methods; ERA5-Land / CORDEX / CMIP6
@@ -160,17 +155,14 @@ groups:
 - id: stahl
   layer: 1
   pi: Prof. Dr. Kerstin Stahl
-  pi_collaborators:
-  - Prof. Dr. Dirk Schindler
-  - Prof. Dr. Markus Weiler
   model_name: Extreme Event Storylines & Coupled Groundwater Hydrology
   title_short: Extreme event storylines and coupled surface-groundwater hydrology
   model_software: Extreme event storyline analysis
   objectives:
   - Develop extreme event storylines and stress-test scenarios representing specific high-impact drought sequences under future
-    climate conditions (→ iland, → roger, → hanewinkel)
-  - Extend RoGeR with MODFLOW groundwater coupling to assess how groundwater disconnection from forest root systems intensifies
-    drought stress (→ roger)
+    climate conditions
+  - Extend RoGeR with groundwater model coupling to assess how groundwater disconnection from forest root systems intensifies
+    drought stress
   short_description:
   - Investigates legacy effects of forest changes on catchment water balance and hydrological extremes such as floods and
     droughts
@@ -589,8 +581,6 @@ groups:
 - id: hanewinkel
   layer: 3
   pi: Prof. Dr. Marc Hanewinkel
-  pi_collaborators:
-  - Prof. Dr. Stefan Pauliuk
   model_name: Forest Economics and Risk Model (GFPM-SW)
   title_short: Integrative economic modelling for Future Forests
   model_software: GFPM / GAMS (partial equilibrium model)
@@ -729,11 +719,6 @@ groups:
 - id: brown
   layer: 3
   pi: Dr. Calum Brown
-  pi_collaborators:
-  - Jun.-Prof. Dr. Ana Stritih
-  - Prof. Dr. Maja Schlüter
-  - Prof. Dr. Marc Hanewinkel
-  - Prof. Dr. Stefan Pauliuk
   model_name: CRAFTY-EU — European Land Use Agent-Based Model
   title_short: Scaling novel forest ecosystems in future European land systems
   model_software: CRAFTY-EU (within LandSyMM)
