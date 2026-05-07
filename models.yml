@@ -1,641 +1,7 @@
 groups:
-- id: jung_schindler
-  layer: 1
-  pi: Dr. Christopher Jung / Prof. Dr. Dirk Schindler
-  pi_applicants:
-  - Prof. Dr. Kerstin Stahl
-  - Prof. Dr. Dirk Schindler
-  - Prof. Dr. Andreas Christen
-  - Prof. Dr. René Orth
-  model_name: HyClimScenarios
-  title_short: High-resolution climate scenario downscaling for the FuFo domain
-  model_software: Statistical downscaling with tree-ensemble methods; ERA5-Land / CORDEX / CMIP6
-  objectives:
-  - Prepare regionalized reanalysis and future climate scenario data to support all cluster modelling activities
-  - Develop novel approaches to generate specific scenarios for forest-relevant aspects of the water balance, including extreme
-    events
-  - Produce 100 m × 100 m meteorological forcing fields (T, precip, VPD, wind, radiation, derived indices) under historical
-    conditions and CMIP6 warming levels (→ iland, → roger, → orth, → brown, → hanewinkel)
-  short_description:
-  - Downscales ERA5-Land reanalysis and CMIP6 projections from ~10–120 km to 100 m × 100 m grid across the study regions
-  - Uses tree-ensemble ML for bias correction and statistical downscaling, covering historical conditions and future warming
-    levels
-  - Develops novel approaches for forest-relevant water balance aspects, including extreme events and event-storyline scenarios
-    (in collaboration with Stahl)
-  type: Statistical downscaling / Climate scenario modelling
-  modelling_approach: Statistical downscaling / Machine learning (tree-ensemble)
-  language:
-  - Python
-  - R
-  status: in_development
-  scale: 100 m x 100 m grid, regional to SW Germany
-  inputs:
-  - name: ERA5-Land gridded reanalysis (0.10° × 0.10°, hourly)
-    source: ECMWF (open access)
-  - name: Global Historical Climatology Network — >2000 measurement sites in Central Europe
-    source: NOAA GHCN (open access)
-  - name: CMIP6 global climate model outputs under various SSP/RCP scenarios
-    source: ESGF (open access)
-  - name: Digital elevation model predictors
-    source: National surveys
-  - name: Land use model predictors
-    source: Copernicus / national surveys
-  outputs:
-  - name: 'Downscaled hourly/daily fields at 100 m × 100 m: air temperature, precipitation, dew point, wind speed, solar radiation,
-      vapour pressure deficit, derived climate indices'
-  - name: Climate projections under CMIP6 global warming levels (1.5°C, 2°C, 3°C+)
-  method: Tree-ensemble methods for residual-based bias correction of hourly reanalysis and daily climate model products.
-    Statistical downscaling from ~10-120 km to 100 m x 100 m.
-  hire:
-    name: TBD
-    start: TBD
-  area_of_application: Meteorology, climatology
-  topic: Climate analysis and modelling
-  methods: Modelling
-  cluster: climate_hydrology
-- id: stahl
-  layer: 1
-  pi: Prof. Dr. Kerstin Stahl
-  pi_collaborators:
-  - Prof. Dr. Dirk Schindler
-  - Prof. Dr. Markus Weiler
-  model_name: Extreme Event Storylines & Coupled Groundwater Hydrology
-  title_short: Extreme event storylines and coupled surface-groundwater hydrology
-  model_software: MODFLOW (groundwater coupling); extreme event storyline analysis
-  objectives:
-  - Develop extreme event storylines and stress-test scenarios representing specific high-impact drought sequences under future
-    climate conditions (→ iland, → roger, → hanewinkel)
-  - Extend RoGeR with MODFLOW groundwater coupling to assess how groundwater disconnection from forest root systems intensifies
-    drought stress (→ roger)
-  short_description:
-  - Develops extreme event storylines and stress-test scenarios — asking what happens if the 2018–2022 drought sequence recurs
-    under mid-century climate
-  - Goes beyond standard ensemble projections to represent specific high-impact events relevant for forest management
-  - Extends RoGeR with MODFLOW groundwater coupling to assess how groundwater disconnection from root systems intensifies
-    drought stress
-  - Co-leads C2 with Hanewinkel; connected to six C3 groups in the workshop collaboration matrix
-  modelling_approach: Extreme event storylines / Coupled surface-groundwater modelling
-  type: Extreme value analysis / Event storyline modelling / Coupled hydrology
-  language:
-  - R
-  - Python
-  status: in_development
-  scale: Regional — FuFo domain to state-wide (SW Germany)
-  inputs:
-  - name: Downscaled reanalysis and climate model outputs
-    source: Jung/Schindler (HyClimScenarios)
-  - name: Extreme value statistics
-  outputs:
-  - name: Extreme event storylines and stress-test scenarios
-  - name: Coupled surface-groundwater model outputs (RoGeR–MODFLOW coupling)
-  hire:
-    name: TBD
-    start: TBD
-  area_of_application: Hydro-climatic research
-  topic: Hydro-modelling, extreme events
-  methods: Data analysis, modelling
-  cluster: climate_hydrology
-- id: christen
-  layer: 1
-  pi: Prof. Dr. Andreas Christen
-  pi_collaborators:
-  - Prof. Dr. Markus Weiler
-  - Dr. Florian Schnabel
-  project: Theme A1 WP1 — Adaptive Sensor Network
-  model_name: Adaptive Sensor Network & In-canopy Microclimate Model (A1)
-  title_short: Adaptive sensor network and ML-based in-canopy microclimate reconstruction
-  model_software: Adaptive sensor network + ML tree-ensemble (Python)
-  objectives:
-  - 'Goal 1: Develop quality control and assess station uniqueness to inform adaptive network reconfiguration after year one
-    of full deployment'
-  - 'Goal 2: Apply ML to reconstruct historical in-canopy microclimate conditions over 30 years (hindcasting) and fill data
-    gaps'
-  - 'Goal 3: Create transferable regional model predicting below-canopy temperatures and humidity at any forested site in
-    the FuFo domain (→ jung_schindler)'
-  short_description:
-  - Combines an adaptive sensor network (~300 plots across 100–150 stands) with ML to reconstruct and predict fine-scale hydro-climatic
-    conditions
-  - Network is self-optimising — sites providing redundant information are progressively replaced after the first year of
-    full deployment
-  - Hindcasts in-canopy conditions over 30 years from quality-controlled station data
-  - Extends into a transferable regional tool predicting below-canopy temperatures and humidity at any forested site in the
-    FuFo domain
-  type: Machine learning / Spatial-temporal downscaling
-  modelling_approach: Machine learning / Spatial-temporal downscaling
-  language:
-  - Python
-  status: in_development
-  scale: 100 m x 100 m grid; 300 sensor plots across 100-150 forest stands
-  inputs:
-  - name: Sensor network data — in-canopy air temperature and humidity from ~300 field plots
-    source: FuFo adaptive sensor network (A1)
-  - name: Geospatial predictors and downscaled climate data
-    source: Jung/Schindler (HyClimScenarios)
-  outputs:
-  - name: In-canopy climate statistics and frequency of climate extremes — 30-year hindcast
-  - name: Transferable regional model predicting below-canopy temperatures and humidity across the FuFo domain
-  hire:
-    name: Tabea Wörner (PhD)
-    start: '2026-04-01'
-  area_of_application: Meteorology, climatology
-  topic: Sensor network, forest measurements
-  methods: In-situ measurements, modelling
-  cluster: climate_hydrology
-- id: weiler_gis
-  layer: 1
-  pi: Prof. Dr. Markus Weiler
-  model_name: Spatial Data Infrastructure & Ecohydrological Framework (GIS)
-  title_short: Spatial data infrastructure and ecohydrological framework
-  model_software: QGIS / Python / R (spatial data processing)
-  objectives:
-  - 'Compile and harmonise static spatial datasets at 100 m resolution: soil properties (BÜK200), forest structure (BWI, LiDAR),
-    catchment delineations'
-  - Supply harmonised spatial data to all C3 models requiring terrain, soil, and forest structure inputs (→ iland, → roger,
-    → stritih, → landclim)
-  short_description:
-  - Compiles and harmonises the static spatial datasets underpinning all C3 models at 100 m resolution
-  - Covers soil properties (BÜK200), forest structure (BWI, LiDAR terrain models), and catchment delineations for hydrological
-    routing
-  type: GIS / Spatial data integration / Ecohydrology
-  modelling_approach: GIS / Spatial data integration
-  language:
-  - Python
-  - R
-  - QGIS
-  status: operational
-  scale: 'FuFo domain, 100 m resolution; ecohydrological work: stand to watershed (1m–1000s km²)'
-  inputs:
-  - name: 'GIS data: forest structure, soil, hydrology, tree species'
-    source: National surveys and databases
-  outputs:
-  - name: 'Harmonised spatial datasets at 100 m resolution: forest structure, soil properties, hydrology network, tree species'
-  hire:
-    name: TBD
-    start: TBD
-  area_of_application: Forestry, hydrology, ecosystem services
-  topic: Hydrology, general hydro-modelling
-  methods: GIS analysis, hydrological modelling
-  cluster: climate_hydrology
-- id: seifert
-  layer: 1
-  pi: Prof. Dr. Thomas Seifert
-  pi_collaborators:
-  - Dr. Axel Albrecht
-  - Prof. Dr. Marc Hanewinkel
-  - Prof. Dr. Markus Weiler
-  model_name: LiDAR Forest Inventory and Dendroecology
-  title_short: LiDAR-based forest structure inventory and dendroecology
-  model_software: TLS / ULS LiDAR processing (R, Python)
-  objectives:
-  - Characterise individual tree positions, dimensions, and species across study stands via terrestrial (TLS) and UAV-based
-    (ULS) laser scanning
-  - Provide iLAND initialisation data and long-term observational reference for calibration via dendrochronological records
-    (→ iland)
-  - Develop digital twin reconstructions of forest stands for structural analysis
-  short_description:
-  - Provides the structural forest data needed to initialise iLAND and validate its simulations
-  - TLS and ULS laser scanning characterise individual tree positions, dimensions, and species across the study stands
-  - Dendrochronological records add decades of annual growth response, giving iLAND a realistic starting state and long-term
-    calibration reference
-  - Develops digital twin reconstructions of forest stands for structural analysis
-  type: Remote sensing / Field measurements / Dendroecology
-  modelling_approach: Remote sensing (LiDAR) / Dendroecology
-  language:
-  - R
-  - Python
-  - C++
-  status: in_development
-  scale: Individual tree to stand (up to ~10 000 ha catchment)
-  inputs:
-  - name: LiDAR scans (TLS/ULS)
-    source: Field campaigns
-  outputs:
-  - name: 'Forest structure data for iLAND initialisation: tree positions, dimensions, species'
-  hire:
-    name: TBD
-    start: 2026-07-01 (pending)
-  notes: 'Hiring ongoing. Scale: individual tree to ~10 000 ha. Collaborators: Albrecht, Hanewinkel, Weiler.'
-  area_of_application: Forest structure assessment
-  topic: LiDAR scans and forest structure
-  methods: LiDAR measurements, modelling
-  cluster: forest_ecology
-- id: kattenborn
-  layer: 1
-  pi: Prof. Dr. Teja Kattenborn
-  pi_collaborators:
-  - Prof. Dr. René Orth
-  - Dr. Pia Müller
-  model_name: Remote Sensing Mortality and Plant Traits
-  title_short: Remote sensing of tree mortality and plant functional traits
-  model_software: CNN-based deep learning (Python, PyTorch); satellite time-series analysis
-  objectives:
-  - Map tree mortality at landscape scale using convolutional neural networks on drone and satellite imagery (→ deadtree.earth
-    initiative)
-  - Derive spatially continuous plant functional trait maps from satellite time series for iLAND calibration and validation
-    (→ iland, → orth)
-  short_description:
-  - Maps tree mortality at landscape scale using convolutional neural networks on drone and satellite imagery, contributing
-    to the deadtree.earth initiative
-  - Derives plant functional traits — leaf area index, chlorophyll, crown area — from satellite time series
-  - Provides spatially continuous trait observations for iLAND calibration and validation
-  type: Deep learning / Remote sensing
-  modelling_approach: Deep learning / Remote sensing
-  language:
-  - Python
-  status: operational
-  scale: 'Drone: stand scale; Satellite: landscape to regional'
-  inputs:
-  - name: Drone and satellite imagery
-    source: Field campaigns / deadtree.earth initiative
-  - name: Satellite time series — multispectral
-    source: ESA Copernicus / USGS (open access)
-  outputs:
-  - name: Dead tree maps
-  - name: Satellite-derived tree functional traits
-  hire:
-    name: TBD
-    start: TBD
-  area_of_application: Ecology, land use change
-  topic: Tree traits, dead trees
-  methods: Remote sensing data analysis, modelling
-  cluster: forest_ecology
-- id: orth
-  layer: 1
-  pi: Prof. Dr. René Orth
-  pi_collaborators:
-  - Prof. Dr. Teja Kattenborn
-  - Dr. Pia Müller
-  model_name: Forest Drought Response Functions
-  title_short: Updating modelled forest response to atmospheric and soil dryness
-  model_software: QUINCY
-  objectives:
-  - 'Obj. 1 (WP1): Derive functional relationships of vegetation response to VPD and soil moisture at grid-scale using observation-based
-    datasets and plant trait maps (→ kattenborn)'
-  - 'Obj. 2 (WP1–WP2): Improve QUINCY by incorporating observation-derived vegetation–dryness relationships modulated by spatially
-    varying plant traits'
-  - 'Obj. 3 (WP3): Test and stress-test QUINCY using mean and extreme future climate trajectories from C2 (→ jung_schindler)'
-  short_description:
-  - Quantifies how forest function declines as water availability decreases, using global satellite observations, eddy covariance
-    flux towers, and the TRY plant trait database
-  - Derives species-specific response functions relating photosynthesis and transpiration to soil water content and vapour
-    pressure deficit
-  - Embeds these response functions into iLAND to constrain its drought mortality representation
-  type: Machine learning / Data synthesis / Observational
-  modelling_approach: Machine learning / Data synthesis
-  language:
-  - Python
-  - R
-  status: operational
-  scale: Global training data applied regionally in FuFo domain
-  inputs:
-  - name: Global plant trait maps
-    source: Open databases
-  - name: Satellite vegetation datasets — soil moisture, vapour pressure deficit
-  outputs:
-  - name: Species-specific drought response functions (vegetation function vs. soil moisture / VPD)
-  hire:
-    name: TBD
-    start: TBD
-  area_of_application: Climate impact research
-  topic: Drought modelling
-  methods: Modelling
-  cluster: climate_hydrology
-- id: iland
-  layer: 2
-  pi: Prof. Dr. Thomas Seifert
-  pi_collaborators:
-  - Dr. Axel Albrecht
-  - Prof. Dr. Marc Hanewinkel
-  - Prof. Dr. Markus Weiler
-  - Jun.-Prof. Dr. Ana Stritih
-  model_name: iLAND — Individual-based Forest Landscape and Disturbance Model
-  title_short: Individual-tree forest landscape growth and disturbance modelling
-  model_software: iLAND
-  objectives:
-  - Provide model framework for scenario simulations on forest development under different disturbance regimes and environmental
-    stress for A&TPs
-  - Improve light modelling for mountain terrain (Black Forest aspect and slope)
-  - Implement updated drought mortality module (WEHAM model for BW/Germany)
-  - Bidirectional coupling with hydrological model for water-limited growth (→ roger)
-  short_description:
-  - Simulates growth, mortality, regeneration, and disturbance for every individual tree at 100 m × 100 m resolution, from
-    plot scale to ~10,000 ha catchments
-  - 'Represents ecophysiological processes explicitly: carbon allocation, light competition, drought stress, wind, bark beetle,
-    and fire'
-  - Handles silvicultural management through the Agent-Based Engine (ABE) module, linking directly to Stritih's participatory
-    scenario work
-  - Bidirectionally coupled with RoGeR
-  type: Process-based / Individual-based forest landscape model
-  modelling_approach: Process-based / Individual-based model
-  language:
-  - C++
-  - R
-  - JavaScript (iLAND interface)
-  status: operational
-  scale: Individual tree to ~10 000 ha; 100 m x 100 m resolution
-  inputs:
-  - name: Topography, soil data, climate data (temperature, precipitation, etc.)
-    source: Weiler (GIS), Jung/Schindler, Christen
-  - name: Spatial data on trees or inventory data (ULS, 3D trees, digital twins)
-    source: Seifert
-  - name: Management scenarios
-    source: Stritih
-  outputs:
-  - name: 'Individual tree to small catchment (10 000 ha): biomass, structure, species composition, carbon, harvested volume'
-  - name: Ecosystem service indicators
-  hire:
-    name: TBD
-    start: TBD
-  notes: 'Bidirectionally coupled with RoGeR. iLAND -> RoGeR: canopy, LAI, root uptake. RoGeR -> iLAND: soil water content
-    (SWC), lateral flow. ABE module = direct interface to Stritih participatory ABM.'
-  area_of_application: Forest sciences, forestry
-  topic: Forest growth and management
-  methods: Modelling
-  cluster: forest_ecology
-- id: roger
-  layer: 2
-  pi: Prof. Dr. Markus Weiler
-  model_name: RoGeR — Runoff Generation Research Model (modular toolkit)
-  title_short: Water redistribution mediating local transpiration and drought vulnerability
-  model_software: 'RoGeR (suite: RoGeR_WB, RoGeR_WB_Dyn)'
-  objectives:
-  - Model soil water redistribution across topographic contexts (plateau, hillslope, riparian/valley) to explain tree-to-tree
-    drought differences
-  - Couple with MODFLOW for subsurface water dynamics and capillary rise (→ stahl)
-  - Bidirectional coupling with iLAND for forest–water interactions (→ iland)
-  short_description:
-  - Models water redistribution at the surface and subsurface across plateau, hillslope, and riparian topographic settings
-  - All parameters are physically measurable — no calibration required; operates from 1 m to several thousand km²
-  - Being extended with MODFLOW groundwater coupling (Stahl) within FuFo
-  - Bidirectionally coupled with iLAND
-  type: Process-based hydrological model
-  modelling_approach: Process-based hydrological model (no parameter calibration)
-  language:
-  - Python
-  - Fortran
-  status: operational
-  scale: 1 m to several 1000 km²; timestep 1 min to 1 day
-  inputs:
-  - name: Local climate scenarios and meteorological forcing
-    source: Jung/Schindler (HyClimScenarios) / Stahl
-  - name: Soil properties, geology
-    source: Weiler (GIS)
-  - name: Tree species, age, rooting depth
-    source: Seifert / Weiler (GIS)
-  outputs:
-  - name: Soil water availability in root zone across plateau, hillslope, and riparian settings
-  hire:
-    name: TBD
-    start: TBD
-  notes: 'Bidirectionally coupled with iLAND: iLAND → RoGeR (canopy, LAI, root uptake); RoGeR → iLAND (soil water content,
-    lateral flow). Key feature: no parameter calibration — all parameters measurable. Modular: RoGeR, RoGeR_WB, RoGeR_WB_Urban,
-    RoGeR_dyn, RoGeR_WB_Dyn.'
-  area_of_application: Forestry, hydrology, ecosystem services
-  topic: Hydrology, general hydro-modelling
-  methods: GIS analysis, hydrological modelling
-  cluster: forest_ecology
-- id: stritih
-  layer: 3
-  pi: Jun.-Prof. Dr. Ana Stritih
-  model_name: Participatory Modelling — iLAND + ABE
-  title_short: Participatory forest dynamics and management scenario co-design
-  model_software: iLAND + ABE (Agent-Based management Extension)
-  objectives:
-  - 'Goal 1: Integrate diverse actors'' perspectives on forest management objectives into a coupled forest dynamics–agent-based
-    model (→ iland)'
-  - 'Goal 2: Enable co-learning among scientists and practitioners through an iterative Observe–Plan–Act cycle'
-  - 'Goal 3: Develop iterative, transdisciplinary process for evaluating A&TPs through modelling (→ brown, → pauliuk)'
-  - 'Goal 4: Evaluate model credibility and legitimacy — does participation increase perceived usefulness of modelling results?'
-  short_description:
-  - Brings forest managers, ecologists, and other stakeholders together to co-design realistic management scenarios for future
-    forests
-  - Feeds scenarios into iLAND's Agent-Based Engine (ABE) to simulate how different management choices play out over time
-  - Scenario outputs travel downstream to Brown's CRAFTY-EU and Pauliuk's wood cascade analysis — making Stritih a central
-    connector in the modelling chain
-  - Evaluates credibility and legitimacy of scenarios alongside the modelling results
-  type: Participatory modelling / Agent-based modelling / Spatial analysis
-  modelling_approach: Participatory modelling / Agent-based model
-  language:
-  - R
-  - Python
-  - JavaScript (iLAND ABE)
-  status: in_development
-  scale: 'Landscape scale — potential areas: Schwarzwald, Oberrhein (TBD with SES-CaseLab)'
-  inputs:
-  - name: Daily climate data (temperature, precipitation, vapour pressure deficit, radiation)
-    source: Jung/Schindler, Christen
-  - name: Spatial data (soil, elevation)
-    source: Weiler (GIS)
-  - name: Forest structure and vegetation data
-    source: Seifert
-  - name: Stakeholder input from local forest managers
-    source: SES-CaseLab
-  outputs:
-  - name: Co-designed management scenarios — silvicultural strategies and management intensity choices
-    consumers:
-    - iLAND (ABE module)
-    - Brown (CRAFTY-EU)
-    - Pauliuk (Wood Cascade)
-  - name: Credibility and legitimacy assessments of management scenarios
-  - name: Landscape-scale ecosystem service outcomes under different management strategies
-  hire:
-    name: Christina Dollinger (PostDoc, Margarete-von-Wrangell funding, currently TUM)
-    start: '2026-05-01'
-  notes: 'Participatory process: Agents (forest managers) Observe → Plan → Act cycle. Scenario outputs feed iLAND (ABE module),
-    Brown (CRAFTY-EU), and Pauliuk (Wood Cascade). Scenario assumptions derive from stakeholder co-creation grounded in SSP/NFF
-    frameworks.'
-  area_of_application: Forest sciences, forestry
-  topic: Forest growth and management
-  methods: Modelling
-  cluster: forest_ecology
-- id: hanewinkel
-  layer: 3
-  pi: Prof. Dr. Marc Hanewinkel
-  pi_collaborators:
-  - Prof. Dr. Stefan Pauliuk
-  model_name: Forest Economics and Risk Model (GFPM-SW)
-  title_short: Integrative economic modelling for Future Forests
-  model_software: GFPM / GAMS (partial equilibrium model)
-  objectives:
-  - 'Obj. 1: Develop economic modelling and evaluation framework for ecosystem services under risk and uncertainty for A&TPs'
-  - 'Obj. 2: Apply framework to process-based growth model output using C2 scenarios for robust management strategies (→ iland,
-    → jung_schindler)'
-  - 'Obj. 3: Adapt GFPM for SW Germany to model market dynamics of ES beyond timber (→ pauliuk, → schanz)'
-  - 'Obj. 4: Develop preliminary A&TPs for SW Germany forests as input to C4'
-  short_description:
-  - Develops an economic modelling and evaluation framework for ecosystem services under risk and uncertainty
-  - Adapts the Global Forest Products Model (GFPM) for Southwest Germany as a partial equilibrium model implemented in GAMS
-  - Takes ecosystem service outputs from iLAND and RoGeR and models their flow through demand, supply, industry, and networks
-    of markets
-  - Uses Value at Risk and Conditional Value at Risk metrics to produce optimised robust management strategies
-  - Contributes preliminary A&TPs for forests in SW Germany as economic input to C4
-  type: Partial equilibrium model / Economic optimisation
-  modelling_approach: Partial equilibrium / Economic optimisation
-  language:
-  - R
-  - Python
-  - GAMS
-  status: planned
-  scale: Larger regions SW Germany to national scale
-  inputs:
-  - name: Ecosystem service outputs from process-based forest growth simulations
-    source: iLAND, RoGeR
-  - name: Forest vulnerability and mortality risk maps at landscape scale
-    source: A3 — Kattenborn, Albrecht (remote sensing and mortality modelling)
-  - name: Socio-economic scenarios — prices, costs, technology development pathways
-    source: C2 scenarios
-  outputs:
-  - name: Optimised robust management strategies — demand, supply, industry, network of markets
-  - name: Economic boundaries for Adaptation and Transformation Pathways
-  hire:
-    name: TBD (deadline extended)
-    start: TBD
-  notes: 'Hiring pending — deadline extended. Model: GFPM in GAMS. Risk metrics: VaR/CVaR.'
-  area_of_application: Forestry economics
-  topic: Economic modelling
-  methods: Modelling
-  cluster: socio_economic
-- id: pauliuk
-  layer: 3
-  pi: Prof. Dr. Stefan Pauliuk
-  pi_collaborators:
-  - Dr. Simon Schulte
-  - Prof. Dr. Heiner Schanz
-  - Jun.-Prof. Dr. Ana Stritih
-  - Prof. Dr. Marc Hanewinkel
-  - Prof. Dr. Maja Schlüter
-  model_name: Wood Cascade and Carbon Accounting (A&TPs)
-  title_short: A&TPs for wood use and cascading of wood products
-  model_software: RECC (stock-flow consistent process model)
-  objectives:
-  - 'RQ 1: Translate B decision-making principles into agent descriptions and modelling principles for wood industry A&TPs'
-  - 'RQ 2: Quantify circular economy potential and climate benefit of wood use and cascading in the study region (→ iland,
-    → hanewinkel)'
-  - 'RQ 3: Assess robustness of wood processing industries under disruptive events and technologies'
-  - 'RQ 4: Develop pathways to novel SES-informed regime of wood processing and use (→ brown, → schanz)'
-  short_description:
-  - Develops a modelling and stakeholder engagement framework for identifying and evaluating A&TPs for wood use and cascading
-  - Defines A&TPs as sequences of decisions by agents in the wood use system that meet given objectives and respect given
-    principles of responsibility and legitimacy
-  - 'Three steps: mapping the option space via scenarios; combining processing data and stakeholder input to identify pathways;
-    assessing achievability under uncertainty'
-  - Co-creation with RA B and the SES-CaseLab required for steps 2 and 3
-  type: Material flow analysis (MFA) / Life cycle assessment (LCA) / Socio-technical systems modelling
-  modelling_approach: Material flow analysis / Life cycle assessment
-  language:
-  - Python
-  status: in_development
-  scale: Stand-level to entire wood supply potential; 100 to 200 year horizon
-  inputs:
-  - name: 'Wood cascade data: stocks, flows, carbon, monetary values'
-    source: iLAND / Hanewinkel
-  - name: Stakeholder input on development goals
-    source: SES-CaseLab / RA B
-  outputs:
-  - name: 'Wood cascade scenarios: stocks, flows, carbon balance, monetary evaluation'
-  - name: Adaptation and Transformation Pathways for wood use
-  hire:
-    name: Dr. Simon Schulte
-    start: TBD
-  notes: Co-creation process needed — input from RA B and SES-CaseLab required. A&TP = sequence of decisions by agents plus
-    resulting trajectory of system variables.
-  area_of_application: Socioeconomics
-  topic: Wood cascade and carbon
-  methods: Modelling
-  cluster: socio_economic
-- id: schanz
-  layer: 3
-  pi: Prof. Dr. Heiner Schanz
-  model_name: FESMarkets — Forest Ecosystem Service Markets
-  title_short: Structural modelling of forest ecosystem service markets
-  model_software: NoMFES (Network of Markets for Forest Ecosystem Services)
-  objectives:
-  - 'Step 1: Structural modelling of all forest ES markets — economic and political — expanded from existing NoMWood (177
-    nodes, 1582 edges)'
-  - 'Step 2: Identify system-relevant markets using network metrics and edge gravity'
-  - 'Step 3: Model governance dynamics of key markets as basis for system dynamics model'
-  short_description:
-  - Analyses the structural architecture of Forest Ecosystem Service networks covering water, recreation, protection, and
-    timber
-  - Characterises how supply and demand occurs through real markets (commodities, contracts) and political markets (subsidies)
-    linked across complex value chains
-  - System dynamics model captures stocks and flows at macro level; Causal Loop Diagrams represent actor perspectives and
-    governance interventions at micro level
-  type: System dynamics / Network of Markets (NoM) / Causal Loop Diagrams (CLD)
-  modelling_approach: System dynamics / Network of Markets
-  language:
-  - Python
-  - Vensim
-  status: planned
-  scale: Forestry industries — Germany and comparative European contexts
-  inputs:
-  - name: 'Forest ecosystem service indicators: timber, water, recreation, protection'
-    source: iLAND, RoGeR
-  - name: 'Market data: prices, volumes, subsidies'
-    source: Eurostat / national statistics
-  outputs:
-  - name: System dynamics model — stocks and flows as function of forest condition/quality
-  - name: Causal Loop Diagrams for relevant markets and governance interventions
-  hire:
-    name: Steffi Peuckert (PhD)
-    start: '2026-04-01'
-  notes: Strong synergy with Yannek (group affiliation TBC) on system dynamics — collaboration planned once PhD begins.
-  area_of_application: Forest bioeconomy
-  topic: Forest Markets Modelling
-  methods: Modelling
-  cluster: socio_economic
-- id: brown
-  layer: 3
-  pi: Dr. Calum Brown
-  pi_collaborators:
-  - Jun.-Prof. Dr. Ana Stritih
-  - Prof. Dr. Maja Schlüter
-  - Prof. Dr. Marc Hanewinkel
-  - Prof. Dr. Stefan Pauliuk
-  model_name: CRAFTY-EU — European Land Use Agent-Based Model
-  title_short: Scaling novel forest ecosystems in future European land systems
-  model_software: CRAFTY-EU (within LandSyMM)
-  objectives:
-  - 'Obj. 1: Test opportunities and risks for novel forest systems providing multiple benefits under future change'
-  - 'Obj. 2: Explore potential for desired forest systems to scale up within Europe, including competition with other land
-    uses'
-  - 'Obj. 3: Contribute to scenarios and pathways incorporating varying policies, management measures, and climatic and socio-economic
-    scenarios (→ jung_schindler, → stritih, → hanewinkel)'
-  short_description:
-  - Agent-based model operating at EU27+3 scale and 1 km resolution, embedded within the LandSyMM global framework
-  - Couples land use decision-making with macroeconomics, trade, ecosystem processes, biodiversity, and the climate system
-  - Provides continental-scale context for C3 models, upscaling local management patterns and ecosystem service outcomes to
-    global scenarios (SSPs, RCPs, NFF)
-  - 'Key open challenge: bridging the scale difference between CRAFTY-EU (1 km) and iLAND (100 m)'
-  type: Agent-based model (ABM) / Land use model
-  modelling_approach: Agent-based model / Land use model
-  language:
-  - Python
-  - Java
-  status: planned
-  scale: EU27+3, 1 km resolution (global context via LandSyMM)
-  inputs:
-  - name: 'Findings from other cluster models: forest, ecological, economic, agent-based'
-    source: iLAND, Hanewinkel, Pauliuk, Schanz, Stritih
-  - name: Qualitative and quantitative baseline management and decision-making data
-    source: RA B (B1-B3)
-  - name: SSP/RCP/NFF scenario parameters
-    source: C2 / IPCC / IPBES
-  outputs:
-  - name: Land-use scenarios and management activities at European scale (EU27+3, 1 km resolution)
-  - name: Transformation and Adaptation Pathways under behavioural, socioeconomic, political and climatic change
-  hire:
-    name: TBD — options available in CRAFTY modelling team
-    start: end 2026 (pending)
-  notes: 'Scale mismatch open challenge: CRAFTY-EU 1 km vs iLAND 100 m. Collaborative role linking RA A, B, C1, C3 models,
-    and C4 governance.'
-  area_of_application: Land use, land use change
-  topic: Landscape analysis and modelling
-  methods: Modelling
-  cluster: socio_economic
 - id: c1_framework
   layer: 0
-  pi: Prof. Dr. Stefan Pauliuk
+  pi: Prof. Dr. Tanja Mölders · Prof. Dr. Cathrin Zengerling · Prof. Dr. Maja Schlüter
   pi_collaborators:
   - Prof. Dr. Tanja Mölders
   - Prof. Dr. Maja Schlüter
@@ -677,6 +43,7 @@ groups:
   area_of_application: Interdisciplinary SES theory
   topic: SES Conceptual Framework
   cluster: conceptual
+  hiring_status: Esther Sophia Rust (PhD)
 - id: c2_scenarios
   layer: 0
   pi: Prof. Dr. Kerstin Stahl / Prof. Dr. Dirk Schindler / Prof. Dr. Andreas Christen / Prof. Dr. René Orth
@@ -735,107 +102,299 @@ groups:
   area_of_application: Climate and socio-economic scenarios
   topic: Transdisciplinary Regionalised Scenarios
   cluster: conceptual
-- id: yannek
+  hiring_status: ''
+- id: jung_schindler
   layer: 1
-  pi: Jun.-Prof. Dr. Yannek Käber
-  pi_collaborators:
-  - Prof. Dr. Carsten Dormann
-  - Prof. Dr. Michael Pregernig
-  model_name: Forest Model Evaluation & Improvement (B1)
-  title_short: Forest model evaluation using Level-of-Evidence scheme
-  model_software: R / Python (evidence synthesis; meta-modelling)
+  pi: Prof. Dr. Kerstin Stahl · Prof. Dr. Dirk Schindler · Prof. Dr. Andreas Christen · Prof. Dr. René Orth
+  pi_applicants:
+  - Prof. Dr. Kerstin Stahl
+  - Prof. Dr. Dirk Schindler
+  - Prof. Dr. Andreas Christen
+  - Prof. Dr. René Orth
+  model_name: HyClimScenarios
+  title_short: High-resolution climate scenario downscaling for the FuFo domain
+  model_software: Statistical downscaling with tree-ensemble methods; ERA5-Land / CORDEX / CMIP6
   objectives:
-  - Evaluate C3 forest growth models against current scientific evidence using structured Level-of-Evidence scheme (→ iland,
-    → roger, → landclim)
-  - Catalogue which processes the available models represent and review literature to assess adequacy of representation
-  - Improve open-source model code where evidence gaps are found (→ iland, → roger)
+  - Prepare regionalized reanalysis and future climate scenario data to support all cluster modelling activities
+  - Develop novel approaches to generate specific scenarios for forest-relevant aspects of the water balance, including extreme
+    events
+  - Produce 100 m × 100 m meteorological forcing fields (T, precip, VPD, wind, radiation, derived indices) under historical
+    conditions and CMIP6 warming levels (→ iland, → roger, → orth, → brown, → hanewinkel)
   short_description:
-  - Evaluates C3 forest growth models against the current state of scientific evidence using a structured Level-of-Evidence
-    scheme from evidence-based medicine
-  - Catalogues which processes the available models represent — drought response, mortality, regeneration, CO₂ and nitrogen
-    limitations — and reviews literature to assess adequacy
-  - Improves open-source model code where evidence gaps are found; iLAND and QUINCY are currently the most likely candidates
-  - Decision context determined with RA B; evidence on biological processes from RA A
-  type: Model evaluation / Evidence synthesis / Open-source model improvement
-  modelling_approach: Evidence-based model evaluation / Meta-modelling
+  - Downscales ERA5-Land reanalysis and CMIP6 projections from ~10–120 km to 100 m × 100 m grid across the study regions
+  - Uses tree-ensemble ML for bias correction and statistical downscaling, covering historical conditions and future climate
+    under multiple CMIP6 warming levels
+  - Develops novel approaches for forest-relevant water balance aspects, including extreme events (in collaboration with Stahl)
+  type: Statistical downscaling / Climate scenario modelling
+  modelling_approach: Statistical downscaling / Machine learning (tree-ensemble)
+  language:
+  - Python
+  - R
+  status: in_development
+  scale: 100 m x 100 m grid, regional to SW Germany
+  inputs:
+  - name: ERA5-Land gridded reanalysis (0.10° × 0.10°, hourly)
+    source: ECMWF (open access)
+  - name: Global Historical Climatology Network — >2000 measurement sites in Central Europe
+    source: NOAA GHCN (open access)
+  - name: CMIP6 global climate model outputs under various SSP/RCP scenarios
+    source: ESGF (open access)
+  - name: Digital elevation model predictors
+    source: National surveys
+  - name: Land use model predictors
+    source: Copernicus / national surveys
+  outputs:
+  - name: 'Downscaled hourly/daily fields at 100 m × 100 m: air temperature, precipitation, dew point, wind speed, solar radiation,
+      vapour pressure deficit, derived climate indices'
+  - name: Climate projections under CMIP6 global warming levels (1.5°C, 2°C, 3°C+)
+  method: Tree-ensemble methods for residual-based bias correction of hourly reanalysis and daily climate model products.
+    Statistical downscaling from ~10-120 km to 100 m x 100 m.
+  hire:
+    name: TBD
+    start: TBD
+  area_of_application: Meteorology, climatology
+  topic: Climate analysis and modelling
+  methods: Modelling
+  cluster: climate_hydrology
+  hiring_status: Dr. Christopher Jung (PostDoc)
+- id: stahl
+  layer: 1
+  pi: Prof. Dr. Kerstin Stahl
+  pi_collaborators:
+  - Prof. Dr. Dirk Schindler
+  - Prof. Dr. Markus Weiler
+  model_name: Extreme Event Storylines & Coupled Groundwater Hydrology
+  title_short: Extreme event storylines and coupled surface-groundwater hydrology
+  model_software: Extreme event storyline analysis
+  objectives:
+  - Develop extreme event storylines and stress-test scenarios representing specific high-impact drought sequences under future
+    climate conditions (→ iland, → roger, → hanewinkel)
+  - Extend RoGeR with MODFLOW groundwater coupling to assess how groundwater disconnection from forest root systems intensifies
+    drought stress (→ roger)
+  short_description:
+  - Investigates legacy effects of forest changes on catchment water balance and hydrological extremes such as floods and
+    droughts
+  - Extends RoGeR with groundwater model coupling for subsurface water dynamics
+  - Co-leads C2 with Hanewinkel
+  modelling_approach: Extreme event storylines / Coupled surface-groundwater modelling
+  type: Extreme value analysis / Event storyline modelling / Coupled hydrology
   language:
   - R
   - Python
   status: in_development
-  scale: Model evaluation applies across all C3 model scales
+  scale: Regional — FuFo domain to state-wide (SW Germany)
   inputs:
-  - name: Process documentation and code from C3 forest models
-    source: iLAND, RoGeR, LandClim
-  - name: Scientific literature on forest processes (drought response, mortality, carbon allocation)
-    source: RA A and published literature
-  - name: Decision context information — what processes matter for which management questions
-    source: RA B (B1-B3)
+  - name: Downscaled reanalysis and climate model outputs
+    source: Jung/Schindler (HyClimScenarios)
+  - name: Extreme value statistics
   outputs:
-  - name: Evaluation reports — which models represent which processes adequately, and where gaps exist
-  - name: Improved process representations in open-source C3 models
-    consumers:
-    - iLAND
-    - RoGeR
-    - LandClim
+  - name: Extreme event storylines and stress-test scenarios
+  - name: Coupled surface-groundwater model outputs (RoGeR–MODFLOW coupling)
   hire:
     name: TBD
     start: TBD
-  area_of_application: Forest sciences, model evaluation
-  topic: Forest model evaluation and improvement
-  methods: Evidence synthesis, model review
-  cluster: forest_ecology
-- id: landclim
-  layer: 2
-  pi: Dr. Axel Albrecht
+  area_of_application: Hydro-climatic research
+  topic: Hydro-modelling, extreme events
+  methods: Data analysis, modelling
+  cluster: climate_hydrology
+  hiring_status: Johanna von Drachenfels (PhD) · 01.05.2026
+- id: christen
+  layer: 1
+  pi: Prof. Dr. Andreas Christen
   pi_collaborators:
-  - Jun.-Prof. Dr. Michaela Haug
-  model_name: LandClim — Landscape-Scale Dynamic Vegetation Model
-  title_short: Phyto-demographic DVM with normative socio-empirical inputs
-  model_software: LandClim (primary); iLand (potential secondary)
+  - Prof. Dr. Markus Weiler
+  - Dr. Florian Schnabel
+  project: Theme A1 WP1 — Adaptive Sensor Network
+  model_name: Adaptive Sensor Network & In-canopy Microclimate Model (A1)
+  title_short: Adaptive sensor network and ML-based in-canopy microclimate reconstruction
+  model_software: Adaptive sensor network + ML tree-ensemble (Python)
   objectives:
-  - 'Steps 1–2: Transient climate simulations (<250 yrs) at 250 m resolution across Baden-Württemberg, with and without current
-    in-situ start vegetation (→ jung_schindler)'
-  - 'Step 3: Incorporate normative tree species restrictions from B3 contested tree species interviews'
-  - 'Steps 4–5: Expand model applicability; analyse dominant species, diversity, and persistence under varying normative inputs'
-  - 'Step 7: Identify and implement coupling potentials with other C3 models (→ iland, → hanewinkel)'
+  - 'Goal 1: Develop quality control and assess station uniqueness to inform adaptive network reconfiguration after year one
+    of full deployment'
+  - 'Goal 2: Apply ML to reconstruct historical in-canopy microclimate conditions over 30 years (hindcasting) and fill data
+    gaps'
+  - 'Goal 3: Create transferable regional model predicting below-canopy temperatures and humidity at any forested site in
+    the FuFo domain (→ jung_schindler)'
   short_description:
-  - Simulates how forest species composition, tree density, and biomass change over time across large landscape areas (thousands
-    of hectares) under different climate and management conditions
-  - Coarser spatial grain than iLAND but covers larger areas and longer time horizons — suited to regional projections of
-    which tree species will thrive under future conditions
-  - Can be run with different normative assumptions — comparing scenarios that include or exclude non-native species such
-    as Douglas fir
-  - Normative inputs developed with social anthropologist Michaela Haug and the B3 contested tree species group
-  type: Dynamic vegetation model (DVM) / Landscape-scale forest simulation
-  modelling_approach: Process-based dynamic vegetation model
+  - Adaptive sensor network (200 below-canopy stations) — self-optimising after year one
+  - ML hindcasting of in-canopy microclimates over 30 years
+  - Transferable regional model for below-canopy temperature at any FuFo site
+  type: Machine learning / Spatial-temporal downscaling
+  modelling_approach: Machine learning / Spatial-temporal downscaling
   language:
-  - C++
-  - R
+  - Python
   status: in_development
-  scale: Landscape to regional scale — thousands of hectares; multi-decadal to centennial time horizon
+  scale: 100 m x 100 m grid; 300 sensor plots across 100-150 forest stands
   inputs:
-  - name: Climate projections — temperature, precipitation, extreme events
-    source: C2 / Jung/Schindler (HyClimScenarios)
-  - name: Soil and terrain data
-    source: Weiler (GIS)
-  - name: Normative management assumptions — which species are considered acceptable
-    source: B3 (Haug, contested tree species) / stakeholder co-creation
+  - name: Sensor network data — in-canopy air temperature and humidity from ~300 field plots
+    source: FuFo adaptive sensor network (A1)
+  - name: Geospatial predictors and downscaled climate data
+    source: Jung/Schindler (HyClimScenarios)
   outputs:
-  - name: Forest composition projections — tree species, density, and biomass under different management and climate scenarios
-    consumers:
-    - Hanewinkel (economic valuation of future forest conditions)
-    - Brown (CRAFTY-EU, landscape-scale context for land use modelling)
-  - name: Species-specific biomass potential maps for the FuFo study region
+  - name: In-canopy climate statistics and frequency of climate extremes — 30-year hindcast
+  - name: Transferable regional model predicting below-canopy temperatures and humidity across the FuFo domain
+  hire:
+    name: Tabea Wörner (PhD)
+    start: '2026-04-01'
+  area_of_application: Meteorology, climatology
+  topic: Sensor network, forest measurements
+  methods: In-situ measurements, modelling
+  cluster: climate_hydrology
+  hiring_status: Tabea Wörner (PhD) · 01.04.2026
+- id: canopy_micro
+  topic: Canopy Micro Environment
+  pi: Prof. Dr. Markus Weiler · Prof. Dr. Andreas Christen · Prof. Dr. Thomas Seifert
+  pi_applicants:
+  - Prof. Dr. Heike Puhlmann (FVA)
+  model_name: Terrain and Forest Canopy-induced Hydro-meteorological Processes
+  title_short: Terrain and forest canopy-induced hydro-meteorological processes and micro-environmental patterns
+  model_software: ML clustering and spatial interpolation (Python); LiDAR processing
+  methods: In-situ measurements, LiDAR, remote sensing, ML
+  cluster: climate_hydrology
+  layer: 1
+  hiring_status: PostDoc (vacant) · Technician (vacant)
+  short_description:
+  - Establishes comprehensive measurement network for hydroclimatic variables across 300 plots in 100–150 stands in the study
+    regions
+  - Derives terrain and forest structural indices to inform spatial interpolation of meteorological variables
+  - Applies ML and clustering to classify micro-environments and predict below-canopy hydro-climatic conditions
+  - Provides foundation for sensor network placement across study regions (Rhine valley and Black Forest)
+  objectives:
+  - Derive terrain and forest structural indices for spatial interpolation of meteorological variables and clustering of micro-environments
+  - Combine state-wide, terrestrial and drone-based LiDAR datasets to determine tree and forest structure with high accuracy
+  - Define locations for ~100–150 forest stands representing specific tree species compositions and management types
+  - Develop ML approaches for spatio-temporally consistent datasets of multiple hydro-climatic variables to infer forest climate
+    modulation
+  inputs:
+  - name: State-wide LiDAR and remote sensing datasets
+    source: National surveys / Landesamt
+  - name: ERA5-Land reanalysis data
+    source: ECMWF (open access)
+  - name: Terrain and soil maps
+    source: National databases
+  outputs:
+  - name: Initial map of micro-climates and micro-environments across Rhine valley and Black Forest at 5 m resolution
+  - name: Sensor network placement plan — 300 plots in 100–150 stands
+  - name: ML-derived spatio-temporally consistent hydroclimatic datasets below forest canopies
+- id: weiler_gis
+  layer: 1
+  pi: Prof. Dr. Markus Weiler
+  model_name: Spatial Data Infrastructure & Ecohydrological Framework (GIS)
+  title_short: Spatial data infrastructure and ecohydrological framework
+  model_software: QGIS / Python / R (spatial data processing)
+  objectives:
+  - 'Compile and harmonise static spatial datasets at 100 m resolution: soil properties (BÜK200), forest structure (BWI, LiDAR),
+    catchment delineations'
+  - Supply harmonised spatial data to all C3 models requiring terrain, soil, and forest structure inputs (→ iland, → roger,
+    → stritih, → landclim)
+  short_description:
+  - Compiles and harmonises the static spatial datasets underpinning all C3 models at 100 m resolution
+  - Covers soil properties (BÜK200), forest structure (BWI, LiDAR terrain models), and catchment delineations for hydrological
+    routing
+  type: GIS / Spatial data integration / Ecohydrology
+  modelling_approach: GIS / Spatial data integration
+  language:
+  - Python
+  - R
+  - QGIS
+  status: operational
+  scale: 'FuFo domain, 100 m resolution; ecohydrological work: stand to watershed (1m–1000s km²)'
+  inputs:
+  - name: 'GIS data: forest structure, soil, hydrology, tree species'
+    source: National surveys and databases
+  outputs:
+  - name: 'Harmonised spatial datasets at 100 m resolution: forest structure, soil properties, hydrology network, tree species'
   hire:
     name: TBD
     start: TBD
-  notes: Represents a distinct modelling philosophy from iLAND — phyto-demographic and landscape-scale rather than individual-tree.
-    Haug's social anthropology expertise connects LandClim directly to normative and value-driven dimensions of forest futures.
-    Connected to B3 contested tree species work.
-  area_of_application: Forest sciences, landscape ecology
-  topic: Dynamic vegetation modelling
-  methods: Modelling
+  area_of_application: Forestry, hydrology, ecosystem services
+  topic: Hydrology, general hydro-modelling
+  methods: GIS analysis, hydrological modelling
+  cluster: climate_hydrology
+- id: kattenborn
+  layer: 1
+  pi: Prof. Dr. Teja Kattenborn
+  pi_collaborators:
+  - Prof. Dr. Catalina Munteanu
+  - Prof. Dr. Carsten Dormann
+  - Dr. Florian Schnabel
+  model_name: Remote Sensing Mortality and Plant Traits
+  title_short: Remote sensing of tree mortality and plant functional traits
+  model_software: CNN-based deep learning (Python, PyTorch); satellite time-series analysis
+  objectives:
+  - Map tree mortality at landscape scale using convolutional neural networks on drone and satellite imagery (→ deadtree.earth
+    initiative)
+  - Derive spatially continuous plant functional trait maps from satellite time series for iLAND calibration and validation
+    (→ iland, → orth)
+  short_description:
+  - Maps tree mortality at landscape scale using convolutional neural networks on drone and satellite imagery, contributing
+    to the deadtree.earth initiative
+  - Derives plant functional traits — leaf area index, chlorophyll, crown area — from satellite time series
+  - Provides spatially continuous trait observations for iLAND calibration and validation
+  type: Deep learning / Remote sensing
+  modelling_approach: Deep learning / Remote sensing
+  language:
+  - Python
+  status: operational
+  scale: 'Drone: stand scale; Satellite: landscape to regional'
+  inputs:
+  - name: Drone and satellite imagery
+    source: Field campaigns / deadtree.earth initiative
+  - name: Satellite time series — multispectral
+    source: ESA Copernicus / USGS (open access)
+  outputs:
+  - name: Dead tree maps
+  - name: Satellite-derived tree functional traits
+  hire:
+    name: TBD
+    start: TBD
+  area_of_application: Ecology, land use change
+  topic: Tree traits, dead trees
+  methods: Remote sensing data analysis, modelling
   cluster: forest_ecology
+  hiring_status: Mattis Pfenning (PhD)
+- id: orth
+  layer: 1
+  pi: Prof. Dr. René Orth
+  pi_collaborators:
+  - Prof. Dr. Teja Kattenborn
+  - Dr. Pia Müller
+  model_name: Forest Drought Response Functions
+  title_short: Updating modelled forest response to atmospheric and soil dryness
+  model_software: QUINCY
+  objectives:
+  - 'Obj. 1 (WP1): Derive functional relationships of vegetation response to VPD and soil moisture at grid-scale using observation-based
+    datasets and plant trait maps (→ kattenborn)'
+  - 'Obj. 2 (WP1–WP2): Improve QUINCY by incorporating observation-derived vegetation–dryness relationships modulated by spatially
+    varying plant traits'
+  - 'Obj. 3 (WP3): Test and stress-test QUINCY using mean and extreme future climate trajectories from C2 (→ jung_schindler)'
+  short_description:
+  - Quantifies how forest function declines as water availability decreases, using global satellite observations, eddy covariance
+    flux towers, and the TRY plant trait database
+  - Derives species-specific response functions relating photosynthesis and transpiration to soil water content and vapour
+    pressure deficit
+  - Embeds these response functions into iLAND to constrain its drought mortality representation
+  type: Machine learning / Data synthesis / Observational
+  modelling_approach: Machine learning / Data synthesis
+  language:
+  - Python
+  - R
+  status: operational
+  scale: Global training data applied regionally in FuFo domain
+  inputs:
+  - name: Global plant trait maps
+    source: Open databases
+  - name: Satellite vegetation datasets — soil moisture, vapour pressure deficit
+  outputs:
+  - name: Species-specific drought response functions (vegetation function vs. soil moisture / VPD)
+  hire:
+    name: TBD
+    start: TBD
+  area_of_application: Climate impact research
+  topic: Drought modelling
+  methods: Modelling
+  cluster: climate_hydrology
+  hiring_status: Pia Müller (PhD) · 01.04.2026
 - id: christen_ml
   layer: 1
   pi: Prof. Dr. Andreas Christen
@@ -886,3 +445,338 @@ groups:
   topic: In-canopy microclimate modelling
   methods: Machine learning, process-based modelling
   cluster: climate_hydrology
+- id: iland
+  layer: 2
+  pi: Prof. Dr. Thomas Seifert
+  model_name: iLAND — Individual-based Forest Landscape and Disturbance Model
+  title_short: Individual-tree forest landscape growth and disturbance modelling
+  model_software: iLAND
+  objectives:
+  - Provide model framework for scenario simulations on forest development under different disturbance regimes and environmental
+    stress for A&TPs
+  - Improve light modelling for mountain terrain (Black Forest aspect and slope)
+  - Implement updated drought mortality module (WEHAM model for BW/Germany)
+  - Bidirectional coupling with hydrological model for water-limited growth (→ roger)
+  short_description:
+  - Distance-dependent, individual tree-based forest growth simulator based on ecophysiological processes
+  - 'Scale: individual tree to small catchments (~10 000 ha) at 100 m × 100 m resolution'
+  - Agent-Based Engine (ABE) module for management decisions — direct interface to Stritih participatory modelling
+  - Bidirectionally coupled with RoGeR
+  type: Process-based / Individual-based forest landscape model
+  modelling_approach: Process-based / Individual-based model
+  language:
+  - C++
+  - R
+  - JavaScript (iLAND interface)
+  status: operational
+  scale: Individual tree to ~10 000 ha; 100 m x 100 m resolution
+  inputs:
+  - name: Topography, soil data, climate data (temperature, precipitation, etc.)
+    source: Weiler (GIS), Jung/Schindler, Christen
+  - name: Spatial data on trees or inventory data (ULS, 3D trees, digital twins)
+    source: Seifert
+  - name: Management scenarios
+    source: Stritih
+  outputs:
+  - name: 'Individual tree to small catchment (10 000 ha): biomass, structure, species composition, carbon, harvested volume'
+  - name: Ecosystem service indicators
+  hire:
+    name: TBD
+    start: TBD
+  notes: 'Bidirectionally coupled with RoGeR. iLAND -> RoGeR: canopy, LAI, root uptake. RoGeR -> iLAND: soil water content
+    (SWC), lateral flow. ABE module = direct interface to Stritih participatory ABM.'
+  area_of_application: Forest sciences, forestry
+  topic: Forest Growth Modelling
+  methods: Modelling
+  cluster: forest_ecology
+  hiring_status: PostDoc pending · 01.07.2026 (?)
+- id: roger
+  layer: 2
+  pi: Prof. Dr. Markus Weiler
+  model_name: RoGeR — Runoff Generation Research Model (modular toolkit)
+  title_short: Water redistribution mediating local transpiration and drought vulnerability
+  model_software: 'RoGeR (suite: RoGeR_WB, RoGeR_WB_Dyn)'
+  objectives:
+  - Model soil water redistribution across topographic contexts (plateau, hillslope, riparian/valley) to explain tree-to-tree
+    drought differences
+  - Couple with MODFLOW for subsurface water dynamics and capillary rise (→ stahl)
+  - Bidirectional coupling with iLAND for forest–water interactions (→ iland)
+  short_description:
+  - Models water redistribution at the surface and subsurface across plateau, hillslope, and riparian topographic settings
+  - All parameters are physically measurable — no calibration required; operates from 1 m to several thousand km²
+  - Being extended with groundwater model coupling (Stahl) within FuFo
+  - Bidirectionally coupled with iLAND
+  type: Process-based hydrological model
+  modelling_approach: Process-based hydrological model (no parameter calibration)
+  language:
+  - Python
+  - Fortran
+  status: operational
+  scale: 1 m to several 1000 km²; timestep 1 min to 1 day
+  inputs:
+  - name: Local climate scenarios and meteorological forcing
+    source: Jung/Schindler (HyClimScenarios) / Stahl
+  - name: Soil properties, geology
+    source: Weiler (GIS)
+  - name: Tree species, age, rooting depth
+    source: Seifert / Weiler (GIS)
+  outputs:
+  - name: Soil water availability in root zone across plateau, hillslope, and riparian settings
+  hire:
+    name: TBD
+    start: TBD
+  notes: 'Bidirectionally coupled with iLAND: iLAND → RoGeR (canopy, LAI, root uptake); RoGeR → iLAND (soil water content,
+    lateral flow). Key feature: no parameter calibration — all parameters measurable. Modular: RoGeR, RoGeR_WB, RoGeR_WB_Urban,
+    RoGeR_dyn, RoGeR_WB_Dyn.'
+  area_of_application: Forestry, hydrology, ecosystem services
+  topic: Hydrology, general hydro-modelling
+  methods: GIS analysis, hydrological modelling
+  cluster: forest_ecology
+  hiring_status: Sheikh Muhammad Asad (PhD) · 01.05.2026
+- id: stritih
+  layer: 3
+  pi: Jun.-Prof. Dr. Ana Stritih
+  model_name: Participatory Modelling — iLAND + ABE
+  title_short: Participatory forest dynamics and management scenario co-design
+  model_software: iLAND + ABE (Agent-Based management Extension)
+  objectives:
+  - 'Goal 1: Integrate diverse actors'' perspectives on forest management objectives into a coupled forest dynamics–agent-based
+    model (→ iland)'
+  - 'Goal 2: Enable co-learning among scientists and practitioners through an iterative Observe–Plan–Act cycle'
+  - 'Goal 3: Develop iterative, transdisciplinary process for evaluating A&TPs through modelling (→ brown, → pauliuk)'
+  - 'Goal 4: Evaluate model credibility and legitimacy — does participation increase perceived usefulness of modelling results?'
+  short_description:
+  - Brings forest managers, ecologists, and other stakeholders together to co-design realistic management scenarios for future
+    forests
+  - Feeds scenarios into iLAND's Agent-Based Engine (ABE) to simulate how different management choices play out over time
+  - Evaluates credibility and legitimacy of scenarios alongside the modelling results
+  type: Participatory modelling / Agent-based modelling / Spatial analysis
+  modelling_approach: Participatory modelling / Agent-based model
+  language:
+  - R
+  - Python
+  - JavaScript (iLAND ABE)
+  status: in_development
+  scale: 'Landscape scale — potential areas: Schwarzwald, Oberrhein (TBD with SES-CaseLab)'
+  inputs:
+  - name: Daily climate data (temperature, precipitation, vapour pressure deficit, radiation)
+    source: Jung/Schindler, Christen
+  - name: Spatial data (soil, elevation)
+    source: Weiler (GIS)
+  - name: Forest structure and vegetation data
+    source: Seifert
+  - name: Stakeholder input from local forest managers
+    source: SES-CaseLab
+  outputs:
+  - name: Co-designed management scenarios — silvicultural strategies and management intensity choices
+    consumers:
+    - iLAND (ABE module)
+    - Brown (CRAFTY-EU)
+    - Pauliuk (Wood Cascade)
+  - name: Credibility and legitimacy assessments of management scenarios
+  - name: Landscape-scale ecosystem service outcomes under different management strategies
+  hire:
+    name: Christina Dollinger (PostDoc, Margarete-von-Wrangell funding, currently TUM)
+    start: '2026-05-01'
+  notes: 'Participatory process: Agents (forest managers) Observe → Plan → Act cycle. Scenario outputs feed iLAND (ABE module),
+    Brown (CRAFTY-EU), and Pauliuk (Wood Cascade). Scenario assumptions derive from stakeholder co-creation grounded in SSP/NFF
+    frameworks.'
+  area_of_application: Forest sciences, forestry
+  topic: Forest growth and management
+  methods: Modelling
+  cluster: forest_ecology
+  hiring_status: Christina Dollinger (PI/AI) · 01.05.2026 · PostDoc (vacant)
+- id: hanewinkel
+  layer: 3
+  pi: Prof. Dr. Marc Hanewinkel
+  pi_collaborators:
+  - Prof. Dr. Stefan Pauliuk
+  model_name: Forest Economics and Risk Model (GFPM-SW)
+  title_short: Integrative economic modelling for Future Forests
+  model_software: GFPM / GAMS (partial equilibrium model)
+  objectives:
+  - 'Obj. 1: Develop economic modelling and evaluation framework for ecosystem services under risk and uncertainty for A&TPs'
+  - 'Obj. 2: Apply framework to process-based growth model output using C2 scenarios for robust management strategies (→ iland,
+    → jung_schindler)'
+  - 'Obj. 3: Adapt GFPM for SW Germany to model market dynamics of ES beyond timber (→ pauliuk, → schanz)'
+  - 'Obj. 4: Develop preliminary A&TPs for SW Germany forests as input to C4'
+  short_description:
+  - Develops an economic modelling and evaluation framework for ecosystem services under risk and uncertainty
+  - Adapts the Global Forest Products Model (GFPM) for Southwest Germany as a partial equilibrium model implemented in GAMS
+  - Takes ecosystem service outputs from iLAND and models their flow through demand, supply, industry, and networks of markets
+  - Uses Value at Risk and Conditional Value at Risk metrics to produce optimised robust management strategies
+  - Contributes preliminary A&TPs for forests in SW Germany as economic input to C4
+  type: Partial equilibrium model / Economic optimisation
+  modelling_approach: Partial equilibrium / Economic optimisation
+  language:
+  - R
+  - Python
+  - GAMS
+  status: planned
+  scale: Larger regions SW Germany to national scale
+  inputs:
+  - name: Ecosystem service outputs from process-based forest growth simulations
+    source: iLAND, RoGeR
+  - name: Forest vulnerability and mortality risk maps at landscape scale
+    source: A3 — Kattenborn, Albrecht (remote sensing and mortality modelling)
+  - name: Socio-economic scenarios — prices, costs, technology development pathways
+    source: C2 scenarios
+  outputs:
+  - name: Optimised robust management strategies — demand, supply, industry, network of markets
+  - name: Economic boundaries for Adaptation and Transformation Pathways
+  hire:
+    name: TBD (deadline extended)
+    start: TBD
+  notes: 'Hiring pending — deadline extended. Model: GFPM in GAMS. Risk metrics: VaR/CVaR.'
+  area_of_application: Forestry economics
+  topic: Economic modelling
+  methods: Modelling
+  cluster: socio_economic
+  pi_applicants:
+  - Prof. Dr. Stefan Pauliuk
+  hiring_status: ''
+- id: pauliuk
+  layer: 3
+  pi: Prof. Dr. Stefan Pauliuk
+  pi_collaborators:
+  - Dr. Simon Schulte
+  - Prof. Dr. Heiner Schanz
+  - Jun.-Prof. Dr. Ana Stritih
+  - Prof. Dr. Marc Hanewinkel
+  - Prof. Dr. Maja Schlüter
+  model_name: Wood Cascade and Carbon Accounting (A&TPs)
+  title_short: A&TPs for wood use and cascading of wood products
+  model_software: RECC (stock-flow consistent process model)
+  objectives:
+  - 'RQ 1: Translate B decision-making principles into agent descriptions and modelling principles for wood industry A&TPs'
+  - 'RQ 2: Quantify circular economy potential and climate benefit of wood use and cascading in the study region (→ iland,
+    → hanewinkel)'
+  - 'RQ 3: Assess robustness of wood processing industries under disruptive events and technologies'
+  - 'RQ 4: Develop pathways to novel SES-informed regime of wood processing and use (→ brown, → schanz)'
+  short_description:
+  - Develops a modelling and stakeholder engagement framework for identifying and evaluating A&TPs for wood use and cascading
+  - Defines A&TPs as sequences of decisions by agents in the wood use system that meet given objectives and respect given
+    principles of responsibility and legitimacy
+  - 'Three steps: mapping the option space via scenarios; combining processing data and stakeholder input to identify pathways;
+    assessing achievability under uncertainty'
+  - Co-creation with RA B and the SES-CaseLab required for steps 2 and 3
+  type: Material flow analysis (MFA) / Life cycle assessment (LCA) / Socio-technical systems modelling
+  modelling_approach: Material flow analysis / Life cycle assessment
+  language:
+  - Python
+  status: in_development
+  scale: Stand-level to entire wood supply potential; 100 to 200 year horizon
+  inputs:
+  - name: 'Wood cascade data: stocks, flows, carbon, monetary values'
+    source: iLAND / Hanewinkel
+  - name: Stakeholder input on development goals
+    source: SES-CaseLab / RA B
+  outputs:
+  - name: 'Wood cascade scenarios: stocks, flows, carbon balance, monetary evaluation'
+  - name: Adaptation and Transformation Pathways for wood use
+  hire:
+    name: Dr. Simon Schulte
+    start: TBD
+  notes: Co-creation process needed — input from RA B and SES-CaseLab required. A&TP = sequence of decisions by agents plus
+    resulting trajectory of system variables.
+  area_of_application: Socioeconomics
+  topic: Wood cascade and carbon
+  methods: Modelling
+  cluster: socio_economic
+  hiring_status: Simon Schulte (PostDoc) · 01.06.2026 · Christian Hauenstein (PostDoc) · June–Sept 2026
+- id: schanz
+  layer: 3
+  pi: Prof. Dr. Heiner Schanz
+  model_name: FESMarkets — Forest Ecosystem Service Markets
+  title_short: Structural modelling of forest ecosystem service markets
+  model_software: NoMFES (Network of Markets for Forest Ecosystem Services)
+  objectives:
+  - 'Step 1: Structural modelling of all forest ES markets — economic and political — expanded from existing NoMWood (177
+    nodes, 1582 edges)'
+  - 'Step 2: Identify system-relevant markets using network metrics and edge gravity'
+  - 'Step 3: Model governance dynamics of key markets as basis for system dynamics model'
+  short_description:
+  - Analyses the structural architecture of Forest Ecosystem Service networks covering water, recreation, protection, and
+    timber
+  - Characterises how supply and demand occurs through real markets (commodities, contracts) and political markets (subsidies)
+    linked across complex value chains
+  - System dynamics model captures stocks and flows at macro level; Causal Loop Diagrams represent actor perspectives and
+    governance interventions at micro level
+  type: System dynamics / Network of Markets (NoM) / Causal Loop Diagrams (CLD)
+  modelling_approach: System dynamics / Network of Markets
+  language:
+  - Python
+  - Vensim
+  status: planned
+  scale: Forestry industries — Germany and comparative European contexts
+  inputs:
+  - name: 'Forest ecosystem service indicators: timber, water, recreation, protection'
+    source: iLAND, RoGeR
+  - name: 'Market data: prices, volumes, subsidies'
+    source: Eurostat / national statistics
+  outputs:
+  - name: System dynamics model — stocks and flows as function of forest condition/quality
+  - name: Causal Loop Diagrams for relevant markets and governance interventions
+  hire:
+    name: Steffi Peuckert (PhD)
+    start: '2026-04-01'
+  notes: Strong synergy with Yannek (group affiliation TBC) on system dynamics — collaboration planned once PhD begins.
+  area_of_application: Forest bioeconomy
+  topic: Forest Markets Modelling
+  methods: Modelling
+  cluster: socio_economic
+  hiring_status: Steffi Peuckert (PhD) · 01.04.2026
+- id: brown
+  layer: 3
+  pi: Dr. Calum Brown
+  pi_collaborators:
+  - Jun.-Prof. Dr. Ana Stritih
+  - Prof. Dr. Maja Schlüter
+  - Prof. Dr. Marc Hanewinkel
+  - Prof. Dr. Stefan Pauliuk
+  model_name: CRAFTY-EU — European Land Use Agent-Based Model
+  title_short: Scaling novel forest ecosystems in future European land systems
+  model_software: CRAFTY-EU (within LandSyMM)
+  objectives:
+  - 'Obj. 1: Test opportunities and risks for novel forest systems providing multiple benefits under future change'
+  - 'Obj. 2: Explore potential for desired forest systems to scale up within Europe, including competition with other land
+    uses'
+  - 'Obj. 3: Contribute to scenarios and pathways incorporating varying policies, management measures, and climatic and socio-economic
+    scenarios (→ jung_schindler, → stritih, → hanewinkel)'
+  short_description:
+  - Agent-based model operating at EU27+3 scale and 1 km resolution, embedded within the LandSyMM global framework
+  - Couples land use decision-making with macroeconomics, trade, ecosystem processes, biodiversity, and the climate system
+  - Provides continental-scale context for C3 models, upscaling local management patterns and ecosystem service outcomes to
+    global scenarios (SSPs, RCPs, NFF)
+  type: Agent-based model (ABM) / Land use model
+  modelling_approach: Agent-based model / Land use model
+  language:
+  - Python
+  - Java
+  status: planned
+  scale: EU27+3, 1 km resolution (global context via LandSyMM)
+  inputs:
+  - name: 'Findings from other cluster models: forest, ecological, economic, agent-based'
+    source: iLAND, Hanewinkel, Pauliuk, Schanz, Stritih
+  - name: Qualitative and quantitative baseline management and decision-making data
+    source: RA B (B1-B3)
+  - name: SSP/RCP/NFF scenario parameters
+    source: C2 / IPCC / IPBES
+  outputs:
+  - name: Land-use scenarios and management activities at European scale (EU27+3, 1 km resolution)
+  - name: Transformation and Adaptation Pathways under behavioural, socioeconomic, political and climatic change
+  hire:
+    name: TBD — options available in CRAFTY modelling team
+    start: end 2026 (pending)
+  notes: 'Scale mismatch open challenge: CRAFTY-EU 1 km vs iLAND 100 m. Collaborative role linking RA A, B, C1, C3 models,
+    and C4 governance.'
+  area_of_application: Land use, land use change
+  topic: Landscape analysis and modelling
+  methods: Modelling
+  cluster: socio_economic
+  pi_applicants:
+  - Prof. Dr. Marc Hanewinkel
+  - Jun.-Prof. Dr. Ana Stritih
+  - Prof. Dr. Maja Schlüter
+  - Prof. Dr. Stefan Pauliuk
+  hiring_status: PostDoc pending · end 2026
