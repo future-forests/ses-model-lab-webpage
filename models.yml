@@ -58,7 +58,7 @@ groups:
   title_short: Transdisciplinary regionalised scenarios for novel forest SESs
   objectives:
   - Translate global frameworks (SSPs, RCPs, Nature's Futures Framework) into high-resolution, locally relevant inputs for
-    FuFo study regions (→ all C3)
+    FuFo study regions
   - Develop downscaled projections with explicit treatment of extreme events and compound droughts
   - Co-create socio-economic narratives and quantitative pathways with stakeholders and partner institutions
   short_description:
@@ -114,7 +114,7 @@ groups:
   - Develop novel approaches to generate specific scenarios for forest-relevant aspects of the water balance, including extreme
     events
   - Produce 100 m × 100 m meteorological forcing fields (T, precip, VPD, wind, radiation, derived indices) under historical
-    conditions and CMIP6 warming levels (→ iland, → roger, → orth, → brown, → hanewinkel)
+    conditions and CMIP6 warming levels
   short_description:
   - Downscales ERA5-Land reanalysis and CMIP6 projections from ~10–120 km to 100 m × 100 m grid across the study regions
   - Uses tree-ensemble ML for bias correction and statistical downscaling, covering historical conditions and future climate
@@ -141,7 +141,7 @@ groups:
   outputs:
   - name: 'Downscaled hourly/daily fields at 100 m × 100 m: air temperature, precipitation, dew point, wind speed, solar radiation,
       vapour pressure deficit, derived climate indices'
-  - name: Climate projections under CMIP6 global warming levels (1.5°C, 2°C, 3°C+)
+  - name: Climate projections under CMIP6 global warming levels
   method: Tree-ensemble methods for residual-based bias correction of hourly reanalysis and daily climate model products.
     Statistical downscaling from ~10-120 km to 100 m x 100 m.
   hire:
@@ -206,7 +206,7 @@ groups:
   - 'Goal 2: Apply ML to reconstruct historical in-canopy microclimate conditions over 30 years (hindcasting) and fill data
     gaps'
   - 'Goal 3: Create transferable regional model predicting below-canopy temperatures and humidity at any forested site in
-    the FuFo domain (→ jung_schindler)'
+    the FuFo domain'
   short_description:
   - Adaptive sensor network (200 below-canopy stations) — self-optimising after year one
   - ML hindcasting of in-canopy microclimates over 30 years
@@ -277,8 +277,7 @@ groups:
   objectives:
   - 'Compile and harmonise static spatial datasets at 100 m resolution: soil properties (BÜK200), forest structure (BWI, LiDAR),
     catchment delineations'
-  - Supply harmonised spatial data to all C3 models requiring terrain, soil, and forest structure inputs (→ iland, → roger,
-    → stritih, → landclim)
+  - Supply harmonised spatial data to all C3 models requiring terrain, soil, and forest structure inputs
   short_description:
   - Compiles and harmonises the static spatial datasets underpinning all C3 models at 100 m resolution
   - Covers soil properties (BÜK200), forest structure (BWI, LiDAR terrain models), and catchment delineations for hydrological
@@ -314,10 +313,8 @@ groups:
   title_short: Remote sensing of tree mortality and plant functional traits
   model_software: CNN-based deep learning (Python, PyTorch); satellite time-series analysis
   objectives:
-  - Map tree mortality at landscape scale using convolutional neural networks on drone and satellite imagery (→ deadtree.earth
-    initiative)
+  - Map tree mortality at landscape scale using convolutional neural networks on drone and satellite imagery
   - Derive spatially continuous plant functional trait maps from satellite time series for iLAND calibration and validation
-    (→ iland, → orth)
   short_description:
   - Maps tree mortality at landscape scale using convolutional neural networks on drone and satellite imagery, contributing
     to the deadtree.earth initiative
@@ -356,10 +353,10 @@ groups:
   model_software: QUINCY
   objectives:
   - 'Obj. 1 (WP1): Derive functional relationships of vegetation response to VPD and soil moisture at grid-scale using observation-based
-    datasets and plant trait maps (→ kattenborn)'
+    datasets and plant trait maps'
   - 'Obj. 2 (WP1–WP2): Improve QUINCY by incorporating observation-derived vegetation–dryness relationships modulated by spatially
     varying plant traits'
-  - 'Obj. 3 (WP3): Test and stress-test QUINCY using mean and extreme future climate trajectories from C2 (→ jung_schindler)'
+  - 'Obj. 3 (WP3): Test and stress-test QUINCY using mean and extreme future climate trajectories from C2'
   short_description:
   - Quantifies how forest function declines as water availability decreases, using global satellite observations, eddy covariance
     flux towers, and the TRY plant trait database
@@ -397,10 +394,9 @@ groups:
   model_software: ML hybrid physical-statistical downscaling (Python)
   objectives:
   - 'Goal 1 (from 2028): Extend sensor network ML hindcast with forest physiology data from QUINCY to improve within-canopy
-    predictions (→ orth, → christen)'
-  - 'Goal 2: Project in-canopy microclimates across FuFo domain under future climate scenarios (→ jung_schindler)'
-  - 'Goal 3: Quantify forest microclimate buffering — how much does the canopy shield trees from extreme heat and drought?
-    (→ iland, → roger)'
+    predictions'
+  - 'Goal 2: Project in-canopy microclimates across FuFo domain under future climate scenarios'
+  - 'Goal 3: Quantify forest microclimate buffering — how much does the canopy shield trees from extreme heat and drought?'
   short_description:
   - Extends the sensor network work (A1 WP1) by incorporating forest biology — how the canopy regulates temperature and humidity
     through leaf area, stomatal opening, and photosynthesis
@@ -448,7 +444,7 @@ groups:
     stress for A&TPs
   - Improve light modelling for mountain terrain (Black Forest aspect and slope)
   - Implement updated drought mortality module (WEHAM model for BW/Germany)
-  - Bidirectional coupling with hydrological model for water-limited growth (→ roger)
+  - Bidirectional coupling with hydrological model for water-limited growth
   short_description:
   - Distance-dependent, individual tree-based forest growth simulator based on ecophysiological processes
   - 'Scale: individual tree to small catchments (~10 000 ha) at 100 m × 100 m resolution'
@@ -491,8 +487,8 @@ groups:
   objectives:
   - Model soil water redistribution across topographic contexts (plateau, hillslope, riparian/valley) to explain tree-to-tree
     drought differences
-  - Couple with MODFLOW for subsurface water dynamics and capillary rise (→ stahl)
-  - Bidirectional coupling with iLAND for forest–water interactions (→ iland)
+  - Couple with MODFLOW for subsurface water dynamics and capillary rise
+  - Bidirectional coupling with iLAND for forest–water interactions
   short_description:
   - Models water redistribution at the surface and subsurface across plateau, hillslope, and riparian topographic settings
   - All parameters are physically measurable — no calibration required; operates from 1 m to several thousand km²
@@ -533,9 +529,9 @@ groups:
   model_software: iLAND + ABE (Agent-Based management Extension)
   objectives:
   - 'Goal 1: Integrate diverse actors'' perspectives on forest management objectives into a coupled forest dynamics–agent-based
-    model (→ iland)'
+    model'
   - 'Goal 2: Enable co-learning among scientists and practitioners through an iterative Observe–Plan–Act cycle'
-  - 'Goal 3: Develop iterative, transdisciplinary process for evaluating A&TPs through modelling (→ brown, → pauliuk)'
+  - 'Goal 3: Develop iterative, transdisciplinary process for evaluating A&TPs through modelling'
   - 'Goal 4: Evaluate model credibility and legitimacy — does participation increase perceived usefulness of modelling results?'
   short_description:
   - Brings forest managers, ecologists, and other stakeholders together to co-design realistic management scenarios for future
@@ -586,9 +582,8 @@ groups:
   model_software: GFPM / GAMS (partial equilibrium model)
   objectives:
   - 'Obj. 1: Develop economic modelling and evaluation framework for ecosystem services under risk and uncertainty for A&TPs'
-  - 'Obj. 2: Apply framework to process-based growth model output using C2 scenarios for robust management strategies (→ iland,
-    → jung_schindler)'
-  - 'Obj. 3: Adapt GFPM for SW Germany to model market dynamics of ES beyond timber (→ pauliuk, → schanz)'
+  - 'Obj. 2: Apply framework to process-based growth model output using C2 scenarios for robust management strategies'
+  - 'Obj. 3: Adapt GFPM for SW Germany to model market dynamics of ES beyond timber'
   - 'Obj. 4: Develop preliminary A&TPs for SW Germany forests as input to C4'
   short_description:
   - Develops an economic modelling and evaluation framework for ecosystem services under risk and uncertainty
@@ -639,10 +634,9 @@ groups:
   model_software: RECC (stock-flow consistent process model)
   objectives:
   - 'RQ 1: Translate B decision-making principles into agent descriptions and modelling principles for wood industry A&TPs'
-  - 'RQ 2: Quantify circular economy potential and climate benefit of wood use and cascading in the study region (→ iland,
-    → hanewinkel)'
+  - 'RQ 2: Quantify circular economy potential and climate benefit of wood use and cascading in the study region'
   - 'RQ 3: Assess robustness of wood processing industries under disruptive events and technologies'
-  - 'RQ 4: Develop pathways to novel SES-informed regime of wood processing and use (→ brown, → schanz)'
+  - 'RQ 4: Develop pathways to novel SES-informed regime of wood processing and use'
   short_description:
   - Develops a modelling and stakeholder engagement framework for identifying and evaluating A&TPs for wood use and cascading
   - Defines A&TPs as sequences of decisions by agents in the wood use system that meet given objectives and respect given
@@ -727,7 +721,7 @@ groups:
   - 'Obj. 2: Explore potential for desired forest systems to scale up within Europe, including competition with other land
     uses'
   - 'Obj. 3: Contribute to scenarios and pathways incorporating varying policies, management measures, and climatic and socio-economic
-    scenarios (→ jung_schindler, → stritih, → hanewinkel)'
+    scenarios'
   short_description:
   - Agent-based model operating at EU27+3 scale and 1 km resolution, embedded within the LandSyMM global framework
   - Couples land use decision-making with macroeconomics, trade, ecosystem processes, biodiversity, and the climate system
