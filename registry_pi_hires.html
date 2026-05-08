@@ -5,22 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Modelling PI Group Registry</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600;700&display=swap');
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --navy: #1e3a5f; --green: #1a7a4a; --green-light: #dcfce7;
     --blue-light: #eff6ff; --slate: #64748b; --slate-light: #f8fafc;
-    --border: #e2e8f0; --mono: 'IBM Plex Mono', monospace; --sans: 'IBM Plex Sans', sans-serif;
+    --border: #e2e8f0; --mono: ui-monospace, monospace; --sans: system-ui, -apple-system, sans-serif;
   }
   html, body { height: 100%; }
   body { font-family: var(--sans); background: #f1f5f9; color: #1e293b; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-
   .header { background: var(--navy); color: white; padding: 11px 24px; flex-shrink: 0; border-bottom: 3px solid var(--green); }
   .header-title { font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
-
   .layout { display: flex; flex: 1; overflow: hidden; }
-
-  /* SIDEBAR */
   .sidebar { width: 190px; flex-shrink: 0; background: white; border-right: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
   .sidebar-list { overflow-y: auto; flex: 1; padding: 8px 0; }
   .theme-item { padding: 11px 16px; cursor: pointer; border-bottom: 1px solid #f1f5f9; transition: background 0.12s; display: flex; align-items: center; gap: 10px; }
@@ -31,26 +26,18 @@
   .theme-label { font-size: 11px; color: var(--slate); }
   .theme-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
   .dot-a { background: #0ea5e9; } .dot-b { background: #8b5cf6; } .dot-c { background: var(--green); }
-
-  /* MAIN */
   .main { flex: 1; overflow-y: auto; padding: 24px 28px; }
   .placeholder { display: flex; align-items: center; justify-content: center; height: 100%; color: #94a3b8; font-family: var(--mono); font-size: 12px; }
   .theme-card { display: none; }
   .theme-card.visible { display: block; }
-
-  /* THEME HEADER */
   .theme-header { margin-bottom: 20px; padding-bottom: 14px; border-bottom: 2px solid var(--navy); }
   .theme-header-top { display: flex; align-items: baseline; gap: 12px; margin-bottom: 10px; }
   .theme-header-code { font-family: var(--mono); font-size: 26px; font-weight: 700; color: var(--navy); }
   .theme-header-name { font-size: 14px; color: var(--slate); }
   .theme-lead { font-family: var(--mono); font-size: 10px; color: #94a3b8; margin-bottom: 10px; }
-
-  /* THEME BULLETS */
   .theme-bullets { list-style: none; display: flex; flex-direction: column; gap: 5px; }
   .theme-bullets li { display: flex; gap: 8px; align-items: flex-start; font-size: 12.5px; line-height: 1.55; color: #334155; }
   .theme-bullets li::before { content: '—'; color: var(--navy); font-weight: 700; flex-shrink: 0; }
-
-  /* PROJECT BLOCKS */
   .project-block { margin-bottom: 16px; border: 1px solid var(--border); border-radius: 5px; overflow: hidden; }
   .project-top { padding: 12px 15px; background: white; }
   .project-title { font-size: 13.5px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
@@ -61,23 +48,18 @@
   .proj-bullets { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3px; }
   .proj-bullets li { display: flex; gap: 7px; align-items: flex-start; font-size: 12px; color: #475569; line-height: 1.5; }
   .proj-bullets li::before { content: '·'; color: var(--navy); font-weight: 900; flex-shrink: 0; font-size: 14px; line-height: 1.3; }
-
-  /* HIRES */
   .hires-inner { background: var(--slate-light); border-top: 1px solid var(--border); }
   .hire-row { display: flex; align-items: center; gap: 10px; padding: 7px 15px; border-bottom: 1px solid var(--border); font-size: 12px; }
   .hire-row:last-child { border-bottom: none; }
   .hire-name { font-weight: 600; flex: 1; }
   .hire-name em { font-weight: 400; color: #94a3b8; font-style: italic; }
   .no-hires { padding: 7px 15px; font-size: 11px; color: #94a3b8; font-style: italic; }
-
   .role-badge { display: inline-block; font-family: var(--mono); font-size: 9px; padding: 2px 6px; border-radius: 3px; font-weight: 600; flex-shrink: 0; }
   .role-phd { background: #fef3c7; color: #92400e; }
   .role-postdoc { background: var(--blue-light); color: #1e40af; }
   .role-ra { background: #f3e8ff; color: #6b21a8; }
   .role-tech { background: #f1f5f9; color: #475569; }
-
   .section-divider { font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: #94a3b8; margin: 20px 0 10px; }
-
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
 </style>
@@ -92,7 +74,7 @@
 <div class="sidebar">
   <div class="sidebar-list">
     <div class="theme-item" onclick="showTheme('a1')" id="item-a1">
-      <div class="theme-dot dot-a"></div><div><div class="theme-code">A1</div><div class="theme-label">Sensor & Climate</div></div>
+      <div class="theme-dot dot-a"></div><div><div class="theme-code">A1</div><div class="theme-label">Sensor &amp; Climate</div></div>
     </div>
     <div class="theme-item" onclick="showTheme('a3')" id="item-a3">
       <div class="theme-dot dot-a"></div><div><div class="theme-code">A3</div><div class="theme-label">Forest Mortality</div></div>
@@ -110,26 +92,23 @@
 </div>
 
 <div class="main" id="main-panel">
-<div class="placeholder" id="placeholder">← Select a theme to view projects</div>
+<div class="placeholder" id="placeholder">&larr; Select a theme to view projects</div>
 
-<!-- ══════════ A1 ══════════ -->
+<!-- A1 -->
 <div class="theme-card" id="card-a1">
   <div class="theme-header">
     <div class="theme-header-top">
       <div class="theme-header-code">A1</div>
-      <div class="theme-header-name">Adaptive Sensor Networks & Data-driven Modelling</div>
+      <div class="theme-header-name">Adaptive Sensor Networks &amp; Data-driven Modelling</div>
     </div>
-    <div class="theme-lead">LEAD · Andreas Christen, Fritzi Lang · CONTRIBUTORS · Kammerer, Orth, Puhlmann, Seifert, Stahl, Weiler</div>
+    <div class="theme-lead">LEAD &middot; Andreas Christen &middot; CONTRIBUTORS &middot; Kammerer, Orth, Puhlmann, Seifert, Stahl, Weiler</div>
     <ul class="theme-bullets">
       <li>Builds and operates an adaptive below-canopy sensor network (~300 plots) measuring air temperature, humidity, and water fluxes at high spatial and temporal resolution</li>
       <li>Develops ML-based approaches for sensor data quality control, station uniqueness ranking, and hindcasting of within-forest microclimates over three decades</li>
-      <li>Produces the observational data foundation — microclimate, soil moisture, water chemistry, water legacy signals — consumed by models in C2 and C3</li>
-      <li>Integration project from 2028: combines ML with QUINCY phenology outputs to project future in-canopy climate under C2 scenarios</li>
+      <li>Produces the observational data foundation &mdash; microclimate, soil moisture, water chemistry, water legacy signals &mdash; consumed by models in C2 and C3</li>
     </ul>
   </div>
-
-  <div class="section-divider">Projects & Hires</div>
-
+  <div class="section-divider">Projects &amp; Hires</div>
   <div class="project-block">
     <div class="project-top">
       <div class="project-title">Adaptive Sensor Network</div>
@@ -139,17 +118,16 @@
         <span class="pi-chip">Prof. Dr. Florian Schnabel</span>
       </div>
       <ul class="proj-bullets">
-        <li>Implements and operates the FuFo hydro-climatic below-canopy sensor network across 300 plots in 100–150 stands</li>
+        <li>Implements and operates the FuFo hydro-climatic below-canopy sensor network across 300 plots in 100&ndash;150 stands</li>
         <li>Develops ML-based approaches for data quality control and station uniqueness rankings</li>
         <li>Hindcasts three decades of below-canopy climates using site-specific ML and hybrid downscaling</li>
         <li>Develops a unified transferable model for in-canopy air temperature and humidity using geospatial predictors of forest structure</li>
       </ul>
     </div>
     <div class="hires-inner">
-      <div class="hire-row"><span class="hire-name">Tabea Wörner</span><span class="role-badge role-phd">PhD</span></div>
+      <div class="hire-row"><span class="hire-name">Tabea W&ouml;rner</span><span class="role-badge role-phd">PhD</span></div>
     </div>
   </div>
-
   <div class="project-block">
     <div class="project-top">
       <div class="project-title">Canopy Micro Environment</div>
@@ -160,15 +138,14 @@
         <span class="pi-chip">Prof. Dr. Heike Puhlmann</span>
       </div>
       <ul class="proj-bullets">
-        <li>Characterises the physical and biogeochemical environment within forest canopies across A1 network plots</li>
-        <li>Integrates canopy structural data (LiDAR), microclimate sensor readings, and soil properties to understand within-forest conditions driving carbon and water cycling</li>
+        <li>Quantifies hydroclimatic variability within forest ecosystems across A1 network plots</li>
+        <li>Integrates canopy structural data (LiDAR), microclimate sensor readings, and soil properties to understand within-forest conditions</li>
       </ul>
     </div>
     <div class="hires-inner">
       <div class="hire-row"><span class="hire-name"><em>TBD</em></span><span class="role-badge role-postdoc">Postdoc</span></div>
     </div>
   </div>
-
   <div class="project-block">
     <div class="project-top">
       <div class="project-title">Water Legacy</div>
@@ -188,7 +165,6 @@
       <div class="hire-row"><span class="hire-name">Johanna von Drachenfels</span><span class="role-badge role-phd">PhD</span></div>
     </div>
   </div>
-
   <div class="project-block">
     <div class="project-top">
       <div class="project-title">Water Quality Monitoring</div>
@@ -206,7 +182,6 @@
       <div class="no-hires">Not yet hired</div>
     </div>
   </div>
-
   <div class="project-block">
     <div class="project-top">
       <div class="project-title">Soil Carbon Sequestration</div>
@@ -215,23 +190,17 @@
         <span class="pi-chip">Prof. Dr. Heike Puhlmann</span>
         <span class="pi-chip">Prof. Dr. Bernd Kammerer</span>
       </div>
-      <ul class="proj-bullets">
-        <li>Investigates soil carbon and nutrient dynamics in forested catchments under climate-driven disturbances</li>
-        <li>Monitors how forest dieback and management affect soil organic matter quality and carbon sequestration capacity</li>
-        <li>Builds on forest floor vulnerability work (FOR 5315) and ecosystem nutrient availability research</li>
-      </ul>
     </div>
     <div class="hires-inner">
       <div class="hire-row"><span class="hire-name">Kenton Stutz</span><span class="role-badge role-postdoc">Postdoc</span></div>
     </div>
   </div>
-
   <div class="project-block">
     <div class="project-top">
       <div class="project-title">ML-based Forest Climate Projections</div>
       <div class="pi-chips">
         <span class="pi-chip lead">Prof. Dr. Andreas Christen</span>
-        <span class="pi-chip">Prof. Dr. René Orth</span>
+        <span class="pi-chip">Prof. Dr. Ren&eacute; Orth</span>
       </div>
       <ul class="proj-bullets">
         <li>Starts 2028; extends A1 microclimate interpolation by incorporating forest phenology (leaf area index) and physiology (stomatal conductance)</li>
@@ -246,24 +215,21 @@
   </div>
 </div>
 
-<!-- ══════════ A3 ══════════ -->
+<!-- A3 -->
 <div class="theme-card" id="card-a3">
   <div class="theme-header">
     <div class="theme-header-top">
       <div class="theme-header-code">A3</div>
-      <div class="theme-header-name">Vulnerability, Resilience & Large-Scale Mortality</div>
+      <div class="theme-header-name">Vulnerability, Resilience &amp; Large-Scale Mortality</div>
     </div>
-    <div class="theme-lead">LEAD · Jürgen Bauhus; CO-LEAD · Thomas Seifert</div>
+    <div class="theme-lead">LEAD &middot; J&uuml;rgen Bauhus</div>
     <ul class="theme-bullets">
       <li>Quantifies vulnerability and resilience of different tree species and forest types to drought, storms, and other disturbances</li>
-      <li>Assesses stand density management as a silvicultural strategy for reducing drought-related mortality in beech, oak, fir, and Douglas fir forests</li>
       <li>Maps and quantifies large-scale forest mortality events across Central Europe using satellite imagery and airborne LiDAR</li>
       <li>Provides risk assessments and mortality inputs directly to the C3 modelling framework</li>
     </ul>
   </div>
-
-  <div class="section-divider">Projects & Hires</div>
-
+  <div class="section-divider">Projects &amp; Hires</div>
   <div class="project-block">
     <div class="project-top">
       <div class="project-title">Large Scale Mortality</div>
@@ -283,34 +249,16 @@
       <div class="hire-row"><span class="hire-name">Mattis Pfenning</span><span class="role-badge role-phd">PhD</span></div>
     </div>
   </div>
-
-  <div class="project-block">
-    <div class="project-top">
-      <div class="project-title">Stand Density Management</div>
-      <div class="pi-chips">
-        <span class="pi-chip lead">Prof. Dr. Jürgen Bauhus</span>
-        <span class="pi-chip lead">Prof. Dr. Florian Schnabel</span>
-      </div>
-      <ul class="proj-bullets">
-        <li>Quantifies the capacity of stand density management to reduce drought-related mortality in beech, oak, fir, and Douglas fir forests</li>
-        <li>Combines field experiments with process-based modelling</li>
-        <li>Results guide silvicultural recommendations feeding into C3 management scenarios</li>
-      </ul>
-    </div>
-    <div class="hires-inner">
-      <div class="no-hires">Not yet hired</div>
-    </div>
-  </div>
 </div>
 
-<!-- ══════════ C1 ══════════ -->
+<!-- C1 -->
 <div class="theme-card" id="card-c1">
   <div class="theme-header">
     <div class="theme-header-top">
       <div class="theme-header-code">C1</div>
       <div class="theme-header-name">Multi- and Interdisciplinary Conceptualisation of Novel SESs</div>
     </div>
-    <div class="theme-lead">LEAD · Stefan Pauliuk, Tanja Mölders</div>
+    <div class="theme-lead">LEAD &middot; Tanja M&ouml;lders</div>
     <ul class="theme-bullets">
       <li>Transforms the generic notion of future forests into a specific interdisciplinary SES framework shared across all research areas</li>
       <li>Advances social-ecological theory by integrating concepts from natural and social sciences; produces consistent terminology, definitions, and indicators</li>
@@ -319,17 +267,27 @@
       <li>Facilitates cluster-wide co-learning through workshops, reflections, and iterative concept refinement</li>
     </ul>
   </div>
-
-  <div class="section-divider">Projects & Hires</div>
-
+  <div class="section-divider">Projects &amp; Hires</div>
+  <div class="project-block">
+    <div class="project-top">
+      <div class="project-title">SES Planning</div>
+      <div class="pi-chips">
+        <span class="pi-chip lead">Prof. Dr. Tanja M&ouml;lders</span>
+      </div>
+    </div>
+    <div class="hires-inner">
+      <div class="hire-row"><span class="hire-name">Esther Sophia Rust</span><span class="role-badge role-phd">PhD</span></div>
+    </div>
+  </div>
+  </div>
   <div class="project-block">
     <div class="project-top">
       <div class="project-title">Theorizing Social-Ecological Systems</div>
       <div class="pi-chips">
-        <span class="pi-chip lead">Prof. Dr. Maja Schlüter</span>
+        <span class="pi-chip lead">Prof. Dr. Maja Schl&uuml;ter</span>
       </div>
       <ul class="proj-bullets">
-        <li>Develops SES theory and formal frameworks for coupled human–forest systems</li>
+        <li>Develops SES theory and formal frameworks for coupled human&ndash;forest systems</li>
         <li>Translates SES concepts into agent behaviour rules and interaction structures for use in the C3 ABM and wood cascade model</li>
         <li>Advances conceptual ABMs to operationalise the SES framework across C3</li>
       </ul>
@@ -340,37 +298,35 @@
   </div>
 </div>
 
-<!-- ══════════ C2 ══════════ -->
+<!-- C2 -->
 <div class="theme-card" id="card-c2">
   <div class="theme-header">
     <div class="theme-header-top">
       <div class="theme-header-code">C2</div>
       <div class="theme-header-name">Transdisciplinary Regionalised Scenarios for Novel SESs</div>
     </div>
-    <div class="theme-lead">LEAD · Marc Hanewinkel, Kerstin Stahl</div>
+    <div class="theme-lead">LEAD &middot; Marc Hanewinkel, Kerstin Stahl</div>
     <ul class="theme-bullets">
       <li>Develops spatially and temporally high-resolution, regionalized hydro-climatic scenarios representing droughts, storms, and heatwaves for the FuFo study region</li>
       <li>Combines long-term climate model projections with event-storyline formulations for extreme disturbance triggers</li>
-      <li>Co-creates quantitative socio-economic scenarios from qualitative stakeholder narratives, aligned with RCPs, SSPs, and Nature's Futures Framework</li>
+      <li>Co-creates quantitative socio-economic scenarios from qualitative stakeholder narratives, aligned with RCPs, SSPs, and Nature&rsquo;s Futures Framework</li>
       <li>Provides the boundary conditions (biophysical and socio-economic) for all adaptation and transformation pathway modelling in C3</li>
       <li>Involves stakeholders in scenario co-design through inter- and transdisciplinary working groups</li>
     </ul>
   </div>
-
-  <div class="section-divider">Projects & Hires</div>
-
+  <div class="section-divider">Projects &amp; Hires</div>
   <div class="project-block">
     <div class="project-top">
-      <div class="project-title">HyClimScenarios — Regional Hydroclimatic Scenarios</div>
+      <div class="project-title">HyClimScenarios &mdash; Regional Hydroclimatic Scenarios</div>
       <div class="pi-chips">
         <span class="pi-chip lead">Prof. Dr. Kerstin Stahl</span>
         <span class="pi-chip lead">Prof. Dr. Dirk Schindler</span>
         <span class="pi-chip">Prof. Dr. Andreas Christen</span>
-        <span class="pi-chip">Prof. Dr. René Orth</span>
+        <span class="pi-chip">Prof. Dr. Ren&eacute; Orth</span>
       </div>
       <ul class="proj-bullets">
         <li>Produces high-resolution regionalized climate and hydrological scenarios representing droughts, storms, and floods for the FuFo study region</li>
-        <li>Statistically downscales precipitation and gust speed to 25 m × 25 m resolution</li>
+        <li>Statistically downscales meteorological fields from ~10&ndash;120 km to a 100 m &times; 100 m grid</li>
         <li>Uses event-storyline formulations to represent disturbance extremes alongside long-term climate projections</li>
         <li>Provides the biophysical boundary conditions for all C3 models</li>
       </ul>
@@ -379,10 +335,9 @@
       <div class="hire-row"><span class="hire-name">Christopher Jung</span><span class="role-badge role-postdoc">Postdoc</span></div>
     </div>
   </div>
-
   <div class="project-block">
     <div class="project-top">
-      <div class="project-title">Participatory Modelling & Landscape Scenarios</div>
+      <div class="project-title">Participatory Modelling &amp; Landscape Scenarios</div>
       <div class="pi-chips">
         <span class="pi-chip lead">Jun.-Prof. Dr. Ana Stritih</span>
       </div>
@@ -393,21 +348,22 @@
       </ul>
     </div>
     <div class="hires-inner">
+      <div class="hire-row"><span class="hire-name">Christina Dollinger (PI/AI)</span><span class="role-badge role-postdoc">MvW</span></div>
       <div class="hire-row"><span class="hire-name"><em>TBD</em></span><span class="role-badge role-postdoc">Postdoc</span></div>
     </div>
   </div>
 </div>
 
-<!-- ══════════ C3 ══════════ -->
+<!-- C3 -->
 <div class="theme-card" id="card-c3">
   <div class="theme-header">
     <div class="theme-header-top">
       <div class="theme-header-code">C3</div>
-      <div class="theme-header-name">Model Framework for Multidimensional Analysis & Stress-Testing of Adaptation Pathways</div>
+      <div class="theme-header-name">Model Framework for Multidimensional Analysis &amp; Stress-Testing of Adaptation Pathways</div>
     </div>
-    <div class="theme-lead">LEAD · Thomas Seifert, Markus Weiler</div>
+    <div class="theme-lead">LEAD &middot; Thomas Seifert, Markus Weiler</div>
     <ul class="theme-bullets">
-      <li>Develops an integrated interdisciplinary modelling framework — not a monolithic tool, but an assembly of models at variable space and time scales</li>
+      <li>Develops an integrated interdisciplinary modelling framework &mdash; not a monolithic tool, but an assembly of models at variable space and time scales</li>
       <li>Captures both biophysical processes (forest growth, hydrology, drought) and socio-economic dynamics (markets, agent decisions, material flows) within a coupled SES</li>
       <li>Facilitates systems understanding: identifies appropriate aggregation levels, model couplings, causal mechanisms, and indicators not directly measurable</li>
       <li>Enables stress-testing of governance and management approaches under C2 climate and socio-economic scenarios, including climate extremes</li>
@@ -415,9 +371,7 @@
       <li>Includes four sequential steps: development, integration, testing, and application of models</li>
     </ul>
   </div>
-
-  <div class="section-divider">Projects & Hires</div>
-
+  <div class="section-divider">Projects &amp; Hires</div>
   <div class="project-block">
     <div class="project-top">
       <div class="project-title">Forest Growth Modelling</div>
@@ -425,7 +379,7 @@
         <span class="pi-chip lead">Prof. Dr. Thomas Seifert</span>
       </div>
       <ul class="proj-bullets">
-        <li>Runs iLAND — a process-based individual-tree model — driven by C2 climate scenarios and management inputs</li>
+        <li>Runs iLAND &mdash; a process-based individual-tree model &mdash; driven by C2 climate scenarios and management inputs</li>
         <li>Produces timber volumes, carbon stocks, and species composition dynamics</li>
         <li>Core biophysical output layer consumed by all downstream economic and cascade models</li>
       </ul>
@@ -434,12 +388,11 @@
       <div class="hire-row"><span class="hire-name"><em>TBD</em></span><span class="role-badge role-postdoc">Postdoc</span></div>
     </div>
   </div>
-
   <div class="project-block">
     <div class="project-top">
       <div class="project-title">Drought Modelling</div>
       <div class="pi-chips">
-        <span class="pi-chip lead">Prof. Dr. René Orth</span>
+        <span class="pi-chip lead">Prof. Dr. Ren&eacute; Orth</span>
         <span class="pi-chip">Prof. Dr. Teja Kattenborn</span>
       </div>
       <ul class="proj-bullets">
@@ -449,10 +402,9 @@
       </ul>
     </div>
     <div class="hires-inner">
-      <div class="hire-row"><span class="hire-name">Pia Müller</span><span class="role-badge role-phd">PhD</span></div>
+      <div class="hire-row"><span class="hire-name">Pia M&uuml;ller</span><span class="role-badge role-phd">PhD</span></div>
     </div>
   </div>
-
   <div class="project-block">
     <div class="project-top">
       <div class="project-title">Water Redistribution</div>
@@ -469,7 +421,6 @@
       <div class="hire-row"><span class="hire-name">Sheikh Muhammad Asad</span><span class="role-badge role-phd">PhD</span></div>
     </div>
   </div>
-
   <div class="project-block">
     <div class="project-top">
       <div class="project-title">Wood Cascade Modelling</div>
@@ -477,7 +428,7 @@
         <span class="pi-chip lead">Prof. Dr. Stefan Pauliuk</span>
       </div>
       <ul class="proj-bullets">
-        <li>Tracks carbon through the full wood product chain — from forest to processing industries to built environment — using MFA and LCA (RECC model)</li>
+        <li>Tracks carbon through the full wood product chain &mdash; from forest to processing industries to built environment &mdash; using MFA and LCA (RECC model)</li>
         <li>Develops scenario tools for wood use and cascading strategies and their climate benefits</li>
         <li>Being extended with agent-based and relation-based modelling (ABM/RBM) to represent decision-makers across the industry chain</li>
       </ul>
@@ -487,7 +438,6 @@
       <div class="hire-row"><span class="hire-name">Christian Hauenstein</span><span class="role-badge role-postdoc">Postdoc</span></div>
     </div>
   </div>
-
   <div class="project-block">
     <div class="project-top">
       <div class="project-title">Integrative Economic Model</div>
@@ -508,21 +458,20 @@
       <div class="hire-row"><span class="hire-name"><em>TBD</em></span><span class="role-badge role-postdoc">Postdoc</span></div>
     </div>
   </div>
-
   <div class="project-block">
     <div class="project-top">
       <div class="project-title">Large Scale ABM</div>
       <div class="pi-chips">
         <span class="pi-chip lead">Dr. Calum Brown</span>
-        <span class="pi-chip lead">Jun.-Prof. Dr. Ana Stritih</span>
+        <span class="pi-chip">Jun.-Prof. Dr. Ana Stritih</span>
         <span class="pi-chip">Prof. Dr. Marc Hanewinkel</span>
-        <span class="pi-chip">Prof. Dr. Maja Schlüter</span>
+        <span class="pi-chip">Prof. Dr. Maja Schl&uuml;ter</span>
         <span class="pi-chip">Prof. Dr. Stefan Pauliuk</span>
       </div>
       <ul class="proj-bullets">
         <li>Runs CRAFTY-EU to simulate heterogeneous forest owner and land manager decisions at landscape to regional scale</li>
         <li>Agent behavioural archetypes grounded in B area knowledge of decision-making practices and objectives</li>
-        <li>Receives scenario inputs from Stritih and biophysical constraints from Seifert's iLAND</li>
+        <li>Receives scenario inputs from Stritih and biophysical constraints from Seifert&rsquo;s iLAND</li>
         <li>Produces emergent land-use trajectories and management pathways feeding into economic and cascade models</li>
       </ul>
     </div>
@@ -530,7 +479,6 @@
       <div class="hire-row"><span class="hire-name"><em>TBD</em></span><span class="role-badge role-postdoc">Postdoc</span></div>
     </div>
   </div>
-
   <div class="project-block">
     <div class="project-top">
       <div class="project-title">Forest Ecosystem Service Markets (FESMarkets)</div>
@@ -538,9 +486,9 @@
         <span class="pi-chip lead">Prof. Dr. Heiner Schanz</span>
       </div>
       <ul class="proj-bullets">
-        <li>Analyses how market mechanisms and policy instruments can be designed to reward forest ecosystem services</li>
-        <li>Develops socio-economic trend scenarios (demographic, economic, land ownership) as boundary conditions alongside HyClimScenarios</li>
-        <li>Builds the FESMarkets abstract market model for forest ecosystem service transactions</li>
+        <li>Analyses the structural architecture of Forest Ecosystem Service networks covering water, recreation, protection, and timber</li>
+        <li>Characterises how supply and demand occurs through real markets (commodities, contracts) and political markets (subsidies) linked across complex value chains</li>
+        <li>System dynamics model captures stocks and flows at macro level; Causal Loop Diagrams represent actor perspectives and governance interventions at micro level</li>
       </ul>
     </div>
     <div class="hires-inner">
@@ -551,14 +499,12 @@
   </div>
 
 </div>
-
-</div><!-- /main -->
-</div><!-- /layout -->
+</div>
 
 <script>
   function showTheme(id) {
-    document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('visible'));
-    document.querySelectorAll('.theme-item').forEach(i => i.classList.remove('active'));
+    document.querySelectorAll('.theme-card').forEach(function(c) { c.classList.remove('visible'); });
+    document.querySelectorAll('.theme-item').forEach(function(i) { i.classList.remove('active'); });
     document.getElementById('placeholder').style.display = 'none';
     document.getElementById('card-' + id).classList.add('visible');
     document.getElementById('item-' + id).classList.add('active');
