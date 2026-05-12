@@ -57,7 +57,7 @@ textarea{resize:vertical;line-height:1.6}
 </head>
 <body>
 <header>
-<div class="tag">Future Forests Excellence Cluster · Universität Freiburg </div>
+<div class="tag">Future Forests Excellence Cluster · Universität Freiburg</div>
 <h1>Modelling Connections Survey</h1>
 <p>We are mapping what each group works on and where collaborations around modelling could emerge. Mostly checkboxes — takes about 5 minutes. Browse the registry before filling in the survey:</p>
 <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:10px">
@@ -76,6 +76,10 @@ textarea{resize:vertical;line-height:1.6}
 <div class="field">
 <label class="field-label">Name <span class="req">*</span></label>
 <input type="text" id="name">
+</div>
+<div class="field">
+<label class="field-label">Email <span class="req">*</span></label>
+<input type="email" id="email">
 </div>
 <div class="field">
 <label class="field-label">Supervisor / PI</label>
@@ -284,19 +288,20 @@ textarea{resize:vertical;line-height:1.6}
 <input type="hidden" name="_captcha" value="false">
 <input type="hidden" name="_next" value="https://mwenta.codeberg.page/fufo_modelling/survey.html">
 <input type="hidden" id="f-name" name="01_Name">
-<input type="hidden" id="f-supervisor" name="02_Supervisor">
-<input type="hidden" id="f-ra" name="03_Research_Area">
-<input type="hidden" id="f-role" name="04_Role">
-<input type="hidden" id="f-data-use" name="05_Data_worked_with">
-<input type="hidden" id="f-data-other" name="06_Data_other">
-<input type="hidden" id="f-need" name="07_Data_needed">
-<input type="hidden" id="f-need-other" name="08_Data_needed_other">
-<input type="hidden" id="f-projects" name="09_Project_connections">
-<input type="hidden" id="f-proj-notes" name="10_Connection_notes">
-<input type="hidden" id="f-modelling-rel" name="11_Relation_to_modelling">
-<input type="hidden" id="f-collab" name="12_Collaboration_interests">
-<input type="hidden" id="f-collab-who" name="13_Collaboration_who_topic">
-<input type="hidden" id="f-comments" name="14_Comments">
+<input type="hidden" id="f-email" name="02_Email">
+<input type="hidden" id="f-supervisor" name="03_Supervisor">
+<input type="hidden" id="f-ra" name="04_Research_Area">
+<input type="hidden" id="f-role" name="05_Role">
+<input type="hidden" id="f-data-use" name="06_Data_worked_with">
+<input type="hidden" id="f-data-other" name="07_Data_other">
+<input type="hidden" id="f-need" name="08_Data_needed">
+<input type="hidden" id="f-need-other" name="09_Data_needed_other">
+<input type="hidden" id="f-projects" name="10_Project_connections">
+<input type="hidden" id="f-proj-notes" name="11_Connection_notes">
+<input type="hidden" id="f-modelling-rel" name="12_Relation_to_modelling">
+<input type="hidden" id="f-collab" name="13_Collaboration_interests">
+<input type="hidden" id="f-collab-who" name="14_Collaboration_who_topic">
+<input type="hidden" id="f-comments" name="15_Comments">
 </form>
 <iframe name="hidden-iframe" style="display:none"></iframe>
 
@@ -327,9 +332,13 @@ function submitForm(){
   else{document.getElementById('ra').style.borderColor='';}
   if(!role){document.getElementById('role').style.borderColor='var(--red)';ok=false;}
   else{document.getElementById('role').style.borderColor='';}
+  var email=document.getElementById('email').value.trim();
+  if(!email||email.indexOf('@')===-1){document.getElementById('email').style.borderColor='var(--red)';ok=false;}
+  else{document.getElementById('email').style.borderColor='';}
   if(!ok){window.scrollTo({top:0,behavior:'smooth'});return;}
 
   document.getElementById('f-name').value=name;
+  document.getElementById('f-email').value=document.getElementById('email').value.trim();
   document.getElementById('f-supervisor').value=document.getElementById('supervisor').value.trim();
   document.getElementById('f-ra').value=ra;
   document.getElementById('f-role').value=role;
