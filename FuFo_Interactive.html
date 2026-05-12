@@ -44,7 +44,7 @@ header{background:var(--navy);padding:12px 24px 10px;border-bottom:3px solid var
 #info-pi{color:#cbd5e1;font-size:10px;margin-bottom:3px;font-family:'IBM Plex Sans',sans-serif}
 #info-desc{color:#94a3b8;font-size:10px;line-height:1.5;font-family:'IBM Plex Sans',sans-serif;max-width:900px}
 #info-connects{color:#64748b;font-size:9px;margin-top:3px}
-#info-hire{color:#fbbf24;font-size:10px;text-align:right;align-self:start;white-space:nowrap;padding-left:20px}
+#info-hire{color:#6bcf9e;font-size:10px;text-align:right;align-self:start;white-space:nowrap;padding-left:20px}
 </style>
 </head>
 <body>
@@ -80,7 +80,7 @@ var LD=[
 {id:0,y:0,h:200,fill:'#ede9fe',band:'#ddd6fe',ink:'#5b50c4',label:'C1 & C2 \u2014 CONCEPTUAL FRAMEWORK & SCENARIOS'},
 {id:1,y:200,h:490,fill:'#f0fdf7',band:'#dcfce7',ink:'#1a7a4a',label:'A1 & A3 \u2014 SENSOR, CLIMATE & FOREST RISKS'},
 {id:2,y:690,h:270,fill:'#eff6ff',band:'#dbeafe',ink:'#1a4f8a',label:'C3 \u2014 FOREST ECOLOGY & HYDROLOGY'},
-{id:3,y:960,h:280,fill:'#fffbeb',band:'#fed7aa',ink:'#92400e',label:'C3 \u2014 SOCIO-ECONOMIC & LAND USE'}
+{id:3,y:960,h:280,fill:'#eff6ff',band:'#dbeafe',ink:'#1a4f8a',label:'C3 \u2014 SOCIO-ECONOMIC & LAND USE'}
 ];
 
 var NODES=[
@@ -92,19 +92,19 @@ de:['Shared SES vocabulary, indicators, accounting framework','Conceptual founda
 
 {id:'jung',l:0,c:'c2',t:'HyClimScenarios',ld:['Stahl','Schindler','Christen','Orth'],co:[],
 d:['Statistical downscaling of meteorological fields: 10\u2013120 km to 100 m','Historical and CMIP6 warming levels','Scenarios on forest-relevant climate and water dynamics'],
-hi:'Dr. Christopher Jung (PostDoc)',ok:1,st:'#60a5fa',ic:'#1e40af',
+hi:'Dr. Christopher Jung (PostDoc)',ok:1,st:'#a78bfa',ic:'#5b50c4',
 de:['Statistical downscaling of meteorological fields: 10\u2013120 km to 100 m','Historical and CMIP6 warming levels','Scenarios on forest-relevant climate and water dynamics']},
 
 {id:'stritih',l:0,c:'c2',t:'PARTICIPATORY MODELLING',ld:['Stritih'],co:[],
 d:['Co-designs management scenarios with stakeholders','Feeds scenarios into iLAND\u2019s Agent-Based Engine (ABE)','Evaluates credibility and legitimacy of scenarios alongside modelling results'],
-hi:'Christina Dollinger (PI/AI) \u00b7 01.05.2026 \u00b7 PostDoc (vacant)',ok:1,st:'#60a5fa',ic:'#1e40af',
+hi:'Christina Dollinger (PI/AI) \u00b7 01.05.2026 \u00b7 PostDoc (vacant)',ok:1,st:'#a78bfa',ic:'#5b50c4',
 de:['Co-designs management scenarios with stakeholders','Feeds scenarios into iLAND\u2019s Agent-Based Engine (ABE)','Evaluates credibility and legitimacy of scenarios alongside modelling results']},
 
 // Layer 1: A1 + A3
 {id:'stahl',l:1,c:'a1',t:'WATER LEGACY',ld:['Stahl','Gnann','Weiler'],co:[],
 d:['Legacy effects of forest changes on water balance','Time series of forest evolution and hydrology','Adapts RoGeR for competing drivers of change'],
 hi:'Johanna von Drachenfels (PhD) \u00b7 01.05.2026',ok:1,st:'#6bcf9e',ic:'#1a7a4a',
-de:['Legacy effects on catchment water balance and extremes','RoGeR + groundwater coupling for subsurface dynamics','Clean water provision as ecosystem service']},
+de:['Legacy effects on catchment water balance and extremes','RoGeR + groundwater coupling for subsurface dynamics','Investigate causes for forest hydrological changes']},
 
 {id:'christen',l:1,c:'a1',t:'ADAPTIVE SENSOR NETWORK',ld:['Christen'],co:['Weiler','Schnabel'],
 d:['200 below-canopy stations, self-optimising','ML hindcasting of 30-year microclimates','Transferable regional model for below-canopy T'],
@@ -114,59 +114,59 @@ de:['Adaptive sensor network + ML for fine-scale reconstruction','Self-optimisin
 {id:'canopy_micro',l:1,c:'a1',t:'CANOPY MICRO ENVIRONMENT',ld:['Weiler','Christen','Seifert'],co:['Puhlmann'],
 d:['300 plots in 100\u2013150 stands','Terrain/forest structural indices for interpolation','ML clustering of micro-environments'],
 hi:'PostDoc (vacant) \u00b7 Technician (vacant)',ok:0,st:'#6bcf9e',ic:'#1a7a4a',
-de:['Below-canopy conditions via LiDAR, RS, ML','Foundation for sensor placement: Rhine valley + Black Forest','300 plots in 100\u2013150 stands']},
+de:['A comprehensive measurement network to quantify the hydroclimatic variability within forest ecosystems','Foundation for sensor placement: Rhine valley + Black Forest','300 plots in 100\u2013150 stands','Collaboration with related projects will facilitate the monitoring set-up of 150 forest stands to capture variables such as temperature, humidity, precipitation, radiation, and transpiration.']},
 
 {id:'water_quality',l:1,c:'a1',t:'WATER QUALITY MONITORING',ld:['Weiler','Winter'],co:[],
-d:['Water T, turbidity, DOC, N at 50 catchments','Extends existing sites, reacts to disturbances','Forest state \u2192 freshwater quality link'],
+d:['Water T, turbidity, DOC, N at 50 catchments','Extends existing sites, reacts to disturbances','Forest state \u2192 freshwater quality link','\u26a0 Connections to be established (A3, C3)'],
 hi:'Not yet hired',ok:0,st:'#6bcf9e',ic:'#1a7a4a',
-de:['Continuous monitoring at 50 headwater catchment outlets','Extends sites and responds to disturbances','Links forest state to freshwater quality']},
+de:['Continuous monitoring at 50 headwater catchment outlets','Extends sites and responds to disturbances','Links forest state to freshwater quality','\u26a0 Connections to be established (A3, C3)']},
 
 {id:'christen_ml',l:1,c:'a1',t:'ML FOREST CLIMATE PROJECTIONS',ld:['Christen','Orth'],co:[],
 d:['Extends sensor network with QUINCY physiology','Projects future in-canopy microclimates via ML','Starts 2028: canopy buffering quantification'],
 hi:'TBD \u00b7 Start: 2028',ok:0,st:'#6bcf9e',ic:'#1a7a4a',
-de:['In-canopy T and humidity under future climate','Sensor data + C2 projections + QUINCY via ML','Canopy buffering; starts 2028']},
+de:['Integrate observations data on vegetation into ML based microclimate interpolation','Sensor data + C2 projections + QUINCY via ML','Understand microclimate buffering effect of the forest']},
 
 {id:'kattenborn',l:1,c:'a3',t:'LARGE SCALE MORTALITY',ld:['Kattenborn'],co:['Munteanu','Dormann','Schnabel'],
-d:['CNN-based mortality mapping (deadtree.earth)','Plant functional traits from Sentinel-2','Trait maps feed Orth and iLAND calibration'],
-hi:'Mattis Pfenning (PhD)',ok:1,st:'#fb923c',ic:'#c2410c',
-de:['Tree mortality via CNNs on drone/satellite (deadtree.earth)','Spatially continuous trait maps from Sentinel-2','Trait data for QUINCY and iLAND calibration']},
+d:['CNN-based mortality mapping (deadtree.earth)','Plant functional traits from Sentinel-2','Quantify patterns of excess tree mortality across Germany since 2016 (data for C3)'],
+hi:'Mattis Pfenning (PhD)',ok:1,st:'#6bcf9e',ic:'#1a7a4a',
+de:['Tree mortality via CNNs on drone/satellite (deadtree.earth)','Spatially continuous trait maps from Sentinel-2','Visualize mortality patterns and driver contributions for evaluation by forestry experts']},
 
 // Layer 2: C3 process
 {id:'orth',l:2,c:'c3',t:'DROUGHT MODELLING',ld:['Orth'],co:['Kattenborn','M\u00fcller'],
-d:['Species-specific response: vegetation vs soil moisture/VPD','ICOS/AmeriFlux + TRY database','Response functions embedded into iLAND'],
+d:['Species-specific response: vegetation vs soil moisture/VPD','Improving the QUINCY ecosystem model by incorporating the observation-derived vegetation response to VPD and SM','Improves simulation of carbon and water fluxes under dryness'],
 hi:'Pia M\u00fcller (PhD) \u00b7 01.04.2026',ok:1,st:'#93c5fd',ic:'#1a4f8a',
-de:['Emergent forest response to dryness','Species-specific photosynthesis/transpiration functions','Embedded into iLAND drought mortality']},
+de:['Emergent forest response to dryness','Species-specific photosynthesis/transpiration functions','QUINCY model update can be transferred into process based models and SES models']},
 
 {id:'iland',l:2,c:'c3',t:'FOREST GROWTH MODELLING',ld:['Seifert'],co:[],
 d:['Individual tree ecophysiological growth simulator','ABE module for management decisions','Bidirectionally coupled with RoGeR'],
 hi:'PostDoc pending \u00b7 01.07.2026 (?)',ok:0,st:'#93c5fd',ic:'#1a4f8a',
-de:['Individual tree ecophysiological growth simulator','ABE module for management decisions','Bidirectionally coupled with RoGeR']},
+de:['Embedding management modules that reflect realistic harvesting, thinning, and regeneration practices under adaptive strategies','Preparing the model to simulate future forest compositions that may include species not currently present in the study region','Modules reflecting realistic harvesting, thinning, and regeneration practices']},
 
 {id:'roger',l:2,c:'c3',t:'WATER REDISTRIBUTION',ld:['Weiler'],co:[],
-d:['Process-based: plateau, hillslope, riparian/valley','No calibration; physically measurable parameters','Lateral subsurface flow explains tree-to-tree mortality','Bidirectionally coupled with iLAND'],
+d:['Process-based: plateau, hillslope, riparian/valley','No calibration; physically measurable parameters','Lateral subsurface flow explains tree-to-tree mortality','Ground-based plus satellite data to map variations in environmental drivers under drought'],
 hi:'Sheikh Muhammad Asad (PhD) \u00b7 01.05.2026',ok:1,st:'#93c5fd',ic:'#1a4f8a',
-de:['Water redistribution: transpiration and drought vulnerability','Plateau, hillslope, riparian contexts','No calibration; MODFLOW coupling (Stahl)']},
+de:['Water redistribution: transpiration and drought vulnerability','Plateau, hillslope, riparian contexts','No calibration; MODFLOW coupling']},
 
 // Layer 3: C3 socio-economic
 {id:'hanewinkel',l:3,c:'c3',t:'INTEGRATIVE ECONOMIC MODEL',ld:['Hanewinkel'],co:['Pauliuk','Stritih','Seifert'],
 d:['Develops an economic modelling and evaluation framework for ES under risk and uncertainty','Adapts the Global Forest Products Model (GFPM) for Southwest Germany','VaR/CVaR for robust management','Preliminary A&TPs as input to C4'],
-hi:'PostDoc pending \u00b7 01.07.2026',ok:0,st:'#fbbf24',ic:'#92400e',
+hi:'PostDoc pending \u00b7 01.07.2026',ok:0,st:'#93c5fd',ic:'#1a4f8a',
 de:['Develops an economic modelling and evaluation framework for ES under risk and uncertainty','Adapts the Global Forest Products Model (GFPM) for Southwest Germany','VaR/CVaR for robust management','Preliminary A&TPs as input to C4']},
 
 {id:'pauliuk',l:3,c:'c3',t:'WOOD CASCADE MODELLING',ld:['Pauliuk'],co:['Hanewinkel','Stritih','Schl\u00fcter','Schanz','Gingrich'],
 d:['Develops a modelling and stakeholder engagement framework for identifying and evaluating A&TPs for wood use and cascading','Defines A&TPs as sequences of decisions by agents in the wood use system'],
-hi:'Simon Schulte (PostDoc) \u00b7 01.06.2026 \u00b7 Christian Hauenstein (PostDoc)',ok:1,st:'#fbbf24',ic:'#92400e',
-de:['Develops a modelling and stakeholder engagement framework for identifying and evaluating A&TPs for wood use and cascading','Defines A&TPs as sequences of decisions by agents in the wood use system']},
+hi:'Simon Schulte (PostDoc) \u00b7 01.06.2026 \u00b7 Christian Hauenstein (PostDoc)',ok:1,st:'#93c5fd',ic:'#1a4f8a',
+de:['Future Forest A&TPs for the use and cascading of wood','Tools that can generate both the option space and the decision sequences in the wood processing, using, and cascading industries','Sets up a stakeholder exchange process via the SES-CaseLab']},
 
 {id:'schanz',l:3,c:'c3',t:'FOREST ECOSYSTEM SERVICE MARKETS',ld:['Schanz'],co:[],
-d:['Analyses the structural architecture of Forest ES networks covering water, recreation, protection, and timber','Macro: system dynamics stocks and flows','Micro: Causal Loop Diagrams for governance'],
-hi:'Steffi Peuckert (PhD) \u00b7 01.04.2026',ok:1,st:'#fbbf24',ic:'#92400e',
-de:['Analyses the structural architecture of Forest ES networks covering water, recreation, protection, and timber','Macro: system dynamics stocks and flows','Micro: Causal Loop Diagrams for governance']},
+d:['Analyses the structural architecture of Forest ES networks covering water, recreation, protection, and timber','Modelling the interactions between market configuration elements and market shaping capabilities','Formulate a draft system dynamics model to assess forest management impacts on ecosystem services.'],
+hi:'Steffi Peuckert (PhD) \u00b7 01.04.2026',ok:1,st:'#93c5fd',ic:'#1a4f8a',
+de:['NoMWood model is to be expanded to includeall markets into a NoMFES','NoMFES will take into account the key socio-economic and environmental factors, as well astheir interactions, for each forest-based sector','Goal:identify key markets for the sustained provision of diverse forest ecosystems under conditions of global change']},
 
 {id:'brown',l:3,c:'c3',t:'LARGE SCALE ABM',ld:['Brown'],co:['Hanewinkel','Stritih','Schl\u00fcter','Pauliuk'],
 d:['CRAFTY-EU: EU27+3, 1 km, within LandSyMM','Land use + macroeconomics + trade + ecosystems','Provides continental-scale context for C3 models'],
-hi:'PostDoc pending \u00b7 end 2026',ok:0,st:'#fbbf24',ic:'#92400e',
-de:['CRAFTY-EU: EU27+3, 1 km, within LandSyMM','Land use + macroeconomics + trade + ecosystems','Provides continental-scale context for C3 models']}
+hi:'PostDoc pending \u00b7 end 2026',ok:0,st:'#93c5fd',ic:'#1a4f8a',
+de:['CRAFTY as one interface for social and ecological parts of the project','A large-scale but high-resolution model incorporating economic, environmental and social drivers of land use change','Potential coupling with other FuFo models to simulate system interactions e.g. market and wood cascade models in C3']}
 ];
 
 var CS={
@@ -212,14 +212,16 @@ var CO=[
 // C1 conceptual
 ['c1','iland','conceptual'],['c1','stritih','conceptual'],['c1','brown','conceptual'],
 ['c1','hanewinkel','conceptual'],['c1','pauliuk','conceptual'],['c1','schanz','conceptual'],
-
 // Workshop Excel connections (03.03.2026)
 ['jung','stahl','data'],['jung','stritih','data'],
-
 ['schanz','hanewinkel','lateral'],
 ['stahl','brown','lateral'],['stahl','orth','lateral'],
 ['kattenborn','brown','lateral'],['christen','orth','lateral'],
-['kattenborn','stritih','lateral'],['schanz','stritih','lateral']
+['kattenborn','stritih','lateral'],['schanz','stritih','lateral'],
+// Whiteboard: Jung/Schindler <-> Christen (downscaled climate for sensor network)
+['jung','christen','lateral'],
+// Water quality -> A1 connections
+['water_quality','stahl','data'],['water_quality','canopy_micro','data']
 ];
 
 // Adjacency
@@ -228,33 +230,46 @@ CO.forEach(function(c){if(adj[c[0]])adj[c[0]].add(c[1]);if(adj[c[1]])adj[c[1]].a
 
 function ldef(id){return LD.find(function(l){return l.id===id})}
 
-function layout(){
-  var w0=(CW-PAD*2-GAP*2)/3;
-  ['c1','jung','stritih'].forEach(function(id,i){
-    var n=NODES.find(function(x){return x.id===id});
-    n._x=PAD+(w0+GAP)*i;n._y=LD[0].y+22;n._w=w0;n._h=LD[0].h-30;
+function estimateWidth(n){
+  // Width based on longest bullet text, ~5.5px per char at 9.5px font + padding
+  var maxLen=0;
+  if(n.d)n.d.forEach(function(s){if(s.length>maxLen)maxLen=s.length});
+  var title=n.t?n.t.length:0;
+  if(title>maxLen)maxLen=title;
+  var w=Math.max(220, Math.min(480, maxLen*5.2+60));
+  return Math.round(w);
+}
+
+function layoutRow(ids,layerIdx,yOff,fixedH){
+  var L=LD[layerIdx];
+  var nodes=ids.map(function(id){return NODES.find(function(x){return x.id===id})});
+  var widths=nodes.map(function(n){return n.ban?estimateWidth(n)+100:estimateWidth(n)});
+  var totalW=widths.reduce(function(a,b){return a+b},0)+GAP*(nodes.length-1);
+  var startX=(CW-totalW)/2;
+  var x=startX;
+  nodes.forEach(function(n,i){
+    n._x=x;n._y=L.y+yOff;n._w=widths[i];n._h=fixedH;
+    x+=widths[i]+GAP;
   });
-  // Layer 1 — two rows: A1 (top), A3 (bottom)
-  var a1nodes=NODES.filter(function(n){return n.l===1&&n.c==='a1'});
+}
+
+function layout(){
+  // Layer 0: C1 banner + jung + stritih
+  layoutRow(['c1','jung','stritih'],0,22,LD[0].h-30);
+  // Layer 1 A1 row
+  var a1ids=NODES.filter(function(n){return n.l===1&&n.c==='a1'}).map(function(n){return n.id});
+  layoutRow(a1ids,1,28,210);
+  // Layer 1 A3 row
   var a3nodes=NODES.filter(function(n){return n.l===1&&n.c==='a3'});
-  var rowH=210;
-  var nw1=(CW-PAD*2-GAP*(a1nodes.length-1))/a1nodes.length;
-  var x1=PAD;
-  a1nodes.forEach(function(n){n._x=x1;n._y=LD[1].y+28;n._w=nw1;n._h=rowH;x1+=nw1+GAP});
-  // A3 row below A1, left-aligned, wider card
-  var a3y=LD[1].y+28+rowH+36;
-  var a3w=420;
+  var a3y=LD[1].y+28+210+36;
+  var a3w=estimateWidth(a3nodes[0]);
   a3nodes.forEach(function(n,i){n._x=PAD+i*(a3w+GAP);n._y=a3y;n._w=a3w;n._h=180});
-  // Layer 2: three equal-width nodes
-  var l2=NODES.filter(function(n){return n.l===2});
-  var nw2=(CW-PAD*2-GAP*(l2.length-1))/l2.length;
-  var x2=PAD;
-  l2.forEach(function(n){n._x=x2;n._y=LD[2].y+28;n._w=nw2;n._h=LD[2].h-36;x2+=nw2+GAP});
+  // Layer 2
+  var l2ids=NODES.filter(function(n){return n.l===2}).map(function(n){return n.id});
+  layoutRow(l2ids,2,28,LD[2].h-36);
   // Layer 3
-  var l3=NODES.filter(function(n){return n.l===3});
-  var nw3=(CW-PAD*2-GAP*(l3.length-1))/l3.length;
-  var x3=PAD;
-  l3.forEach(function(n){n._x=x3;n._y=LD[3].y+28;n._w=nw3;n._h=LD[3].h-36;x3+=nw3+GAP});
+  var l3ids=NODES.filter(function(n){return n.l===3}).map(function(n){return n.id});
+  layoutRow(l3ids,3,28,LD[3].h-36);
 }
 
 var cv,nEls={},cEls={};
@@ -271,7 +286,7 @@ function renderBands(){
   });
   // A3 sub-label inside band 1
   var a3lbl=document.createElement('div');
-  a3lbl.style.cssText='position:absolute;z-index:2;left:'+PAD+'px;top:'+(LD[1].y+28+210+18)+'px;font-family:IBM Plex Mono,monospace;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#c2410c;background:#fed7aa;padding:2px 10px;border-radius:3px;';
+  a3lbl.style.cssText='position:absolute;z-index:2;left:'+PAD+'px;top:'+(LD[1].y+28+210+18)+'px;font-family:IBM Plex Mono,monospace;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#1a7a4a;background:#bbf7d0;padding:2px 10px;border-radius:3px;';
   a3lbl.textContent='A3 \u2014 FOREST RISKS';
   cv.appendChild(a3lbl);
 }
