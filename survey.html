@@ -299,6 +299,24 @@ textarea{resize:vertical;line-height:1.6}
 </div>
 </div>
 
+<!-- 08 ADDITIONAL QUESTIONS -->
+<div class="section" style="border-color:#1e3a5f;background:#1e3a5f;">
+<div class="section-head" style="background:#16304f;border-bottom-color:#2d4f7a;">
+  <span class="section-num" style="color:#6bcf9e;">08</span>
+  <span class="section-title" style="color:#e2e8f0;">Additional questions</span>
+</div>
+<div class="section-body" style="background:#1e3a5f;">
+<div class="field">
+  <label class="field-label" style="color:#94a3b8;">What high-impact research question could be answered by your collaboration with another FuFo group?</label>
+  <textarea id="high_impact" rows="4" style="background:#16304f;border-color:#2d4f7a;color:#f1f5f9;" placeholder=""></textarea>
+</div>
+<div class="field">
+  <label class="field-label" style="color:#94a3b8;">Do you have an international collaborator interested in collaborating within the case study or in other capacity?</label>
+  <textarea id="intl_collab" rows="4" style="background:#16304f;border-color:#2d4f7a;color:#f1f5f9;" placeholder=""></textarea>
+</div>
+</div>
+</div>
+
 <button class="submit-btn" onclick="submitForm()">Submit</button>
 </div>
 
@@ -331,6 +349,8 @@ textarea{resize:vertical;line-height:1.6}
 <input type="hidden" id="f-collab" name="15_Collaboration_interests">
 <input type="hidden" id="f-collab-who" name="16_Collaboration_who_topic">
 <input type="hidden" id="f-comments" name="17_Comments">
+<input type="hidden" id="f-high-impact" name="18_High_impact_question">
+<input type="hidden" id="f-intl-collab" name="19_International_collaborator">
 </form>
 <iframe name="hidden-iframe" style="display:none"></iframe>
 
@@ -383,6 +403,8 @@ function submitForm(){
   document.getElementById('f-collab').value=getChecked('collab');
   document.getElementById('f-collab-who').value=document.getElementById('collab_who').value.trim();
   document.getElementById('f-comments').value=document.getElementById('comments').value.trim();
+  document.getElementById('f-high-impact').value=document.getElementById('high_impact').value.trim();
+  document.getElementById('f-intl-collab').value=document.getElementById('intl_collab').value.trim();
 
   document.getElementById('hidden-form').submit();
   document.getElementById('form-body').style.display='none';
