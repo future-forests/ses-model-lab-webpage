@@ -4,3 +4,4 @@ read msg
 git add .
 git commit -m "$msg"
 git push --set-upstream origin pages
+git push main
