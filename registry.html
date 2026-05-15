@@ -31,6 +31,7 @@
   <button class="filter-btn" onclick="filterCards('cluster','c1',this)">C1</button>
   <button class="filter-btn" onclick="filterCards('cluster','c2',this)">C2</button>
   <button class="filter-btn" onclick="filterCards('cluster','c3',this)">C3</button>
+  <button class="filter-btn" onclick="filterCards('cluster','other',this)">Other</button>
 </div>
 <div class="filter-bar" style="margin-top:-10px;">
   <span style="font-size:11px;color:#94a3b8;font-family:'IBM Plex Mono',monospace">METHOD:</span>
@@ -512,6 +513,34 @@
     </div>
   </div>
 </div>
+<div class="cluster-head" data-cluster="other" style="display:none;margin-bottom:6px;padding:10px 14px;background:#fef3c7;border-radius:6px;border-left:4px solid #b45309;">
+  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.14em;color:#b45309;text-transform:uppercase;">Other — External Data Infrastructure</span>
+  <div style="font-size:11.5px;color:#475569;margin-top:3px;">External partners and data resources relevant to the FuFo modelling framework.</div>
+</div>
+<div class="card" id="card-lfvbw" data-labels="field-data" data-cluster="other" data-layer="0"
+     style="border-left:4px solid #b45309;background:#fffbeb;border-radius:8px;
+            padding:16px 18px;margin-bottom:12px;transition:box-shadow .15s;display:none;">
+  <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:18px;font-weight:700;color:#b45309;letter-spacing:-.01em;margin-bottom:2px;">LFV BW / WWW 4.0 Data Infrastructure</div>
+      <div style="font-size:11px;color:#64748b;font-style:italic;margin-bottom:4px;">Structured operational and planning data for Baden-Württemberg's public forest estate</div>
+      <div style="font-size:13px;font-weight:400;color:#1e293b;">PD Dr. Tobias Schlechtriemen<span style="font-size:12px;color:#64748b;margin-left:6px">Universität Freiburg · WWW 4.0 Knowledge Graph · 2024–2026</span></div>
+      <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;"><span style="background:#fef3c7;color:#92400e;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">Landesforstverwaltung Baden-Württemberg</span><span style="background:#fef3c7;color:#92400e;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">Knowledge graph / operational data</span></div>
+    </div>
+  </div>
+  <ul style="margin:10px 0 0 0;padding-left:18px;font-size:12px;color:#475569;line-height:1.55;list-style-type:disc;">
+    <p style="margin-bottom:3px;">Provides structured access to operational and planning data for Baden-Württemberg's public forest estate via the WWW 4.0 knowledge graph project</p>
+    <p style="margin-bottom:3px;">Forest site mapping (Standortskartierung): soil properties, water balance, topology</p>
+    <li style="margin-bottom:3px;">10-year forest management planning (Forsteinrichtung)</li>
+    <li style="margin-bottom:3px;">Tree species suitability assessments and climate-informed species forecasts (FVA model outputs)</li>
+    <li style="margin-bottom:3px;">Digital terrain model</li>
+    <li style="margin-bottom:3px;">Planting numbers and spacing guidelines</li>
+    <li style="margin-bottom:3px;">Silviculture manual (Waldbauhandbuch)</li>
+    <li style="margin-bottom:3px;">Nature conservation designations and certification status</li>
+    <li style="margin-bottom:3px;">Subsidy programme data</li>
+    <li style="margin-bottom:3px;">Operational forest management data</li>
+  </ul>
+</div>
 <div style='height:20px'></div>
 <div style="text-align:center;font-size:10px;color:#94a3b8;font-family:'IBM Plex Mono',monospace;margin-top:20px;padding-top:12px;border-top:1px solid #e2e8f0;">
   SES-ModelLab · Future Forests C3 · <a href="FuFo_Interactive.html" style="color:#1a4f8a">↗ Interactive Connection Map</a>
@@ -522,12 +551,21 @@ function filterCards(type, value, btn) {
   btn.classList.add('active');
   document.querySelectorAll('.card').forEach(card => {
     if (value === 'all') {
-      card.style.display = '';
+      card.style.display = card.dataset.cluster === 'other' ? 'none' : '';
     } else if (type === 'cluster') {
       card.style.display = card.dataset.cluster === value ? '' : 'none';
     } else {
       const labels = (card.dataset.labels || '').split(' ');
       card.style.display = labels.includes(value) ? '' : 'none';
+    }
+  });
+  document.querySelectorAll('.cluster-head').forEach(h => {
+    if (value === 'all') {
+      h.style.display = 'none';
+    } else if (type === 'cluster') {
+      h.style.display = h.dataset.cluster === value ? '' : 'none';
+    } else {
+      h.style.display = 'none';
     }
   });
 }
