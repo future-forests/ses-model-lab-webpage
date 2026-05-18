@@ -267,9 +267,20 @@ textarea{resize:vertical;line-height:1.6}
 </div>
 </div>
 
-<!-- 07 COLLABORATION -->
+<!-- 07 SPECIFIC MODEL -->
 <div class="section">
-<div class="section-head"><span class="section-num">07</span><span class="section-title">Potential collaborations</span></div>
+<div class="section-head"><span class="section-num">07</span><span class="section-title">What specific model do you use?</span></div>
+<div class="section-body">
+<div class="field">
+<label class="field-label">What specific model (if any) do you use or plan to use in your work?<span class="hint">Name, version, or brief description — leave blank if not applicable</span></label>
+<textarea id="specific_model" rows="3"></textarea>
+</div>
+</div>
+</div>
+
+<!-- 08 COLLABORATION -->
+<div class="section">
+<div class="section-head"><span class="section-num">08</span><span class="section-title">Potential collaborations</span></div>
 <div class="section-body">
 <div class="field">
 <span class="field-label">Which of these would you be interested in?</span>
@@ -295,10 +306,10 @@ textarea{resize:vertical;line-height:1.6}
 </div>
 </div>
 
-<!-- 08 ADDITIONAL QUESTIONS -->
+<!-- 09 ADDITIONAL QUESTIONS -->
 <div class="section" style="border-color:#1e3a5f;background:#1e3a5f;">
 <div class="section-head" style="background:#16304f;border-bottom-color:#2d4f7a;">
-  <span class="section-num" style="color:#6bcf9e;">08</span>
+  <span class="section-num" style="color:#6bcf9e;">09</span>
   <span class="section-title" style="color:#e2e8f0;">Additional questions</span>
 </div>
 <div class="section-body" style="background:#1e3a5f;">
@@ -379,11 +390,12 @@ async function submitForm(){
     '12_Project_connections': getProjects(),
     '13_Connection_notes': document.getElementById('proj_notes').value.trim(),
     '14_Relation_to_modelling': document.querySelector('input[name="modelling_rel"]:checked') ? document.querySelector('input[name="modelling_rel"]:checked').value : '',
-    '15_Collaboration_interests': getChecked('collab'),
-    '16_Collaboration_who_topic': document.getElementById('collab_who').value.trim(),
-    '17_Comments': document.getElementById('comments').value.trim(),
-    '18_High_impact_question': document.getElementById('high_impact').value.trim(),
-    '19_International_collaborator': document.getElementById('intl_collab').value.trim()
+    '15_Specific_model': document.getElementById('specific_model').value.trim(),
+    '16_Collaboration_interests': getChecked('collab'),
+    '17_Collaboration_who_topic': document.getElementById('collab_who').value.trim(),
+    '18_Comments': document.getElementById('comments').value.trim(),
+    '19_High_impact_question': document.getElementById('high_impact').value.trim(),
+    '20_International_collaborator': document.getElementById('intl_collab').value.trim()
   };
 
   try {
