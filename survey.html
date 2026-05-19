@@ -127,6 +127,7 @@ textarea{resize:vertical;line-height:1.6}
 <div class="section">
 <div class="section-head"><span class="section-num">02</span><span class="section-title">What data or material do you work with?</span></div>
 <div class="section-body">
+<p style="font-size:12px;color:var(--slate);font-style:italic;margin-bottom:10px">If you're early-stage, answer for what you expect your work to involve.</p>
 <span class="field-label">Select all that apply</span>
 <div class="two-col" style="margin-top:4px">
 <label class="check-item"><input type="checkbox" name="data_use" value="climate">Climate / reanalysis data (ERA5, CMIP6…)</label>
@@ -153,6 +154,7 @@ textarea{resize:vertical;line-height:1.6}
 <div class="section">
 <div class="section-head"><span class="section-num">03</span><span class="section-title">What does your work produce or make available?</span></div>
 <div class="section-body">
+<p style="font-size:12px;color:var(--slate);font-style:italic;margin-bottom:10px">If you're early-stage, answer for what you expect your work to involve.</p>
 <span class="field-label">Select all that apply</span>
 <div class="two-col" style="margin-top:4px">
 <label class="check-item"><input type="checkbox" name="produce" value="maps_spatial">Maps / spatial datasets</label>
@@ -169,7 +171,7 @@ textarea{resize:vertical;line-height:1.6}
 <label class="check-item"><input type="checkbox" name="produce" value="narratives">Case studies / narratives</label>
 </div>
 <div class="field" style="margin-top:14px">
-<label class="field-label">Describe what you produce or have available<span class="hint">Species, region, time period, format</span></label>
+<label class="field-label">Describe what you produce or have available<span class="hint">Species, region, time period, format. If uncertain, describe what you aim to produce.</span></label>
 <textarea id="produce_desc" rows="3"></textarea>
 </div>
 </div>
@@ -206,7 +208,8 @@ textarea{resize:vertical;line-height:1.6}
 <div class="section-head"><span class="section-num">05</span><span class="section-title">Where do you see connections to your work?</span></div>
 <div class="section-body">
 <span class="field-label">Tick any projects you could connect with — then select the direction</span>
-<span class="hint" style="margin-bottom:16px;display:block">→ I could provide data/input &nbsp;|&nbsp; ← I could use their outputs &nbsp;|&nbsp; ↔ Both</span>
+<span class="hint" style="margin-bottom:4px;display:block">→ I could provide data/input &nbsp;|&nbsp; ← I could use their outputs &nbsp;|&nbsp; ↔ Both</span>
+<p style="font-size:12px;color:var(--slate);font-style:italic;margin-bottom:16px">If you're early-stage, tick projects you think you might connect with — or leave empty.</p>
 
 <div class="ra-group">
 <div class="ra-label">A1 — Sensor & Climate</div>
@@ -324,6 +327,20 @@ textarea{resize:vertical;line-height:1.6}
 </div>
 </div>
 
+<!-- 10 FOLLOW-UP TIMING -->
+<div class="section">
+<div class="section-head"><span class="section-num">10</span><span class="section-title">When would be a good time to follow up with you?</span></div>
+<div class="section-body">
+<div class="radio-list" style="margin-top:4px">
+<label class="radio-item"><input type="radio" name="followup_timing" value="3-6 months">In 3–6 months</label>
+<label class="radio-item"><input type="radio" name="followup_timing" value="6-12 months">In 6–12 months</label>
+<label class="radio-item"><input type="radio" name="followup_timing" value="after field season">After my first field season / data collection</label>
+<label class="radio-item"><input type="radio" name="followup_timing" value="once clearer question">Once I have a clearer research question</label>
+<label class="radio-item"><input type="radio" name="followup_timing" value="no follow-up">No follow-up needed — I'm happy with what I submitted</label>
+</div>
+</div>
+</div>
+
 <button class="submit-btn" id="submit-btn" onclick="submitForm()">Submit</button>
 </div>
 
@@ -395,7 +412,8 @@ async function submitForm(){
     '17_Collaboration_who_topic': document.getElementById('collab_who').value.trim(),
     '18_Comments': document.getElementById('comments').value.trim(),
     '19_High_impact_question': document.getElementById('high_impact').value.trim(),
-    '20_International_collaborator': document.getElementById('intl_collab').value.trim()
+    '20_International_collaborator': document.getElementById('intl_collab').value.trim(),
+    '21_Followup_timing': document.querySelector('input[name="followup_timing"]:checked') ? document.querySelector('input[name="followup_timing"]:checked').value : ''
   };
 
   try {
