@@ -3,8 +3,8 @@
 **Maintained by:** Marta Wenta, Scientific Modelling Coordinator, Future Forests Excellence Cluster, Universität Freiburg
 **To view each chart:**:
 
-https://mwenta.codeberg.page/fufo_modelling/registry.html -> registry of modeling activities
-https://mwenta.codeberg.page/fufo_modelling/survey.html -> survey for FuFo members (and associated people)
+https://fufo-modelling-458783.pages.uni-freiburg.de/registry.html -> registry of modeling activities
+https://fufo-modelling-458783.pages.uni-freiburg.de/survey.html -> survey for FuFo members (and associated people)
 ---
 
 ## What this is
