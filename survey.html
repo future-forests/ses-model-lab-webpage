@@ -23,7 +23,7 @@ header p{font-size:12px;color:#94a3b8;margin-top:6px;line-height:1.6;max-width:6
 .field:last-child{margin-bottom:0}
 .field-label{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);display:block;margin-bottom:8px}
 .hint{font-family:'IBM Plex Sans',sans-serif;font-weight:400;font-style:italic;letter-spacing:0;text-transform:none;color:var(--muted);font-size:11px;display:block;margin-top:3px}
-input[type=text],select,textarea{font-family:'IBM Plex Sans',sans-serif;font-size:13px;color:#1e293b;background:#fff;border:1.5px solid var(--border);border-radius:6px;padding:9px 12px;transition:border-color .15s;width:100%}
+input[type=text],input[type=email],select,textarea{font-family:'IBM Plex Sans',sans-serif;font-size:13px;color:#1e293b;background:#fff;border:1.5px solid var(--border);border-radius:6px;padding:9px 12px;transition:border-color .15s;width:100%}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(30,58,95,.08)}
 textarea{resize:vertical;line-height:1.6}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px 20px}
@@ -32,8 +32,6 @@ textarea{resize:vertical;line-height:1.6}
 .radio-list{display:flex;flex-direction:column;gap:7px}
 .radio-item{display:flex;align-items:flex-start;gap:8px;font-size:12.5px;line-height:1.45;cursor:pointer}
 .radio-item input{margin-top:2px;accent-color:var(--navy);cursor:pointer;flex-shrink:0}
-
-/* Project connection groups */
 .ra-group{margin-bottom:18px}
 .ra-label{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid var(--border)}
 .project-row{display:flex;align-items:center;gap:0;margin-bottom:5px;border:1px solid var(--border);border-radius:6px;overflow:hidden;transition:border-color .15s}
@@ -45,9 +43,9 @@ textarea{resize:vertical;line-height:1.6}
 .proj-dir{padding:4px 8px;display:none;background:#f8fafc;border-left:1px solid var(--border)}
 .project-row:has(.proj-check:checked) .proj-dir{display:flex;align-items:center}
 .proj-dir select{font-size:11px;padding:4px 8px;border:none;background:transparent;cursor:pointer;color:var(--navy);font-weight:600;width:auto}
-
 .submit-btn{display:block;width:100%;padding:16px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:700;letter-spacing:.04em;cursor:pointer;margin-top:24px;transition:background .15s}
 .submit-btn:hover{background:#16304f}
+.submit-btn:disabled{background:#94a3b8;cursor:not-allowed}
 #thank-you{display:none;text-align:center;padding:48px 24px;background:#fff;border:1px solid var(--border);border-radius:10px}
 #thank-you h2{font-size:20px;color:var(--navy);margin-bottom:10px}
 #thank-you p{font-size:13px;color:var(--slate);line-height:1.7}
@@ -129,6 +127,7 @@ textarea{resize:vertical;line-height:1.6}
 <div class="section">
 <div class="section-head"><span class="section-num">02</span><span class="section-title">What data or material do you work with?</span></div>
 <div class="section-body">
+<p style="font-size:12px;color:var(--slate);font-style:italic;margin-bottom:10px">If not sure, leave empty or mark what you expect to work with.</p>
 <span class="field-label">Select all that apply</span>
 <div class="two-col" style="margin-top:4px">
 <label class="check-item"><input type="checkbox" name="data_use" value="climate">Climate / reanalysis data (ERA5, CMIP6…)</label>
@@ -151,11 +150,11 @@ textarea{resize:vertical;line-height:1.6}
 </div>
 </div>
 
-
 <!-- 03 WHAT DO YOU PRODUCE -->
 <div class="section">
 <div class="section-head"><span class="section-num">03</span><span class="section-title">What does your work produce or make available?</span></div>
 <div class="section-body">
+<p style="font-size:12px;color:var(--slate);font-style:italic;margin-bottom:10px">You can also indicate what you expect your work to involve.</p>
 <span class="field-label">Select all that apply</span>
 <div class="two-col" style="margin-top:4px">
 <label class="check-item"><input type="checkbox" name="produce" value="maps_spatial">Maps / spatial datasets</label>
@@ -172,7 +171,7 @@ textarea{resize:vertical;line-height:1.6}
 <label class="check-item"><input type="checkbox" name="produce" value="narratives">Case studies / narratives</label>
 </div>
 <div class="field" style="margin-top:14px">
-<label class="field-label">Describe what you produce or have available<span class="hint">Species, region, time period, format</span></label>
+<label class="field-label">Describe what you produce or have available<span class="hint">Species, region, time period, format. If uncertain, describe what you aim to produce.</span></label>
 <textarea id="produce_desc" rows="3"></textarea>
 </div>
 </div>
@@ -182,6 +181,7 @@ textarea{resize:vertical;line-height:1.6}
 <div class="section">
 <div class="section-head"><span class="section-num">04</span><span class="section-title">What would be useful for your work from other groups?</span></div>
 <div class="section-body">
+<p style="font-size:12px;color:var(--slate);font-style:italic;margin-bottom:10px">If you're early-stage, answer for what you expect your work to involve.</p>
 <span class="field-label">Select all that apply</span>
 <div class="two-col" style="margin-top:4px">
 <label class="check-item"><input type="checkbox" name="need" value="clim_proj">Climate projections for my study area</label>
@@ -209,47 +209,48 @@ textarea{resize:vertical;line-height:1.6}
 <div class="section-head"><span class="section-num">05</span><span class="section-title">Where do you see connections to your work?</span></div>
 <div class="section-body">
 <span class="field-label">Tick any projects you could connect with — then select the direction</span>
-<span class="hint" style="margin-bottom:16px;display:block">→ I could provide data/input &nbsp;|&nbsp; ← I could use their outputs &nbsp;|&nbsp; ↔ Both</span>
+<span class="hint" style="margin-bottom:4px;display:block">→ I could provide data/input &nbsp;|&nbsp; ← I could use their outputs &nbsp;|&nbsp; ↔ Both</span>
+<p style="font-size:12px;color:var(--slate);font-style:italic;margin-bottom:16px">If you're early-stage, tick projects you think you might connect with — or leave empty.</p>
 
 <div class="ra-group">
 <div class="ra-label">A1 — Sensor & Climate</div>
-<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Water Legacy"></div><label class="proj-name">Water Legacy <span class="proj-pi"></span></label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
-<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Adaptive Sensor Network"></div><label class="proj-name">Adaptive Sensor Network <span class="proj-pi"></span></label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
-<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Canopy Micro Environment"></div><label class="proj-name">Canopy Micro Environment <span class="proj-pi"></span></label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
-<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Water Quality Monitoring"></div><label class="proj-name">Water Quality Monitoring <span class="proj-pi"></span></label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
-<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="ML Forest Climate Projections"></div><label class="proj-name">ML Forest Climate Projections <span class="proj-pi"></span></label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
+<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Water Legacy"></div><label class="proj-name">Water Legacy</label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
+<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Adaptive Sensor Network"></div><label class="proj-name">Adaptive Sensor Network</label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
+<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Canopy Micro Environment"></div><label class="proj-name">Canopy Micro Environment</label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
+<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Water Quality Monitoring"></div><label class="proj-name">Water Quality Monitoring</label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
+<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="ML Forest Climate Projections"></div><label class="proj-name">ML Forest Climate Projections</label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
 </div>
 
 <div class="ra-group">
 <div class="ra-label">A3 — Forest Risks</div>
-<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Large Scale Mortality"></div><label class="proj-name">Large Scale Mortality <span class="proj-pi"></span></label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
+<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Large Scale Mortality"></div><label class="proj-name">Large Scale Mortality</label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
 </div>
 
 <div class="ra-group">
 <div class="ra-label">C1 — SES Theory</div>
-<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Advancing SES Theory (Schlüter)"></div><label class="proj-name">Advancing SES Theory <span class="proj-pi"></span></label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
+<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Advancing SES Theory (Schlüter)"></div><label class="proj-name">Advancing SES Theory</label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
 </div>
 
 <div class="ra-group">
 <div class="ra-label">C2 — Scenarios</div>
-<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="HyClimScenarios (Stahl, Schindler, Christen, Orth)"></div><label class="proj-name">HyClimScenarios <span class="proj-pi"></span></label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
-<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Participatory Modelling (Stritih)"></div><label class="proj-name">Participatory Modelling <span class="proj-pi"></span></label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
+<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="HyClimScenarios"></div><label class="proj-name">HyClimScenarios</label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
+<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Participatory Modelling (Stritih)"></div><label class="proj-name">Participatory Modelling</label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
 </div>
 
 <div class="ra-group">
 <div class="ra-label">C3 — Integrated Modelling</div>
-<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Drought Modelling (Orth)"></div><label class="proj-name">Drought Modelling <span class="proj-pi"></span></label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
-<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Forest Growth Modelling (Seifert)"></div><label class="proj-name">Forest Growth Modelling — iLAND <span class="proj-pi"></span></label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
-<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Water Redistribution (Weiler)"></div><label class="proj-name">Water Redistribution — RoGeR <span class="proj-pi"></span></label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
-<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Integrative Economic Model (Hanewinkel)"></div><label class="proj-name">Integrative Economic Model <span class="proj-pi"></span></label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
-<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Wood Cascade Modelling (Pauliuk)"></div><label class="proj-name">Wood Cascade Modelling <span class="proj-pi"></span></label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
-<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Forest Ecosystem Service Markets (Schanz)"></div><label class="proj-name">Forest Ecosystem Service Markets <span class="proj-pi"></span></label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
-<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Large Scale ABM (Brown)"></div><label class="proj-name">Large Scale ABM — CRAFTY <span class="proj-pi"></span></label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
+<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Drought Modelling (Orth)"></div><label class="proj-name">Drought Modelling</label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
+<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Forest Growth Modelling (Seifert)"></div><label class="proj-name">Forest Growth Modelling — iLAND</label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
+<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Water Redistribution (Weiler)"></div><label class="proj-name">Water Redistribution — RoGeR</label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
+<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Integrative Economic Model (Hanewinkel)"></div><label class="proj-name">Integrative Economic Model</label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
+<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Wood Cascade Modelling (Pauliuk)"></div><label class="proj-name">Wood Cascade Modelling</label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
+<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Forest Ecosystem Service Markets (Schanz)"></div><label class="proj-name">Forest Ecosystem Service Markets</label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
+<div class="project-row"><div class="proj-check-wrap"><input class="proj-check" type="checkbox" name="proj" value="Large Scale ABM (Brown)"></div><label class="proj-name">Large Scale ABM — CRAFTY</label><div class="proj-dir"><select><option>→ I provide</option><option>← I use</option><option>↔ Both</option></select></div></div>
 </div>
 
 <div class="field" style="margin-top:6px">
 <label class="field-label">For the projects you selected — briefly, what is the connection?</label>
-<textarea id="proj_notes" rows="3" placeholder=""></textarea>
+<textarea id="proj_notes" rows="3"></textarea>
 </div>
 </div>
 </div>
@@ -266,14 +267,27 @@ textarea{resize:vertical;line-height:1.6}
 <label class="radio-item"><input type="radio" name="modelling_rel" value="conceptual">I work on concepts or frameworks that could inform models</label>
 <label class="radio-item"><input type="radio" name="modelling_rel" value="interested">I'd like to connect to modelling but am not sure how yet</label>
 <label class="radio-item"><input type="radio" name="modelling_rel" value="none">My work is not directly related to modelling</label>
+<label class="radio-item"><input type="radio" name="modelling_rel" value="unknown">I do not know yet</label>
 </div>
 </div>
 </div>
 
-<!-- 07 COLLABORATION -->
+<!-- 07 SPECIFIC MODEL -->
 <div class="section">
-<div class="section-head"><span class="section-num">07</span><span class="section-title">Potential collaborations</span></div>
+<div class="section-head"><span class="section-num">07</span><span class="section-title">What specific model do you use?</span></div>
 <div class="section-body">
+<div class="field">
+<label class="field-label">What specific model (if any) do you use or plan to use in your work?<span class="hint">Name, version, or brief description — leave blank if not applicable</span></label>
+<textarea id="specific_model" rows="3"></textarea>
+</div>
+</div>
+</div>
+
+<!-- 08 COLLABORATION -->
+<div class="section">
+<div class="section-head"><span class="section-num">08</span><span class="section-title">Potential collaborations</span></div>
+<div class="section-body">
+<p style="font-size:12px;color:var(--slate);font-style:italic;margin-bottom:10px"></p>
 <div class="field">
 <span class="field-label">Which of these would you be interested in?</span>
 <div class="two-col" style="margin-top:6px">
@@ -285,6 +299,7 @@ textarea{resize:vertical;line-height:1.6}
 <label class="check-item"><input type="checkbox" name="collab" value="conceptual_link">Linking my conceptual work to a quantitative model</label>
 <label class="check-item"><input type="checkbox" name="collab" value="joint_paper">Joint paper or deliverable with a C3 modelling group</label>
 <label class="check-item"><input type="checkbox" name="collab" value="stakeholder">Involving stakeholders in modelling or scenario work</label>
+<label class="check-item"><input type="checkbox" name="collab" value="not_interested">Not interested in collaborations</label>
 </div>
 </div>
 <div class="field" style="margin-top:4px">
@@ -293,65 +308,52 @@ textarea{resize:vertical;line-height:1.6}
 </div>
 <div class="field" style="margin-top:4px">
 <label class="field-label">Any other thoughts on collaboration — or anything else you want us to know?</label>
-<textarea id="comments" rows="4" placeholder=""></textarea>
+<textarea id="comments" rows="4"></textarea>
 </div>
 </div>
 </div>
 
-<!-- 08 ADDITIONAL QUESTIONS -->
+<!-- 09 ADDITIONAL QUESTIONS -->
 <div class="section" style="border-color:#1e3a5f;background:#1e3a5f;">
 <div class="section-head" style="background:#16304f;border-bottom-color:#2d4f7a;">
-  <span class="section-num" style="color:#6bcf9e;">08</span>
+  <span class="section-num" style="color:#6bcf9e;">09</span>
   <span class="section-title" style="color:#e2e8f0;">Additional questions</span>
 </div>
 <div class="section-body" style="background:#1e3a5f;">
 <div class="field">
   <label class="field-label" style="color:#94a3b8;">What high-impact research question could be answered by your collaboration with another FuFo group?</label>
-  <textarea id="high_impact" rows="4" style="background:#16304f;border-color:#2d4f7a;color:#f1f5f9;" placeholder=""></textarea>
+  <textarea id="high_impact" rows="4" style="background:#16304f;border-color:#2d4f7a;color:#f1f5f9;"></textarea>
 </div>
 <div class="field">
   <label class="field-label" style="color:#94a3b8;">Do you have an international collaborator interested in collaborating within the case study or in other capacity?</label>
-  <textarea id="intl_collab" rows="4" style="background:#16304f;border-color:#2d4f7a;color:#f1f5f9;" placeholder=""></textarea>
+  <textarea id="intl_collab" rows="4" style="background:#16304f;border-color:#2d4f7a;color:#f1f5f9;"></textarea>
 </div>
 </div>
 </div>
 
-<button class="submit-btn" onclick="submitForm()">Submit</button>
+<!-- 10 FOLLOW-UP TIMING -->
+<div class="section">
+<div class="section-head"><span class="section-num">10</span><span class="section-title">When would be a good time to follow up with you?</span></div>
+<div class="section-body">
+<div class="radio-list" style="margin-top:4px">
+<label class="radio-item"><input type="radio" name="followup_timing" value="3-6 months">In 3–6 months</label>
+<label class="radio-item"><input type="radio" name="followup_timing" value="6-12 months">In 6–12 months</label>
+<label class="radio-item"><input type="radio" name="followup_timing" value="after field season">After my first field season / data collection</label>
+<label class="radio-item"><input type="radio" name="followup_timing" value="once clearer question">Once I have a clearer research question</label>
+<label class="radio-item"><input type="radio" name="followup_timing" value="no follow-up">No follow-up needed — I'm happy with what I submitted</label>
+</div>
+</div>
+</div>
+
+<button class="submit-btn" id="submit-btn" onclick="submitForm()">Submit</button>
 </div>
 
 <div id="thank-you">
 <h2>Thank you.</h2>
 <p>Your response has been received.<br>We will be in touch if we have follow-up questions.<br><br>
-<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#94a3b8">C3 Modelling Coordinator · Future Forests · Universität Freiburg</span></p>
+<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#94a3b8">Future Forests · Universität Freiburg</span></p>
 </div>
 </div>
-
-<form id="hidden-form" action="https://formsubmit.co/marta.wenta@futureforests.uni-freiburg.de" method="POST" target="hidden-iframe" style="display:none">
-<input type="hidden" name="_subject" value="FuFo Modelling Connections Survey">
-<input type="hidden" name="_template" value="table">
-<input type="hidden" name="_captcha" value="false">
-<input type="hidden" name="_next" value="https://fufo-ses-model-lab.codeberg.page/fufo_modelling/survey.html">
-<input type="hidden" id="f-name" name="01_Name">
-<input type="hidden" id="f-email" name="02_Email">
-<input type="hidden" id="f-supervisor" name="03_Supervisor">
-<input type="hidden" id="f-ra" name="04_Research_Area">
-<input type="hidden" id="f-role" name="05_Role">
-<input type="hidden" id="f-data-use" name="06_Data_worked_with">
-<input type="hidden" id="f-data-other" name="07_Data_other">
-<input type="hidden" id="f-produce" name="08_Produces">
-<input type="hidden" id="f-produce-desc" name="09_Produces_description">
-<input type="hidden" id="f-need" name="10_Data_needed">
-<input type="hidden" id="f-need-other" name="11_Data_needed_other">
-<input type="hidden" id="f-projects" name="12_Project_connections">
-<input type="hidden" id="f-proj-notes" name="13_Connection_notes">
-<input type="hidden" id="f-modelling-rel" name="14_Relation_to_modelling">
-<input type="hidden" id="f-collab" name="15_Collaboration_interests">
-<input type="hidden" id="f-collab-who" name="16_Collaboration_who_topic">
-<input type="hidden" id="f-comments" name="17_Comments">
-<input type="hidden" id="f-high-impact" name="18_High_impact_question">
-<input type="hidden" id="f-intl-collab" name="19_International_collaborator">
-</form>
-<iframe name="hidden-iframe" style="display:none"></iframe>
 
 <script>
 function getChecked(name){
@@ -369,46 +371,76 @@ function getProjects(){
   });
   return results.join(' | ');
 }
-function submitForm(){
+
+async function submitForm(){
   var name=document.getElementById('name').value.trim();
   var ra=document.getElementById('ra').value;
   var role=document.getElementById('role').value;
+  var email=document.getElementById('email').value.trim();
   var ok=true;
+
   if(!name){document.getElementById('name').style.borderColor='var(--red)';ok=false;}
   else{document.getElementById('name').style.borderColor='';}
+  if(!email||email.indexOf('@')===-1){document.getElementById('email').style.borderColor='var(--red)';ok=false;}
+  else{document.getElementById('email').style.borderColor='';}
   if(!ra){document.getElementById('ra').style.borderColor='var(--red)';ok=false;}
   else{document.getElementById('ra').style.borderColor='';}
   if(!role){document.getElementById('role').style.borderColor='var(--red)';ok=false;}
   else{document.getElementById('role').style.borderColor='';}
-  var email=document.getElementById('email').value.trim();
-  if(!email||email.indexOf('@')===-1){document.getElementById('email').style.borderColor='var(--red)';ok=false;}
-  else{document.getElementById('email').style.borderColor='';}
   if(!ok){window.scrollTo({top:0,behavior:'smooth'});return;}
 
-  document.getElementById('f-name').value=name;
-  document.getElementById('f-email').value=document.getElementById('email').value.trim();
-  document.getElementById('f-supervisor').value=document.getElementById('supervisor').value.trim();
-  document.getElementById('f-ra').value=ra;
-  document.getElementById('f-role').value=role;
-  document.getElementById('f-data-use').value=getChecked('data_use');
-  document.getElementById('f-data-other').value=document.getElementById('data_other').value.trim();
-  document.getElementById('f-produce').value=getChecked('produce');
-  document.getElementById('f-produce-desc').value=document.getElementById('produce_desc').value.trim();
-  document.getElementById('f-need').value=getChecked('need');
-  document.getElementById('f-need-other').value=document.getElementById('need_other').value.trim();
-  document.getElementById('f-projects').value=getProjects();
-  document.getElementById('f-proj-notes').value=document.getElementById('proj_notes').value.trim();
-  document.getElementById('f-modelling-rel').value=document.querySelector('input[name="modelling_rel"]:checked')?document.querySelector('input[name="modelling_rel"]:checked').value:'';
-  document.getElementById('f-collab').value=getChecked('collab');
-  document.getElementById('f-collab-who').value=document.getElementById('collab_who').value.trim();
-  document.getElementById('f-comments').value=document.getElementById('comments').value.trim();
-  document.getElementById('f-high-impact').value=document.getElementById('high_impact').value.trim();
-  document.getElementById('f-intl-collab').value=document.getElementById('intl_collab').value.trim();
+  var btn=document.getElementById('submit-btn');
+  btn.disabled=true;
+  btn.textContent='Sending…';
 
-  document.getElementById('hidden-form').submit();
-  document.getElementById('form-body').style.display='none';
-  document.getElementById('thank-you').style.display='block';
-  window.scrollTo({top:0,behavior:'smooth'});
+  var payload={
+    access_key: '0013a879-fb87-4a39-a3e7-4408532268ae',
+    subject: 'FuFo Modelling Connections Survey',
+    from_name: 'FuFo Survey',
+    '01_Name': name,
+    '02_Email': email,
+    '03_Supervisor': document.getElementById('supervisor').value.trim(),
+    '04_Research_Area': ra,
+    '05_Role': role,
+    '06_Data_worked_with': getChecked('data_use'),
+    '07_Data_other': document.getElementById('data_other').value.trim(),
+    '08_Produces': getChecked('produce'),
+    '09_Produces_description': document.getElementById('produce_desc').value.trim(),
+    '10_Data_needed': getChecked('need'),
+    '11_Data_needed_other': document.getElementById('need_other').value.trim(),
+    '12_Project_connections': getProjects(),
+    '13_Connection_notes': document.getElementById('proj_notes').value.trim(),
+    '14_Relation_to_modelling': document.querySelector('input[name="modelling_rel"]:checked') ? document.querySelector('input[name="modelling_rel"]:checked').value : '',
+    '15_Specific_model': document.getElementById('specific_model').value.trim(),
+    '16_Collaboration_interests': getChecked('collab'),
+    '17_Collaboration_who_topic': document.getElementById('collab_who').value.trim(),
+    '18_Comments': document.getElementById('comments').value.trim(),
+    '19_High_impact_question': document.getElementById('high_impact').value.trim(),
+    '20_International_collaborator': document.getElementById('intl_collab').value.trim(),
+    '21_Followup_timing': document.querySelector('input[name="followup_timing"]:checked') ? document.querySelector('input[name="followup_timing"]:checked').value : ''
+  };
+
+  try {
+    var response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+      body: JSON.stringify(payload)
+    });
+    var result = await response.json();
+    if(result.success){
+      document.getElementById('form-body').style.display='none';
+      document.getElementById('thank-you').style.display='block';
+      window.scrollTo({top:0,behavior:'smooth'});
+    } else {
+      btn.disabled=false;
+      btn.textContent='Submit';
+      alert('Something went wrong: '+result.message+'. Please try again.');
+    }
+  } catch(err){
+    btn.disabled=false;
+    btn.textContent='Submit';
+    alert('Network error — please check your connection and try again.');
+  }
 }
 </script>
 </body>
