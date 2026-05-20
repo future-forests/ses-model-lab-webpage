@@ -6,5 +6,6 @@ pages:
   artifacts:
     paths:
       - public
-  only:
-    - main
+    expire_in: never
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
