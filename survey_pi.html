@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Future Forests — Modelling Connections Survey</title>
+<title>Future Forests — Modelling Connections Survey (PI)</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 :root{--navy:#1e3a5f;--green:#1a7a4a;--border:#e2e8f0;--bg:#f8fafc;--muted:#94a3b8;--slate:#475569;--red:#c0392b}
@@ -51,16 +51,12 @@ textarea{resize:vertical;line-height:1.6}
 #thank-you p{font-size:13px;color:var(--slate);line-height:1.7}
 .req{color:var(--red)}
 @media(max-width:560px){.two-col{grid-template-columns:1fr}}
-.sub-q{margin-bottom:22px}
-.sub-q-label{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#92400e;display:block;margin-bottom:10px;padding-bottom:5px;border-bottom:1px solid #fde68a}
-.cond-block{display:none;margin-top:10px;padding:10px 14px;background:#fef9c3;border:1px solid #fde68a;border-radius:6px}
-.cond-block-label{font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#92400e;display:block;margin-bottom:8px}
 </style>
 </head>
 <body>
 <header>
 <div class="tag">Future Forests Excellence Cluster · Universität Freiburg</div>
-<h1>Modelling Connections Survey</h1>
+<h1>Modelling Connections Survey — PI version</h1>
 <p>We are mapping what each group works on and where collaborations around modelling could emerge. Mostly checkboxes — takes about 5 minutes. Browse the registry before filling in the survey:</p>
 <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:10px">
 <a href="https://fufo-ses-model-lab.codeberg.page/fufo_modelling/registry.html" target="_blank" style="display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#6bcf9e;text-decoration:none;border:1px solid #6bcf9e33;padding:5px 12px;border-radius:5px;transition:background .15s" onmouseover="this.style.background='rgba(107,207,158,.1)'" onmouseout="this.style.background='transparent'">&#8599; Model Registry</a>
@@ -327,123 +323,10 @@ textarea{resize:vertical;line-height:1.6}
 </div>
 </div>
 
-<!-- 09 MODEL DEVELOPMENT -->
-<div class="section" style="border-color:#fde68a;background:#fffbeb">
-<div class="section-head" style="background:#fef3c7;border-bottom-color:#fde68a">
-  <span class="section-num" style="color:#b45309">09</span>
-  <span class="section-title" style="color:#78350f">Coding</span>
-</div>
-<div class="section-body" style="background:#fffbeb">
-
-<div class="sub-q">
-<span class="sub-q-label">9.1 — Bash / Linux experience</span>
-<div class="radio-list">
-<label class="radio-item"><input type="radio" name="bash_exp" value="0">0 — No experience</label>
-<label class="radio-item"><input type="radio" name="bash_exp" value="1">1 — I have heard of it</label>
-<label class="radio-item"><input type="radio" name="bash_exp" value="2">2 — I can navigate files and run basic commands</label>
-<label class="radio-item"><input type="radio" name="bash_exp" value="3">3 — I write simple scripts and use the terminal regularly</label>
-<label class="radio-item"><input type="radio" name="bash_exp" value="4">4 — I write complex scripts, use pipes, cron jobs, and environment configuration</label>
-<label class="radio-item"><input type="radio" name="bash_exp" value="5">5 — I maintain system-level workflows and automate infrastructure tasks</label>
-</div>
-</div>
-
-<div class="sub-q">
-<span class="sub-q-label">9.2 — Version control (Git) experience</span>
-<div class="radio-list">
-<label class="radio-item"><input type="radio" name="git_exp" value="0" onchange="toggleGitPlatforms()">0 — No experience</label>
-<label class="radio-item"><input type="radio" name="git_exp" value="1" onchange="toggleGitPlatforms()">1 — I have heard of it</label>
-<label class="radio-item"><input type="radio" name="git_exp" value="2" onchange="toggleGitPlatforms()">2 — I can clone a repository and pull changes</label>
-<label class="radio-item"><input type="radio" name="git_exp" value="3" onchange="toggleGitPlatforms()">3 — I commit, push, branch, and resolve simple merge conflicts</label>
-<label class="radio-item"><input type="radio" name="git_exp" value="4" onchange="toggleGitPlatforms()">4 — I use branching strategies, pull requests, and review workflows</label>
-<label class="radio-item"><input type="radio" name="git_exp" value="5" onchange="toggleGitPlatforms()">5 — I manage repositories with submodules, CI/CD pipelines, or release automation</label>
-</div>
-<div id="git-platforms" class="cond-block">
-<span class="cond-block-label">Which platform(s) do you use?</span>
-<div style="display:flex;flex-wrap:wrap;gap:6px 20px">
-<label class="check-item"><input type="checkbox" name="git_platform" value="GitHub">GitHub</label>
-<label class="check-item"><input type="checkbox" name="git_platform" value="GitLab">GitLab</label>
-<label class="check-item"><input type="checkbox" name="git_platform" value="Bitbucket">Bitbucket</label>
-<label class="check-item"><input type="checkbox" name="git_platform" value="Codeberg">Codeberg</label>
-<label class="check-item"><input type="checkbox" name="git_platform" value="Other">Other</label>
-</div>
-<div style="margin-top:8px"><input type="text" id="git_platform_other" placeholder="Other platform…" style="font-size:12px;padding:6px 10px"></div>
-</div>
-</div>
-
-<div class="sub-q">
-<span class="sub-q-label">9.3 — Programming / scripting languages used for analysis (select all that apply)</span>
-<div class="two-col" style="margin-top:4px">
-<label class="check-item"><input type="checkbox" name="lang" value="R">R</label>
-<label class="check-item"><input type="checkbox" name="lang" value="Python">Python</label>
-<label class="check-item"><input type="checkbox" name="lang" value="Julia">Julia</label>
-<label class="check-item"><input type="checkbox" name="lang" value="MATLAB">MATLAB</label>
-<label class="check-item"><input type="checkbox" name="lang" value="Fortran">Fortran</label>
-<label class="check-item"><input type="checkbox" name="lang" value="C/C++">C/C++</label>
-<label class="check-item"><input type="checkbox" name="lang" value="JavaScript">JavaScript</label>
-<label class="check-item"><input type="checkbox" name="lang" value="Stata">Stata</label>
-<label class="check-item"><input type="checkbox" name="lang" value="None">None</label>
-</div>
-<div style="margin-top:10px"><input type="text" id="lang_other" placeholder="Other language(s)…" style="font-size:12px;padding:6px 10px;width:100%"></div>
-</div>
-
-<div class="sub-q">
-<span class="sub-q-label">9.4 — Python experience</span>
-<div class="radio-list">
-<label class="radio-item"><input type="radio" name="python_exp" value="0">0 — No experience</label>
-<label class="radio-item"><input type="radio" name="python_exp" value="1">1 — I have heard of it</label>
-<label class="radio-item"><input type="radio" name="python_exp" value="2">2 — I can run existing scripts and modify simple parameters</label>
-<label class="radio-item"><input type="radio" name="python_exp" value="3">3 — I write my own scripts using loops, conditionals, and standard libraries</label>
-<label class="radio-item"><input type="radio" name="python_exp" value="4">4 — I write functions, use external packages, and handle data pipelines</label>
-<label class="radio-item"><input type="radio" name="python_exp" value="5">5 — I use object-oriented programming, build reusable modules, and develop structured projects</label>
-</div>
-</div>
-
-<div class="sub-q">
-<span class="sub-q-label">9.5 — Do you use an Integrated Development Environment (IDE)?</span>
-<div class="radio-list">
-<label class="radio-item"><input type="radio" name="uses_ide" value="Yes" onchange="toggleIDE()">Yes</label>
-<label class="radio-item"><input type="radio" name="uses_ide" value="No" onchange="toggleIDE()">No</label>
-</div>
-<div id="ide-list" class="cond-block">
-<span class="cond-block-label">Which one(s)?</span>
-<div class="two-col">
-<label class="check-item"><input type="checkbox" name="ide" value="VS Code">VS Code</label>
-<label class="check-item"><input type="checkbox" name="ide" value="PyCharm">PyCharm</label>
-<label class="check-item"><input type="checkbox" name="ide" value="RStudio">RStudio</label>
-<label class="check-item"><input type="checkbox" name="ide" value="Jupyter Notebook/Lab">Jupyter Notebook/Lab</label>
-<label class="check-item"><input type="checkbox" name="ide" value="Spyder">Spyder</label>
-<label class="check-item"><input type="checkbox" name="ide" value="Vim/Neovim">Vim/Neovim</label>
-</div>
-<div style="margin-top:8px"><input type="text" id="ide_other" placeholder="Other IDE…" style="font-size:12px;padding:6px 10px"></div>
-</div>
-</div>
-
-<div class="sub-q" style="margin-bottom:0">
-<span class="sub-q-label">9.6 — Have you ever connected to a remote server or HPC cluster for computation?</span>
-<div class="radio-list">
-<label class="radio-item"><input type="radio" name="uses_hpc" value="Yes" onchange="toggleHPC()">Yes</label>
-<label class="radio-item"><input type="radio" name="uses_hpc" value="No" onchange="toggleHPC()">No</label>
-</div>
-<div id="hpc-detail" class="cond-block">
-<span class="cond-block-label">With which software?</span>
-<div style="display:flex;flex-wrap:wrap;gap:6px 20px;margin-bottom:8px">
-<label class="check-item"><input type="checkbox" name="hpc_software" value="Terminal only">Terminal only</label>
-<label class="check-item"><input type="checkbox" name="hpc_software" value="PuTTY">PuTTY</label>
-<label class="check-item"><input type="checkbox" name="hpc_software" value="MobaXterm">MobaXterm</label>
-<label class="check-item"><input type="checkbox" name="hpc_software" value="VS Code Remote-SSH">VS Code with Remote - SSH</label>
-<label class="check-item"><input type="checkbox" name="hpc_software" value="Other">Other</label>
-</div>
-<input type="text" id="hpc_which" placeholder="Other software…" style="font-size:12px;padding:6px 10px;width:100%">
-</div>
-</div>
-
-</div>
-</div>
-
-<!-- 10 ADDITIONAL QUESTIONS -->
+<!-- 09 ADDITIONAL QUESTIONS -->
 <div class="section" style="border-color:#1e3a5f;background:#1e3a5f;">
 <div class="section-head" style="background:#16304f;border-bottom-color:#2d4f7a;">
-  <span class="section-num" style="color:#6bcf9e;">10</span>
+  <span class="section-num" style="color:#6bcf9e;">09</span>
   <span class="section-title" style="color:#e2e8f0;">Additional questions</span>
 </div>
 <div class="section-body" style="background:#1e3a5f;">
@@ -454,6 +337,20 @@ textarea{resize:vertical;line-height:1.6}
 <div class="field">
   <label class="field-label" style="color:#94a3b8;">Do you have an international collaborator interested in collaborating within the case study or in other capacity?</label>
   <textarea id="intl_collab" rows="4" style="background:#16304f;border-color:#2d4f7a;color:#f1f5f9;"></textarea>
+</div>
+</div>
+</div>
+
+<!-- 10 FOLLOW-UP TIMING -->
+<div class="section">
+<div class="section-head"><span class="section-num">10</span><span class="section-title">When would be a good time to follow up with you?</span></div>
+<div class="section-body">
+<div class="radio-list" style="margin-top:4px">
+<label class="radio-item"><input type="radio" name="followup_timing" value="3-6 months">In 3–6 months</label>
+<label class="radio-item"><input type="radio" name="followup_timing" value="6-12 months">In 6–12 months</label>
+<label class="radio-item"><input type="radio" name="followup_timing" value="after field season">After my first field season / data collection</label>
+<label class="radio-item"><input type="radio" name="followup_timing" value="once clearer question">Once I have a clearer research question</label>
+<label class="radio-item"><input type="radio" name="followup_timing" value="no follow-up">No follow-up needed — I'm happy with what I submitted</label>
 </div>
 </div>
 </div>
@@ -485,19 +382,6 @@ function getProjects(){
   return results.join(' | ');
 }
 
-function toggleGitPlatforms(){
-  var val=document.querySelector('input[name="git_exp"]:checked');
-  document.getElementById('git-platforms').style.display=(val&&parseInt(val.value)>=1)?'block':'none';
-}
-function toggleIDE(){
-  var val=document.querySelector('input[name="uses_ide"]:checked');
-  document.getElementById('ide-list').style.display=(val&&val.value==='Yes')?'block':'none';
-}
-function toggleHPC(){
-  var val=document.querySelector('input[name="uses_hpc"]:checked');
-  document.getElementById('hpc-detail').style.display=(val&&val.value==='Yes')?'block':'none';
-}
-
 async function submitForm(){
   var name=document.getElementById('name').value.trim();
   var ra=document.getElementById('ra').value;
@@ -521,8 +405,8 @@ async function submitForm(){
 
   var payload={
     access_key: '0013a879-fb87-4a39-a3e7-4408532268ae',
-    subject: 'FuFo Modelling Connections Survey',
-    from_name: 'FuFo Survey',
+    subject: 'FuFo Modelling Connections Survey (PI)',
+    from_name: 'FuFo Survey PI',
     '01_Name': name,
     '02_Email': email,
     '03_Supervisor': document.getElementById('supervisor').value.trim(),
@@ -543,15 +427,7 @@ async function submitForm(){
     '18_Comments': document.getElementById('comments').value.trim(),
     '19_High_impact_question': document.getElementById('high_impact').value.trim(),
     '20_International_collaborator': document.getElementById('intl_collab').value.trim(),
-    '22_Bash_experience': document.querySelector('input[name="bash_exp"]:checked') ? document.querySelector('input[name="bash_exp"]:checked').value : '',
-    '23_Git_experience': document.querySelector('input[name="git_exp"]:checked') ? document.querySelector('input[name="git_exp"]:checked').value : '',
-    '24_Git_platforms': (function(){var p=getChecked('git_platform');var o=document.getElementById('git_platform_other').value.trim();return p+(o?'; Other: '+o:'');})(),
-    '25_Languages': (function(){var l=getChecked('lang');var o=document.getElementById('lang_other').value.trim();return l+(o?'; Other: '+o:'');})(),
-    '26_Python_experience': document.querySelector('input[name="python_exp"]:checked') ? document.querySelector('input[name="python_exp"]:checked').value : '',
-    '27_Uses_IDE': document.querySelector('input[name="uses_ide"]:checked') ? document.querySelector('input[name="uses_ide"]:checked').value : '',
-    '28_IDE_list': (function(){var i=getChecked('ide');var o=document.getElementById('ide_other').value.trim();return i+(o?'; Other: '+o:'');})(),
-    '29_Uses_HPC': document.querySelector('input[name="uses_hpc"]:checked') ? document.querySelector('input[name="uses_hpc"]:checked').value : '',
-    '30_HPC_software': (function(){var s=getChecked('hpc_software');var o=document.getElementById('hpc_which').value.trim();return s+(o?'; Other: '+o:'');})(),
+    '21_Followup_timing': document.querySelector('input[name="followup_timing"]:checked') ? document.querySelector('input[name="followup_timing"]:checked').value : ''
   };
 
   try {
