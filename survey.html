@@ -275,7 +275,7 @@ textarea{resize:vertical;line-height:1.6}
 <div class="section-body">
 <span class="field-label">Pick the closest match</span>
 <div class="radio-list" style="margin-top:6px">
-<label class="radio-item"><input type="radio" name="modelling_rel" value="run">I develop or run simulation models</label>
+<label class="radio-item"><input type="radio" name="modelling_rel" value="run">I run simulation models and develop/modify the source code of models</label>
 <label class="radio-item"><input type="radio" name="modelling_rel" value="produce">I produce data that could feed into models</label>
 <label class="radio-item"><input type="radio" name="modelling_rel" value="use">I use or interpret model outputs in my research</label>
 <label class="radio-item"><input type="radio" name="modelling_rel" value="conceptual">I work on concepts or frameworks that could inform models</label>
@@ -331,7 +331,7 @@ textarea{resize:vertical;line-height:1.6}
 <div class="section" style="border-color:#fde68a;background:#fffbeb">
 <div class="section-head" style="background:#fef3c7;border-bottom-color:#fde68a">
   <span class="section-num" style="color:#b45309">09</span>
-  <span class="section-title" style="color:#78350f"> Model Development</span>
+  <span class="section-title" style="color:#78350f">Coding</span>
 </div>
 <div class="section-body" style="background:#fffbeb">
 
@@ -425,8 +425,15 @@ textarea{resize:vertical;line-height:1.6}
 <label class="radio-item"><input type="radio" name="uses_hpc" value="No" onchange="toggleHPC()">No</label>
 </div>
 <div id="hpc-detail" class="cond-block">
-<label class="cond-block-label">Which one(s)?</label>
-<input type="text" id="hpc_which" placeholder="e.g. bwUniCluster, university HPC, AWS, institutional server…" style="font-size:12px;padding:6px 10px;width:100%">
+<span class="cond-block-label">With which software?</span>
+<div style="display:flex;flex-wrap:wrap;gap:6px 20px;margin-bottom:8px">
+<label class="check-item"><input type="checkbox" name="hpc_software" value="Terminal only">Terminal only</label>
+<label class="check-item"><input type="checkbox" name="hpc_software" value="PuTTY">PuTTY</label>
+<label class="check-item"><input type="checkbox" name="hpc_software" value="MobaXterm">MobaXterm</label>
+<label class="check-item"><input type="checkbox" name="hpc_software" value="VS Code Remote-SSH">VS Code with Remote - SSH</label>
+<label class="check-item"><input type="checkbox" name="hpc_software" value="Other">Other</label>
+</div>
+<input type="text" id="hpc_which" placeholder="Other software…" style="font-size:12px;padding:6px 10px;width:100%">
 </div>
 </div>
 
@@ -559,7 +566,7 @@ async function submitForm(){
     '27_Uses_IDE': document.querySelector('input[name="uses_ide"]:checked') ? document.querySelector('input[name="uses_ide"]:checked').value : '',
     '28_IDE_list': (function(){var i=getChecked('ide');var o=document.getElementById('ide_other').value.trim();return i+(o?'; Other: '+o:'');})(),
     '29_Uses_HPC': document.querySelector('input[name="uses_hpc"]:checked') ? document.querySelector('input[name="uses_hpc"]:checked').value : '',
-    '30_HPC_which': document.getElementById('hpc_which').value.trim()
+    '30_HPC_software': (function(){var s=getChecked('hpc_software');var o=document.getElementById('hpc_which').value.trim();return s+(o?'; Other: '+o:'');})(),
   };
 
   try {
