@@ -644,7 +644,25 @@ let currentSearch = '';
 // ── INIT ──
 document.addEventListener('DOMContentLoaded', () => {
   renderPeopleList();
-  loadFromGitLab();
+  renderBoard(); // always render board immediately, don't wait for GitLab
+  loadFromGitLab().catch(err => {
+    console.warn('GitLab load failed (CORS or network):', err);
+    setStatus('offline — changes not saved');
+    showToast('GitLab unreachable — board works locally only', true);
+  });
+  // event delegation for drag — works on dynamically rendered cards
+  document.getElementById('peopleList').addEventListener('dragstart', e => {
+    const card = e.target.closest('.person-card');
+    if (!card || card.classList.contains('in-collab')) return;
+    dragSrcName = card.dataset.name;
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', dragSrcName);
+    card.classList.add('dragging');
+  });
+  document.getElementById('peopleList').addEventListener('dragend', e => {
+    const card = e.target.closest('.person-card');
+    if (card) card.classList.remove('dragging');
+  });
 });
 
 // ── PEOPLE LIST ──
@@ -673,7 +691,6 @@ function renderPeopleList() {
     return `<div class="person-card ${inLane ? 'in-collab' : ''}"
       draggable="${!inLane}"
       data-name="${escapeAttr(p.name)}"
-      ondragstart="onDragStart(event)"
       title="${escapeAttr(p.projects.join(', ') || p.theme)}">
       <div class="card-name">${escapeHtml(p.name)}</div>
       <div class="card-meta">
@@ -838,33 +855,25 @@ document.getElementById('addLaneModal').addEventListener('click', e => {
 async function loadFromGitLab() {
   setStatus('loading...');
   setLoadingBar(30);
-  try {
-    const url = `${GITLAB_BASE}/api/v4/projects/${PROJECT_PATH}/repository/files/${encodeURIComponent(FILE_PATH)}?ref=${BRANCH}`;
-    const res = await fetch(url, { headers: { 'PRIVATE-TOKEN': TOKEN } });
-    setLoadingBar(70);
-    if (res.status === 404) {
-      // File doesn't exist yet — start fresh
-      gitlabFileSha = null;
-      setStatus('ready (new file)');
-      setLoadingBar(100);
-      renderBoard();
-      return;
-    }
-    if (!res.ok) throw new Error(`GitLab API error: ${res.status}`);
-    const data = await res.json();
-    gitlabFileSha = data.last_commit_id || null;
-    const yaml = atob(data.content.replace(/\n/g, ''));
-    lanes = parseYaml(yaml);
-    colorIdx = lanes.length;
-    renderBoard();
-    renderPeopleList();
-    setStatus('loaded');
+  const url = `${GITLAB_BASE}/api/v4/projects/${PROJECT_PATH}/repository/files/${encodeURIComponent(FILE_PATH)}?ref=${BRANCH}`;
+  const res = await fetch(url, { headers: { 'PRIVATE-TOKEN': TOKEN } });
+  setLoadingBar(70);
+  if (res.status === 404) {
+    gitlabFileSha = null;
+    setStatus('ready (new file)');
     setLoadingBar(100);
-  } catch (err) {
-    setStatus('error loading');
-    setLoadingBar(0);
-    showToast('Could not load from GitLab: ' + err.message, true);
+    return;
   }
+  if (!res.ok) throw new Error(`GitLab API ${res.status}`);
+  const data = await res.json();
+  gitlabFileSha = data.last_commit_id || null;
+  const yaml = atob(data.content.replace(/\n/g, ''));
+  lanes = parseYaml(yaml);
+  colorIdx = lanes.length;
+  renderBoard();
+  renderPeopleList();
+  setStatus('loaded');
+  setLoadingBar(100);
 }
 
 async function saveToGitLab() {
