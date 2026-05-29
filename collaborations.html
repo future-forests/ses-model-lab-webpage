@@ -650,19 +650,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setStatus('offline — changes not saved');
     showToast('GitLab unreachable — board works locally only', true);
   });
-  // event delegation for drag — works on dynamically rendered cards
-  document.getElementById('peopleList').addEventListener('dragstart', e => {
-    const card = e.target.closest('.person-card');
-    if (!card || card.classList.contains('in-collab')) return;
-    dragSrcName = card.dataset.name;
-    e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('text/plain', dragSrcName);
-    card.classList.add('dragging');
-  });
-  document.getElementById('peopleList').addEventListener('dragend', e => {
-    const card = e.target.closest('.person-card');
-    if (card) card.classList.remove('dragging');
-  });
 });
 
 // ── PEOPLE LIST ──
@@ -688,9 +675,11 @@ function renderPeopleList() {
 
   list.innerHTML = filtered.map(p => {
     const inLane = allInLanes.has(p.name);
+    const dragAttrs = inLane ? '' : 'ondragstart="onDragStart(event)" ondragend="onDragEnd(event)"';
     return `<div class="person-card ${inLane ? 'in-collab' : ''}"
       draggable="${!inLane}"
       data-name="${escapeAttr(p.name)}"
+      ${dragAttrs}
       title="${escapeAttr(p.projects.join(', ') || p.theme)}">
       <div class="card-name">${escapeHtml(p.name)}</div>
       <div class="card-meta">
@@ -716,10 +705,15 @@ function filterPeople() {
 
 // ── DRAG & DROP ──
 function onDragStart(e) {
-  dragSrcName = e.currentTarget.dataset.name;
+  const card = e.currentTarget;
+  dragSrcName = card.dataset.name;
   e.dataTransfer.effectAllowed = 'move';
   e.dataTransfer.setData('text/plain', dragSrcName);
-  setTimeout(() => e.currentTarget.classList.add('dragging'), 0);
+  setTimeout(() => card.classList.add('dragging'), 0);
+}
+
+function onDragEnd(e) {
+  e.currentTarget.classList.remove('dragging');
 }
 
 function onDragOver(e, laneId) {
