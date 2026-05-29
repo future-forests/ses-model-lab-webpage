@@ -650,6 +650,42 @@ document.addEventListener('DOMContentLoaded', () => {
     setStatus('offline — changes not saved');
     showToast('GitLab unreachable — board works locally only', true);
   });
+
+  const boardEl = document.getElementById('board');
+
+  boardEl.addEventListener('dragover', function(e) {
+    const lane = e.target.closest('.lane');
+    if (!lane) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    document.querySelectorAll('.lane').forEach(l => l.classList.remove('drag-over'));
+    lane.classList.add('drag-over');
+  });
+
+  boardEl.addEventListener('dragleave', function(e) {
+    if (!e.relatedTarget || !boardEl.contains(e.relatedTarget)) {
+      document.querySelectorAll('.lane').forEach(l => l.classList.remove('drag-over'));
+    }
+  });
+
+  boardEl.addEventListener('drop', function(e) {
+    const laneEl = e.target.closest('.lane');
+    if (!laneEl) return;
+    e.preventDefault();
+    document.querySelectorAll('.lane').forEach(l => l.classList.remove('drag-over'));
+    const laneId = laneEl.id.replace(/^lane-/, '');
+    const name = e.dataTransfer.getData('text/plain') || dragSrcName;
+    if (!name) return;
+    const lane = lanes.find(l => l.id === laneId);
+    if (!lane) return;
+    if (!lane.members.includes(name)) {
+      lane.members.push(name);
+      renderBoard();
+      renderPeopleList();
+      setStatus('unsaved');
+    }
+    dragSrcName = null;
+  });
 });
 
 // ── PEOPLE LIST ──
@@ -716,32 +752,6 @@ function onDragEnd(e) {
   e.currentTarget.classList.remove('dragging');
 }
 
-function onDragOver(e, laneId) {
-  e.preventDefault();
-  e.dataTransfer.dropEffect = 'move';
-  document.querySelectorAll('.lane').forEach(l => l.classList.remove('drag-over'));
-  document.getElementById('lane-' + laneId).classList.add('drag-over');
-}
-
-function onDragLeave(laneId) {
-  document.getElementById('lane-' + laneId).classList.remove('drag-over');
-}
-
-function onDrop(e, laneId) {
-  e.preventDefault();
-  document.getElementById('lane-' + laneId).classList.remove('drag-over');
-  const name = e.dataTransfer.getData('text/plain') || dragSrcName;
-  if (!name) return;
-  const lane = lanes.find(l => l.id === laneId);
-  if (!lane) return;
-  if (!lane.members.includes(name)) {
-    lane.members.push(name);
-    renderBoard();
-    renderPeopleList();
-    setStatus('unsaved');
-  }
-  dragSrcName = null;
-}
 
 // ── LANES ──
 function addLane(title) {
@@ -805,10 +815,7 @@ function renderBoard() {
           </div>`;
         }).join('');
 
-    return `<div class="lane" id="lane-${lane.id}"
-      ondragover="onDragOver(event,'${lane.id}')"
-      ondragleave="onDragLeave('${lane.id}')"
-      ondrop="onDrop(event,'${lane.id}')">
+    return `<div class="lane" id="lane-${lane.id}">
       <div class="lane-header">
         <div class="lane-color-dot" style="background:${lane.color}"></div>
         <input class="lane-title-input" value="${escapeAttr(lane.title)}"
