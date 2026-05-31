@@ -676,20 +676,27 @@ document.addEventListener('DOMContentLoaded', () => {
   // People panel delegation — stable container, never replaced
   document.getElementById('peopleList').addEventListener('click', function(e) {
     const card = e.target.closest('.person-card');
+    console.log('[peopleList click]', { target: e.target, card: card, name: card && card.dataset.name });
     if (!card || card.classList.contains('in-collab')) return;
     selectPerson(card.dataset.name);
   });
 
   // Board delegation — stable container, only children change
   document.getElementById('board').addEventListener('click', function(e) {
+    console.log('[board click]', { target: e.target, selectedName: selectedName });
     if (e.target.closest('.lane-title-input') ||
         e.target.closest('.lane-delete') ||
         e.target.closest('.remove-from-lane') ||
-        e.target.closest('.add-lane-btn')) return;
+        e.target.closest('.add-lane-btn')) {
+      console.log('[board click] ignored (input/delete/remove/add btn)');
+      return;
+    }
     const laneEl = e.target.closest('.lane');
+    console.log('[board click] laneEl:', laneEl, 'selectedName:', selectedName);
     if (!laneEl || !selectedName) return;
     const laneId = laneEl.id.replace(/^lane-/, '');
     const lane = lanes.find(l => l.id === laneId);
+    console.log('[board click] adding', selectedName, 'to lane', laneId, lane);
     if (!lane || lane.members.includes(selectedName)) return;
     lane.members.push(selectedName);
     selectedName = null;
