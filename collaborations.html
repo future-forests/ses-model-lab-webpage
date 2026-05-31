@@ -471,10 +471,8 @@
   <div class="header-actions">
     <span class="save-status" id="saveStatus">loading...</span>
     <button class="btn btn-ghost" onclick="openAddLaneModal()">+ New collaboration</button>
-    <button class="btn btn-ghost" onclick="loadFileInput.click()" title="Load a previously saved .yml file">Load file</button>
     <button class="btn btn-ghost" onclick="downloadFile()" title="Download as .yml file">Download</button>
     <button class="btn btn-primary" onclick="saveToGitLab()">Save to GitLab</button>
-    <input type="file" id="loadFileInput" accept=".yml,.yaml,.txt" style="display:none" onchange="loadFromFile(this)">
   </div>
 </div>
 
@@ -525,7 +523,7 @@
 // ── GITLAB CONFIG ── paste your personal access token here (needs api scope)
 const GITLAB_BASE = 'https://gitlab.uni-freiburg.de';
 const PROJECT_PATH = 'future-forests%2Fses_model_lab';
-const FILE_PATH = 'collaborations.yml';
+const FILE_PATH = 'fufo_modelling/collaborations.yml';
 const BRANCH = 'main';
 const TOKEN = 'glpat-t1psUPbVeO9pvoh-l4kKL286MQp1OmNiCA.01.0y0msvv1a'; // ← paste token here
 
@@ -990,24 +988,26 @@ async function saveToGitLab() {
   const content = btoa(unescape(encodeURIComponent(yaml)));
   const fileUrl = `${GITLAB_BASE}/api/v4/projects/${PROJECT_PATH}/repository/files/${encodeURIComponent(FILE_PATH)}`;
 
-  let exists = false;
+  const payload = {
+    branch: BRANCH,
+    content,
+    commit_message: `Update collaborations — ${new Date().toISOString().slice(0,16).replace('T',' ')}`,
+    encoding: 'base64'
+  };
   try {
-    const check = await fetch(`${fileUrl}?ref=${BRANCH}`, { headers: { 'PRIVATE-TOKEN': TOKEN } });
-    exists = check.ok;
-  } catch(e) {}
-
-  const method = exists ? 'PUT' : 'POST';
-  try {
-    const res = await fetch(fileUrl, {
-      method,
+    // Try PUT (update existing file); if 404 fall back to POST (create new file)
+    let res = await fetch(fileUrl, {
+      method: 'PUT',
       headers: { 'PRIVATE-TOKEN': TOKEN, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        branch: BRANCH,
-        content,
-        commit_message: `Update collaborations — ${new Date().toISOString().slice(0,16).replace('T',' ')}`,
-        encoding: 'base64'
-      })
+      body: JSON.stringify(payload)
     });
+    if (res.status === 404) {
+      res = await fetch(fileUrl, {
+        method: 'POST',
+        headers: { 'PRIVATE-TOKEN': TOKEN, 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    }
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
       throw new Error(err.message || res.status);
