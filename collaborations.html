@@ -644,47 +644,12 @@ let currentSearch = '';
 // ── INIT ──
 document.addEventListener('DOMContentLoaded', () => {
   renderPeopleList();
-  renderBoard(); // always render board immediately, don't wait for GitLab
+  renderBoard();
+  initPointerDrag();
   loadFromGitLab().catch(err => {
     console.warn('GitLab load failed (CORS or network):', err);
     setStatus('offline — changes not saved');
     showToast('GitLab unreachable — board works locally only', true);
-  });
-
-  const boardEl = document.getElementById('board');
-
-  boardEl.addEventListener('dragover', function(e) {
-    const lane = e.target.closest('.lane');
-    if (!lane) return;
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'move';
-    document.querySelectorAll('.lane').forEach(l => l.classList.remove('drag-over'));
-    lane.classList.add('drag-over');
-  });
-
-  boardEl.addEventListener('dragleave', function(e) {
-    if (!e.relatedTarget || !boardEl.contains(e.relatedTarget)) {
-      document.querySelectorAll('.lane').forEach(l => l.classList.remove('drag-over'));
-    }
-  });
-
-  boardEl.addEventListener('drop', function(e) {
-    const laneEl = e.target.closest('.lane');
-    if (!laneEl) return;
-    e.preventDefault();
-    document.querySelectorAll('.lane').forEach(l => l.classList.remove('drag-over'));
-    const laneId = laneEl.id.replace(/^lane-/, '');
-    const name = e.dataTransfer.getData('text/plain') || dragSrcName;
-    if (!name) return;
-    const lane = lanes.find(l => l.id === laneId);
-    if (!lane) return;
-    if (!lane.members.includes(name)) {
-      lane.members.push(name);
-      renderBoard();
-      renderPeopleList();
-      setStatus('unsaved');
-    }
-    dragSrcName = null;
   });
 });
 
@@ -711,11 +676,8 @@ function renderPeopleList() {
 
   list.innerHTML = filtered.map(p => {
     const inLane = allInLanes.has(p.name);
-    const dragAttrs = inLane ? '' : 'ondragstart="onDragStart(event)" ondragend="onDragEnd(event)"';
     return `<div class="person-card ${inLane ? 'in-collab' : ''}"
-      draggable="${!inLane}"
       data-name="${escapeAttr(p.name)}"
-      ${dragAttrs}
       title="${escapeAttr(p.projects.join(', ') || p.theme)}">
       <div class="card-name">${escapeHtml(p.name)}</div>
       <div class="card-meta">
@@ -739,19 +701,80 @@ function filterPeople() {
   renderPeopleList();
 }
 
-// ── DRAG & DROP ──
-function onDragStart(e) {
-  const card = e.currentTarget;
-  dragSrcName = card.dataset.name;
-  e.dataTransfer.effectAllowed = 'move';
-  e.dataTransfer.setData('text/plain', dragSrcName);
-  setTimeout(() => card.classList.add('dragging'), 0);
+// ── POINTER-BASED DRAG (replaces HTML5 drag API) ──
+let ghost = null;
+let dragOffsetX = 0, dragOffsetY = 0;
+let activeDragName = null;
+let activeDragCard = null;
+
+function initPointerDrag() {
+  document.getElementById('peopleList').addEventListener('mousedown', e => {
+    const card = e.target.closest('.person-card');
+    if (!card || card.classList.contains('in-collab')) return;
+    e.preventDefault();
+
+    activeDragName = card.dataset.name;
+    activeDragCard = card;
+
+    const rect = card.getBoundingClientRect();
+    dragOffsetX = e.clientX - rect.left;
+    dragOffsetY = e.clientY - rect.top;
+
+    ghost = card.cloneNode(true);
+    ghost.style.cssText = [
+      'position:fixed', 'z-index:9999', 'pointer-events:none',
+      'width:' + rect.width + 'px', 'opacity:0.85',
+      'box-shadow:0 8px 24px rgba(0,0,0,0.18)',
+      'border-radius:5px', 'background:white',
+      'border:1px solid #2a7ae2',
+      'left:' + rect.left + 'px', 'top:' + rect.top + 'px',
+      'transition:none', 'padding:8px 10px'
+    ].join(';');
+    document.body.appendChild(ghost);
+    card.classList.add('dragging');
+  });
+
+  document.addEventListener('mousemove', e => {
+    if (!ghost) return;
+    ghost.style.left = (e.clientX - dragOffsetX) + 'px';
+    ghost.style.top  = (e.clientY - dragOffsetY) + 'px';
+    document.querySelectorAll('.lane').forEach(l => l.classList.remove('drag-over'));
+    const el = document.elementFromPoint(e.clientX, e.clientY);
+    const lane = el && el.closest('.lane');
+    if (lane) lane.classList.add('drag-over');
+  });
+
+  document.addEventListener('mouseup', e => {
+    if (!ghost) return;
+    ghost.style.display = 'none';
+    const el = document.elementFromPoint(e.clientX, e.clientY);
+    ghost.style.display = '';
+    const laneEl = el && el.closest('.lane');
+
+    if (laneEl && activeDragName) {
+      const laneId = laneEl.id.replace('lane-', '');
+      const lane = lanes.find(l => l.id === laneId);
+      if (lane && !lane.members.includes(activeDragName)) {
+        lane.members.push(activeDragName);
+        renderBoard();
+        renderPeopleList();
+        setStatus('unsaved');
+      }
+    }
+
+    ghost.remove();
+    ghost = null;
+    if (activeDragCard) activeDragCard.classList.remove('dragging');
+    activeDragCard = null;
+    activeDragName = null;
+    document.querySelectorAll('.lane').forEach(l => l.classList.remove('drag-over'));
+  });
 }
 
-function onDragEnd(e) {
-  e.currentTarget.classList.remove('dragging');
-}
-
+// no-ops so lane markup compiles
+function onDragOver(e) { e.preventDefault(); }
+function onDragLeave() {}
+function onDrop(e) { e.preventDefault(); }
 
 // ── LANES ──
 function addLane(title) {
@@ -815,7 +838,10 @@ function renderBoard() {
           </div>`;
         }).join('');
 
-    return `<div class="lane" id="lane-${lane.id}">
+    return `<div class="lane" id="lane-${lane.id}"
+      ondragover="onDragOver(event,'${lane.id}')"
+      ondragleave="onDragLeave('${lane.id}')"
+      ondrop="onDrop(event,'${lane.id}')">
       <div class="lane-header">
         <div class="lane-color-dot" style="background:${lane.color}"></div>
         <input class="lane-title-input" value="${escapeAttr(lane.title)}"
