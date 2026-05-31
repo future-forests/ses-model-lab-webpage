@@ -496,7 +496,7 @@
   <div class="board" id="board">
     <div class="empty-state" id="emptyBoard" style="margin:auto;width:300px">
       <div style="font-size:28px;margin-bottom:12px">⟶</div>
-      No collaborations yet.<br>Click "+ New collaboration" to create one,<br>then drag people into it.
+      No collaborations yet.<br>Click "+ New collaboration" to create one,<br>then click people to add them.
     </div>
   </div>
 
@@ -672,6 +672,26 @@ document.addEventListener('DOMContentLoaded', () => {
     setStatus('offline — changes not saved');
     showToast('GitLab unreachable — board works locally only', true);
   });
+
+  // Escape key cancels selection
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && selectedName) {
+      selectedName = null;
+      renderPeopleList();
+      renderBoard();
+      updateHint();
+    }
+  });
+
+  // Clicking outside a person card or lane cancels selection
+  document.addEventListener('click', function(e) {
+    if (!selectedName) return;
+    if (e.target.closest('.person-card') || e.target.closest('.lane') || e.target.closest('.modal-overlay')) return;
+    selectedName = null;
+    renderPeopleList();
+    renderBoard();
+    updateHint();
+  });
 });
 
 // ── PEOPLE LIST ──
@@ -757,7 +777,7 @@ function updateHint() {
   if (selectedName) {
     status.textContent = selectedName + ' selected';
     status.className = 'save-status selecting';
-    if (global) global.textContent = 'now click a group to place ' + selectedName;
+    if (global) global.textContent = 'click a group to add · Esc to cancel';
   } else {
     setStatus('ready');
     if (global) global.textContent = 'select a person, then click a group';
