@@ -851,9 +851,8 @@ function renderBoard() {
         }).join('');
 
     const isDropReady = !!selectedName;
-    return `<div class="lane ${isDropReady ? 'drop-ready' : ''}" id="lane-${lane.id}"
-      onclick="if(selectedName) addToLane('${lane.id}', event)">
-      <div class="lane-header">
+    return `<div class="lane ${isDropReady ? 'drop-ready' : ''}" id="lane-${lane.id}">
+      <div class="lane-header" onclick="addToLane('${lane.id}', event)">
         <div class="lane-color-dot" style="background:${lane.color}"></div>
         <input class="lane-title-input" value="${escapeAttr(lane.title)}"
           placeholder="Collaboration name..."
@@ -862,7 +861,7 @@ function renderBoard() {
           onclick="event.stopPropagation()">
         <button class="lane-delete" onclick="event.stopPropagation(); deleteLane('${lane.id}')" title="Delete lane">×</button>
       </div>
-      <div class="lane-body">
+      <div class="lane-body" onclick="addToLane('${lane.id}', event)">
         ${membersHtml}
         ${lane.members.length > 0 && selectedName ? `<div class="lane-drop-hint ready" style="margin-top:4px">+ Add ${escapeHtml(selectedName)}</div>` : ''}
       </div>
