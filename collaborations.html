@@ -1,408 +1,1016 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Future Forests — Collaboration Board</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--font-sans);background:var(--color-background-tertiary);color:var(--color-text-primary)}
-.layout{display:grid;grid-template-columns:260px 1fr;gap:12px;padding:12px;min-height:520px}
-.panel{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);display:flex;flex-direction:column;overflow:hidden}
-.panel-head{padding:10px 12px;border-bottom:0.5px solid var(--color-border-tertiary);flex-shrink:0}
-.panel-title{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
-input[type=text]{width:100%;font-size:12px;padding:5px 8px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary);color:var(--color-text-primary);outline:none;margin-bottom:6px}
-.filters{display:flex;gap:4px;flex-wrap:wrap}
-.ftag{font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px;cursor:pointer;border:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary);color:var(--color-text-secondary);transition:all .12s}
-.ftag.active-all{background:var(--color-text-primary);color:var(--color-background-primary);border-color:var(--color-text-primary)}
-.ftag.active-A{background:#1a7a4a;color:#fff;border-color:#1a7a4a}
-.ftag.active-B{background:#1a4f8a;color:#fff;border-color:#1a4f8a}
-.ftag.active-C{background:#c47a00;color:#fff;border-color:#c47a00}
-.people-list{flex:1;overflow-y:auto;padding:8px;display:flex;flex-direction:column;gap:4px}
-.pcard{padding:7px 9px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);cursor:pointer;transition:all .12s;user-select:none}
-.pcard:hover{border-color:var(--color-border-primary);background:var(--color-background-secondary)}
-.pcard.selected{border-color:#2a7ae2;background:#e8f2fd;box-shadow:0 0 0 2px #2a7ae255}
-.pcard.placed{opacity:.35;pointer-events:none}
-.pcard-name{font-size:12px;font-weight:500;color:var(--color-text-primary)}
-.pcard-meta{display:flex;gap:4px;margin-top:2px;flex-wrap:wrap}
-.tag{font-size:9px;font-weight:600;padding:1px 5px;border-radius:3px}
-.tag-A{background:#edf7f1;color:#1a7a4a}
-.tag-B{background:#edf2fa;color:#1a4f8a}
-.tag-C{background:#fdf6e3;color:#c47a00}
-.tag-na{background:var(--color-background-secondary);color:var(--color-text-secondary)}
-.role-tag{font-size:9px;color:var(--color-text-secondary)}
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
 
-.board-area{display:flex;flex-direction:column;gap:10px}
-.board-scroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;min-height:200px;align-items:flex-start}
-.board-scroll::-webkit-scrollbar{height:4px}
-.board-scroll::-webkit-scrollbar-thumb{background:var(--color-border-secondary);border-radius:2px}
-.lane{width:210px;flex-shrink:0;background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);display:flex;flex-direction:column;max-height:420px}
-.lane.drop-ready{border-color:#2a7ae2;background:#f0f7ff}
-.lane-head{padding:8px 10px;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;gap:6px;flex-shrink:0}
-.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
-.lane-name-input{flex:1;font-size:12px;font-weight:500;border:none;outline:none;background:transparent;color:var(--color-text-primary);min-width:0}
-.lane-del{background:none;border:none;cursor:pointer;color:var(--color-text-secondary);font-size:14px;padding:0 2px;line-height:1;opacity:0;transition:opacity .12s}
-.lane:hover .lane-del{opacity:1}
-.lane-del:hover{color:#dc2626}
-.lane-body{flex:1;overflow-y:auto;padding:6px;display:flex;flex-direction:column;gap:4px}
-.lane-body::-webkit-scrollbar{width:3px}
-.drop-hint{font-size:11px;color:var(--color-text-secondary);text-align:center;padding:16px 8px;border:0.5px dashed var(--color-border-tertiary);border-radius:var(--border-radius-md)}
-.drop-hint.ready{border-color:#2a7ae2;color:#2a7ae2;background:#f0f7ff;cursor:pointer;font-weight:500}
-.lane-member{display:flex;align-items:center;justify-content:space-between;padding:5px 7px;border-radius:var(--border-radius-md);background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);gap:6px}
-.member-name{font-size:11px;font-weight:500;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.member-tag{font-size:9px;font-weight:600;padding:1px 4px;border-radius:3px;flex-shrink:0}
-.rm-btn{background:none;border:none;cursor:pointer;color:var(--color-text-secondary);font-size:13px;padding:0;line-height:1;flex-shrink:0;opacity:0;transition:opacity .12s}
-.lane-member:hover .rm-btn{opacity:1}
-.rm-btn:hover{color:#dc2626}
+  :root {
+    --bg: #f7f6f2;
+    --surface: #ffffff;
+    --border: #e2ddd6;
+    --text: #1a1a1a;
+    --muted: #6b6560;
+    --ra-a: #1a7a4a;
+    --ra-a-bg: #edf7f1;
+    --ra-b: #1a4f8a;
+    --ra-b-bg: #edf2fa;
+    --ra-c: #c47a00;
+    --ra-c-bg: #fdf6e3;
+    --ra-na: #7a6f65;
+    --ra-na-bg: #f5f0eb;
+    --accent: #1e3a5f;
+    --drag-over: #e8f4fd;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-drag: 0 8px 24px rgba(0,0,0,0.15);
+  }
 
-.add-lane-btn{flex-shrink:0;width:210px;padding:10px;border-radius:var(--border-radius-lg);border:0.5px dashed var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);font-size:12px;cursor:pointer;transition:all .12s;text-align:center}
-.add-lane-btn:hover{border-color:#2a7ae2;color:#2a7ae2}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-.hint-bar{font-size:11px;color:var(--color-text-secondary);padding:6px 10px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;justify-content:space-between}
-.hint-bar.selecting{color:#2a7ae2;background:#e8f2fd;border-color:#2a7ae2}
-.save-btn{font-size:11px;font-weight:500;padding:5px 12px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-primary);cursor:pointer;transition:all .12s}
-.save-btn:hover{background:#2a7ae2;color:#fff;border-color:#2a7ae2}
-.save-btn:disabled{opacity:.4;cursor:default}
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 
-.empty-board{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;color:var(--color-text-secondary);font-size:12px;text-align:center;min-height:200px}
+  /* ── HEADER ── */
+  .header {
+    background: var(--accent);
+    color: white;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .header-left { display: flex; align-items: baseline; gap: 16px; }
+  .header-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    color: #7fa8d4;
+    text-transform: uppercase;
+  }
+  .header-title { font-size: 16px; font-weight: 600; }
+  .header-actions { display: flex; gap: 10px; align-items: center; }
+
+  .btn {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-primary {
+    background: #2a7ae2;
+    color: white;
+  }
+  .btn-primary:hover { background: #1d6bcc; }
+  .btn-ghost {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.2); }
+  .btn-danger {
+    background: #dc2626;
+    color: white;
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+  .btn-danger:hover { background: #b91c1c; }
+
+  .save-status {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: #7fa8d4;
+    margin-right: 8px;
+  }
+  .save-status.saving { color: #f59e0b; }
+  .save-status.saved { color: #34d399; }
+  .save-status.error { color: #f87171; }
+
+  /* ── LAYOUT ── */
+  .workspace {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    height: calc(100vh - 52px);
+  }
+
+  /* ── PEOPLE PANEL ── */
+  .people-panel {
+    width: 280px;
+    flex-shrink: 0;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .panel-header {
+    padding: 14px 16px 10px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .panel-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .search-box {
+    width: 100%;
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 12px;
+    color: var(--text);
+    background: var(--bg);
+    outline: none;
+    margin-bottom: 8px;
+  }
+  .search-box:focus { border-color: var(--accent); }
+
+  .filter-row {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    font-size: 10px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.12s;
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+  .filter-btn.all { border-color: var(--border); background: var(--bg); color: var(--muted); }
+  .filter-btn.all.active { background: var(--accent); color: white; border-color: var(--accent); }
+  .filter-btn.ra-a { border-color: var(--ra-a); background: var(--ra-a-bg); color: var(--ra-a); }
+  .filter-btn.ra-a.active { background: var(--ra-a); color: white; }
+  .filter-btn.ra-b { border-color: var(--ra-b); background: var(--ra-b-bg); color: var(--ra-b); }
+  .filter-btn.ra-b.active { background: var(--ra-b); color: white; }
+  .filter-btn.ra-c { border-color: var(--ra-c); background: var(--ra-c-bg); color: var(--ra-c); }
+  .filter-btn.ra-c.active { background: var(--ra-c); color: white; }
+
+  .people-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px;
+  }
+  .people-list::-webkit-scrollbar { width: 4px; }
+  .people-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  /* ── PERSON CARD ── */
+  .person-card {
+    padding: 8px 10px;
+    border-radius: 5px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    margin-bottom: 5px;
+    cursor: grab;
+    user-select: none;
+    transition: box-shadow 0.15s, transform 0.15s, opacity 0.15s;
+    box-shadow: var(--shadow);
+  }
+  .person-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+  .person-card.dragging {
+    opacity: 0.4;
+    transform: scale(0.97);
+  }
+  .person-card.in-collab { opacity: 0.4; pointer-events: none; }
+  .person-card:not(.in-collab) { cursor: pointer; }
+  .person-card.selected {
+    border-color: #2a7ae2;
+    background: #e8f2fd;
+    box-shadow: 0 0 0 2px rgba(42,122,226,0.25);
+  }
+  .lane.drop-ready {
+    border-color: #2a7ae2;
+    cursor: pointer;
+  }
+  .lane.drop-ready:hover { background: var(--drag-over); }
+  .lane-drop-hint.ready {
+    color: #2a7ae2;
+    border-color: #2a7ae2;
+    background: #e8f2fd;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  .save-status.selecting {
+    color: #f59e0b;
+  }
+
+  .card-name {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+  .card-meta {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    padding: 1px 5px;
+    border-radius: 2px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .tag-ra-A { background: var(--ra-a-bg); color: var(--ra-a); }
+  .tag-ra-B { background: var(--ra-b-bg); color: var(--ra-b); }
+  .tag-ra-C { background: var(--ra-c-bg); color: var(--ra-c); }
+  .tag-ra-na { background: var(--ra-na-bg); color: var(--ra-na); }
+  .tag-role {
+    font-size: 9px;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* ── BOARD ── */
+  .board {
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 16px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .board::-webkit-scrollbar { height: 6px; }
+  .board::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ── LANE ── */
+  .lane {
+    width: 240px;
+    flex-shrink: 0;
+    background: var(--surface);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 100px);
+    box-shadow: var(--shadow);
+  }
+  .lane.drag-over {
+    background: var(--drag-over);
+    border-color: #2a7ae2;
+  }
+  .lane-header {
+    padding: 10px 12px 8px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .lane-color-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .lane-title-input {
+    flex: 1;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    border: none;
+    outline: none;
+    background: transparent;
+    min-width: 0;
+  }
+  .lane-title-input::placeholder { color: var(--muted); font-weight: 400; }
+  .lane-delete {
+    opacity: 0;
+    transition: opacity 0.15s;
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0 2px;
+    line-height: 1;
+  }
+  .lane:hover .lane-delete { opacity: 1; }
+  .lane-delete:hover { color: #dc2626; }
+
+  .lane-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px;
+    min-height: 80px;
+  }
+  .lane-body::-webkit-scrollbar { width: 3px; }
+  .lane-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .lane-drop-hint {
+    text-align: center;
+    padding: 20px 10px;
+    color: var(--muted);
+    font-size: 11px;
+    font-family: 'IBM Plex Mono', monospace;
+    border: 1px dashed var(--border);
+    border-radius: 4px;
+  }
+
+  /* Card inside lane */
+  .lane .person-card {
+    opacity: 1;
+    pointer-events: all;
+    cursor: default;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+  }
+  .lane .person-card .card-content { flex: 1; min-width: 0; }
+  .remove-from-lane {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 13px;
+    padding: 0;
+    line-height: 1;
+    flex-shrink: 0;
+    opacity: 0;
+    transition: opacity 0.12s;
+  }
+  .lane .person-card:hover .remove-from-lane { opacity: 1; }
+  .remove-from-lane:hover { color: #dc2626; }
+
+  /* ── ADD LANE BUTTON ── */
+  .add-lane-btn {
+    width: 240px;
+    flex-shrink: 0;
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px dashed var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+  }
+  .add-lane-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(30,58,95,0.03);
+  }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--accent);
+    color: white;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.2s;
+    z-index: 1000;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+  .toast.error { background: #dc2626; }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: white;
+    border-radius: 8px;
+    padding: 24px;
+    width: 360px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  }
+  .modal h3 { font-size: 14px; font-weight: 600; margin-bottom: 16px; color: var(--accent); }
+  .modal label { font-size: 11px; font-weight: 500; color: var(--muted); display: block; margin-bottom: 4px; }
+  .modal input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    outline: none;
+    margin-bottom: 16px;
+  }
+  .modal input:focus { border-color: var(--accent); }
+  .modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
+  .btn-secondary {
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-secondary:hover { background: var(--border); }
+
+  .loading-bar {
+    height: 2px;
+    background: #2a7ae2;
+    width: 0%;
+    transition: width 0.3s;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--muted);
+    font-size: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
 </style>
+</head>
+<body>
 
-<h2 class="sr-only">Future Forests collaboration board — select a person then click a group to add them</h2>
+<div class="loading-bar" id="loadingBar"></div>
 
-<div class="layout">
-  <div class="panel">
-    <div class="panel-head">
-      <div class="panel-title">Members <span id="cnt"></span></div>
-      <input type="text" id="search" placeholder="Search name or project…" oninput="render()">
-      <div class="filters">
-        <span class="ftag active-all" onclick="setFilter('all',this)">All</span>
-        <span class="ftag" onclick="setFilter('A',this)">RA-A</span>
-        <span class="ftag" onclick="setFilter('B',this)">RA-B</span>
-        <span class="ftag" onclick="setFilter('C',this)">RA-C</span>
+<div class="header">
+  <div class="header-left">
+    <span class="header-tag">Future Forests · SES-ModelLab · C3 &nbsp;·&nbsp; <span id="globalHint" style="color:#7fa8d4">select a person, then click a group</span></span>
+    <span class="header-title">Collaboration Board</span>
+  </div>
+  <div class="header-actions">
+    <span class="save-status" id="saveStatus">loading...</span>
+    <button class="btn btn-ghost" onclick="openAddLaneModal()">+ New collaboration</button>
+    <button class="btn btn-primary" onclick="saveToGitLab()">Save to GitLab</button>
+  </div>
+</div>
+
+<div class="workspace">
+
+  <!-- LEFT: People pool -->
+  <div class="people-panel">
+    <div class="panel-header">
+      <div class="panel-title">All members <span id="memberCount" style="font-weight:300;text-transform:none;letter-spacing:0"></span></div>
+      <input class="search-box" type="text" placeholder="Search name or project..." id="searchInput" oninput="filterPeople()">
+      <div class="filter-row">
+        <button class="filter-btn all active" onclick="setFilter('all', this)">All</button>
+        <button class="filter-btn ra-a" onclick="setFilter('A', this)">RA-A</button>
+        <button class="filter-btn ra-b" onclick="setFilter('B', this)">RA-B</button>
+        <button class="filter-btn ra-c" onclick="setFilter('C', this)">RA-C</button>
       </div>
     </div>
     <div class="people-list" id="peopleList"></div>
   </div>
 
-  <div class="board-area">
-    <div class="hint-bar" id="hintBar">
-      <span id="hintText">← Select a person, then click a collaboration group to add them</span>
-      <button class="save-btn" id="saveBtn" onclick="save()">Save to GitLab</button>
+  <!-- RIGHT: Board -->
+  <div class="board" id="board">
+    <div class="empty-state" id="emptyBoard" style="margin:auto;width:300px">
+      <div style="font-size:28px;margin-bottom:12px">⟶</div>
+      No collaborations yet.<br>Click "+ New collaboration" to create one,<br>then drag people into it.
     </div>
-    <div class="board-scroll" id="boardScroll">
-      <div class="empty-board" id="emptyBoard">No groups yet.<br>Click "+ New group" below to start.</div>
-      <button class="add-lane-btn" id="addBtn" onclick="newLane()">+ New group</button>
+  </div>
+
+</div>
+
+<!-- Add Lane Modal -->
+<div class="modal-overlay" id="addLaneModal">
+  <div class="modal">
+    <h3>New Collaboration Group</h3>
+    <label>Name (e.g. "Drought A3–C3" or "Collab 1")</label>
+    <input type="text" id="newLaneName" placeholder="Collaboration name..." onkeydown="if(event.key==='Enter')confirmAddLane()">
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeAddLaneModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmAddLane()">Create</button>
     </div>
   </div>
 </div>
 
+<div class="toast" id="toast"></div>
+
 <script>
+// ── CONFIG ── replace token locally, never commit it
 const GITLAB_BASE = 'https://gitlab.uni-freiburg.de';
-const PROJECT_PATH = 'future-forests%2Fses_model_lab';
+const PROJECT_PATH = 'future-forests%2Fses_model_lab'; // URL-encoded
 const FILE_PATH = 'collaborations.yml';
 const BRANCH = 'main';
-const TOKEN = 'Yglpat-xGVmLx94IrRoy6WqnSZ7mm86MQp1OmNhCA.01.0y1wgw8lv';
+const TOKEN = 'YOUR_GITLAB_TOKEN'; // ← paste your new token here locally
 
-const COLORS = ['#1a7a4a','#1a4f8a','#c47a00','#7b3fa0','#c0392b','#0e7490'];
-let colorIdx = 0;
-
+// ── PEOPLE DATA (from Excel) ──
 const PEOPLE = [
-  {name:"Adam Smoleń",ra:"B",theme:"B1",role:"PhD",projects:["Epistemic Authority Disputes"]},
-  {name:"Aharon Valdes",ra:"na",theme:"na",role:"Unknown",projects:[]},
-  {name:"Alexandra-Maria Klein",ra:"A",theme:"A4",role:"PI/AI",projects:["Canopy Pollinators","Invasion biotic interactions"]},
-  {name:"Alexej Steuerle",ra:"A",theme:"A2",role:"PhD",projects:["Tree Responses"]},
-  {name:"Ana Stritih",ra:"C",theme:"C2",role:"PI/AI",projects:["Large Scale ABM","Participatory Modelling"]},
-  {name:"Andrea Ingrosso",ra:"B",theme:"B1",role:"PhD",projects:["Evidence Process Model"]},
-  {name:"Andreas Christen",ra:"A",theme:"A1",role:"PI/AI",projects:["Adaptive sensor network","HyClimScenarios"]},
-  {name:"Andy Maun",ra:"na",theme:"na",role:"PI/AI",projects:["Human Health"]},
-  {name:"Anja Bindewald",ra:"A",theme:"A4",role:"Collaborator",projects:["Invasion biotic interactions"]},
-  {name:"Anja Klein",ra:"C",theme:"C1",role:"PI/AI",projects:["Theorizing"]},
-  {name:"Ann-Kathrin Weith",ra:"B",theme:"B3",role:"PhD",projects:["Institutions"]},
-  {name:"Anna-Lena Hendel",ra:"na",theme:"na",role:"Postdoc",projects:["Bat-prey relationships"]},
-  {name:"Axel Albrecht",ra:"A",theme:"A3",role:"PI/AI",projects:["Density Management","Vulnerabilty Resilience"]},
-  {name:"Bernd Kammerer",ra:"A",theme:"A1",role:"PI/AI",projects:["Soil Carbon Sequestration"]},
-  {name:"Calum Brown",ra:"C",theme:"C3",role:"PI/AI",projects:["Large Scale ABM"]},
-  {name:"Carolin Winter",ra:"A",theme:"A1",role:"PI/AI",projects:["Water Quality Monitoring"]},
-  {name:"Caroline Schill",ra:"C",theme:"C1",role:"PI/AI",projects:["Theorizing"]},
-  {name:"Carsten Dormann",ra:"A",theme:"A3",role:"PI/AI",projects:["Evidence Process Model","Large Scale Mortality"]},
-  {name:"Catalina Munteanu",ra:"A",theme:"A3",role:"PI/AI",projects:["Large Scale Mortality"]},
-  {name:"Cathrin Zengerling",ra:"B",theme:"B2",role:"PI/AI",projects:["SES and Law"]},
-  {name:"Charalambos Neophytou",ra:"A",theme:"A2",role:"PI/AI",projects:["A2 Umbrella"]},
-  {name:"Christian Hauenstein",ra:"C",theme:"C3",role:"Postdoc",projects:["Wood Cascade Modelling"]},
-  {name:"Christiane Werner",ra:"A",theme:"A2",role:"PI/AI",projects:["Tree Responses"]},
-  {name:"Christina Dollinger",ra:"C",theme:"C2",role:"PI/AI",projects:["Participatory Modelling"]},
-  {name:"Christopher Jung",ra:"C",theme:"C2",role:"Postdoc",projects:["HyClimScenarios"]},
-  {name:"Daniela Kleinschmit",ra:"B",theme:"B2",role:"PI/AI",projects:["Legitimacy Justice"]},
-  {name:"Danilo Lüdke",ra:"A",theme:"A2",role:"PhD",projects:["Biotic drivers of tree stress"]},
-  {name:"David Andermahr",ra:"A",theme:"A3",role:"PhD",projects:["Density Management"]},
-  {name:"Dirk Schindler",ra:"C",theme:"C2",role:"PI/AI",projects:["HyClimScenarios"]},
-  {name:"Enno Link",ra:"B",theme:"B3",role:"PhD",projects:["Knowledge Barriers"]},
-  {name:"Esther Sophia Rust",ra:"C",theme:"C1",role:"PhD",projects:["SES Planning"]},
-  {name:"Felix Fornoff",ra:"A",theme:"A4",role:"PI/AI",projects:["Canopy Pollinators"]},
-  {name:"Florian Schnabel",ra:"A",theme:"A1",role:"PI/AI",projects:["Density Management","Large Scale Mortality"]},
-  {name:"Fritzi Lang",ra:"A",theme:"A1",role:"PI/AI",projects:["Soil Carbon Sequestration"]},
-  {name:"Gernot Segelbacher",ra:"A",theme:"A5",role:"PI/AI",projects:["Ticks"]},
-  {name:"Hartmut Fünfgeld",ra:"B",theme:"B2",role:"PI/AI",projects:["Governance Experiments","Legitimacy Justice"]},
-  {name:"Heike Puhlmann",ra:"A",theme:"A1",role:"PI/AI",projects:["Soil Carbon Sequestration"]},
-  {name:"Heiner Schanz",ra:"C",theme:"C3",role:"PI/AI",projects:["Forest Ecosystem Service Markets"]},
-  {name:"Ina Aufderheide",ra:"A",theme:"A4",role:"PhD",projects:["Invasion biotic interactions"]},
-  {name:"Isabel Karst",ra:"A",theme:"A3",role:"PhD",projects:["Vulnerabilty Resilience"]},
-  {name:"Jakob Kramer",ra:"B",theme:"B2",role:"Postdoc",projects:["Legitimacy Justice"]},
-  {name:"Jan Zumoberhaus",ra:"B",theme:"B1",role:"Postdoc",projects:["Decision Making Frame"]},
-  {name:"Johanna von Drachenfels",ra:"A",theme:"A1",role:"PhD",projects:["Water Legacy"]},
-  {name:"Joonseo Kim",ra:"C",theme:"na",role:"Research Assistant",projects:["Socio-economic scenarios"]},
-  {name:"Joschka Geissler",ra:"A",theme:"A1",role:"Postdoc",projects:["Canopy Micro Environment"]},
-  {name:"Jürgen Bauhus",ra:"A",theme:"A3",role:"PI/AI",projects:["Density Management","Vulnerabilty Resilience"]},
-  {name:"Jürgen Kleine-Vehn",ra:"A",theme:"A2",role:"PI/AI",projects:["Epigenetics Memory","Genome Editing"]},
-  {name:"Jürgen Kreuzwieser",ra:"A",theme:"A2",role:"PI/AI",projects:["Tree Responses"]},
-  {name:"Kathrin Blumenstein",ra:"A",theme:"A2",role:"PI/AI",projects:["Pathogens"]},
-  {name:"Katrin Heer",ra:"A",theme:"A2",role:"PI/AI",projects:["Epigenetics Memory","Genome Editing"]},
-  {name:"Kenton Stutz",ra:"A",theme:"A1",role:"Postdoc",projects:["Soil Carbon Sequestration"]},
-  {name:"Kerstin Stahl",ra:"A",theme:"A1",role:"PI/AI",projects:["HyClimScenarios","Water Legacy"]},
-  {name:"Konrad Greinwald",ra:"A",theme:"A4",role:"PI/AI",projects:["Vegetation decomposition"]},
-  {name:"Laura Ragni",ra:"A",theme:"A2",role:"PI/AI",projects:["Tree Responses"]},
-  {name:"Lee Deutsch",ra:"A",theme:"A2",role:"PhD",projects:["Pathogens"]},
-  {name:"Leonie Buß",ra:"C",theme:"C1",role:"PhD",projects:["SES and Law"]},
-  {name:"Luigi Conte",ra:"C",theme:"C2",role:"Postdoc",projects:["Participatory Modelling"]},
-  {name:"Maja Schlüter",ra:"C",theme:"C1",role:"PI/AI",projects:["Large Scale ABM","Theorizing"]},
-  {name:"Malte Lehmann",ra:"A",theme:"A4",role:"PhD",projects:["Vegetation decomposition"]},
-  {name:"Marc Hanewinkel",ra:"B",theme:"B2",role:"PI/AI",projects:["Economic Model","Large Scale ABM"]},
-  {name:"Marcus Panning",ra:"A",theme:"A5",role:"PI/AI",projects:["Ticks"]},
-  {name:"Marina Klimke",ra:"B",theme:"B2",role:"Postdoc",projects:["B2 Synthesis"]},
-  {name:"Markus Hauck",ra:"A",theme:"A4",role:"PI/AI",projects:["Epiphyte Diversity"]},
-  {name:"Markus Weiler",ra:"A",theme:"A1",role:"PI/AI",projects:["Adaptive sensor network","Water Legacy"]},
-  {name:"Marvin Daab",ra:"B",theme:"B2",role:"PI/AI",projects:["Responsibility for Future Forests"]},
-  {name:"Mattis Pfenning",ra:"A",theme:"A3",role:"PhD",projects:["Large Scale Mortality"]},
-  {name:"Michael Pregernig",ra:"B",theme:"B1",role:"PI/AI",projects:["Decision Making Frame","Epistemic Authority Disputes"]},
-  {name:"Michael Scherer-Lorenzen",ra:"A",theme:"A4",role:"PI/AI",projects:["DivStability","Ticks"]},
-  {name:"Michaela Haug",ra:"B",theme:"B3",role:"PI/AI",projects:["Contested Tree Species","Navigating Complexity"]},
-  {name:"Moritz Schuck",ra:"A",theme:"A5",role:"PhD",projects:["Visual and Acoustic Forest Change"]},
-  {name:"Paulina Friemann",ra:"B",theme:"B2",role:"PhD",projects:["Spatial Robust"]},
-  {name:"Peter Biedermann",ra:"A",theme:"A2",role:"PI/AI",projects:["Biotic drivers of tree stress"]},
-  {name:"Philipp Stark",ra:"B",theme:"B2",role:"PhD",projects:["Responsibility for Future Forests"]},
-  {name:"Pia Müller",ra:"C",theme:"C3",role:"PhD",projects:["Drought Modelling"]},
-  {name:"René Orth",ra:"C",theme:"C2",role:"PI/AI",projects:["Drought Modelling","HyClimScenarios"]},
-  {name:"Rita Sousa-Silva",ra:"A",theme:"A5",role:"PI/AI",projects:["Visual and Acoustic Forest Change"]},
-  {name:"Robin Schweikert",ra:"A",theme:"A4",role:"PhD",projects:["Epiphyte Diversity"]},
-  {name:"Ronny Rotbarth",ra:"A",theme:"A3",role:"PI/AI",projects:["Resilience Early Warning Signals"]},
-  {name:"Sandra Müller",ra:"A",theme:"A4",role:"PI/AI",projects:["Invasion biotic interactions"]},
-  {name:"Sandra Tikale",ra:"B",theme:"B3",role:"PhD",projects:["Contested Tree Species"]},
-  {name:"Sarah May",ra:"A",theme:"A3",role:"PI/AI",projects:["Navigating Complexity","Vulnerabilty Resilience"]},
-  {name:"Sebastian Gnann",ra:"A",theme:"A1",role:"PI/AI",projects:["Water Legacy"]},
-  {name:"Sheikh Muhammad Asad",ra:"C",theme:"C3",role:"PhD",projects:["Water Redistribution"]},
-  {name:"Simon Schulte",ra:"C",theme:"C3",role:"Postdoc",projects:["Wood Cascade Modelling"]},
-  {name:"Sjon Hartman",ra:"A",theme:"A2",role:"PI/AI",projects:["Epigenetics Memory","Genome Editing"]},
-  {name:"Stefan Baumgärtner",ra:"B",theme:"B2",role:"PI/AI",projects:["Responsibility for Future Forests"]},
-  {name:"Stefan Kaufmann",ra:"A",theme:"A4",role:"PI/AI",projects:["Epiphyte Diversity"]},
-  {name:"Stefan Pauliuk",ra:"C",theme:"C3",role:"PI/AI",projects:["Economic Model","Large Scale ABM","Wood Cascade Modelling"]},
-  {name:"Steffi Peuckert",ra:"C",theme:"C3",role:"PhD",projects:["Forest Ecosystem Service Markets"]},
-  {name:"Stephanie Bethmann",ra:"B",theme:"B3",role:"PI/AI",projects:["Contested Tree Species","Knowledge Barriers"]},
-  {name:"Sylvia Kruse",ra:"B",theme:"B3",role:"PI/AI",projects:["Institutions"]},
-  {name:"Tabea Wörner",ra:"A",theme:"A1",role:"PhD",projects:["Adaptive sensor network"]},
-  {name:"Tanja Mölders",ra:"C",theme:"C1",role:"PI/AI",projects:["SES Planning","Theorizing"]},
-  {name:"Teja Kattenborn",ra:"A",theme:"A3",role:"PI/AI",projects:["Drought Modelling","Large Scale Mortality"]},
-  {name:"Theresa Klara Loch",ra:"C",theme:"C1",role:"Postdoc",projects:["Theorizing"]},
-  {name:"Thomas Seifert",ra:"A",theme:"A1",role:"PI/AI",projects:["Forest Growth Modelling","Tree Responses"]},
-  {name:"Veronika Braunisch",ra:"A",theme:"A4",role:"PI/AI",projects:["Canopy Pollinators","Invasion biotic interactions"]},
-  {name:"Vienna Kowalik",ra:"A",theme:"A2",role:"PI/AI",projects:["Biotic drivers of tree stress","Pathogens"]},
-  {name:"Wiebke Hebermehl",ra:"B",theme:"B3",role:"PhD",projects:["Diversity in Human Nature Relationships"]},
-  {name:"Yannek Käber",ra:"B",theme:"B1",role:"PI/AI",projects:["Evidence Process Model"]},
-  {name:"Zabrina Welter",ra:"na",theme:"na",role:"Postdoc",projects:["EU Knowledge Regimes"]}
+  {"name":"Adam Smoleń","ra":"B","theme":"B1","role":"PhD","projects":["Epistemic Authority Disputes (EpistAD)"]},
+  {"name":"Aharon Valdes","ra":"na","theme":"na","role":"Unknown","projects":[]},
+  {"name":"Alexandra-Maria Klein","ra":"A","theme":"A4","role":"PI/AI","projects":["Canopy Pollinators","Invasion biotic interactions"]},
+  {"name":"Alexej Steuerle","ra":"A","theme":"A2","role":"PhD","projects":["Tree Responses"]},
+  {"name":"Ana Stritih","ra":"C","theme":"C2","role":"PI/AI","projects":["Large Scale ABM","Participatory Modelling","Workshop SES Disturbance"]},
+  {"name":"Andrea Ingrosso","ra":"B","theme":"B1","role":"PhD","projects":["Evidence Process Model"]},
+  {"name":"Andreas Christen","ra":"A","theme":"A1","role":"PI/AI","projects":["Adaptive sensor network","Canopy Micro Environment","HyClimScenarios","Lidar"]},
+  {"name":"Andy Maun","ra":"na","theme":"na","role":"PI/AI","projects":["Human Health"]},
+  {"name":"Anja Bindewald","ra":"A","theme":"A4","role":"Collaborator","projects":["Invasion biotic interactions"]},
+  {"name":"Anja Klein","ra":"C","theme":"C1","role":"PI/AI","projects":["Theorizing"]},
+  {"name":"Ann-Kathrin Weith","ra":"B","theme":"B3","role":"PhD","projects":["Institutions"]},
+  {"name":"Anna-Lena Hendel","ra":"na","theme":"na","role":"Postdoc","projects":["Bat-prey relationhips"]},
+  {"name":"Axel Albrecht","ra":"A","theme":"A3","role":"PI/AI","projects":["Contested Tree Species","Density Management","Resilience Early Warning Signals","Vulnerabilty Resilience"]},
+  {"name":"Bernd Kammerer","ra":"A","theme":"A1","role":"PI/AI","projects":["Soil Carbon Sequestration"]},
+  {"name":"Calum Brown","ra":"C","theme":"C3","role":"PI/AI","projects":["Large Scale ABM"]},
+  {"name":"Carolin Winter","ra":"A","theme":"A1","role":"PI/AI","projects":["Forest Dieback and Water Quality","Water Quality Monitoring"]},
+  {"name":"Caroline Schill","ra":"C","theme":"C1","role":"PI/AI","projects":["Theorizing"]},
+  {"name":"Carsten Dormann","ra":"A","theme":"A3","role":"PI/AI","projects":["Evidence Process Model","Large Scale Mortality"]},
+  {"name":"Catalina Munteanu","ra":"A","theme":"A3","role":"PI/AI","projects":["Large Scale Mortality","Visual and Acoustic Forest Change Impact"]},
+  {"name":"Cathrin Zengerling","ra":"B","theme":"B2","role":"PI/AI","projects":["B2 Synthesis Project - DM principles","SES and Law"]},
+  {"name":"Charalambos Neophytou","ra":"A","theme":"A2","role":"PI/AI","projects":["A2 Umbrella"]},
+  {"name":"Christian Hauenstein","ra":"C","theme":"C3","role":"Postdoc","projects":["Wood Cascade Modelling"]},
+  {"name":"Christian Scharinger","ra":"A","theme":"A5","role":"PI/AI","projects":["Visual and Acoustic Forest Change Impact"]},
+  {"name":"Christiane Werner","ra":"A","theme":"A2","role":"PI/AI","projects":["A2 Umbrella","Tree Responses"]},
+  {"name":"Christina Dollinger","ra":"C","theme":"C2","role":"PI/AI","projects":["Participatory Modelling"]},
+  {"name":"Christopher Jung","ra":"C","theme":"C2","role":"Postdoc","projects":["HyClimScenarios"]},
+  {"name":"Cristina Espinosa","ra":"na","theme":"na","role":"Project member","projects":["EU Knowledge Regimes"]},
+  {"name":"Daniela Kleinschmit","ra":"B","theme":"B2","role":"PI/AI","projects":["Governance Experiments (Govinno)","Legitimacy Justice"]},
+  {"name":"Danilo Lüdke","ra":"A","theme":"A2","role":"PhD","projects":["Biotic drivers of tree stress"]},
+  {"name":"David Andermahr","ra":"A","theme":"A3","role":"PhD","projects":["Density Management"]},
+  {"name":"Dirk Schindler","ra":"C","theme":"C2","role":"PI/AI","projects":["HyClimScenarios"]},
+  {"name":"Enno Link","ra":"B","theme":"B3","role":"PhD","projects":["Knowlegde Barriers"]},
+  {"name":"Esther Sophia Rust","ra":"C","theme":"C1","role":"PhD","projects":["SES Planning"]},
+  {"name":"Felix Fornoff","ra":"A","theme":"A4","role":"PI/AI","projects":["Canopy Pollinators","Invasion biotic interactions"]},
+  {"name":"Felix Radtke","ra":"na","theme":"na","role":"Project member","projects":["Forest Dieback and Water Quality"]},
+  {"name":"Finn Rehling","ra":"na","theme":"na","role":"Project member","projects":["Animal Displacement"]},
+  {"name":"Florian Schnabel","ra":"A","theme":"A1","role":"PI/AI","projects":["Adaptive sensor network","Density Management","DivStability","Forest Dieback and Water Quality","Large Scale Mortality","Vulnerabilty Resilience"]},
+  {"name":"Fritzi Lang","ra":"A","theme":"A1","role":"PI/AI","projects":["Soil Carbon Sequestration"]},
+  {"name":"Gernot Segelbacher","ra":"A","theme":"A5","role":"PI/AI","projects":["Ticks"]},
+  {"name":"Hartmut Fünfgeld","ra":"B","theme":"B2","role":"PI/AI","projects":["Governance Experiments (Govinno)","Legitimacy Justice"]},
+  {"name":"Heike Puhlmann","ra":"A","theme":"A1","role":"PI/AI","projects":["Canopy Micro Environment","Soil Carbon Sequestration"]},
+  {"name":"Heiner Ochse","ra":"na","theme":"na","role":"Project member","projects":["Soil moisture droughts"]},
+  {"name":"Heiner Schanz","ra":"C","theme":"C3","role":"PI/AI","projects":["Forest Ecosystem Service Markets","Socio-economic scenarios and trends"]},
+  {"name":"Immanuel Frenzel","ra":"na","theme":"na","role":"Project member","projects":["Forever Chemicals"]},
+  {"name":"Ina Aufderheide","ra":"A","theme":"A4","role":"PhD","projects":["Invasion biotic interactions"]},
+  {"name":"Isabel Karst","ra":"A","theme":"A3","role":"PhD","projects":["Vulnerabilty Resilience"]},
+  {"name":"Isabelle Hempler","ra":"na","theme":"na","role":"PI/AI","projects":["Human Health"]},
+  {"name":"Jakob Kramer","ra":"B","theme":"B2","role":"Postdoc","projects":["Legitimacy Justice"]},
+  {"name":"Jan Zumoberhaus","ra":"B","theme":"B1","role":"Postdoc","projects":["Decision Making Frame"]},
+  {"name":"Jens Lange","ra":"na","theme":"na","role":"Project member","projects":["Forever Chemicals"]},
+  {"name":"Johanna von Drachenfels","ra":"A","theme":"A1","role":"PhD","projects":["Water Legacy"]},
+  {"name":"Joonseo Kim","ra":"C","theme":"na","role":"Research Assistant","projects":["Socio-economic scenarios and trends"]},
+  {"name":"Joschka Geissler","ra":"A","theme":"A1","role":"Postdoc","projects":["Canopy Micro Environment"]},
+  {"name":"Jürgen Bauhus","ra":"A","theme":"A3","role":"PI/AI","projects":["Density Management","Resilience Early Warning Signals","Vulnerabilty Resilience","Workshop SES Disturbance"]},
+  {"name":"Jürgen Kleine-Vehn","ra":"A","theme":"A2","role":"PI/AI","projects":["Epigenetics Memory","Genome Editing"]},
+  {"name":"Jürgen Kreuzwieser","ra":"A","theme":"A2","role":"PI/AI","projects":["Tree Responses"]},
+  {"name":"Kathrin Blumenstein","ra":"A","theme":"A2","role":"PI/AI","projects":["Pathogens"]},
+  {"name":"Katrin Heer","ra":"A","theme":"A2","role":"PI/AI","projects":["A2 Umbrella","Epigenetics Memory","Genome Editing"]},
+  {"name":"Katrin Hübscher","ra":"A","theme":"A2","role":"Technician","projects":["A2 Umbrella"]},
+  {"name":"Kenton Stutz","ra":"A","theme":"A1","role":"Postdoc","projects":["Soil Carbon Sequestration"]},
+  {"name":"Kerstin Stahl","ra":"A","theme":"A1","role":"PI/AI","projects":["Forest Dieback and Water Quality","HyClimScenarios","Water Legacy"]},
+  {"name":"Klaus Püttmann","ra":"na","theme":"na","role":"PI/AI","projects":["Workshop SES Disturbance"]},
+  {"name":"Konrad Greinwald","ra":"A","theme":"A4","role":"PI/AI","projects":["Vegetation decomposition"]},
+  {"name":"Laura Ragni","ra":"A","theme":"A2","role":"PI/AI","projects":["Tree Responses"]},
+  {"name":"Lee Deutsch","ra":"A","theme":"A2","role":"PhD","projects":["Pathogens"]},
+  {"name":"Leonie Buß","ra":"C","theme":"C1","role":"PhD","projects":["SES and Law"]},
+  {"name":"Luigi Conte","ra":"C","theme":"C2","role":"Postdoc","projects":["Participatory Modelling"]},
+  {"name":"Maja Schlüter","ra":"C","theme":"C1","role":"PI/AI","projects":["Large Scale ABM","Theorizing","Workshop CAS Concept"]},
+  {"name":"Malte Lehmann","ra":"A","theme":"A4","role":"PhD","projects":["Vegetation decomposition"]},
+  {"name":"Marc Hanewinkel","ra":"B","theme":"B2","role":"PI/AI","projects":["Economic Model","Large Scale ABM","Socio-economic scenarios and trends","Spatial Robust","Workshop SES Disturbance"]},
+  {"name":"Marcus Panning","ra":"A","theme":"A5","role":"PI/AI","projects":["Ticks"]},
+  {"name":"Marina Klimke","ra":"B","theme":"B2","role":"Postdoc","projects":["B2 Synthesis Project - DM principles"]},
+  {"name":"Markus Hauck","ra":"A","theme":"A4","role":"PI/AI","projects":["Epiphyte Diversity"]},
+  {"name":"Markus Weiler","ra":"A","theme":"A1","role":"PI/AI","projects":["Adaptive sensor network","Canopy Micro Environment","Forest Dieback and Water Quality","Water Legacy","Water Quality Monitoring","Water Redistribution"]},
+  {"name":"Marvin Daab","ra":"B","theme":"B2","role":"PI/AI","projects":["Responsibility for Future Forests"]},
+  {"name":"Mateo Flohr Reija","ra":"C","theme":"na","role":"Research Assistant","projects":["Socio-economic scenarios and trends"]},
+  {"name":"Mattis Pfenning","ra":"A","theme":"A3","role":"PhD","projects":["Large Scale Mortality"]},
+  {"name":"Melissa Ruiz-Vásquez","ra":"na","theme":"na","role":"Project member","projects":["Soil moisture droughts"]},
+  {"name":"Michael Müller","ra":"na","theme":"na","role":"Project member","projects":["Forever Chemicals"]},
+  {"name":"Michael Pregernig","ra":"B","theme":"B1","role":"PI/AI","projects":["Decision Making Frame","EU Knowledge Regimes","Epistemic Authority Disputes (EpistAD)"]},
+  {"name":"Michael Scherer-Lorenzen","ra":"A","theme":"A4","role":"PI/AI","projects":["DivStability","Ticks","Vegetation decomposition","Visual and Acoustic Forest Change Impact"]},
+  {"name":"Michaela Haug","ra":"B","theme":"B3","role":"PI/AI","projects":["Contested Tree Species","Navigating Complexity"]},
+  {"name":"Miriam Kienesberger","ra":"na","theme":"na","role":"PhD","projects":["Power in SES"]},
+  {"name":"Moritz Benka","ra":"A","theme":"A1","role":"Technician","projects":["Soil Carbon Sequestration"]},
+  {"name":"Moritz Schuck","ra":"A","theme":"A5","role":"PhD","projects":["Visual and Acoustic Forest Change Impact"]},
+  {"name":"Paulina Friemann","ra":"B","theme":"B2","role":"PhD","projects":["Spatial Robust"]},
+  {"name":"Paulina Weber-Steinhilber","ra":"A","theme":"A5","role":"PhD","projects":["Ticks"]},
+  {"name":"Peter Biedermann","ra":"A","theme":"A2","role":"PI/AI","projects":["A2 Umbrella","Biotic drivers of tree stress"]},
+  {"name":"Philipp Stark","ra":"B","theme":"B2","role":"PhD","projects":["Responsibility for Future Forests"]},
+  {"name":"Pia Müller","ra":"C","theme":"C3","role":"PhD","projects":["Drought Modelling"]},
+  {"name":"René Orth","ra":"C","theme":"C2","role":"PI/AI","projects":["Drought Modelling","HyClimScenarios","Soil moisture droughts"]},
+  {"name":"Riko Fardiansah","ra":"na","theme":"na","role":"Project member","projects":["Canopy Pollinators"]},
+  {"name":"Rita Sousa-Silva","ra":"A","theme":"A5","role":"PI/AI","projects":["Visual and Acoustic Forest Change Impact"]},
+  {"name":"Robin Schweikert","ra":"A","theme":"A4","role":"PhD","projects":["Epiphyte Diversity"]},
+  {"name":"Ronny Rotbarth","ra":"A","theme":"A3","role":"PI/AI","projects":["Resilience Early Warning Signals","Vulnerabilty Resilience"]},
+  {"name":"Salim Soltani","ra":"na","theme":"na","role":"PI/AI","projects":["Lidar"]},
+  {"name":"Sandra Müller","ra":"A","theme":"A4","role":"PI/AI","projects":["Invasion biotic interactions","Visual and Acoustic Forest Change Impact"]},
+  {"name":"Sandra Tikale","ra":"B","theme":"B3","role":"PhD","projects":["Contested Tree Species"]},
+  {"name":"Sarah May","ra":"A","theme":"A3","role":"PI/AI","projects":["Knowlegde Barriers","Navigating Complexity","Vulnerabilty Resilience","Workshop SES Disturbance"]},
+  {"name":"Sebastian Gnann","ra":"A","theme":"A1","role":"PI/AI","projects":["Soil moisture droughts","Water Legacy"]},
+  {"name":"Sheikh Muhammad Asad","ra":"C","theme":"C3","role":"PhD","projects":["Water Redistribution"]},
+  {"name":"Simon Lotz","ra":"A","theme":"A5","role":"Technician","projects":["Visual and Acoustic Forest Change Impact"]},
+  {"name":"Simon Schulte","ra":"C","theme":"C3","role":"Postdoc","projects":["Wood Cascade Modelling"]},
+  {"name":"Sjon Hartman","ra":"A","theme":"A2","role":"PI/AI","projects":["Epigenetics Memory","Genome Editing"]},
+  {"name":"Stefan Baumgärtner","ra":"B","theme":"B2","role":"PI/AI","projects":["Responsibility for Future Forests"]},
+  {"name":"Stefan Kaufmann","ra":"A","theme":"A4","role":"PI/AI","projects":["Epiphyte Diversity"]},
+  {"name":"Stefan Pauliuk","ra":"C","theme":"C3","role":"PI/AI","projects":["Economic Model","Large Scale ABM","Wood Cascade Modelling"]},
+  {"name":"Steffi Peuckert","ra":"C","theme":"C3","role":"PhD","projects":["Forest Ecosystem Service Markets"]},
+  {"name":"Stephanie Bethmann","ra":"B","theme":"B3","role":"PI/AI","projects":["Contested Tree Species","Diversity in Human Nature Relationships","Knowlegde Barriers"]},
+  {"name":"Sylvia Kruse","ra":"B","theme":"B3","role":"PI/AI","projects":["Institutions"]},
+  {"name":"Tabea Wörner","ra":"A","theme":"A1","role":"PhD","projects":["Adaptive sensor network"]},
+  {"name":"Tahereh Golpour","ra":"A","theme":"A5","role":"Technician","projects":["Ticks"]},
+  {"name":"Tanja Mölders","ra":"C","theme":"C1","role":"PI/AI","projects":["Power in SES","SES Planning","Theorizing"]},
+  {"name":"Teja Kattenborn","ra":"A","theme":"A3","role":"PI/AI","projects":["Drought Modelling","Forest Dieback and Water Quality","Large Scale Mortality","Lidar","Visual and Acoustic Forest Change Impact"]},
+  {"name":"Theresa Klara Loch","ra":"C","theme":"C1","role":"Postdoc","projects":["Theorizing"]},
+  {"name":"Thomas Seifert","ra":"A","theme":"A1","role":"PI/AI","projects":["Canopy Micro Environment","Forest Growth Modelling","Lidar","Tree Responses"]},
+  {"name":"Veronika Braunisch","ra":"A","theme":"A4","role":"PI/AI","projects":["Bat-prey relationhips","Canopy Pollinators","Invasion biotic interactions"]},
+  {"name":"Vienna Kowalik","ra":"A","theme":"A2","role":"PI/AI","projects":["Biotic drivers of tree stress","Pathogens"]},
+  {"name":"Wentao Yu","ra":"na","theme":"na","role":"Postdoc","projects":["DivStability"]},
+  {"name":"Wiebke Hebermehl","ra":"B","theme":"B3","role":"PhD","projects":["Diversity in Human Nature Relationships"]},
+  {"name":"Yannek Käber","ra":"B","theme":"B1","role":"PI/AI","projects":["Evidence Process Model"]},
+  {"name":"Zabrina Welter","ra":"na","theme":"na","role":"Postdoc","projects":["EU Knowledge Regimes"]}
 ];
 
-let lanes = [];
-let selected = null;
-let filterRA = 'all';
+// Lane colour palette
+const LANE_COLORS = ['#1a7a4a','#1a4f8a','#c47a00','#7b3fa0','#c0392b','#0e7490','#92400e','#1e3a5f'];
+let colorIdx = 0;
 
-function placed(name){ return lanes.some(l=>l.members.includes(name)); }
+// ── STATE ──
+let lanes = []; // [{id, title, color, members:[name,...]}]
+let dragSrcName = null;
+let gitlabFileSha = null;
+let activeFilter = 'all';
+let currentSearch = '';
 
-function render(){
-  const q = document.getElementById('search').value.toLowerCase();
-  const list = document.getElementById('peopleList');
-  const vis = PEOPLE.filter(p=>{
-    if(filterRA!=='all'&&p.ra!==filterRA) return false;
-    if(q&&!p.name.toLowerCase().includes(q)&&!p.projects.some(x=>x.toLowerCase().includes(q))&&!p.theme.toLowerCase().includes(q)) return false;
-    return true;
+// ── INIT ──
+document.addEventListener('DOMContentLoaded', () => {
+  renderPeopleList();
+  renderBoard();
+  initPointerDrag();
+  loadFromGitLab().catch(err => {
+    console.warn('GitLab load failed (CORS or network):', err);
+    setStatus('offline — changes not saved');
+    showToast('GitLab unreachable — board works locally only', true);
   });
-  document.getElementById('cnt').textContent='('+vis.length+')';
-  list.innerHTML=vis.map(p=>{
-    const isSel=selected===p.name;
-    const isPlaced=placed(p.name);
-    return `<div class="pcard${isSel?' selected':''}${isPlaced?' placed':''}" onclick="selectPerson('${esc(p.name)}')" title="${esc(p.projects.join(', '))||p.theme}">
-      <div class="pcard-name">${p.name}</div>
-      <div class="pcard-meta">
-        <span class="tag tag-${p.ra}">${p.ra==='na'?'—':p.ra}</span>
-        ${p.theme!=='na'?`<span class="tag tag-${p.ra}">${p.theme}</span>`:''}
-        <span class="role-tag">${p.role}</span>
+});
+
+// ── PEOPLE LIST ──
+function renderPeopleList() {
+  const list = document.getElementById('peopleList');
+  const allInLanes = new Set(lanes.flatMap(l => l.members));
+  const q = currentSearch.toLowerCase();
+
+  const filtered = PEOPLE.filter(p => {
+    const matchFilter = activeFilter === 'all' || p.ra === activeFilter;
+    const matchSearch = !q || p.name.toLowerCase().includes(q) ||
+      p.projects.some(pr => pr.toLowerCase().includes(q)) ||
+      p.theme.toLowerCase().includes(q);
+    return matchFilter && matchSearch;
+  });
+
+  document.getElementById('memberCount').textContent = `(${filtered.length})`;
+
+  if (filtered.length === 0) {
+    list.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted);font-size:11px;font-family:IBM Plex Mono,monospace">No results</div>';
+    return;
+  }
+
+  list.innerHTML = filtered.map(p => {
+    const inLane = allInLanes.has(p.name);
+    const isSelected = selectedName === p.name;
+    return `<div class="person-card ${inLane ? 'in-collab' : ''} ${isSelected ? 'selected' : ''}"
+      data-name="${escapeAttr(p.name)}"
+      onclick="${inLane ? '' : `selectPerson('${escapeAttr(p.name)}')`}"
+      title="${escapeAttr(p.projects.join(', ') || p.theme)}">
+      <div class="card-name">${escapeHtml(p.name)}</div>
+      <div class="card-meta">
+        <span class="tag tag-ra-${p.ra}">${p.ra === 'na' ? '—' : p.ra}</span>
+        ${p.theme !== 'na' ? `<span class="tag tag-ra-${p.ra}">${p.theme}</span>` : ''}
+        <span class="tag-role">${p.role}</span>
       </div>
     </div>`;
   }).join('');
+}
+
+function setFilter(f, btn) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPeopleList();
+}
+
+function filterPeople() {
+  currentSearch = document.getElementById('searchInput').value;
+  renderPeopleList();
+}
+
+// ── CLICK-TO-SELECT, CLICK-TO-PLACE ──
+let selectedName = null;
+
+function selectPerson(name) {
+  if (selectedName === name) {
+    selectedName = null;
+  } else {
+    selectedName = name;
+  }
+  renderPeopleList();
   renderBoard();
   updateHint();
 }
 
-function selectPerson(name){
-  if(placed(name)) return;
-  selected = selected===name ? null : name;
-  render();
+function addToLane(laneId) {
+  if (!selectedName) return;
+  const lane = lanes.find(l => l.id === laneId);
+  if (!lane || lane.members.includes(selectedName)) return;
+  lane.members.push(selectedName);
+  selectedName = null;
+  renderPeopleList();
+  renderBoard();
+  updateHint();
+  setStatus('unsaved');
 }
 
-function setFilter(ra, el){
-  filterRA=ra;
-  document.querySelectorAll('.ftag').forEach(e=>e.className='ftag');
-  el.classList.add('active-'+ra);
-  render();
-}
-
-function addToLane(laneId){
-  if(!selected) return;
-  const lane=lanes.find(l=>l.id===laneId);
-  if(!lane||lane.members.includes(selected)) return;
-  lane.members.push(selected);
-  selected=null;
-  render();
-}
-
-function removeFromLane(laneId, name){
-  const lane=lanes.find(l=>l.id===laneId);
-  if(lane) lane.members=lane.members.filter(m=>m!==name);
-  render();
-}
-
-function newLane(){
-  const name=prompt('Collaboration group name (e.g. "Drought A3–C3"):');
-  if(!name||!name.trim()) return;
-  lanes.push({id:'lane_'+Date.now(), title:name.trim(), color:COLORS[colorIdx++%COLORS.length], members:[]});
-  render();
-}
-
-function deleteLane(id){
-  if(!confirm('Delete this group?')) return;
-  lanes=lanes.filter(l=>l.id!==id);
-  render();
-}
-
-function renderBoard(){
-  const scroll=document.getElementById('boardScroll');
-  const empty=document.getElementById('emptyBoard');
-  const addBtn=document.getElementById('addBtn');
-  if(!scroll) return;
-
-  // Remove old lanes but keep empty state and add button
-  scroll.querySelectorAll('.lane').forEach(el=>el.remove());
-
-  if(lanes.length===0){
-    empty.style.display='';
+function updateHint() {
+  const status = document.getElementById('saveStatus');
+  const global = document.getElementById('globalHint');
+  if (selectedName) {
+    status.textContent = selectedName + ' selected';
+    status.className = 'save-status selecting';
+    if (global) global.textContent = 'now click a group to place ' + selectedName;
   } else {
-    empty.style.display='none';
+    setStatus('ready');
+    if (global) global.textContent = 'select a person, then click a group';
   }
+}
 
-  // Insert lanes before the add button
-  lanes.forEach(lane=>{
-    const el=document.createElement('div');
-    el.className='lane'+(selected?' drop-ready':'');
-    el.id='lane-'+lane.id;
-    el.innerHTML=`
-      <div class="lane-head">
-        <div class="dot" style="background:${lane.color}"></div>
-        <input class="lane-name-input" value="${esc(lane.title)}" oninput="renameLane('${lane.id}',this.value)">
-        <button class="lane-del" onclick="deleteLane('${lane.id}')" title="Delete">×</button>
+function initPointerDrag() {
+  // no-op — using click-to-select instead
+}
+
+// ── LANES ──
+function addLane(title) {
+  const id = 'lane_' + Date.now();
+  const color = LANE_COLORS[colorIdx % LANE_COLORS.length];
+  colorIdx++;
+  lanes.push({ id, title, color, members: [] });
+  renderBoard();
+}
+
+function deleteLane(id) {
+  lanes = lanes.filter(l => l.id !== id);
+  renderBoard();
+  renderPeopleList();
+  setStatus('unsaved');
+}
+
+function removeFromLane(laneId, name) {
+  const lane = lanes.find(l => l.id === laneId);
+  if (!lane) return;
+  lane.members = lane.members.filter(m => m !== name);
+  renderBoard();
+  renderPeopleList();
+  setStatus('unsaved');
+}
+
+function updateLaneTitle(id, val) {
+  const lane = lanes.find(l => l.id === id);
+  if (lane) { lane.title = val; setStatus('unsaved'); }
+}
+
+// ── RENDER BOARD ──
+function renderBoard() {
+  const board = document.getElementById('board');
+  const empty = document.getElementById('emptyBoard');
+
+  if (lanes.length === 0) {
+    board.innerHTML = '';
+    board.appendChild(empty);
+    empty.style.display = '';
+    return;
+  }
+  empty.style.display = 'none';
+
+  // Rebuild lanes HTML
+  const html = lanes.map(lane => {
+    const membersHtml = lane.members.length === 0
+      ? `<div class="lane-drop-hint ${selectedName ? 'ready' : ''}">${selectedName ? 'Click to add ' + selectedName : 'Select a person first'}</div>`
+      : lane.members.map(name => {
+          const p = PEOPLE.find(x => x.name === name) || {name, ra:'na', theme:'na', role:''};
+          return `<div class="person-card">
+            <div class="card-content">
+              <div class="card-name">${escapeHtml(name)}</div>
+              <div class="card-meta">
+                <span class="tag tag-ra-${p.ra}">${p.ra === 'na' ? '—' : p.ra}</span>
+                ${p.theme !== 'na' ? `<span class="tag tag-ra-${p.ra}">${p.theme}</span>` : ''}
+                <span class="tag-role">${p.role}</span>
+              </div>
+            </div>
+            <button class="remove-from-lane" onclick="removeFromLane('${lane.id}','${escapeAttr(name)}')" title="Remove">×</button>
+          </div>`;
+        }).join('');
+
+    const isDropReady = !!selectedName;
+    return `<div class="lane ${isDropReady ? 'drop-ready' : ''}" id="lane-${lane.id}"
+      onclick="addToLane('${lane.id}')">
+      <div class="lane-header">
+        <div class="lane-color-dot" style="background:${lane.color}"></div>
+        <input class="lane-title-input" value="${escapeAttr(lane.title)}"
+          placeholder="Collaboration name..."
+          onchange="updateLaneTitle('${lane.id}', this.value)"
+          oninput="updateLaneTitle('${lane.id}', this.value)">
+        <button class="lane-delete" onclick="deleteLane('${lane.id}')" title="Delete lane">×</button>
       </div>
       <div class="lane-body">
-        ${lane.members.length===0
-          ? `<div class="drop-hint${selected?' ready':''}" onclick="addToLane('${lane.id}')">${selected?'Click to add '+selected:'Select a person first'}</div>`
-          : lane.members.map(name=>{
-              const p=PEOPLE.find(x=>x.name===name)||{name,ra:'na',theme:'na'};
-              return `<div class="lane-member">
-                <span class="member-name" title="${name}">${name}</span>
-                <span class="member-tag tag-${p.ra}">${p.ra==='na'?'—':p.ra}</span>
-                <button class="rm-btn" onclick="removeFromLane('${lane.id}','${esc(name)}')" title="Remove">×</button>
-              </div>`;
-            }).join('')
-          + (selected?`<div class="drop-hint ready" onclick="addToLane('${lane.id}')">+ Add ${selected}</div>`:'')
-        }
-      </div>`;
-    scroll.insertBefore(el, addBtn);
-  });
+        ${membersHtml}
+        ${lane.members.length > 0 && selectedName ? `<div class="lane-drop-hint ready" style="margin-top:4px">+ Add ${escapeHtml(selectedName)}</div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+
+  const addBtn = `<button class="add-lane-btn" onclick="openAddLaneModal()">+ New collaboration</button>`;
+  board.innerHTML = html + addBtn;
 }
 
-function renameLane(id, val){
-  const lane=lanes.find(l=>l.id===id);
-  if(lane) lane.title=val;
+// ── MODAL ──
+function openAddLaneModal() {
+  document.getElementById('addLaneModal').classList.add('open');
+  setTimeout(() => document.getElementById('newLaneName').focus(), 50);
 }
+function closeAddLaneModal() {
+  document.getElementById('addLaneModal').classList.remove('open');
+  document.getElementById('newLaneName').value = '';
+}
+function confirmAddLane() {
+  const name = document.getElementById('newLaneName').value.trim();
+  if (!name) return;
+  addLane(name);
+  closeAddLaneModal();
+  setStatus('unsaved');
+}
+document.getElementById('addLaneModal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeAddLaneModal();
+});
 
-function updateHint(){
-  const bar=document.getElementById('hintBar');
-  const txt=document.getElementById('hintText');
-  if(selected){
-    bar.className='hint-bar selecting';
-    txt.textContent='Selected: '+selected+' — now click a group to add them';
-  } else {
-    bar.className='hint-bar';
-    txt.textContent='← Select a person, then click a collaboration group to add them';
+// ── GITLAB ──
+async function loadFromGitLab() {
+  setStatus('loading...');
+  setLoadingBar(30);
+  const url = `${GITLAB_BASE}/api/v4/projects/${PROJECT_PATH}/repository/files/${encodeURIComponent(FILE_PATH)}?ref=${BRANCH}`;
+  const res = await fetch(url, { headers: { 'PRIVATE-TOKEN': TOKEN } });
+  setLoadingBar(70);
+  if (res.status === 404) {
+    gitlabFileSha = null;
+    setStatus('ready (new file)');
+    setLoadingBar(100);
+    return;
   }
+  if (!res.ok) throw new Error(`GitLab API ${res.status}`);
+  const data = await res.json();
+  gitlabFileSha = data.last_commit_id || null;
+  const yaml = atob(data.content.replace(/\n/g, ''));
+  lanes = parseYaml(yaml);
+  colorIdx = lanes.length;
+  renderBoard();
+  renderPeopleList();
+  setStatus('loaded');
+  setLoadingBar(100);
 }
 
-async function save(){
-  const btn=document.getElementById('saveBtn');
-  btn.textContent='Saving…';
-  btn.disabled=true;
-  const yaml=buildYaml();
-  const content=btoa(unescape(encodeURIComponent(yaml)));
-  const url=`${GITLAB_BASE}/api/v4/projects/${PROJECT_PATH}/repository/files/${encodeURIComponent(FILE_PATH)}`;
-  let exists=false;
-  try{
-    const r=await fetch(`${url}?ref=${BRANCH}`,{headers:{'PRIVATE-TOKEN':TOKEN}});
-    exists=r.ok;
-  }catch(e){}
-  try{
-    const r=await fetch(url,{
-      method:exists?'PUT':'POST',
-      headers:{'PRIVATE-TOKEN':TOKEN,'Content-Type':'application/json'},
-      body:JSON.stringify({branch:BRANCH,content,encoding:'base64',commit_message:'Update collaborations '+new Date().toISOString().slice(0,16)})
+async function saveToGitLab() {
+  setStatus('saving...');
+  const yaml = buildYaml();
+  const content = btoa(unescape(encodeURIComponent(yaml)));
+  const fileUrl = `${GITLAB_BASE}/api/v4/projects/${PROJECT_PATH}/repository/files/${encodeURIComponent(FILE_PATH)}`;
+
+  // Check if file exists
+  let exists = false;
+  try {
+    const check = await fetch(`${fileUrl}?ref=${BRANCH}`, { headers: { 'PRIVATE-TOKEN': TOKEN } });
+    exists = check.ok;
+  } catch(e) {}
+
+  const method = exists ? 'PUT' : 'POST';
+  const body = {
+    branch: BRANCH,
+    content,
+    commit_message: `Update collaborations — ${new Date().toISOString().slice(0,16).replace('T',' ')}`,
+    encoding: 'base64'
+  };
+
+  try {
+    const res = await fetch(fileUrl, {
+      method,
+      headers: { 'PRIVATE-TOKEN': TOKEN, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
     });
-    if(!r.ok) throw new Error((await r.json()).message||r.status);
-    btn.textContent='Saved ✓';
-    setTimeout(()=>{btn.textContent='Save to GitLab';btn.disabled=false;},2000);
-  }catch(err){
-    btn.textContent='Error — try again';
-    btn.disabled=false;
-    alert('Save failed: '+err.message);
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || res.status);
+    }
+    setStatus('saved ✓');
+    showToast('Saved to GitLab');
+  } catch (err) {
+    setStatus('error saving');
+    showToast('Save failed: ' + err.message, true);
   }
 }
 
-async function loadFromGitLab(){
-  try{
-    const url=`${GITLAB_BASE}/api/v4/projects/${PROJECT_PATH}/repository/files/${encodeURIComponent(FILE_PATH)}?ref=${BRANCH}`;
-    const r=await fetch(url,{headers:{'PRIVATE-TOKEN':TOKEN}});
-    if(!r.ok) return;
-    const d=await r.json();
-    const yaml=atob(d.content.replace(/\n/g,''));
-    const parsed=parseYaml(yaml);
-    if(parsed.length) { lanes=parsed; colorIdx=lanes.length; render(); }
-  }catch(e){ console.warn('GitLab load:',e); }
-}
-
-function buildYaml(){
-  let s='# FuFo Collaboration Board\n# '+new Date().toISOString()+'\ncollaborations:\n';
-  for(const l of lanes){
-    s+=`  - id: "${l.id}"\n    title: "${l.title.replace(/"/g,'\\"')}"\n    color: "${l.color}"\n    members:\n`;
-    for(const m of l.members) s+=`      - "${m.replace(/"/g,'\\"')}"\n`;
+// ── YAML SERIALISATION ──
+function buildYaml() {
+  const lines = ['# FuFo Collaboration Board', `# Updated: ${new Date().toISOString()}`, ''];
+  lines.push('collaborations:');
+  for (const lane of lanes) {
+    lines.push(`  - id: "${lane.id}"`);
+    lines.push(`    title: "${lane.title.replace(/"/g, '\\"')}"`);
+    lines.push(`    color: "${lane.color}"`);
+    lines.push(`    members:`);
+    for (const m of lane.members) {
+      lines.push(`      - "${m.replace(/"/g, '\\"')}"`);
+    }
   }
-  return s;
+  return lines.join('\n') + '\n';
 }
 
-function parseYaml(yaml){
-  const res=[];let cur=null,inM=false;
-  for(const line of yaml.split('\n')){
-    const t=line.trim();
-    if(t.startsWith('- id:')){if(cur)res.push(cur);cur={id:ex(t),title:'',color:'#1e3a5f',members:[]};inM=false;}
-    else if(cur&&t.startsWith('title:'))cur.title=ex(t);
-    else if(cur&&t.startsWith('color:'))cur.color=ex(t);
-    else if(cur&&t==='members:')inM=true;
-    else if(cur&&inM&&t.startsWith('- "'))cur.members.push(ex('x: '+t.slice(2)));
+function parseYaml(yaml) {
+  // Minimal YAML parser for our known structure
+  const result = [];
+  let current = null;
+  let inMembers = false;
+
+  for (const line of yaml.split('\n')) {
+    const trimmed = line.trim();
+    if (trimmed.startsWith('- id:')) {
+      if (current) result.push(current);
+      current = { id: extractStr(trimmed), title: '', color: '#1e3a5f', members: [] };
+      inMembers = false;
+    } else if (current && trimmed.startsWith('title:')) {
+      current.title = extractStr(trimmed);
+    } else if (current && trimmed.startsWith('color:')) {
+      current.color = extractStr(trimmed);
+    } else if (current && trimmed === 'members:') {
+      inMembers = true;
+    } else if (current && inMembers && trimmed.startsWith('- "')) {
+      current.members.push(extractStr('x: ' + trimmed.slice(2)));
+    }
   }
-  if(cur)res.push(cur);
-  return res;
+  if (current) result.push(current);
+  return result;
 }
-function ex(line){const m=line.match(/:\s*"(.*)"/);return m?m[1].replace(/\\"/g,'"'):'';}
-function esc(s){return String(s).replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
 
-render();
-loadFromGitLab();
+function extractStr(line) {
+  const m = line.match(/:\s*"(.*)"/);
+  return m ? m[1].replace(/\\"/g, '"') : '';
+}
+
+// ── UI HELPERS ──
+function setStatus(msg) {
+  const el = document.getElementById('saveStatus');
+  el.textContent = msg;
+  el.className = 'save-status';
+  if (msg.includes('saving') || msg.includes('loading')) el.classList.add('saving');
+  else if (msg.includes('saved') || msg.includes('loaded') || msg.includes('ready')) el.classList.add('saved');
+  else if (msg.includes('error')) el.classList.add('error');
+}
+
+function setLoadingBar(pct) {
+  const bar = document.getElementById('loadingBar');
+  bar.style.width = pct + '%';
+  if (pct >= 100) setTimeout(() => bar.style.width = '0%', 600);
+}
+
+function showToast(msg, isError = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (isError ? ' error' : '') + ' show';
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function escapeAttr(s) {
+  return String(s).replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
 </script>
+</body>
+</html>
