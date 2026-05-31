@@ -471,7 +471,9 @@
   <div class="header-actions">
     <span class="save-status" id="saveStatus">loading...</span>
     <button class="btn btn-ghost" onclick="openAddLaneModal()">+ New collaboration</button>
-    <button class="btn btn-primary" onclick="saveToGitLab()">Save to GitLab</button>
+    <button class="btn btn-ghost" onclick="loadFileInput.click()" title="Load a previously saved .yml file">Load file</button>
+    <button class="btn btn-primary" onclick="downloadFile()">Save file</button>
+    <input type="file" id="loadFileInput" accept=".yml,.yaml,.txt" style="display:none" onchange="loadFromFile(this)">
   </div>
 </div>
 
@@ -518,12 +520,6 @@
 <div class="toast" id="toast"></div>
 
 <script>
-// ── CONFIG ── replace token locally, never commit it
-const GITLAB_BASE = 'https://gitlab.uni-freiburg.de';
-const PROJECT_PATH = 'future-forests%2Fses_model_lab'; // URL-encoded
-const FILE_PATH = 'collaborations.yml';
-const BRANCH = 'main';
-const TOKEN = 'glpat-t1psUPbVeO9pvoh-l4kKL286MQp1OmNiCA.01.0y0msvv1a'; // ← paste your new token here locally
 
 // ── PEOPLE DATA (from Excel) ──
 const PEOPLE = [
@@ -657,21 +653,14 @@ let colorIdx = 0;
 
 // ── STATE ──
 let lanes = []; // [{id, title, color, members:[name,...]}]
-let dragSrcName = null;
-let gitlabFileSha = null;
 let activeFilter = 'all';
 let currentSearch = '';
 
 // ── INIT ──
 document.addEventListener('DOMContentLoaded', () => {
+  loadFromLocalStorage();
   renderPeopleList();
   renderBoard();
-  initPointerDrag();
-  loadFromGitLab().catch(err => {
-    console.warn('GitLab load failed (CORS or network):', err);
-    setStatus('offline — changes not saved');
-    showToast('GitLab unreachable — board works locally only', true);
-  });
 
   // People panel delegation — stable container, never replaced
   document.getElementById('peopleList').addEventListener('click', function(e) {
@@ -696,7 +685,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderPeopleList();
     renderBoard();
     updateHint();
-    setStatus('unsaved');
+    autoSave(); setStatus('ready');
   });
 
   // Escape key cancels selection
@@ -798,7 +787,7 @@ function addToLane(laneId, e) {
   renderPeopleList();
   renderBoard();
   updateHint();
-  setStatus('unsaved');
+  autoSave(); setStatus('ready');
 }
 
 function updateHint() {
@@ -831,7 +820,7 @@ function deleteLane(id) {
   lanes = lanes.filter(l => l.id !== id);
   renderBoard();
   renderPeopleList();
-  setStatus('unsaved');
+  autoSave(); setStatus('ready');
 }
 
 function removeFromLane(laneId, name) {
@@ -840,12 +829,12 @@ function removeFromLane(laneId, name) {
   lane.members = lane.members.filter(m => m !== name);
   renderBoard();
   renderPeopleList();
-  setStatus('unsaved');
+  autoSave(); setStatus('ready');
 }
 
 function updateLaneTitle(id, val) {
   const lane = lanes.find(l => l.id === id);
-  if (lane) { lane.title = val; setStatus('unsaved'); }
+  if (lane) { lane.title = val; autoSave(); setStatus('ready'); }
 }
 
 // ── RENDER BOARD ──
@@ -917,74 +906,69 @@ function confirmAddLane() {
   if (!name) return;
   addLane(name);
   closeAddLaneModal();
-  setStatus('unsaved');
+  autoSave(); setStatus('ready');
 }
 document.getElementById('addLaneModal').addEventListener('click', e => {
   if (e.target === e.currentTarget) closeAddLaneModal();
 });
 
-// ── GITLAB ──
-async function loadFromGitLab() {
-  setStatus('loading...');
-  setLoadingBar(30);
-  const url = `${GITLAB_BASE}/api/v4/projects/${PROJECT_PATH}/repository/files/${encodeURIComponent(FILE_PATH)}?ref=${BRANCH}`;
-  const res = await fetch(url, { headers: { 'PRIVATE-TOKEN': TOKEN } });
-  setLoadingBar(70);
-  if (res.status === 404) {
-    gitlabFileSha = null;
-    setStatus('ready (new file)');
-    setLoadingBar(100);
-    return;
+// ── LOCAL STORAGE ──
+const LS_KEY = 'fufo_collab_board';
+
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(LS_KEY);
+    if (saved) {
+      lanes = parseYaml(saved);
+      colorIdx = lanes.length;
+      setStatus('ready');
+    } else {
+      setStatus('ready');
+    }
+  } catch(e) {
+    setStatus('ready');
   }
-  if (!res.ok) throw new Error(`GitLab API ${res.status}`);
-  const data = await res.json();
-  gitlabFileSha = data.last_commit_id || null;
-  const yaml = atob(data.content.replace(/\n/g, ''));
-  lanes = parseYaml(yaml);
-  colorIdx = lanes.length;
-  renderBoard();
-  renderPeopleList();
-  setStatus('loaded');
-  setLoadingBar(100);
 }
 
-async function saveToGitLab() {
-  setStatus('saving...');
-  const yaml = buildYaml();
-  const content = btoa(unescape(encodeURIComponent(yaml)));
-  const fileUrl = `${GITLAB_BASE}/api/v4/projects/${PROJECT_PATH}/repository/files/${encodeURIComponent(FILE_PATH)}`;
-
-  // Check if file exists
-  let exists = false;
+function autoSave() {
   try {
-    const check = await fetch(`${fileUrl}?ref=${BRANCH}`, { headers: { 'PRIVATE-TOKEN': TOKEN } });
-    exists = check.ok;
+    localStorage.setItem(LS_KEY, buildYaml());
   } catch(e) {}
+}
 
-  const method = exists ? 'PUT' : 'POST';
-  const body = {
-    branch: BRANCH,
-    content,
-    commit_message: `Update collaborations — ${new Date().toISOString().slice(0,16).replace('T',' ')}`,
-    encoding: 'base64'
-  };
+// ── FILE DOWNLOAD ──
+function downloadFile() {
+  const yaml = buildYaml();
+  const blob = new Blob([yaml], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'collaborations.yml';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('File downloaded');
+}
 
-  try {
-    const res = await fetch(fileUrl, {
-      method,
-      headers: { 'PRIVATE-TOKEN': TOKEN, 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
-    if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err.message || res.status);
+// ── FILE LOAD ──
+function loadFromFile(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      lanes = parseYaml(e.target.result);
+      colorIdx = lanes.length;
+      renderBoard();
+      renderPeopleList();
+      autoSave();
+      setStatus('ready');
+      showToast('Loaded from file');
+    } catch(err) {
+      showToast('Could not read file: ' + err.message, true);
     }
-    setStatus('saved ✓');
-    showToast('Saved to GitLab');
-  } catch (err) {
-    setStatus('error saving');
-    showToast('Save failed: ' + err.message, true);
-  }
+  };
+  reader.readAsText(file);
+  input.value = '';
 }
 
 // ── YAML SERIALISATION ──
