@@ -673,6 +673,32 @@ document.addEventListener('DOMContentLoaded', () => {
     showToast('GitLab unreachable — board works locally only', true);
   });
 
+  // People panel delegation — stable container, never replaced
+  document.getElementById('peopleList').addEventListener('click', function(e) {
+    const card = e.target.closest('.person-card');
+    if (!card || card.classList.contains('in-collab')) return;
+    selectPerson(card.dataset.name);
+  });
+
+  // Board delegation — stable container, only children change
+  document.getElementById('board').addEventListener('click', function(e) {
+    if (e.target.closest('.lane-title-input') ||
+        e.target.closest('.lane-delete') ||
+        e.target.closest('.remove-from-lane') ||
+        e.target.closest('.add-lane-btn')) return;
+    const laneEl = e.target.closest('.lane');
+    if (!laneEl || !selectedName) return;
+    const laneId = laneEl.id.replace(/^lane-/, '');
+    const lane = lanes.find(l => l.id === laneId);
+    if (!lane || lane.members.includes(selectedName)) return;
+    lane.members.push(selectedName);
+    selectedName = null;
+    renderPeopleList();
+    renderBoard();
+    updateHint();
+    setStatus('unsaved');
+  });
+
   // Escape key cancels selection
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && selectedName) {
@@ -683,17 +709,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Clicking outside a person card or lane cancels selection
-  // Use composedPath() — e.target.closest() fails on detached elements after re-render
+  // Clicking outside the people panel, board, or modal cancels selection
   document.addEventListener('click', function(e) {
     if (!selectedName) return;
     const path = e.composedPath ? e.composedPath() : [e.target];
-    const hit = path.some(el => el.classList && (
-      el.classList.contains('person-card') ||
-      el.classList.contains('lane') ||
-      el.classList.contains('modal-overlay')
-    ));
-    if (hit) return;
+    const inside = path.some(el =>
+      el.id === 'peopleList' || el.id === 'board' ||
+      (el.classList && el.classList.contains('modal-overlay'))
+    );
+    if (inside) return;
     selectedName = null;
     renderPeopleList();
     renderBoard();
@@ -727,7 +751,6 @@ function renderPeopleList() {
     const isSelected = selectedName === p.name;
     return `<div class="person-card ${inLane ? 'in-collab' : ''} ${isSelected ? 'selected' : ''}"
       data-name="${escapeAttr(p.name)}"
-      onclick="${inLane ? '' : `selectPerson('${escapeAttr(p.name)}')`}"
       title="${escapeAttr(p.projects.join(', ') || p.theme)}">
       <div class="card-name">${escapeHtml(p.name)}</div>
       <div class="card-meta">
@@ -858,8 +881,7 @@ function renderBoard() {
         }).join('');
 
     const isDropReady = !!selectedName;
-    return `<div class="lane ${isDropReady ? 'drop-ready' : ''}" id="lane-${lane.id}"
-      onclick="addToLane('${lane.id}', event)">
+    return `<div class="lane ${isDropReady ? 'drop-ready' : ''}" id="lane-${lane.id}">
       <div class="lane-header">
         <div class="lane-color-dot" style="background:${lane.color}"></div>
         <input class="lane-title-input" value="${escapeAttr(lane.title)}"
