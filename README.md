@@ -4,9 +4,11 @@
 **To view each chart:**:
 
 https://fufo-modelling-458783.pages.uni-freiburg.de/registry.html -> registry of modeling activities
+
 https://fufo-modelling-458783.pages.uni-freiburg.de/survey.html -> survey for FuFo members (and associated people)
 
 https://fufo-modelling-458783.pages.uni-freiburg.de/other_groups.html -> other projects, not directly (currently) related to modeling
+
 ---
 
 ## What this is
