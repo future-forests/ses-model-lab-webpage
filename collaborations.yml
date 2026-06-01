@@ -1,10 +1,11 @@
 # FuFo Collaboration Board
-# Updated: 2026-05-31T16:42:42.130Z
+# Updated: 2026-06-01T07:45:49.535Z
 
 collaborations:
-  - id: "lane_1780245046083"
-    title: "colab1"
-    color: "#1a4f8a"
+  - id: "lane_1780299941434"
+    title: "iLand"
+    color: "#1a7a4a"
     members:
-      - "Aharon Valdes"
       - "Alexej Steuerle"
+      - "Ana Stritih"
+      - "Andrea Ingrosso"
