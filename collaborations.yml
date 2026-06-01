@@ -1,5 +1,5 @@
 # FuFo Collaboration Board
-# Updated: 2026-06-01T07:45:49.535Z
+# Updated: 2026-06-01T07:46:24.763Z
 
 collaborations:
   - id: "lane_1780299941434"
@@ -9,3 +9,9 @@ collaborations:
       - "Alexej Steuerle"
       - "Ana Stritih"
       - "Andrea Ingrosso"
+  - id: "lane_1780299976344"
+    title: "model"
+    color: "#1a4f8a"
+    members:
+      - "Andy Maun"
+      - "Ann-Kathrin Weith"
