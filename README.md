@@ -1,19 +1,19 @@
 # Future Forests C3 — Modelling Framework Registry
 
-**Maintained by:** Marta Wenta, Scientific Modelling Coordinator, Future Forests Excellence Cluster, Universität Freiburg
-**To view each chart:**:
+> **Maintained by:** Marta Wenta, Scientific Modelling Coordinator  
+> Future Forests Excellence Cluster, Universität Freiburg
 
-https://fufo-modelling-458783.pages.uni-freiburg.de/registry.html -> registry of modeling activities
+## Overview
 
-https://fufo-modelling-458783.pages.uni-freiburg.de/survey.html -> survey for FuFo members (and associated people)
+This repository documents the integrated modelling framework of the Future Forests Excellence Cluster. It is a registry and coordination tool that describes the modelling groups contributing to C3, what each group does, and what data they need and produce.
 
-https://fufo-modelling-458783.pages.uni-freiburg.de/other_groups.html -> other projects, not directly (currently) related to modeling
+## Quick Links
 
----
+- 📊 **[Modelling Registry](https://fufo-modelling-458783.pages.uni-freiburg.de/registry.html)** — Overview of all modeling activities
+- 📋 **[FuFo Survey](https://fufo-modelling-458783.pages.uni-freiburg.de/survey.html)** — Survey for FuFo members and associated researchers  
+- 🔗 **[Related Projects](https://fufo-modelling-458783.pages.uni-freiburg.de/other_groups.html)** — Other projects connected to the modelling ecosystem
 
-## What this is
-
-This repository documents the integrated modelling framework of of the Future Forests Excellence Cluster. It is a registry and coordination tool that describes the modelling groups contributing to C3, what each group does, what data they need and produce.
+## Status
 
 The repository will be updated as groups develop their projects, connections are confirmed, and new information becomes available.
 
