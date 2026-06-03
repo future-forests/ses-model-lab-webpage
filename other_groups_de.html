@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Future Forests — Register (v2)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --font-mono: 'IBM Plex Mono', monospace;
+  --font-sans: 'IBM Plex Sans', sans-serif;
+  --text-primary: #1a1e2e;
+  --text-secondary: #5a607a;
+  --text-muted: #8b93b0;
+  --bg-page: #f8f9fc;
+  --bg-white: #ffffff;
+  --border: #e2e6f0;
+  --radius: 8px;
+  --shadow: 0 1px 4px rgba(0,0,0,0.07), 0 2px 12px rgba(0,0,0,0.04);
+}
+body { font-family: var(--font-sans); background: var(--bg-page); color: var(--text-primary); min-height: 100vh; padding: 0 0 60px; }
+.page-header { background: var(--bg-white); border-bottom: 2px solid #1a1e2e; padding: 24px 40px 20px; position: sticky; top: 0; z-index: 100; }
+.header-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px; }
+.header-title { font-size: 22px; font-weight: 700; color: #1a1e2e; letter-spacing: -0.025em; margin-bottom: 2px; }
+.header-sub { font-size: 12.5px; color: var(--text-secondary); margin-bottom: 16px; }
+.filter-bar { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.filter-label { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); letter-spacing: 0.1em; margin-right: 4px; }
+.filter-btn { font-family: var(--font-mono); font-size: 11px; padding: 5px 12px; border-radius: 20px; border: 1.5px solid var(--c, #1a1e2e); background: var(--bg-white); color: var(--c, #1a1e2e); cursor: pointer; transition: all 0.15s; font-weight: 600; }
+.filter-btn:hover, .filter-btn.active { background: var(--bg, #f0f0f0); color: var(--c); }
+.filter-btn.all-btn { border-color: #1a1e2e; color: #1a1e2e; }
+.filter-btn.all-btn:hover, .filter-btn.all-btn.active { background: #1a1e2e; color: #fff; }
+.filter-group { display: flex; gap: 6px; align-items: center; padding: 0 8px; border-left: 1.5px solid var(--border); }
+.filter-group-label { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); letter-spacing: 0.12em; text-transform: uppercase; }
+.content { padding: 32px 40px 0; max-width: 1600px; margin: 0 auto; }
+.ra-area-header { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; padding: 6px 0 10px; margin: 28px 0 0; color: var(--text-muted); border-top: 1px solid var(--border); }
+.ra-section { margin-bottom: 40px; }
+.ra-section.hidden { display: none; }
+.ra-header { display: flex; align-items: center; gap: 12px; padding: 0 0 12px 16px; margin-bottom: 16px; border-bottom: 1px solid var(--border); }
+.ra-code { font-family: var(--font-mono); font-size: 18px; font-weight: 700; min-width: 28px; }
+.ra-name { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+.ra-count { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); margin-left: auto; }
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+.card { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; transition: box-shadow 0.2s, transform 0.2s; }
+.card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.10); transform: translateY(-1px); }
+.card-ra { font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.05em; padding: 3px 8px; border-radius: 4px; display: inline-block; width: fit-content; }
+.card-topic { font-size: 14.5px; font-weight: 600; color: var(--text-primary); line-height: 1.35; letter-spacing: -0.01em; }
+.card-pi { font-family: var(--font-mono); font-size: 11.5px; font-weight: 600; color: var(--text-secondary); }
+.card-pos { font-size: 11px; color: var(--text-muted); font-style: italic; }
+.card-methods { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-secondary); border-top: 1px solid var(--border); padding-top: 8px; line-height: 1.6; }
+.card-desc { font-size: 12.5px; color: var(--text-secondary); line-height: 1.6; padding-left: 2px; }
+.card-desc ul { list-style: none; padding: 0; margin: 0; }
+.card-desc li { padding-left: 14px; position: relative; margin-bottom: 3px; }
+.card-desc li::before { content: "·"; position: absolute; left: 0; color: var(--text-muted); }
+.footer { text-align: center; font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+<div class="page-header">
+  <div class="header-tag">Future Forests Excellence Cluster · Universität Freiburg · Forschungsbereiche B &amp; C</div>
+  <div class="header-title">FuFo-Projektregister v2</div>
+  <div class="filter-bar">
+    <span class="filter-label">FILTER:</span>
+    <button class="filter-btn all-btn active" onclick="filterRA('all',this)">Alle</button>
+    <span class="filter-group">
+    <span class="filter-group-label">A —</span>
+    <button class="filter-btn" style="--c:#0e5fa0;--bg:#e8f3fd;" onclick="filterRA('A1',this)">A1</button>
+    <button class="filter-btn" style="--c:#5a1a9a;--bg:#f1eafe;" onclick="filterRA('A2',this)">A2</button>
+    <button class="filter-btn" style="--c:#944d00;--bg:#fdf0e0;" onclick="filterRA('A3',this)">A3</button>
+    <button class="filter-btn" style="--c:#1a6e30;--bg:#e6f5eb;" onclick="filterRA('A4',this)">A4</button>
+    <button class="filter-btn" style="--c:#8c1a42;--bg:#fce8ee;" onclick="filterRA('A5',this)">A5</button>
+    </span>
+    <span class="filter-group">
+      <span class="filter-group-label">B —</span>
+      <button class="filter-btn" style="--c:#1a3a6e;--bg:#e8edf8;" onclick="filterRA('B1',this)">B1</button>
+      <button class="filter-btn" style="--c:#4a1070;--bg:#f0e8fc;" onclick="filterRA('B2',this)">B2</button>
+      <button class="filter-btn" style="--c:#6b3a10;--bg:#faf0e8;" onclick="filterRA('B3',this)">B3</button>
+    </span>
+    <span class="filter-group">
+      <span class="filter-group-label">C —</span>
+      <button class="filter-btn" style="--c:#701a1a;--bg:#fce8e8;" onclick="filterRA('C1',this)">C1</button>
+      <button class="filter-btn" style="--c:#604018;--bg:#f8f0e8;" onclick="filterRA('C4',this)">C4</button>
+    </span>
+  </div>
+</div>
+
+<div class="content">
+<!-- ═══════════════════ FORSCHUNGSBEREICH A ═══════════════════ -->
+<div class="ra-area-header">Forschungsbereich A</div>
+
+<!-- A1 -->
+<section class="ra-section" id="ra-A1">
+  <div class="ra-header" style="border-left:4px solid #0e5fa0;">
+    <span class="ra-code" style="color:#0e5fa0;">A1</span>
+    <span class="ra-name">Waldmikroklima &amp; Sensoren</span>
+  </div>
+  <div class="cards-grid">
+
+    <div class="card" data-ra="A1">
+      <div class="card-ra" style="background:#e8f3fd;color:#0e5fa0;border:1px solid #90c4f5;">A1 — Waldmikroklima &amp; Sensoren</div>
+      <div class="card-topic">Bodenkohlenstoffspeicherung unter veränderten Mikroklimabedingungen</div>
+      <div class="card-pi">Lang, Kammerer, Puhlmann</div>
+      <div class="card-pos">PostDoc – Kenton Stutz, Techniker – Moritz Benka</div>
+      <div class="card-methods">Bodenprozessmodellierung · SOM-Fraktionierung · Datensynthese</div>
+      <div class="card-desc">
+        <ul>
+        <li>Quantifiziert, wie kronendachbedingte Mikroklimaänderungen die Dynamik der organischen Bodensubstanz (SOM) beeinflussen.</li>
+        <li>Bewertet die Auswirkungen von Waldbewirtschaftung und Störungen auf Kronenstruktur, Waldmikroklima und SOM-Umsatz.</li>
+        <li>Untersucht Veränderungen bei Streueinträgen, SOM-Qualität, Bodenstörungen und mikrobieller Gemeinschaftsfunktion.</li>
+        <li>Analysiert SOM-Zusammensetzung und Huminsäuren mittels Metabolomik, hochauflösender Massenspektrometrie und NMR.</li>
+        <li>Verbessert das Verständnis, wie Extremwetterereignisse und Waldinnenklimabedinungen den Kohlenstoff- und Nährstoffkreislauf beeinflussen.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- A2 -->
+<section class="ra-section" id="ra-A2">
+  <div class="ra-header" style="border-left:4px solid #5a1a9a;">
+    <span class="ra-code" style="color:#5a1a9a;">A2</span>
+    <span class="ra-name">Baumstressphysiologie</span>
+  </div>
+  <div class="cards-grid">
+
+    <div class="card" data-ra="A2">
+      <div class="card-ra" style="background:#f1eafe;color:#5a1a9a;border:1px solid #c9a8f5;">A2 — Baumstressphysiologie</div>
+      <div class="card-topic">Baumreaktionen auf neuartige Stressfaktoren — koordinierendes Dachprojekt</div>
+      <div class="card-pi">Heer, Biedermann</div>
+      <div class="card-pos">Technikerin: Katrin Hübscher</div>
+      <div class="card-methods">Experimentell (Ecotron + Gewächshaus) · Pfropfung · Multiomics</div>
+      <div class="card-desc">
+        <ul>
+          <li>Koordiniert die gemeinsame experimentelle Infrastruktur innerhalb von A2</li>
+          <li>Untersucht, wie Traubeneiche, ihr assoziiertes Mikrobiom und herbivore Insekten auf Hitzedürre und Herbivorie reagieren.</li>
+          <li>Bestimmt die Auswirkungen von Hitzedürre auf baumliche Endophytengemeinschaften und Pathogenabundanz.</li>
+          <li>Bewertet, wie Pflanzenstress die Leistung der Eichennetzwanze beeinflusst und wie Herbivorie die Baumphysiologie verändert.</li>
+          <li>Untersucht Wechselwirkungen und Symbiontenaus­tausch zwischen pflanzlichen Endophyten und Insektenmikrobiomen.</li>
+          <li>Bewertet die Implikationen dieser Interaktionen für die Übertragung von Pflanzenpathogenen.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" data-ra="A2">
+      <div class="card-ra" style="background:#f1eafe;color:#5a1a9a;border:1px solid #c9a8f5;">A2 — Baumstressphysiologie</div>
+      <div class="card-topic">Molekulare Stressresilienz und Stressgedächtnis (Epigenetisches Gedächtnis)</div>
+      <div class="card-pi">Heer, Hartmann, Kleine-Vehn</div>
+      <div class="card-pos">PostDoc</div>
+      <div class="card-methods">Epigenomik (WGBS, ATAC-seq, CUT&amp;Tag) · RNAseq · Multiomics</div>
+      <div class="card-desc">
+        <ul>
+          <li>Untersucht die molekulare Grundlage von Stressreaktionen und Priming bei Bäumen, die neuartigen Kombinationen biotischer und abiotischer Stressfaktoren ausgesetzt sind.</li>
+          <li>Versucht molekulare Marker und metabolische Rettungssignale zu identifizieren, die als Frühwarnsignale für akuten Stress oder bevorstehende Mortalität dienen.</li>
+          <li>Entwickelt einen Baumstressindex (BSI) als quantitativen Marker für die kumulative Stressbelastung im Feldmonitoring.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" data-ra="A2">
+      <div class="card-ra" style="background:#f1eafe;color:#5a1a9a;border:1px solid #c9a8f5;">A2 — Baumstressphysiologie</div>
+      <div class="card-topic">Funktionelle Baumgenetik für prädiktives Resilienz-Framework (Genomeditiierung)</div>
+      <div class="card-pi">Kleine-Vehn, Heer, Hartmann</div>
+      <div class="card-pos">Doktorand/in</div>
+      <div class="card-methods">Genomeditierung (CRISPR/Cas9) · Epigenetische Mutantenpanels · Stressphenotypisierung</div>
+      <div class="card-desc">
+        <ul>
+          <li>Etabliert ein Pappel-Mutantenpanel, das auf Schlüsselarme epigenetischer Regulation zielt, zur Unterstützung funktioneller Baumgenetik.</li>
+          <li>Benchmarkt Mutantenleistung unter standardisierten Priming-Herausforderungs-Erholungs-Assays (Dürre × Hitze, biotische Elicitoren), abgestimmt mit A2.1.</li>
+          <li>Wendet den Baumstressindex auf Mutanten und Wildtyp-Kontrollen an, um zu testen, ob Stresssignaturen von epigenetischer Regulation abhängen.</li>
+          <li>Identifiziert prädiktive Resilienzmarker durch Verknüpfung von Stressreaktionsdynamiken über Genotypen hinweg mit phänotypischen Ergebnissen.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" data-ra="A2">
+      <div class="card-ra" style="background:#f1eafe;color:#5a1a9a;border:1px solid #c9a8f5;">A2 — Baumstressphysiologie</div>
+      <div class="card-topic">Ökophysiologische und Wachstumsreaktionen auf Trockenstress (Baumreaktionen)</div>
+      <div class="card-pi">Werner, Kreuzwieser, Seifert, Ragni</div>
+      <div class="card-pos">Doktorand – Alexej Steuerle</div>
+      <div class="card-methods">Gasaustausch · VOC-Fluss · Xylogenese · Holzanatomie</div>
+      <div class="card-desc">
+        <ul>
+          <li>Untersucht die Reaktion von Bäumen auf kombinierten abiotischen und biotischen Stress in ökophysiologischen und Wachstumsparametern.</li>
+          <li>Analysiert Reaktionen unter Hitzedürre und biotischen Stressfaktoren.</li>
+          <li>Bewertet die Anlockung von Herbivoren durch flüchtige organische Verbindungen der Bäume in Bezug auf Herbivoren-Fitness und deren mikrobielle Symbionten sowie molekulare Marker und Baumgenotyp.</li>
+          <li>Untersucht die Baumadaption an Dürre und Kombinationsstress durch hydraulische Merkmale, Kohlenstoffallokation, Abwehrstoffwechsel und VOC-Emissionen.</li>
+          <li>Bewertet, wie Stressreaktionen in Holz- und Korkstruktur mittels quantitativer Anatomie, Mikroskopie und ML-Analyse sichtbar werden.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" data-ra="A2">
+      <div class="card-ra" style="background:#f1eafe;color:#5a1a9a;border:1px solid #c9a8f5;">A2 — Baumstressphysiologie</div>
+      <div class="card-topic">Dürre- und Herbivorie-Effekte auf Baumphysiologie und Mikrobiom (Biotische Treiber des Baumstresses)</div>
+      <div class="card-pi">Kowallik, Biedermann</div>
+      <div class="card-pos">Doktorand – Danilo Lüdke</div>
+      <div class="card-methods">Meta-Barcoding (16S/ITS2) · Amplikonsequenzierung · Pflanzen-Insekten-Bioassays</div>
+      <div class="card-desc">
+        <ul>
+        <li>Testet, wie Traubeneiche, ihr Mikrobiom und herbivore Insekten auf Hitzedürre und Eichengitterwanzenbefall reagieren.</li>
+        <li>Bewertet Effekte auf Endophytengemeinschaften, Pflanzenphysiologie, Insektenfitness und potenziellen Pathogenaustausch zwischen Pflanzen und Insekten.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" data-ra="A2">
+      <div class="card-ra" style="background:#f1eafe;color:#5a1a9a;border:1px solid #c9a8f5;">A2 — Baumstressphysiologie</div>
+      <div class="card-topic">Pathogeninteraktionen und Mykobiom der Douglasie unter Dürre (Pathogene)</div>
+      <div class="card-pi">Blumenstein, Kowallik</div>
+      <div class="card-pos">Doktorand – Lee Deutsch</div>
+      <div class="card-methods">ITS2-Metabarcoding · Pathogeninokulierung · Mykobiomanalyse</div>
+      <div class="card-desc">
+        <ul>
+          <li>Identifiziert das Kernmykobiom der Douglasie.</li>
+          <li>Untersucht Ko-Infektionsdynamiken unter Diplodia sapinea, Dothistroma spp. und Rhabdocline pseudotsugae unter Hitzedürre.</li>
+          <li>Vergleicht herkunftsspezifische Anfälligkeit und die Rolle mikrobieller Gemeinschaftsveränderungen bei Krankheitsverläufen.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- A3 -->
+<section class="ra-section" id="ra-A3">
+  <div class="ra-header" style="border-left:4px solid #944d00;">
+    <span class="ra-code" style="color:#944d00;">A3</span>
+    <span class="ra-name">Waldvulnerabilität &amp; Resilienz</span>
+  </div>
+  <div class="cards-grid">
+
+    <div class="card" data-ra="A3">
+      <div class="card-ra" style="background:#fdf0e0;color:#944d00;border:1px solid #f5c97a;">A3 — Waldvulnerabilität &amp; Resilienz</div>
+      <div class="card-topic">Bestandsdichtemanagement als Dürreadaption</div>
+      <div class="card-pi">Schnabel, Bauhus</div>
+      <div class="card-pos">Doktorand – David Andermahr</div>
+      <div class="card-methods">Strukturgleichungsmodelle · Dendroökologie · Fernerkundung</div>
+      <div class="card-desc">
+        <ul>
+        <li>Quantifiziert, wie Bestandsdichtemanagement dürrebedingte Baummortalität bei Rotbuche, Traubeneiche, Weißtanne und Douglasie reduzieren kann.</li>
+        <li>Bewertet dürrebedingten Baumstress und Mortalität bei diesen Fokusarten.</li>
+        <li>Setzt Stress und Mortalität in Beziehung zur Bestandsdichte, Baumhöhe, Alter, Kronengröße und vergangenen Bewirtschaftungsmaßnahmen.</li>
+        <li>Identifiziert den optimalen Bestandsdichte-„Sweet Spot" und verknüpft ihn mit Waldstruktur und Mikroklima zur Orientierung für dürreadaptiertes Waldmanagement.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" data-ra="A3">
+      <div class="card-ra" style="background:#fdf0e0;color:#944d00;border:1px solid #f5c97a;">A3 — Waldvulnerabilität &amp; Resilienz</div>
+      <div class="card-topic">Waldvulnerabilitätskartierung mit sozial-ökologischen Resilienzmetriken (Vulnerabilität Resilienz)</div>
+      <div class="card-pi">Albrecht, Bauhus, Schnabel, May, Rotbarth</div>
+      <div class="card-pos">Doktorandin – Isabel Karst</div>
+      <div class="card-methods">Bayesianische Belief-Netzwerke · Fernerkundung · Stakeholder-Gewichtung</div>
+      <div class="card-desc">
+        <ul>
+          <li>Entwickelt einen integrierten, operativen und räumlich expliziten Rahmen zur Bewertung von Waldvulnerabilität und -resilienz über physikalische, ökologische und soziale Treiber hinweg.</li>
+          <li>Verbessert Vulnerabilitätskarten durch weitere Baumarten, Mortalitätsrisikofaktoren und höhere räumliche Auflösung.</li>
+          <li>Integriert Stakeholder-Einstellungen und -Präferenzen in die Vulnerabilitätskartierung mittels ethnographischer Interviews, Gewichtungsmethoden und bedingter Wahrscheinlichkeitstabellen.</li>
+          <li>Integriert Resilienzindikatoren in räumliche BBNs und validiert den Rahmen mit retrospektiven Schadensdaten zur Identifikation prioritärer Interventionsbereiche.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" data-ra="A3">
+      <div class="card-ra" style="background:#fdf0e0;color:#944d00;border:1px solid #f5c97a;">A3 — Waldvulnerabilität &amp; Resilienz</div>
+      <div class="card-topic">Mehrskaliges Frühwarnsystem für Waldresilienz</div>
+      <div class="card-pi">Rotbarth, Albrecht, Bauhus</div>
+      <div class="card-pos">PostDoc – Ronny Rotbarth</div>
+      <div class="card-methods">Critical Slowing Down (CSD) · Satelliten-NDVI-Zeitreihen · Jahrringe</div>
+      <div class="card-desc">
+        <ul>
+          <li>Quantifiziert Waldresilienz mittels Critical-Slowing-Down-Indikatoren über Satelliten-, Jahrring- und Flussturmdaten.</li>
+          <li>Identifiziert ökologische, klimatische und sozioökonomische Treiber des Resilienzverlustes.</li>
+          <li>Bewertet die Vorhersagekraft der Indikatoren anhand beobachteter Mortalitätsereignisse in Deutschland.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- A4 -->
+<section class="ra-section" id="ra-A4">
+  <div class="ra-header" style="border-left:4px solid #1a6e30;">
+    <span class="ra-code" style="color:#1a6e30;">A4</span>
+    <span class="ra-name">Biodiversität</span>
+  </div>
+  <div class="cards-grid">
+
+    <div class="card" data-ra="A4">
+      <div class="card-ra" style="background:#e6f5eb;color:#1a6e30;border:1px solid #80d49a;">A4 — Biodiversität</div>
+      <div class="card-topic">Epiphytenvielfalt entlang silvikultureller Transformationspfade (Epiphytenvielfalt)</div>
+      <div class="card-pi">Hauck, Kaufmann</div>
+      <div class="card-pos">Doktorand – Robin Schweikert</div>
+      <div class="card-methods">Feldtaxonomie · Metabarcoding (ITS2) · Funktionelle Diversitätsanalyse</div>
+      <div class="card-desc">
+        <ul>
+        <li>Analysiert, wie verschiedene Wald-SES-Pfade die Diversität und biotischen Wechselwirkungen epiphytischer Moose und Flechten beeinflussen.</li>
+        <li>Identifiziert kritische Schwellenwerte für diese Gemeinschaften unter klimabedingtem Bestandszerfall, adaptiver Transformation mit nicht heimischen Baumarten und Extensivierung.</li>
+        <li>Vergleicht Referenzwälder mit sich auflösenden Beständen und Beständen mit eingeführten nicht heimischen Baumarten im Schwarzwald und Oberrheintal.</li>
+        <li>Bewertet Veränderungen der assoziierten mikrobiellen Diversität mittels Metabarcoding eukaryotischer und prokaryotischer Gemeinschaften.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" data-ra="A4">
+      <div class="card-ra" style="background:#e6f5eb;color:#1a6e30;border:1px solid #80d49a;">A4 — Biodiversität</div>
+      <div class="card-topic">Bewirtschaftungsoptionen für invasive Baumarten und ihre Auswirkungen auf ökologische Gemeinschaften sowie assoziierte Ökosystemfunktionen und -leistungen (Invasion biotische Interaktionen)</div>
+      <div class="card-pi">Braunisch, Klein, Müller</div>
+      <div class="card-pos">Doktorandin – Ina Aufderheide</div>
+      <div class="card-methods">Bestäubernetzwerkanalyse · Bioakustik · Metabarcoding · BACI-Design</div>
+      <div class="card-desc">
+        <ul>
+        <li>Bewertet, wie invasive Spätblühende Traubenkirsche (Prunus serotina) Bestäubervielfalt, -abundanz, Gemeinschaftszusammensetzung und funktionale Netzwerke beeinflusst.</li>
+        <li>Bestimmt, wie P. serotina Vogelgemeinschaften direkt über Beeren und indirekt über Veränderungen bei Insekten und Habitatstruktur beeinflusst.</li>
+        <li>Untersucht Zusammenhänge zwischen Insekten- und Vogelvielfalt, Klangraum und menschlicher Wahrnehmung ästhetischer Werte.</li>
+        <li>Bewertet Bewirtschaftungsszenarien für die Integration von P. serotina in silvikulturelle Systeme unter Minimierung von Ökosystemstörungen und Förderung der Biodiversität.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" data-ra="A4">
+      <div class="card-ra" style="background:#e6f5eb;color:#1a6e30;border:1px solid #80d49a;">A4 — Biodiversität</div>
+      <div class="card-topic">Pflanzenvielfalt und Zersetzung unter neuartigen Waldbedingungen (Vegetation Zersetzung)</div>
+      <div class="card-pi">Greinwald, Scherer-Lorenzen</div>
+      <div class="card-pos">Doktorand – Malte Lehmann</div>
+      <div class="card-methods">Vegetationsaufnahmen · Zersetzungsversuche · Strukturgleichungsmodelle</div>
+      <div class="card-desc">
+        <ul>
+        <li>Quantifiziert räumlich-zeitliche Veränderungen in Waldpflanzenvielfalt und -zusammensetzung unter Extremstörungen und neuen Bewirtschaftungsregimes.</li>
+        <li>Bewertet, wie diese Veränderungen die Zersetzung von Nekromasse und organischer Substanz unter verschiedenen abiotischen Bedingungen und Diversitätsniveaus beeinflussen.</li>
+        <li>Modelliert die Zusammenhänge zwischen Umweltbedingungen, Pflanzenvielfalt und Zersetzung zur Identifikation funktionaler Reaktionen und potenzieller Kipppunkte.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- A5 -->
+<section class="ra-section" id="ra-A5">
+  <div class="ra-header" style="border-left:4px solid #8c1a42;">
+    <span class="ra-code" style="color:#8c1a42;">A5</span>
+    <span class="ra-name">Mensch&#8202;–&#8202;Wald-Interaktionen</span>
+  </div>
+  <div class="cards-grid">
+
+    <div class="card" data-ra="A5">
+      <div class="card-ra" style="background:#fce8ee;color:#8c1a42;border:1px solid #f0a0bb;">A5 — Mensch&#8202;–&#8202;Wald-Interaktionen</div>
+      <div class="card-topic">Zeckenpopulationsdynamik und zeckenübertragene Krankheiten im Zusammenhang mit Waldveränderungen</div>
+      <div class="card-pi">Panning, Scherer-Lorenzen, Segelbacher</div>
+      <div class="card-pos">Technikerin – Taherer Golpour</div>
+      <div class="card-methods">Metagenomik · Amplikonsequenzierung · Epidemiologische Modellierung</div>
+      <div class="card-desc">
+        <ul>
+          <li>Quantifiziert Zeckenabundanz und Pathogengemeinschafts­zusammensetzung über Waldtypen hinweg mittels metagenomischer Sequenzierung.</li>
+          <li>Testet Verdünnungseffekt-Hypothesen an Baumvielfalt-Experimenten wie BIOTREE und MyDiv.</li>
+          <li>Entwickelt Frühwarnrahmen für Krankheitsrisiken.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" data-ra="A5">
+      <div class="card-ra" style="background:#fce8ee;color:#8c1a42;border:1px solid #f0a0bb;">A5 — Mensch&#8202;–&#8202;Wald-Interaktionen</div>
+      <div class="card-topic">Visuelle und akustische Dimensionen des Waldwandels und menschliches Wohlbefinden (Auswirkungen des visuellen und akustischen Waldwandels)</div>
+      <div class="card-pi">Munteanu, Müller, Scherer-Lorenzen, Sousa-Silva</div>
+      <div class="card-pos">Doktorand – Moritz Schuck, Techniker – Simon Lotz</div>
+      <div class="card-methods">Fernerkundung (historische/Spionage-Aufnahmen) · Bioakustik · VR-Experimente</div>
+      <div class="card-desc">
+        <ul>
+          <li>Rekonstruiert zeitgenössische und vergangene regionale Landschaften und Klangraum, um langfristigen Waldwandel zu erfassen.</li>
+          <li>Bewertet, wie die Öffentlichkeit Veränderungen in visueller und akustischer Waldvielfalt wahrnimmt, und identifiziert Wahrnehmungslücken.</li>
+          <li>Testet, wie Waldwandel mit Wahrnehmung und physischen Maßen des Wohlbefindens in einer VR-Umgebung zusammenhängt.</li>
+          <li>Integriert wahrgenommene und physische Wohlbefindensergebnisse, um zu bestimmen, ob sie übereinstimmen.</li>
+          <li>Kombiniert Ergebnisse mit verwandten Forschungsbereichen, insbesondere Biodiversität, Mensch-Natur-Beziehungen und Zecken.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════ FORSCHUNGSBEREICH B ═══════════════════ -->
+<div class="ra-area-header">Forschungsbereich B — Entscheidungsfindung für Zukunftswälder</div>
+
+<!-- B1 -->
+<section class="ra-section" id="ra-B1">
+<div class="ra-header" style="border-left:4px solid #1a3a6e;">
+  <span class="ra-code" style="color:#1a3a6e;">B1</span>
+  <span class="ra-name">Evidenzgrundlagen der Entscheidungsfindung</span>
+</div>
+<div class="cards-grid">
+
+<div class="card" data-ra="B1">
+  <div class="card-ra" style="background:#e8edf8;color:#1a3a6e;border:1px solid #8aa0cc;">B1 — Evidenzgrundlagen der EF</div>
+  <div class="card-topic">Entscheidungsfindungsrahmen: Konzeptualisierung, Koordination und Synthese (EF-Rahmen)</div>
+  <div class="card-pi">Michael Pregernig</div>
+  <div class="card-pos">PostDoc — Jan Zumoberhaus</div>
+  <div class="card-methods">Literaturscreening über Disziplinen · Interdisziplinäres Ko-Design · Grenzobjekte · Synthese über Datenaustausch, Szenarien und Wissensmanagement</div>
+  <div class="card-desc"><ul>
+    <li>Stellt theoretischen Rahmen und Operationalisierung von EF unter Unsicherheit und Ambiguität für Zukunftswälder bereit.</li>
+    <li>Koordiniert Forschung innerhalb von RA B und über Forschungsbereiche hinweg durch interdisziplinäre Teams und Stakeholder-Austauschformate.</li>
+    <li>Bereitet die Synthese der Forschung in B und im Cluster vor und unterstützt sie.</li>
+    <li>Koordiniert Thema B1 zu den Evidenzgrundlagen der EF und integriert Perspektiven von Evidenz als Fakten und Evidenz als Behauptungen.</li>
+  </ul></div>
+</div>
+
+<div class="card" data-ra="B1">
+  <div class="card-ra" style="background:#e8edf8;color:#1a3a6e;border:1px solid #8aa0cc;">B1 — Evidenzgrundlagen der EF</div>
+  <div class="card-topic">Epistemische Autorität und Dispute unter tiefer Unsicherheit (EpistAD)</div>
+  <div class="card-pi">Michael Pregernig</div>
+  <div class="card-pos">Doktorand — Adam Smoleń</div>
+  <div class="card-methods">Qualitatives Fallstudiendesign · Interpretative Meta-Analysen · Scoping- und Synthesereviews · Interviews und Teilnehmerbeobachtungen · Diskurs- und Frame-Analyse · Artefaktanalyse</div>
+  <div class="card-desc"><ul>
+    <li>Was gilt als glaubwürdiges Wissen und wie ändern sich Faktizitätsstandards in der SES-Forschung unter tiefer Unsicherheit?</li>
+    <li>Welche Formen der Wissensproduktion sind wissenschaftlich gerechtfertigt und gesellschaftlich akzeptiert unter fundamentaler sozialer Ambiguität?</li>
+    <li>Wie variiert epistemische Autorität über Disziplinen, Handlungsfelder und soziopolitische Kontexte?</li>
+    <li>Fokus auf zeitliche Verschiebungen in Disziplinarfeldern, epistemische Dispute als Marker für Wissenswandel sowie Wissenstransfer in verschiedenen Organisationen.</li>
+  </ul></div>
+</div>
+
+</div></section>
+
+<!-- B2 -->
+<section class="ra-section" id="ra-B2">
+<div class="ra-header" style="border-left:4px solid #4a1070;">
+  <span class="ra-code" style="color:#4a1070;">B2</span>
+  <span class="ra-name">Prinzipien der Entscheidungsfindung</span>
+</div>
+<div class="cards-grid">
+
+<div class="card" data-ra="B2">
+  <div class="card-ra" style="background:#f0e8fc;color:#4a1070;border:1px solid #b080e0;">B2 — Prinzipien der EF</div>
+  <div class="card-topic">Prinzipienbasierte Entscheidungsfindung für neuartige Wald-SES: Konzeptualisierung, Koordination und Synthese (B2-Synthese)</div>
+  <div class="card-pi">Cathrin Zengerling</div>
+  <div class="card-pos">PostDoc — Marina Klimke</div>
+  <div class="card-methods">Systematisches Literaturreview · Interdisziplinäres Ko-Design · Fokusgruppendiskussionen · Archetypanalyse · Umfrage in Fallstudienregionen</div>
+  <div class="card-desc"><ul>
+    <li>Koordiniert und synthetisiert B2-Forschung zu Robustheit, Verantwortung, Legitimität und Gerechtigkeit entlang von drei aufeinanderfolgenden Arbeitspaketen.</li>
+    <li>Konzeptualisiert prinzipienbasierte EF für neuartige Wald-SES in enger Zusammenarbeit mit B2-Forschenden und dem B-PostDoc.</li>
+    <li>Synthetisiert und koordiniert Wissenseingaben/-ausgaben von und zu RA A und C; unterstützt Fallstudiendesign über das SES-CaseLab.</li>
+    <li>Bereitet drei Synthesepublikationen vor: prinzipienbasierte EF in Theorie und Praxis; Wert unter hoher Unsicherheit; Rolle in SES-Rahmen, Szenarien, Modellen und A&amp;TPs.</li>
+  </ul></div>
+</div>
+
+<div class="card" data-ra="B2">
+  <div class="card-ra" style="background:#f0e8fc;color:#4a1070;border:1px solid #b080e0;">B2 — Prinzipien der EF</div>
+  <div class="card-topic">Legitimität und Gerechtigkeit als Entscheidungsfindungsprinzipien für neuartige SES</div>
+  <div class="card-pi">Hartmut Fünfgeld, Daniela Kleinschmit</div>
+  <div class="card-pos">PostDoc — Jakob Kramer</div>
+  <div class="card-methods">Integratives Literaturreview · Dokumentenanalyse · Halbstrukturierte Schlüsselinformanten-Interviews · Fokusgruppen (ggf. szenariobasiert)</div>
+  <div class="card-desc"><ul>
+    <li>Verfolgt intra- und intergenerationelle Gerechtigkeitsansprüche durch einen trivalenten Rahmen: distributive, prozedurale und Anerkennungsgerechtigkeit.</li>
+    <li>Analysiert Input-, Throughput- und Output-Legitimität politischer Prozesse, die Zukunftswälder unter Unsicherheit gestalten.</li>
+    <li>Empirische Anwendung auf drei Governance-Ebenen: Schwarzwald-Region, nationale deutsche Ebene, EU-Ebene.</li>
+    <li>Enthüllt Machtverhältnisse, diverse Verständnisweisen und Inkonsistenzen in Legalität und Legitimität.</li>
+  </ul></div>
+</div>
+
+<div class="card" data-ra="B2">
+  <div class="card-ra" style="background:#f0e8fc;color:#4a1070;border:1px solid #b080e0;">B2 — Prinzipien der EF</div>
+  <div class="card-topic">Verantwortung für Zukunftswälder (VerfWald)</div>
+  <div class="card-pi">Stefan Baumgärtner, Marvin Daab</div>
+  <div class="card-pos">Doktorand — Philipp Stark</div>
+  <div class="card-methods">Stakeholderanalyse · Halbstrukturierte Tiefeninterviews · Qualitative Inhaltsanalyse (MAXQDA)</div>
+  <div class="card-desc"><ul>
+    <li>Wendet ein allgemeines und umfassendes Konzept kausaler, normativer und tugendhafter Verantwortung auf Wald-SES an.</li>
+    <li>Identifiziert relevante Akteure und ihre Beziehungen durch Stakeholderanalyse; beschreibt die generische Rolle, Beziehungen und spezifische persönliche Identitäten jedes Stakeholders.</li>
+    <li>Erhebt Spezifikationen normativer Verantwortung der Stakeholder als sechsstelliges Prädikat (Subjekt, Objekt, Bezug, Ausmaß, Autorität, Begründung).</li>
+    <li>Untersucht, ob Entscheidungsträger selbstberichteten und extern wahrgenommenen Verantwortlichkeiten tatsächlich gerecht werden; testet Hypothese systematischer Lücken aufgrund unterschiedlicher und unklarer Vorstellungen.</li>
+  </ul></div>
+</div>
+
+</div></section>
+
+<!-- B3 -->
+<section class="ra-section" id="ra-B3">
+<div class="ra-header" style="border-left:4px solid #6b3a10;">
+  <span class="ra-code" style="color:#6b3a10;">B3</span>
+  <span class="ra-name">Praktiken der Entscheidungsfindung</span>
+</div>
+<div class="cards-grid">
+
+<div class="card" data-ra="B3">
+  <div class="card-ra" style="background:#faf0e8;color:#6b3a10;border:1px solid #d4a870;">B3 — Praktiken der EF</div>
+  <div class="card-topic">Komplexität navigieren: Entscheidungspraktiken für Zukunftswälder (B3-PostDoc)</div>
+  <div class="card-pi">Sarah May, Michaela Haug</div>
+  <div class="card-pos">PostDoc</div>
+  <div class="card-methods">Multi-sited Ethnographie · Vergleichende Meta-Analyse der B3-Doktorandenprojekte · Teilnehmerbeobachtung · Qualitative Interviews</div>
+  <div class="card-desc"><ul>
+    <li>Untersucht Entscheidungsfindung an neuartigen SES-Hotspots: Oberrheintal und zwei weitere europäische Regionen (Kandidaten: Frankreich, Italien, Portugal, Schweiz).</li>
+    <li>Synthetisiert übergreifende Muster aus vier B3-Doktorandenprojekten, die institutionalisierte Strukturen, diverse Akteure, umstrittene Arten und bestrittene Prozesse verfolgen.</li>
+    <li>Analysiert, wie Bilder, Hoffnungen und Ängste der Zukunft gegenwärtige waldbezogene Praktiken und Entscheidungen beeinflussen; wie konkurrierende Interessen und soziale Ungleichheiten die EF betreffen.</li>
+    <li>Koordiniert gemeinsame Publikationen; bereitet B3-Daten für die Nutzung in der C1-Theoriebildung und der C2-partizipativen Modellierung vor.</li>
+  </ul></div>
+</div>
+
+<div class="card" data-ra="B3">
+  <div class="card-ra" style="background:#faf0e8;color:#6b3a10;border:1px solid #d4a870;">B3 — Praktiken der EF</div>
+  <div class="card-topic">Wissensbarrieren und Wissenspraktiken im alltäglichen Forstmanagement (WissPr)</div>
+  <div class="card-pi">Sarah May, Stephanie Bethmann</div>
+  <div class="card-pos">Doktorand — Enno Link</div>
+  <div class="card-methods">Grounded Theory · Ethnographische Arbeitsanalyse · Teilnehmerbeobachtung · Narrative Interviews</div>
+  <div class="card-desc"><ul>
+    <li>Begleitet Waldbesitzer, -manager und -verwaltungen in der täglichen Arbeit, um zu verstehen, wie implizites, inkorporiertes Wissen in Krisenkontexten herausgefordert wird.</li>
+    <li>Nutzt Borkenkäferbefall als Fokusfeld; greift auf Monitoringdaten zu Waldbeständen, Käferbefall und Kahlschlägen zurück, um Akteure über Untersuchungsregionen hinweg auszuwählen und zu vergleichen.</li>
+    <li>Verfolgt Wissensbarrieren, die hypothetisch entlang von Kommunikations-, Beziehungs-, Evidenz-, Besitz-, Berufs-, Gender- und Machtgrenzen verlaufen.</li>
+    <li>Schenkt feldimmanenten Konzepten von Affekt und Emotion besondere Aufmerksamkeit: Risiko, Angst, Hoffnung, Vertrauen, Verantwortlichkeiten.</li>
+  </ul></div>
+</div>
+
+<div class="card" data-ra="B3">
+  <div class="card-ra" style="background:#faf0e8;color:#6b3a10;border:1px solid #d4a870;">B3 — Praktiken der EF</div>
+  <div class="card-topic">Zukunftswälder imaginieren: Entscheidungspraktiken bei der Einführung umstrittener Baumarten</div>
+  <div class="card-pi">Michaela Haug, Axel Albrecht, Stephanie Bethmann</div>
+  <div class="card-pos">Doktorandin — Sandra Tikale</div>
+  <div class="card-methods">Ethnographische Feldarbeit · Teilnehmerbeobachtung · Informelle und halbstrukturierte Interviews · Partizipative Methoden · Mehr-als-menschlicher Ansatz</div>
+  <div class="card-desc"><ul>
+    <li>Verfolgt umstrittene Baumarten (Roteiche, Douglasie, Spätblühende Traubenkirsche, Ungarische Eiche, Baumhasel, Orientalische Buche) über alle Cluster-Untersuchungsregionen hinweg.</li>
+    <li>Untersucht, wie ökologische Eigenschaften, kulturelle Normen, Zukunftsimaginäre und institutionelle Anforderungen bei Entscheidungen über Einführung, Ablehnung oder Klassifizierung zusammenwirken.</li>
+    <li>Wendet einen mehr-als-menschlichen Ansatz an und erkennt an, wie bestimmte Baumeigenschaften bestimmte Maßnahmen notwendig machen und andere ausschließen.</li>
+    <li>Untersucht, wie Entscheidungen breitere gesellschaftliche Verhandlungen über Umweltzukünfte und Kontinuitäten in der Mensch-Wald-Beziehung spiegeln.</li>
+  </ul></div>
+</div>
+
+<div class="card" data-ra="B3">
+  <div class="card-ra" style="background:#faf0e8;color:#6b3a10;border:1px solid #d4a870;">B3 — Praktiken der EF</div>
+  <div class="card-topic">Vielfalt in Mensch-Natur-Beziehungen als Adaptionspotenzial für bestrittene Waldszenarien (MeNaRe)</div>
+  <div class="card-pi">Stephanie Bethmann</div>
+  <div class="card-pos">Doktorandin — Wiebke Hebermehl</div>
+  <div class="card-methods">Qualitative Methoden · Kunstbasierte und performative Forschung · Kollaborative Fotographie · Reflexive Grounded Theory · Vergleichende Ethnographie</div>
+  <div class="card-desc"><ul>
+    <li>Untersucht Bürgerinitiativen, Genossenschaften und Protestcamps in Baden-Württemberg, die forstliche Entscheidungsfindung herausfordern.</li>
+    <li>Analysiert, wie diverse Mensch-Natur-Beziehungen Entscheidungsfindung, Försterrolle und Resilienz gestalten, einschließlich Risiken und Chancen für Adaption.</li>
+    <li>Verknüpft lokale Praktiken mit globalen Bewegungen wie Naturrechten, Fürsorge, Planetarer Gesundheit und indigenen Ontologien.</li>
+    <li>Entwickelt soziale Wandelszenarien und unterstützt partizipative Modellierung mit konzeptuellen und empirischen Inputs.</li>
+    <li>Fördert transdisziplinären Dialog und kollektives Lernen.</li>
+    <li>Untersucht, wie Forstinstitutionen reagieren, wenn etablierte Entscheidungsrahmen an Wirksamkeit verlieren.</li>
+  </ul></div>
+</div>
+
+<div class="card" data-ra="B3">
+  <div class="card-ra" style="background:#faf0e8;color:#6b3a10;border:1px solid #d4a870;">B3 — Praktiken der EF</div>
+  <div class="card-topic">EF-Praktiken bei antizipierten Störungen: institutionalisierte Strukturen verfolgen (instEFP)</div>
+  <div class="card-pi">Sylvia Kruse</div>
+  <div class="card-pos">Doktorandin — Ann-Kathrin Weith</div>
+  <div class="card-methods">Kritischer Institutionalismus · Qualitative ethnographische Methoden · Fokusgruppendiskussionen · Ko-Kreations-Workshops · Partizipative Beobachtung in Risikomanagement-Workshops</div>
+  <div class="card-desc"><ul>
+    <li>Rekonstruiert die Entwicklung institutionalisierter Strukturen im Waldbrandschutz in UR&amp;BF der letzten 25 Jahre durch institutionelle Bricolage-Analyse.</li>
+    <li>Erkundet affektive Dimensionen und sozialtechnische Imaginäre im Waldrisikomanagement in Verbindung mit institutionalisierten Entscheidungspraktiken.</li>
+    <li>Ko-produziert Szenarien für institutionalisierte Strukturen in zukünftigen A&amp;TPs; erkundet regulatorische Reaktionen wie die Verpflichtung von Waldbesitzern zu Präventivmaßnahmen.</li>
+    <li>Enge Zusammenarbeit mit B1 SPSI; teilt Praxisfeld und minimiert Forscher-Belastung für regionale Praktiker.</li>
+  </ul></div>
+</div>
+
+</div></section>
+
+<!-- ═══════════════════ FORSCHUNGSBEREICH C ═══════════════════ -->
+<div class="ra-area-header">Forschungsbereich C — SES-Theorie, Szenarien, Modellierung &amp; Governance</div>
+
+<!-- C1 -->
+<section class="ra-section" id="ra-C1">
+<div class="ra-header" style="border-left:4px solid #701a1a;">
+  <span class="ra-code" style="color:#701a1a;">C1</span>
+  <span class="ra-name">SES-Theorie &amp; Konzepte</span>
+</div>
+<div class="cards-grid">
+
+<div class="card" data-ra="C1">
+  <div class="card-ra" style="background:#fce8e8;color:#701a1a;border:1px solid #e09090;">C1 — SES-Theorie &amp; Konzepte</div>
+  <div class="card-topic">SES-Theorie und Raumplanung für Zukunftswälder</div>
+  <div class="card-pi">Tanja Mölders</div>
+  <div class="card-pos">Doktorandin — Esther Sophia Rust</div>
+  <div class="card-methods">Raumplanungstheorie · Qualitative und quantitative Planungsmethoden · Fallstudienanalyse · Systematisierung von System-, Ziel- und Transformationswissen</div>
+  <div class="card-desc"><ul>
+    <li>Untersucht, wie SES-Theorie mit Planungstheorie zusammenhängt und wie räumliche und umweltbezogene Planungspraktiken helfen, neuartige Wald-SES zu adaptieren und zu transformieren.</li>
+    <li>Fokus auf Windenergie-Expansion in Wäldern als aktuellen, durch Raum- und Umweltplanung regulierten Transformationsprozess.</li>
+    <li>Trägt planerische Schlüsselkategorien — Zeit als Zukunftsorientierung, Raum als Integration — zum FuFo-SES-Rahmen bei.</li>
+    <li>Erkundet, wie die Integration von Planung in den SES-Rahmen die Entwicklung von A&amp;TPs für Wald-SES informieren kann.</li>
+  </ul></div>
+</div>
+
+<div class="card" data-ra="C1">
+  <div class="card-ra" style="background:#fce8e8;color:#701a1a;border:1px solid #e09090;">C1 — SES-Theorie &amp; Konzepte</div>
+  <div class="card-topic">Integration von Recht und Rechtsinstitutionen in die SES-Theorie und ihre Anwendung auf Zukunftswälder</div>
+  <div class="card-pi">Cathrin Zengerling</div>
+  <div class="card-pos">Doktorandin — Leonie Buß</div>
+  <div class="card-methods">Systematisches Literaturreview · Überblick über SES/CAS-Rahmen · Rechtsdogmatische Analyse · Interdisziplinäres Ko-Design mit C1 und B2</div>
+  <div class="card-desc"><ul>
+    <li>Erstellt systematischen Überblick über den aktuellen Forschungsstand zu SES und Recht; bewertet, wie aktuelle SES-Rahmen die Rolle von Recht und Rechtsinstitutionen berücksichtigen.</li>
+    <li>Entwickelt Optionen für die Einbeziehung von Recht und Rechtsinstitutionen in den FuFo-SES-Rahmen unter Berücksichtigung von Integrations- und Pluralismusräumen.</li>
+    <li>Identifiziert, welches Wissen des Rechtssystems für Szenarienentwicklung, Modellierung, Governance-Experimente und A&amp;TPs in RA C benötigt wird.</li>
+    <li>Exemplifiziert am Beispiel des EU- und deutschen Forstrechts (einschließlich BWaldG, LWaldG BW) ontologische, epistemologische und axiologische Grundlagen rechtsdogmatischer und nicht-rechtsdogmatischer Rechtsanalyse und ihre Beziehung zum FuFo-SES-Rahmen.</li>
+  </ul></div>
+</div>
+
+</div></section>
+
+<!-- C4 -->
+<section class="ra-section" id="ra-C4">
+<div class="ra-header" style="border-left:4px solid #604018;">
+  <span class="ra-code" style="color:#604018;">C4</span>
+  <span class="ra-name">Governance-Experimente</span>
+  <span class="ra-count">1 Projekt</span>
+</div>
+<div class="cards-grid">
+
+<div class="card" data-ra="C4">
+  <div class="card-ra" style="background:#f8f0e8;color:#604018;border:1px solid #c89060;">C4 — Governance-Experimente</div>
+  <div class="card-topic">Governance-Experimente für neuartige Wald-SES: konzeptuelle Entwicklung und empirische Anwendung (Govinno)</div>
+  <div class="card-pi">Daniela Kleinschmit, Hartmut Fünfgeld</div>
+  <div class="card-pos">PostDoc</div>
+  <div class="card-methods">Literaturreviews · Experteninterviews · Policy-Innovationslabore · Partizipative und transdisziplinäre Methoden · Adaptive Pfadplanungsansätze</div>
+  <div class="card-desc"><ul>
+    <li>Entwickelt strukturierten Rahmen für Governance-Experimente über fünf Arenen: Politiken, lokale Zusammenarbeit, Märkte, Recht und Wissen.</li>
+    <li>Pilotiert Policy-Innovationslabore auf Landesebene Baden-Württemberg, um zu analysieren, ob Governance-Experimente Veränderungen in Normen, Regeln, Verhaltensweisen und Beziehungen beeinflussen können.</li>
+    <li>Pilotiert kollaborative Governance-Szenarioübungen mit diversen Stakeholdern in einem lokalen FuFo-Fallstudiengebiet.</li>
+    <li>Adressiert: Wie unterstützen neue Governance-Ansätze EF für disruptive adaptive Lösungen? Wie können Governance-Experimente Policy-Lernen und Governance-Innovation unterstützen?</li>
+    <li>Überarbeitet und veröffentlicht den Governance-Experimentierrahmen auf Basis der Empiriephase; alle Experimente koordiniert mit dem SES-CaseLab.</li>
+  </ul></div>
+</div>
+
+</div></section>
+
+<div class="footer">
+  SES-ModelLab · Future Forests · Universität Freiburg ·
+  <a href="registry.html" style="color:#1a4f8a">↗ C3-Modellierungsregister</a> ·
+  <a href="FuFo_Interactive.html" style="color:#1a4f8a">↗ Interaktive Verbindungskarte</a>
+</div>
+</div>
+
+<script>
+function filterRA(ra, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.ra-section').forEach(s => {
+    if (ra === 'all') s.classList.remove('hidden');
+    else s.classList.toggle('hidden', s.id !== 'ra-' + ra);
+  });
+}
+</script>
+</body>
+</html>
