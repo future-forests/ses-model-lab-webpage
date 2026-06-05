@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FuFo Models — Inputs & Outputs</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;500&display=swap');
+
+  :root {
+    --bg: #f8f7f4;
+    --surface: #fff;
+    --border: #d6d2c8;
+    --blue: #1a4f8a;
+    --green: #1a6b3c;
+    --amber: #7a4a0a;
+    --indigo: #3d3494;
+    --red: #8a1a1a;
+    --muted: #6b6560;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: var(--bg);
+    color: #1a1a1a;
+    font-size: 12.5px;
+    line-height: 1.55;
+  }
+
+  header {
+    padding: 26px 36px 16px;
+    border-bottom: 2px solid var(--blue);
+    background: var(--surface);
+  }
+
+  header h1 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--blue);
+    letter-spacing: 0.03em;
+    margin-bottom: 4px;
+  }
+
+  .wrap { padding: 20px 36px 48px; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    font-size: 11.5px;
+  }
+
+  thead th {
+    background: var(--blue);
+    color: #fff;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    text-align: left;
+    padding: 8px 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-right: 1px solid rgba(255,255,255,0.15);
+    white-space: nowrap;
+  }
+  thead th:last-child { border-right: none; }
+
+  tbody tr { border-bottom: 1px solid var(--border); vertical-align: top; }
+  tbody tr:hover { background: #f3f6fb; }
+
+  td {
+    padding: 10px 11px;
+    border-right: 1px solid var(--border);
+    vertical-align: top;
+  }
+  td:last-child { border-right: none; }
+
+  .mname {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--blue);
+  }
+
+  .pi {
+    display: block;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .lang {
+    display: inline-block;
+    margin-top: 5px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 600;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background: #f0f4fa;
+    border: 1px solid #b0bcd0;
+    color: #1a4f8a;
+    letter-spacing: 0.03em;
+  }
+
+  .type-tag {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: 1px solid;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .t-hydro  { background:#dcfce7; border-color:var(--green);  color:var(--green); }
+  .t-eco    { background:#fef3c7; border-color:var(--amber);  color:var(--amber); }
+  .t-abm    { background:#ede9fe; border-color:var(--indigo); color:var(--indigo); }
+  .t-market { background:#fee2e2; border-color:var(--red);    color:var(--red); }
+
+  .io-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 4px;
+    display: block;
+  }
+
+  table.io-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+    background: transparent;
+    border: none;
+  }
+
+  table.io-table td {
+    padding: 2px 5px 2px 0;
+    border: none;
+    vertical-align: top;
+    line-height: 1.45;
+    background: transparent;
+  }
+
+  table.io-table td.var {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    color: #1a1a1a;
+    white-space: nowrap;
+    padding-right: 8px;
+    width: 1%;
+  }
+
+  table.io-table td.res {
+    font-size: 10px;
+    color: var(--muted);
+    white-space: nowrap;
+    padding-right: 8px;
+    width: 1%;
+  }
+
+  table.io-table td.desc {
+    font-size: 11px;
+    color: #333;
+  }
+
+  .note {
+    display: block;
+    margin-top: 6px;
+    padding: 4px 7px;
+    background: #fffbeb;
+    border-left: 2px solid #d97706;
+    font-size: 10px;
+    color: #7a4a0a;
+    font-style: italic;
+  }
+
+  tr.ghead td {
+    background: #eef1f7;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    padding: 5px 11px;
+    border-top: 2px solid var(--border);
+  }
+
+  footer {
+    padding: 12px 36px;
+    border-top: 1px solid var(--border);
+    font-size: 10px;
+    color: #bbb;
+    font-family: 'IBM Plex Mono', monospace;
+    background: var(--surface);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>FUTURE FORESTS — MODELS</h1>
+</header>
+
+<div class="wrap">
+<table>
+  <thead>
+    <tr>
+      <th style="width:120px">Model</th>
+      <th style="width:90px">Type</th>
+      <th colspan="2">Inputs &nbsp;·&nbsp; Outputs &nbsp;&nbsp;<span style="font-weight:400;font-size:9px;opacity:0.8">[variable · spatial res · temporal res · description]</span></th>
+    </tr>
+  </thead>
+  <tbody>
+
+  <!-- HYDROLOGY -->
+  <tr class="ghead"><td colspan="4">Hydrology</td></tr>
+
+  <tr>
+    <td>
+      <div class="mname">RoGeR</div>
+      <span class="pi">Weiler</span>
+      <span class="lang">Python</span>
+      <!-- Schwemmle et al. (2024) GMD 17:5249: "RoGeR is pure Python" -->
+    </td>
+    <td><span class="type-tag t-hydro">Process-based hydrology</span></td>
+    <td style="width:47%">
+      <span class="io-label">Inputs</span>
+      <table class="io-table">
+        <tr><td class="var">Precipitation</td><td class="res">0.5–25 m · 10 min</td><td class="desc">mm per timestep; adaptive: 10 min for high intensities, hourly for low intensity / snowmelt, daily for dry periods</td></tr>
+        <tr><td class="var">Air temperature</td><td class="res">grid cell · daily</td><td class="desc">°C; used for snowmelt (degree-day) and evapotranspiration</td></tr>
+        <tr><td class="var">Potential evapotranspiration</td><td class="res">grid cell · daily</td><td class="desc">mm/day</td></tr>
+        <tr><td class="var">Soil properties</td><td class="res">0.5–25 m · static</td><td class="desc">texture, hydraulic conductivity, macropore density, soil depth per grid cell</td></tr>
+        <tr><td class="var">Digital terrain model</td><td class="res">0.5–25 m · static</td><td class="desc">slope and flow direction for lateral routing</td></tr>
+        <tr><td class="var">Land cover / sealing</td><td class="res">0.5–25 m · static</td><td class="desc">impervious fraction, vegetation type</td></tr>
+        <tr><td class="var">Initial soil moisture</td><td class="res">grid cell · per run</td><td class="desc">volumetric water content by layer</td></tr>
+        <tr><td class="var">Solute concentrations (v3+)</td><td class="res">grid cell · 10 min</td><td class="desc">e.g. δ¹⁸O for transport simulations</td></tr>
+      </table>
+    </td>
+    <td style="width:47%">
+      <span class="io-label">Outputs</span>
+      <table class="io-table">
+        <tr><td class="var">Soil moisture</td><td class="res">grid cell · adaptive timestep</td><td class="desc">volumetric water content per soil layer</td></tr>
+        <tr><td class="var">Matrix infiltration</td><td class="res">grid cell · 10 min</td><td class="desc">mm per timestep</td></tr>
+        <tr><td class="var">Macropore infiltration</td><td class="res">grid cell · 10 min</td><td class="desc">mm per timestep</td></tr>
+        <tr><td class="var">Hortonian overland flow</td><td class="res">grid cell · 10 min</td><td class="desc">mm per timestep; infiltration-excess</td></tr>
+        <tr><td class="var">Saturation overland flow</td><td class="res">grid cell · 10 min</td><td class="desc">mm per timestep</td></tr>
+        <tr><td class="var">Lateral subsurface flow</td><td class="res">grid cell · timestep</td><td class="desc">interflow; routed between cells</td></tr>
+        <tr><td class="var">Deep percolation</td><td class="res">grid cell · timestep</td><td class="desc">mm to groundwater</td></tr>
+        <tr><td class="var">Evapotranspiration</td><td class="res">grid cell · daily</td><td class="desc">soil evaporation and transpiration reported separately</td></tr>
+        <tr><td class="var">Capillary rise</td><td class="res">grid cell · daily</td><td class="desc">mm/day from groundwater table</td></tr>
+        <tr><td class="var">Flood hydrograph</td><td class="res">outlet · 10 min</td><td class="desc">m³/s with routing scheme</td></tr>
+        <tr><td class="var">Solute transport (v3+)</td><td class="res">grid cell · timestep</td><td class="desc">concentration and water age distributions via SAS functions; output as NetCDF</td></tr>
+      </table>
+    </td>
+  </tr>
+
+  <!-- FOREST ECOLOGY -->
+  <tr class="ghead"><td colspan="4">Forest Ecology &amp; Growth</td></tr>
+
+  <tr>
+    <td>
+      <div class="mname">QUINCY</div>
+      <span class="pi">Orth · Kattenborn</span>
+      <span class="lang">Fortran</span>
+      <!-- Thum et al. (2019) GMD: "scientific code relies on software infrastructure from the MPI-ESM environment" — Fortran-based; confirmed via bgc-jena.mpg.de/bsi/projects/quincy/software -->
+    </td>
+    <td><span class="type-tag t-eco">Process-based terrestrial biosphere</span></td>
+    <td>
+      <span class="io-label">Inputs</span>
+      <table class="io-table">
+        <tr><td class="var">Shortwave radiation</td><td class="res">stand / grid cell · 30 min</td><td class="desc">W/m²</td></tr>
+        <tr><td class="var">Longwave radiation</td><td class="res">stand / grid cell · 30 min</td><td class="desc">W/m²</td></tr>
+        <tr><td class="var">Air temperature</td><td class="res">stand / grid cell · 30 min</td><td class="desc">°C</td></tr>
+        <tr><td class="var">Precipitation</td><td class="res">stand / grid cell · 30 min</td><td class="desc">mm per timestep</td></tr>
+        <tr><td class="var">Snowfall</td><td class="res">stand / grid cell · 30 min</td><td class="desc">mm per timestep</td></tr>
+        <tr><td class="var">Wind velocity</td><td class="res">stand / grid cell · 30 min</td><td class="desc">m/s</td></tr>
+        <tr><td class="var">CO₂, ¹³CO₂, ¹⁴CO₂</td><td class="res">global / regional · 30 min</td><td class="desc">mole fractions; ¹³C and ¹⁴C for isotope tracing</td></tr>
+        <tr><td class="var">Soil properties</td><td class="res">stand / grid cell · static</td><td class="desc">texture, depth, organic carbon, bulk density</td></tr>
+        <tr><td class="var">Atmospheric N, P deposition</td><td class="res">stand / grid cell · annual</td><td class="desc">kg/ha/yr</td></tr>
+        <tr><td class="var">PFT parameters</td><td class="res">— · static</td><td class="desc">species/functional type parameterisation</td></tr>
+      </table>
+    </td>
+    <td>
+      <span class="io-label">Outputs</span>
+      <table class="io-table">
+        <tr><td class="var">GPP, NPP</td><td class="res">stand · 30 min → annual</td><td class="desc">gC/m²; carbon use efficiency CUE = NPP/GPP</td></tr>
+        <tr><td class="var">Transpiration, stomatal conductance</td><td class="res">stand · 30 min</td><td class="desc">mm/timestep; mol/m²/s</td></tr>
+        <tr><td class="var">LAI, phenology</td><td class="res">stand · daily → annual</td><td class="desc">m²/m²; leaf area index and seasonal phenological state</td></tr>
+        <tr><td class="var">C pools</td><td class="res">stand · annual</td><td class="desc">foliage, fine roots, fruits, coarse roots, sapwood, heartwood, labile, reserve (gC/m²)</td></tr>
+        <tr><td class="var">N, P pools and fluxes</td><td class="res">stand · annual</td><td class="desc">vegetation and soil N/P stocks; net mineralisation rates (gN,P/m²/yr)</td></tr>
+        <tr><td class="var">Leaf C:N:P ratios</td><td class="res">stand · annual</td><td class="desc">stoichiometry diagnostics</td></tr>
+        <tr><td class="var">Energy balance terms</td><td class="res">stand · 30 min</td><td class="desc">latent heat, sensible heat (W/m²)</td></tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <div class="mname">iLAND</div>
+      <span class="pi">Seifert · Stritih</span>
+      <span class="lang">C++ / Qt</span>
+      <!-- iland-model.org/QT: "we decided on C++ as the primary development language"; iland-model.org/Software+Tools: "iLand uses the cross platform C++ toolkit Qt" -->
+    </td>
+    <td><span class="type-tag t-eco">Individual-tree landscape model</span></td>
+    <td>
+      <span class="io-label">Inputs</span>
+      <table class="io-table">
+        <tr><td class="var">Daily climate</td><td class="res">resource unit (100 m) · daily</td><td class="desc">mean/min/max temperature (°C), precipitation (mm), radiation (MJ/m²), VPD (kPa), wind speed (m/s)</td></tr>
+        <tr><td class="var">Soil properties</td><td class="res">resource unit (100 m) · static</td><td class="desc">depth (m), texture, plant-available water holding capacity, fertility index</td></tr>
+        <tr><td class="var">Initial forest state</td><td class="res">individual tree (≥4 m) · per run</td><td class="desc">x/y position (m), species, DBH (cm), height (m); from inventory or LiDAR</td></tr>
+        <tr><td class="var">Species parameters</td><td class="res">— · static</td><td class="desc">66 parameters per species: growth, mortality, regeneration, phenology, physiology</td></tr>
+        <tr><td class="var">Management prescriptions</td><td class="res">stand · annual</td><td class="desc">harvesting rules, thinning schedules, planting via ABE scripting engine</td></tr>
+        <tr><td class="var">Disturbance parameters</td><td class="res">landscape · per run</td><td class="desc">wind speed distributions, bark beetle spread rates, fire ignition probabilities</td></tr>
+        <tr><td class="var">Seed availability map</td><td class="res">resource unit (100 m) · annual</td><td class="desc">external seed input from outside the simulated landscape</td></tr>
+      </table>
+    </td>
+    <td>
+      <span class="io-label">Outputs</span>
+      <table class="io-table">
+        <tr><td class="var">Tree state</td><td class="res">individual tree · annual</td><td class="desc">x/y (m), DBH (cm), height (m), basal area (m²), volume (m³), age, leaf area (m²), foliage/stem/branch/fine root/coarse root biomass (kg), stress index (0–1), reserve pool (kg)</td></tr>
+        <tr><td class="var">Removed trees</td><td class="res">individual tree · event</td><td class="desc">same fields as above + removal cause flag: mortality, harvest, bark beetle, wind, fire</td></tr>
+        <tr><td class="var">Stand aggregates</td><td class="res">resource unit × species (100 m) · annual</td><td class="desc">count/ha, mean DBH (cm), mean height (m), volume (m³/ha), total carbon (kg/ha), basal area (m²/ha), NPP (kg/ha), LAI</td></tr>
+        <tr><td class="var">Landscape aggregates</td><td class="res">landscape · annual</td><td class="desc">same variables summed/averaged over full simulation extent per species</td></tr>
+        <tr><td class="var">C and N pools</td><td class="res">resource unit (100 m) · annual</td><td class="desc">above/belowground living biomass C, snags, downed wood, litter, soil organic matter (tC/ha)</td></tr>
+        <tr><td class="var">C and N fluxes</td><td class="res">resource unit (100 m) · annual</td><td class="desc">GPP, NPP, autotrophic respiration, heterotrophic respiration, NEE (tC/ha/yr)</td></tr>
+        <tr><td class="var">Water balance</td><td class="res">resource unit (100 m) · annual</td><td class="desc">interception, transpiration, ET, soil water content, runoff, deep percolation (mm/yr)</td></tr>
+        <tr><td class="var">GPP potential</td><td class="res">resource unit × species (100 m) · annual</td><td class="desc">climate/site-conditioned GPP potential (gC/m²)</td></tr>
+        <tr><td class="var">Sapling state</td><td class="res">resource unit × species (100 m) · annual</td><td class="desc">cohort density, height, age for trees &lt;4 m</td></tr>
+        <tr><td class="var">Monthly production</td><td class="res">resource unit × species (100 m) · monthly</td><td class="desc">GPP and NPP disaggregated by month</td></tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <div class="mname">LandClim</div>
+      <span class="pi">Albrecht · Haug</span>
+      <!-- language not documented in peer-reviewed sources -->
+    </td>
+    <td><span class="type-tag t-eco">Dynamic vegetation model</span></td>
+    <td>
+      <span class="io-label">Inputs</span>
+      <table class="io-table">
+        <tr><td class="var">Digital elevation model</td><td class="res">~25 m · static</td><td class="desc">elevation (m); drives altitudinal climate lapse rates and topographic effects</td></tr>
+        <tr><td class="var">Soil depth map</td><td class="res">25 m · static</td><td class="desc">m; single required soil input</td></tr>
+        <tr><td class="var">Monthly climate</td><td class="res">reference elevation · monthly</td><td class="desc">mean precipitation sum (mm/month) and mean temperature (°C) at reference elevation; altitudinal lapse rates applied per cell</td></tr>
+        <tr><td class="var">Initial forest state</td><td class="res">25 m cell · per run</td><td class="desc">cohorts (species × age) per cell, or bare ground</td></tr>
+        <tr><td class="var">Species parameters</td><td class="res">— · static</td><td class="desc">growth, shade tolerance, drought resistance, dispersal kernels, minimum regeneration temperature</td></tr>
+        <tr><td class="var">Disturbance parameters</td><td class="res">landscape · per run</td><td class="desc">fire return interval, mean fire size; windthrow parameters; bark beetle spread; browsing pressure</td></tr>
+        <tr><td class="var">Harvest parameters</td><td class="res">landscape · per run</td><td class="desc">rates by size class, species, and spatial position</td></tr>
+      </table>
+    </td>
+    <td>
+      <span class="io-label">Outputs</span>
+      <table class="io-table">
+        <tr><td class="var">Biomass per species</td><td class="res">25 m cell · decadal</td><td class="desc">t/ha per species; also aggregated along elevation bands</td></tr>
+        <tr><td class="var">Stem numbers per species</td><td class="res">25 m cell · decadal</td><td class="desc">trees/ha per species</td></tr>
+        <tr><td class="var">Cohort structure</td><td class="res">25 m cell · decadal</td><td class="desc">species × age class composition per cell</td></tr>
+        <tr><td class="var">Disturbance records</td><td class="res">landscape · event</td><td class="desc">fire dates, fire sizes, spatial maps of fire events; windthrow, bark beetle, browsing events</td></tr>
+        <tr><td class="var">Dominant species maps</td><td class="res">25 m cell · decadal</td><td class="desc">species with highest biomass per cell</td></tr>
+        <tr><td class="var">Harvest records</td><td class="res">landscape · decadal</td><td class="desc">volume removed by species and size class</td></tr>
+      </table>
+    </td>
+  </tr>
+
+  <!-- ABM -->
+  <tr class="ghead"><td colspan="4">ABM / Social-Ecological</td></tr>
+
+  <tr>
+    <td>
+      <div class="mname">CRAFTY-EU / LandSyMM</div>
+      <span class="pi">Brown</span>
+      <span class="lang">Java</span>
+      <!-- github.com/CRAFTY-ABM: "An ABM framework designed for modelling land use...in Java" -->
+    </td>
+    <td><span class="type-tag t-abm">Agent-based land use model</span></td>
+    <td>
+      <span class="io-label">Inputs</span>
+      <table class="io-table">
+        <tr><td class="var">Capitals</td><td class="res">1 km cell · annual</td><td class="desc">human, social, manufactured, financial, natural capitals; natural capital includes yields/suitabilities for arable, pastoral, forest land uses</td></tr>
+        <tr><td class="var">Agent functional types (AFTs)</td><td class="res">1 km cell · per run</td><td class="desc">production functions, preferences, giving-up and giving-in thresholds; baseline from observed land use map</td></tr>
+        <tr><td class="var">Societal demand</td><td class="res">regional · annual</td><td class="desc">exogenously defined time series per ecosystem service per scenario</td></tr>
+        <tr><td class="var">Scenario boundary conditions</td><td class="res">global / regional · annual</td><td class="desc">SSP/RCP: population, GDP, climate; LandSyMM provides global trade and macro-economic constraints</td></tr>
+      </table>
+    </td>
+    <td>
+      <span class="io-label">Outputs</span>
+      <table class="io-table">
+        <tr><td class="var">Land use maps</td><td class="res">1 km cell · annual</td><td class="desc">land use type and intensity per cell</td></tr>
+        <tr><td class="var">ES provision maps</td><td class="res">1 km cell · annual</td><td class="desc">supply of ecosystem services per cell (carbon stocks, timber, food, biodiversity, recreation, pollinator habitat, conservation)</td></tr>
+        <tr><td class="var">Agent composition maps</td><td class="res">1 km cell · annual</td><td class="desc">AFT identity and competitiveness score per cell</td></tr>
+        <tr><td class="var">Unmet demand</td><td class="res">regional · annual</td><td class="desc">supply–demand gap per ecosystem service</td></tr>
+        <tr><td class="var">Land abandonment / take-up</td><td class="res">1 km cell · annual</td><td class="desc">transitions between managed and unmanaged states</td></tr>
+      </table>
+    </td>
+  </tr>
+
+  <!-- ECONOMIC -->
+  <tr class="ghead"><td colspan="4">Economic &amp; Market</td></tr>
+
+  <tr>
+    <td>
+      <div class="mname">Hanewinkel Partial Equilibrium (GFPM)</div>
+      <span class="pi">Hanewinkel · Seifert · Pauliuk · Stritih</span>
+      <span class="lang">GAMS / QPELPS</span>
+      <!-- Buongiorno & Zhu (2015) users manual: "GFPM uses the QPELPS (Quadratic Price Endogenous Linear Programming System) software" -->
+    </td>
+    <td><span class="type-tag t-market">Partial equilibrium</span></td>
+    <td>
+      <span class="io-label">Inputs</span>
+      <table class="io-table">
+        <tr><td class="var">Timber supply functions</td><td class="res">country / region · annual</td><td class="desc">volume (m³), species, quality grades; price-elastic supply curves per commodity category</td></tr>
+        <tr><td class="var">Demand functions</td><td class="res">country / region · annual</td><td class="desc">price-quantity relationships per commodity and country</td></tr>
+        <tr><td class="var">Manufacturing parameters</td><td class="res">sector · per base year</td><td class="desc">input-output coefficients between commodity categories (e.g. roundwood to sawnwood); capacity constraints</td></tr>
+        <tr><td class="var">Trade parameters</td><td class="res">bilateral · annual</td><td class="desc">transportation costs and trade flows between countries/regions</td></tr>
+        <tr><td class="var">Forest resource parameters</td><td class="res">country / region · annual</td><td class="desc">forest area (ha), growing stock (m³), net annual increment; used to constrain timber supply</td></tr>
+        <tr><td class="var">Exogenous change scenarios</td><td class="res">country / region · per period</td><td class="desc">policy shocks, GDP growth, population, technology changes applied as period-specific parameter adjustments</td></tr>
+      </table>
+    </td>
+    <td>
+      <span class="io-label">Outputs</span>
+      <table class="io-table">
+        <tr><td class="var">Production</td><td class="res">country / region · annual</td><td class="desc">m³ or tonnes per commodity category (industrial roundwood, sawnwood, wood panels, pulp, paper, wood pellets)</td></tr>
+        <tr><td class="var">Consumption</td><td class="res">country / region · annual</td><td class="desc">m³ or tonnes per commodity category</td></tr>
+        <tr><td class="var">Trade flows</td><td class="res">bilateral · annual</td><td class="desc">imports and exports per commodity category between countries/regions</td></tr>
+        <tr><td class="var">Prices</td><td class="res">country / region · annual</td><td class="desc">equilibrium prices per commodity category (€/m³ or €/tonne)</td></tr>
+        <tr><td class="var">Forest area and growing stock</td><td class="res">country / region · annual</td><td class="desc">ha and m³ projected forward from base year under harvest and growth assumptions</td></tr>
+        <tr><td class="var">Manufacturing capacity</td><td class="res">country / region · annual</td><td class="desc">processing capacity per industry category (m³/yr or tonnes/yr)</td></tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <div class="mname">Pauliuk Wood Cascade (RECC)</div>
+      <span class="pi">Pauliuk</span>
+      <span class="lang">Python</span>
+      <!-- Pauliuk & Heeren (2020) J. Ind. Ecol.: "ODYM is an open source framework for material systems modelling programmed in Python"; github.com/IndEcol/RECC-ODYM -->
+    </td>
+    <td><span class="type-tag t-market">Dynamic material flow model</span></td>
+    <td>
+      <span class="io-label">Inputs</span>
+      <table class="io-table">
+        <tr><td class="var">Service demand</td><td class="res">regional / global · annual</td><td class="desc">shelter (floorspace m²/capita), energy services; exogenously defined from SSP population and per-capita demand scenarios</td></tr>
+        <tr><td class="var">In-use stock parameters</td><td class="res">regional · per scenario</td><td class="desc">building lifetimes (yr), renovation rates (%/yr), demolition rates (%/yr) by building type</td></tr>
+        <tr><td class="var">Material composition</td><td class="res">product type · static / scenario</td><td class="desc">wood content (kg/m² floorspace) per building category</td></tr>
+        <tr><td class="var">Technology parameters</td><td class="res">sector · per scenario</td><td class="desc">processing efficiencies (%), product lifetimes (yr), recycling rates (%), cascading options</td></tr>
+        <tr><td class="var">Displacement factors</td><td class="res">product type · static / scenario</td><td class="desc">GHG displacement per m³ wood depending on substituted material and energy carrier</td></tr>
+        <tr><td class="var">Timber supply</td><td class="res">regional · annual</td><td class="desc">harvest volumes (m³/yr) and species composition</td></tr>
+      </table>
+    </td>
+    <td>
+      <span class="io-label">Outputs</span>
+      <table class="io-table">
+        <tr><td class="var">Material flows</td><td class="res">regional / global · annual</td><td class="desc">Mt/yr through cascade stages: harvest → sawn timber → engineered products → short-lived products → energy recovery → waste</td></tr>
+        <tr><td class="var">In-use stock dynamics</td><td class="res">regional / global · annual</td><td class="desc">building stock by material type and building category (Mt)</td></tr>
+        <tr><td class="var">GHG emissions</td><td class="res">regional / global · annual</td><td class="desc">MtCO₂eq/yr from material production, manufacturing, energy supply (scopes 1–3)</td></tr>
+        <tr><td class="var">Carbon balance</td><td class="res">regional / global · annual</td><td class="desc">material substitution benefit + carbon in stock − foregone forest sequestration (MtC/yr)</td></tr>
+        <tr><td class="var">Scenario option space</td><td class="res">global · per scenario ensemble</td><td class="desc">feasible combinations across 70 scenario configurations; sensitivity outputs across 120 model parameters</td></tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <div class="mname">Schanz FESMarkets (NoMFES)</div>
+      <span class="pi">Schanz</span>
+      <!-- language not documented in Mager et al. (2023) — structural/conceptual model -->
+    </td>
+    <td><span class="type-tag t-market">Structural network model</span></td>
+    <td>
+      <span class="io-label">Inputs</span>
+      <table class="io-table">
+        <tr><td class="var">Value chain mapping data</td><td class="res">sector · static (per study period)</td><td class="desc">raw material flows, product-material combinations, services along sector value chains; constructed from industry statistics and trade data</td></tr>
+        <tr><td class="var">Node and edge lists</td><td class="res">sector · static</td><td class="desc">product groups (nodes) and markets (edges) identified from value chain mapping</td></tr>
+      </table>
+    </td>
+    <td>
+      <span class="io-label">Outputs</span>
+      <table class="io-table">
+        <tr><td class="var">Network graph</td><td class="res">sector · static (per study period)</td><td class="desc">nodes (product groups), edges (markets), structural metrics (edge gravity, betweenness centrality, degree distribution)</td></tr>
+        <tr><td class="var">Leverage point ranking</td><td class="res">sector · static</td><td class="desc">systemically relevant markets ranked by centrality metrics</td></tr>
+        <tr><td class="var">Market architecture</td><td class="res">sector · static</td><td class="desc">structural topology of intra- and inter-industrial relationships by sector</td></tr>
+      </table>
+    </td>
+  </tr>
+
+  </tbody>
+</table>
+</div>
+
+<footer>
+</footer>
+
+</body>
+</html>
