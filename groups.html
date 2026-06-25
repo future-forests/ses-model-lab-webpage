@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Modelling Cooperation Groups · FuFo SES-ModelLab</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#1e3a5c;
+  --fl:#3B6D11; --fl-l:#EAF3DE; --fl-m:#A8CC7A;
+  --dr:#0A5440; --dr-l:#DFF5EE; --dr-m:#5FC4A0;
+  --mc:#8B3010; --mc-l:#FAECE7; --mc-m:#E89070;
+  --pa:#312580; --pa-l:#EEEDFE; --pa-m:#A098D8;
+  --ec:#5A3307; --ec-l:#FFF0D8; --ec-m:#E8A040;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'IBM Plex Sans',sans-serif;background:#f0f2f5;color:#1a1a1a;min-height:100vh}
+
+/* HERO */
+.hero{background:var(--navy);padding:2.2rem 2rem 2rem}
+.hero-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.2em;color:#6bcf9e;text-transform:uppercase;margin-bottom:.6rem}
+.hero h1{font-size:clamp(20px,3vw,30px);font-weight:600;color:#fff;margin-bottom:.6rem;line-height:1.2}
+.hero p{font-size:13px;color:#94a3b8;max-width:640px;line-height:1.7}
+
+/* 5-COLUMN GRID */
+.grid-wrap{overflow-x:auto;padding:1.5rem 1.5rem 2.5rem}
+.grid{display:grid;grid-template-columns:repeat(5,minmax(220px,1fr));gap:12px;min-width:1100px}
+
+/* COLUMN CARD */
+.col{background:#fff;border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+
+/* COLUMN HEADER */
+.col-head{padding:1.1rem 1rem 1rem;color:#fff}
+.col-num{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;opacity:.7;margin-bottom:.3rem}
+.col-name{font-size:14px;font-weight:600;line-height:1.3}
+
+/* SECTION */
+.col-body{padding:.85rem 1rem;flex:1;display:flex;flex-direction:column;gap:0}
+.sec{margin-bottom:1rem}
+.sec:last-child{margin-bottom:0}
+.sec-label{font-family:'IBM Plex Mono',monospace;font-size:8.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.5rem;padding-bottom:.4rem;border-bottom:1px solid #eee}
+.sec-text{font-size:12.5px;line-height:1.65;color:#333}
+
+/* GOAL BOX */
+.goal-box{border-radius:6px;padding:.7rem .85rem;font-size:12.5px;line-height:1.65;font-style:italic}
+
+/* PILLS */
+.pills{display:flex;flex-direction:column;gap:5px}
+.pill{font-size:11.5px;padding:4px 9px;border-radius:4px;border:1px solid;line-height:1.45}
+
+/* FITS */
+.fits-box{border-radius:6px;padding:.7rem .85rem;font-size:12px;line-height:1.65}
+
+/* PRODUCES */
+.prod-list{list-style:none;display:flex;flex-direction:column;gap:5px}
+.prod-list li{font-size:12px;line-height:1.5;color:#333;padding-left:14px;position:relative}
+.prod-list li::before{content:'→';position:absolute;left:0;font-weight:600}
+
+/* COLOR HELPERS */
+.fl .col-head{background:var(--fl)}
+.fl .sec-label{color:var(--fl)}
+.fl .goal-box{background:var(--fl-l);color:#2C5210}
+.fl .pill{background:var(--fl-l);border-color:var(--fl-m);color:var(--fl)}
+.fl .fits-box{background:var(--fl-l);color:#2C5210}
+.fl .prod-list li::before{color:var(--fl)}
+
+.dr .col-head{background:var(--dr)}
+.dr .sec-label{color:var(--dr)}
+.dr .goal-box{background:var(--dr-l);color:#085041}
+.dr .pill{background:var(--dr-l);border-color:var(--dr-m);color:var(--dr)}
+.dr .fits-box{background:var(--dr-l);color:#085041}
+.dr .prod-list li::before{color:var(--dr)}
+
+.mc .col-head{background:var(--mc)}
+.mc .sec-label{color:var(--mc)}
+.mc .goal-box{background:var(--mc-l);color:#6B2910}
+.mc .pill{background:var(--mc-l);border-color:var(--mc-m);color:var(--mc)}
+.mc .fits-box{background:var(--mc-l);color:#6B2910}
+.mc .prod-list li::before{color:var(--mc)}
+
+.pa .col-head{background:var(--pa)}
+.pa .sec-label{color:var(--pa)}
+.pa .goal-box{background:var(--pa-l);color:#26215C}
+.pa .pill{background:var(--pa-l);border-color:var(--pa-m);color:var(--pa)}
+.pa .fits-box{background:var(--pa-l);color:#26215C}
+.pa .prod-list li::before{color:var(--pa)}
+
+.ec .col-head{background:var(--ec)}
+.ec .sec-label{color:var(--ec)}
+.ec .goal-box{background:var(--ec-l);color:#412402}
+.ec .pill{background:var(--ec-l);border-color:var(--ec-m);color:var(--ec)}
+.ec .fits-box{background:var(--ec-l);color:#412402}
+.ec .prod-list li::before{color:var(--ec)}
+
+
+/* CONNECTS */
+.connects-box{border-radius:6px;padding:.65rem .85rem;font-size:11.5px;line-height:1.65;border:1px dashed}
+.fl .connects-box{background:#fff;border-color:var(--fl-m);color:#2C5210}
+.dr .connects-box{background:#fff;border-color:var(--dr-m);color:#085041}
+.mc .connects-box{background:#fff;border-color:var(--mc-m);color:#6B2910}
+.pa .connects-box{background:#fff;border-color:var(--pa-m);color:#26215C}
+.ec .connects-box{background:#fff;border-color:var(--ec-m);color:#412402}
+.fl .sec-label.connects{color:var(--fl)}
+.dr .sec-label.connects{color:var(--dr)}
+.mc .sec-label.connects{color:var(--mc)}
+.pa .sec-label.connects{color:var(--pa)}
+.ec .sec-label.connects{color:var(--ec)}
+
+footer{background:var(--navy);padding:1.2rem 2rem;text-align:center}
+footer p{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#556f8a;letter-spacing:.1em}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <p class="hero-tag">Future Forests Excellence Cluster · Universität Freiburg · SES-ModelLab</p>
+  <h1>Modeling and research cooperation groups</h1>
+</header>
+
+<div class="grid-wrap">
+<div class="grid">
+
+<!-- 1 FOREST GROWTH -->
+<div class="col fl">
+  <div class="col-head">
+    <div class="col-num">Group 1</div>
+    <div class="col-name">Forest growth and disturbance dynamics</div>
+  </div>
+  <div class="col-body">
+    <div class="sec">
+      <div class="sec-label">Goal</div>
+      <div class="goal-box">Project how forests grow, die, and recover under climate stress and disturbance.</div>
+    </div>
+    <div class="sec">
+      <div class="sec-label">What is studied</div>
+      <div class="pills">
+        <span class="pill">Forest growth, disturbance, and mortality</span>
+        <span class="pill">Tree mortality and cover dynamics from remote sensing</span>
+        <span class="pill">Stand structure and trait variation along disturbance gradients</span>
+        <span class="pill">Resilience and recovery after drought or disturbance</span>
+        <span class="pill">How density management affects tree fitness</span>
+        <span class="pill">Whether models represent forest dynamics well enough for decisions</span>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-label">Who fits here</div>
+      <div class="fits-box">You work on how forests grow, die, or recover — whether through field measurements, remote sensing, simulation, or model evaluation. You produce or need data on forest structure, mortality, traits, or growth at stand or landscape scale. You also fit here if you care about whether forest models are well-founded and fit for decision-making: which processes matter, how well they are represented, and what evidence would be needed to trust a model's projections.</div>
+    </div>
+    <div class="sec">
+      <div class="sec-label">Group produces</div>
+      <ul class="prod-list">
+        <li>Forest growth simulations</li>
+        <li>Mortality and disturbance maps</li>
+        <li>Tree trait and structural diversity data</li>
+        <li>Growth and resilience indices</li>
+        <li>Model evaluation outputs</li>
+      </ul>
+
+
+    </div>
+  </div>
+</div>
+
+<!-- 2 DROUGHT + HYDROLOGY -->
+<div class="col dr">
+  <div class="col-head">
+    <div class="col-num">Group 2</div>
+    <div class="col-name">Drought, hydrology, and forest ecosystem responses</div>
+  </div>
+  <div class="col-body">
+    <div class="sec">
+      <div class="sec-label">Goal</div>
+      <div class="goal-box">Understand how drought, heat stress, and shifting water availability affect forest carbon and water fluxes — and project how these change under future climate and management scenarios.</div>
+    </div>
+    <div class="sec">
+      <div class="sec-label">What is studied</div>
+      <div class="pills">
+        <span class="pill">How soil moisture deficit and atmospheric drought drive forest carbon uptake and water use</span>
+        <span class="pill">Vegetation stress responses using plant traits instead of generic categories</span>
+        <span class="pill">Current-state forest vulnerability across Baden-Württemberg</span>
+        <span class="pill">Soil water flow from rainfall to streamflow</span>
+        <span class="pill">Groundwater recharge under different forest covers</span>
+        <span class="pill">How forest composition change propagates through catchment hydrology</span>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-label">Who fits here</div>
+      <div class="fits-box">You work on how forests respond to water stress — at the leaf, stand, catchment, or regional scale. You study carbon and water fluxes under drought or heat, model soil moisture, runoff, or groundwater, or connect forest physiology to hydrological outcomes. You also fit here if you produce the climate and hydroclimatic forcing data that makes these projections possible — regional climate scenarios, downscaled reanalysis, or extreme event storylines — or if your question is which management interventions can actually reduce drought and heat impacts on forests.</div>
+    </div>
+    <div class="sec">
+      <div class="sec-label">Group produces</div>
+      <ul class="prod-list">
+        <li>Forest vulnerability maps for Baden-Württemberg</li>
+        <li>Improved trait-based vegetation stress functions</li>
+        <li>Updated ecosystem model for drought responses</li>
+        <li>Spatially explicit hydrology datasets with uncertainty estimates</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 3 MICROCLIMATE -->
+<div class="col mc">
+  <div class="col-head">
+    <div class="col-num">Group 3</div>
+    <div class="col-name">Sub-canopy microclimate modelling</div>
+  </div>
+  <div class="col-body">
+    <div class="sec">
+      <div class="sec-label">Goal</div>
+      <div class="goal-box">Map the climate conditions experienced inside forests at the resolution and spatial extent needed by biodiversity, drought, and ecosystem service research across FuFo.</div>
+    </div>
+    <div class="sec">
+      <div class="sec-label">What is studied</div>
+      <div class="pills">
+        <span class="pill">Temperature, humidity, and radiation below the forest canopy — 30-year hindcast</span>
+        <span class="pill">Deadwood distribution and its climatic drivers</span>
+        <span class="pill">Groundwater nitrate concentrations linked to forest dieback</span>
+        <span class="pill">Acoustic environments inside forests</span>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-label">Who fits here</div>
+      <div class="fits-box">You work with sensor network data or remote sensing to characterise conditions inside forests. You build or use data-driven models trained on environmental observations. Your research depends on fine-scale temperature, humidity, light, or acoustic conditions below the canopy — or on understanding how forest structure and composition mediate those conditions for biodiversity, people, or ecosystem function.</div>
+    </div>
+    <div class="sec">
+      <div class="sec-label">Group produces</div>
+      <ul class="prod-list">
+        <li>High-resolution sub-canopy climate datasets</li>
+        <li>Deadwood forecasting maps</li>
+        <li>Groundwater nitrate products</li>
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+<!-- 4 PARTICIPATORY -->
+<div class="col pa">
+  <div class="col-head">
+    <div class="col-num">Group 4</div>
+    <div class="col-name">Participatory landscape modelling</div>
+  </div>
+  <div class="col-body">
+    <div class="sec">
+      <div class="sec-label">Goal</div>
+      <div class="goal-box">Connect stakeholder knowledge, governance frameworks, and management objectives to spatially explicit forest simulations — so that scenarios are grounded in what actors actually value, decide, and are legally permitted to do.</div>
+    </div>
+    <div class="sec">
+      <div class="sec-label">What is studied</div>
+      <div class="pills">
+        <span class="pill">Forest resilience through statistical early warning indicators</span>
+        <span class="pill">Landscape-scale forest transformation scenarios co-designed with stakeholders</span>
+        <span class="pill">Stakeholder decision-making processes and governance constraints</span>
+        <span class="pill">Biodiversity trade-offs from renewables and infrastructure</span>
+        <span class="pill">Environmental impacts of forest-related land-use decisions</span>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-label">Who fits here</div>
+      <div class="fits-box">You work on what people think, decide, or argue about forests — through interviews, ethnography, legal analysis, or governance research. You study stakeholder values, responsibility, legitimacy, or decision-making under uncertainty. You develop governance frameworks, legal scenarios, or social change scenarios that shape what future forests are allowed or expected to become. You also fit here if you connect this qualitative knowledge to quantitative landscape models, or if you use model outputs to understand whether governance choices are realistic, legitimate, or fair.</div>
+    </div>
+    <div class="sec">
+      <div class="sec-label">Group produces</div>
+      <ul class="prod-list">
+        <li>Stakeholder knowledge on forest values and decision-making</li>
+        <li>Legal scenarios and governance frameworks</li>
+        <li>Spatially explicit landscape simulations with ecosystem service indicators</li>
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+<!-- 5 BIOECONOMY -->
+<div class="col ec">
+  <div class="col-head">
+    <div class="col-num">Group 5</div>
+    <div class="col-name">Forest bioeconomy modelling</div>
+  </div>
+  <div class="col-body">
+    <div class="sec">
+      <div class="sec-label">Goal</div>
+      <div class="goal-box">Trace where harvested wood ends up and what this means for climate, markets, and forest management — answering when and under what conditions leaving wood in the forest is preferable to harvesting it.</div>
+    </div>
+    <div class="sec">
+      <div class="sec-label">What is studied</div>
+      <div class="pills">
+        <span class="pill">The fate of carbon in harvested wood across product types and time horizons</span>
+        <span class="pill">Stocks and flows of ecosystem services through market networks</span>
+        <span class="pill">Systemic dynamics of the forest bioeconomy under different use and governance scenarios</span>
+        <span class="pill">Trend interactions shaping forest social-ecological futures</span>
+        <span class="pill">Spatial distribution of ecosystem services and tools for their allocation</span>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-label">Who fits here</div>
+      <div class="fits-box">You work on the economic, material, or market dimensions of forest management — tracing timber, carbon, ecosystem services, or wood products through supply chains and governance systems. You model how forest decisions translate into economic or climate outcomes, or develop tools for spatial planning, governance incentives, and payment schemes for ecosystem services. You also fit here if you work on the principles and trade-offs behind those decisions — robustness, responsibility, and legitimacy in the face of deep uncertainty about future markets, climate, and values.</div>
+    </div>
+    <div class="sec">
+      <div class="sec-label">Group produces</div>
+      <ul class="prod-list">
+        <li>Carbon time series of harvested wood across product types and technology scenarios</li>
+        <li>Trend interaction maps for social-ecological and forestry futures</li>
+        <li>Ecosystem service maps and quantification tools</li>
+      </ul>
+
+  
+    </div>
+  </div>
+</div>
+
+</div><!-- grid -->
+</div><!-- grid-wrap -->
+
+
+</body>
+</html>
