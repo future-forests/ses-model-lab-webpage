@@ -9,8 +9,6 @@
 :root {
   --navy:#1e3a5c;
   --fl:#3B6D11; --fl-l:#EAF3DE; --fl-m:#A8CC7A;
-  --dr:#0A5440; --dr-l:#DFF5EE; --dr-m:#5FC4A0;
-  --mc:#8B3010; --mc-l:#FAECE7; --mc-m:#E89070;
   --pa:#312580; --pa-l:#EEEDFE; --pa-m:#A098D8;
   --ec:#5A3307; --ec-l:#FFF0D8; --ec-m:#E8A040;
 }
@@ -24,9 +22,9 @@ body{font-family:'IBM Plex Sans',sans-serif;background:#f0f2f5;color:#1a1a1a;min
 .hero h1{font-size:clamp(20px,3vw,30px);font-weight:600;color:#fff;margin-bottom:.6rem;line-height:1.2}
 .hero p{font-size:13px;color:#94a3b8;max-width:640px;line-height:1.7}
 
-/* 5-COLUMN GRID */
+/* 3-COLUMN GRID */
 .grid-wrap{overflow-x:auto;padding:1.5rem 1.5rem 2.5rem}
-.grid{display:grid;grid-template-columns:repeat(5,minmax(220px,1fr));gap:12px;min-width:1100px}
+.grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;min-width:1100px}
 
 /* COLUMN CARD */
 .col{background:#fff;border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
@@ -66,20 +64,6 @@ body{font-family:'IBM Plex Sans',sans-serif;background:#f0f2f5;color:#1a1a1a;min
 .fl .fits-box{background:var(--fl-l);color:#2C5210}
 .fl .prod-list li::before{color:var(--fl)}
 
-.dr .col-head{background:var(--dr)}
-.dr .sec-label{color:var(--dr)}
-.dr .goal-box{background:var(--dr-l);color:#085041}
-.dr .pill{background:var(--dr-l);border-color:var(--dr-m);color:var(--dr)}
-.dr .fits-box{background:var(--dr-l);color:#085041}
-.dr .prod-list li::before{color:var(--dr)}
-
-.mc .col-head{background:var(--mc)}
-.mc .sec-label{color:var(--mc)}
-.mc .goal-box{background:var(--mc-l);color:#6B2910}
-.mc .pill{background:var(--mc-l);border-color:var(--mc-m);color:var(--mc)}
-.mc .fits-box{background:var(--mc-l);color:#6B2910}
-.mc .prod-list li::before{color:var(--mc)}
-
 .pa .col-head{background:var(--pa)}
 .pa .sec-label{color:var(--pa)}
 .pa .goal-box{background:var(--pa-l);color:#26215C}
@@ -94,35 +78,23 @@ body{font-family:'IBM Plex Sans',sans-serif;background:#f0f2f5;color:#1a1a1a;min
 .ec .fits-box{background:var(--ec-l);color:#412402}
 .ec .prod-list li::before{color:var(--ec)}
 
-
-/* CONNECTS */
-.connects-box{border-radius:6px;padding:.65rem .85rem;font-size:11.5px;line-height:1.65;border:1px dashed}
-.fl .connects-box{background:#fff;border-color:var(--fl-m);color:#2C5210}
-.dr .connects-box{background:#fff;border-color:var(--dr-m);color:#085041}
-.mc .connects-box{background:#fff;border-color:var(--mc-m);color:#6B2910}
-.pa .connects-box{background:#fff;border-color:var(--pa-m);color:#26215C}
-.ec .connects-box{background:#fff;border-color:var(--ec-m);color:#412402}
-.fl .sec-label.connects{color:var(--fl)}
-.dr .sec-label.connects{color:var(--dr)}
-.mc .sec-label.connects{color:var(--mc)}
-.pa .sec-label.connects{color:var(--pa)}
-.ec .sec-label.connects{color:var(--ec)}
-
 footer{background:var(--navy);padding:1.2rem 2rem;text-align:center}
 footer p{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#556f8a;letter-spacing:.1em}
 
+/* MEETING PLANNING BOX */
 .terminplanner{border-radius:6px;padding:.7rem .85rem;font-size:11.5px;line-height:1.6;border:1px dashed;margin-top:auto}
 .fl .terminplanner{background:var(--fl-l);border-color:var(--fl-m);color:#2C5210}
-.dr .terminplanner{background:var(--dr-l);border-color:var(--dr-m);color:#085041}
-.mc .terminplanner{background:var(--mc-l);border-color:var(--mc-m);color:#6B2910}
 .pa .terminplanner{background:var(--pa-l);border-color:var(--pa-m);color:#26215C}
 .ec .terminplanner{background:var(--ec-l);border-color:var(--ec-m);color:#412402}
-.terminplanner a{font-weight:600;text-decoration:none;display:inline-block;margin-top:.35rem}
+.terminplanner a{font-weight:600;text-decoration:none;display:inline-block;margin-top:.15rem}
 .fl .terminplanner a{color:var(--fl)}
-.dr .terminplanner a{color:var(--dr)}
-.mc .terminplanner a{color:var(--mc)}
 .pa .terminplanner a{color:var(--pa)}
 .ec .terminplanner a{color:var(--ec)}
+.tp-block{margin-bottom:.6rem}
+.tp-block:last-child{margin-bottom:0}
+.tp-label{font-weight:600;margin-bottom:.15rem}
+.tp-sub{padding-left:.6rem;border-left:2px solid var(--fl-m);margin-top:.1rem}
+.tp-sub a{display:block;margin-top:.1rem;font-weight:500}
 </style>
 </head>
 <body>
@@ -135,140 +107,74 @@ footer p{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#556f8a;lette
 <div class="grid-wrap">
 <div class="grid">
 
-<!-- 1 FOREST GROWTH -->
+<!-- 1 JOINT: FOREST GROWTH + DROUGHT/HYDROLOGY + MICROCLIMATE -->
 <div class="col fl">
   <div class="col-head">
-    <div class="col-num">Group 1</div>
-    <div class="col-name">Forest growth and disturbance dynamics</div>
+    <div class="col-num">Group 1 · joint session</div>
+    <div class="col-name">Forest growth, disturbance, hydrology &amp; sub-canopy microclimate</div>
   </div>
   <div class="col-body">
     <div class="sec">
       <div class="sec-label">Goal</div>
-      <div class="goal-box">Project how forests grow, die, and recover under climate stress and disturbance.</div>
+      <div class="goal-box">Project how forests grow, die, and recover under climate stress, drought, and disturbance — and characterise the sub-canopy conditions that mediate those responses. Work across canopy structure, water fluxes, and microclimate at scales from stand to landscape.</div>
     </div>
     <div class="sec">
       <div class="sec-label">What is studied</div>
       <div class="pills">
-        <span class="pill">Forest growth, disturbance, and mortality</span>
-        <span class="pill">Tree mortality and cover dynamics from remote sensing</span>
-        <span class="pill">Stand structure and trait variation along disturbance gradients</span>
-        <span class="pill">Resilience and recovery after drought or disturbance</span>
-        <span class="pill">How density management affects tree fitness</span>
-        <span class="pill">Whether models represent forest dynamics well enough for decisions</span>
+        <span class="pill">Forest growth, disturbance, and mortality dynamics</span>
+        <span class="pill">Tree mortality and cover change from remote sensing</span>
+        <span class="pill">Stand structure, trait variation, and resilience along disturbance and management gradients</span>
+        <span class="pill">Soil moisture and atmospheric drought effects on carbon and water fluxes</span>
+        <span class="pill">Trait-based vegetation stress responses</span>
+        <span class="pill">Soil water flow, runoff, and groundwater recharge under different forest covers</span>
+        <span class="pill">Temperature, humidity, radiation, and acoustic conditions below the canopy</span>
+        <span class="pill">Deadwood distribution and groundwater nitrate as forest-condition indicators</span>
+        <span class="pill">Whether and how well models represent these processes for decision-relevant projections</span>
       </div>
     </div>
     <div class="sec">
       <div class="sec-label">Who fits here</div>
-      <div class="fits-box">You work on how forests grow, die, or recover — whether through field measurements, remote sensing, simulation, or model evaluation. You produce or need data on forest structure, mortality, traits, or growth at stand or landscape scale. You also fit here if you care about whether forest models are well-founded and fit for decision-making: which processes matter, how well they are represented, and what evidence would be needed to trust a model's projections.</div>
+      <div class="fits-box">You work on how forests grow, die, recover, or experience their internal climate — through field measurements, sensor networks, remote sensing, simulation, or model evaluation. You produce or need data on forest structure, mortality, traits, growth, water fluxes, or sub-canopy conditions at stand, catchment, or landscape scale. You also fit here if you generate climate and hydroclimatic forcing data, or if your question is whether current models are well-founded enough to inform management and policy.</div>
     </div>
     <div class="sec">
       <div class="sec-label">Group produces</div>
       <ul class="prod-list">
-        <li>Forest growth simulations</li>
-        <li>Mortality and disturbance maps</li>
-        <li>Tree trait and structural diversity data</li>
-        <li>Growth and resilience indices</li>
+        <li>Forest growth and disturbance simulations</li>
+        <li>Mortality, disturbance, and cover-change maps</li>
+        <li>Trait, structural, and resilience datasets</li>
+        <li>Forest vulnerability maps for Baden-Württemberg</li>
+        <li>Improved trait-based vegetation stress functions</li>
+        <li>Updated ecosystem model for drought responses</li>
+        <li>Spatially explicit hydrology datasets with uncertainty</li>
+        <li>High-resolution sub-canopy climate datasets</li>
+        <li>Deadwood and groundwater nitrate products</li>
         <li>Model evaluation outputs</li>
       </ul>
     </div>
     <div class="sec">
       <div class="sec-label">Meeting planning</div>
-      <div class="terminplanner">To plan the meetings of this group fill the Terminplanner:<br>
-        <a href="https://terminplaner6.dfn.de/p/8216900b2d7eb007b1fe400bfeadb053-1815715" target="_blank">→ Open Terminplanner</a>
+      <div class="terminplanner">
+        <div class="tp-block">
+          <div class="tp-label">Joint session — shared workspace, agendas, notes:</div>
+          <a href="https://bwsyncandshare.kit.edu/s/cPZaiPRTrt3ojn2" target="_blank">→ Open joint workspace</a>
+        </div>
+        <div class="tp-block">
+          <div class="tp-label">Topic-specific Terminplaner:</div>
+          <div class="tp-sub">
+            <a href="https://terminplaner6.dfn.de/p/8216900b2d7eb007b1fe400bfeadb053-1815715" target="_blank">→ Forest growth &amp; disturbance</a>
+            <a href="https://terminplaner6.dfn.de/p/73a9ddf2bceffca0e21117868de38f67-1815853" target="_blank">→ Drought &amp; hydrology</a>
+            <a href="https://terminplaner6.dfn.de/p/47edb7d4b82bdc0ce3a6def8b5166768-1815860" target="_blank">→ Sub-canopy microclimate</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- 2 DROUGHT + HYDROLOGY -->
-<div class="col dr">
-  <div class="col-head">
-    <div class="col-num">Group 2</div>
-    <div class="col-name">Drought, hydrology, and forest ecosystem responses</div>
-  </div>
-  <div class="col-body">
-    <div class="sec">
-      <div class="sec-label">Goal</div>
-      <div class="goal-box">Understand how drought, heat stress, and shifting water availability affect forest carbon and water fluxes — and project how these change under future climate and management scenarios.</div>
-    </div>
-    <div class="sec">
-      <div class="sec-label">What is studied</div>
-      <div class="pills">
-        <span class="pill">How soil moisture deficit and atmospheric drought drive forest carbon uptake and water use</span>
-        <span class="pill">Vegetation stress responses using plant traits instead of generic categories</span>
-        <span class="pill">Current-state forest vulnerability across Baden-Württemberg</span>
-        <span class="pill">Soil water flow from rainfall to streamflow</span>
-        <span class="pill">Groundwater recharge under different forest covers</span>
-        <span class="pill">How forest composition change propagates through catchment hydrology</span>
-      </div>
-    </div>
-    <div class="sec">
-      <div class="sec-label">Who fits here</div>
-      <div class="fits-box">You work on how forests respond to water stress — at the leaf, stand, catchment, or regional scale. You study carbon and water fluxes under drought or heat, model soil moisture, runoff, or groundwater, or connect forest physiology to hydrological outcomes. You also fit here if you produce the climate and hydroclimatic forcing data that makes these projections possible — regional climate scenarios, downscaled reanalysis, or extreme event storylines — or if your question is which management interventions can actually reduce drought and heat impacts on forests.</div>
-    </div>
-    <div class="sec">
-      <div class="sec-label">Group produces</div>
-      <ul class="prod-list">
-        <li>Forest vulnerability maps for Baden-Württemberg</li>
-        <li>Improved trait-based vegetation stress functions</li>
-        <li>Updated ecosystem model for drought responses</li>
-        <li>Spatially explicit hydrology datasets with uncertainty estimates</li>
-      </ul>
-    </div>
-    <div class="sec">
-      <div class="sec-label">Meeting planning</div>
-      <div class="terminplanner">To plan the meetings of this group fill the Terminplanner:<br>
-        <a href="https://terminplaner6.dfn.de/p/73a9ddf2bceffca0e21117868de38f67-1815853" target="_blank">→ Open Terminplanner</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- 3 MICROCLIMATE -->
-<div class="col mc">
-  <div class="col-head">
-    <div class="col-num">Group 3</div>
-    <div class="col-name">Sub-canopy microclimate modelling</div>
-  </div>
-  <div class="col-body">
-    <div class="sec">
-      <div class="sec-label">Goal</div>
-      <div class="goal-box">Map the climate conditions experienced inside forests at the resolution and spatial extent needed by biodiversity, drought, and ecosystem service research across FuFo.</div>
-    </div>
-    <div class="sec">
-      <div class="sec-label">What is studied</div>
-      <div class="pills">
-        <span class="pill">Temperature, humidity, and radiation below the forest canopy — 30-year hindcast</span>
-        <span class="pill">Deadwood distribution and its climatic drivers</span>
-        <span class="pill">Groundwater nitrate concentrations linked to forest dieback</span>
-        <span class="pill">Acoustic environments inside forests</span>
-      </div>
-    </div>
-    <div class="sec">
-      <div class="sec-label">Who fits here</div>
-      <div class="fits-box">You work with sensor network data or remote sensing to characterise conditions inside forests. You build or use data-driven models trained on environmental observations. Your research depends on fine-scale temperature, humidity, light, or acoustic conditions below the canopy — or on understanding how forest structure and composition mediate those conditions for biodiversity, people, or ecosystem function.</div>
-    </div>
-    <div class="sec">
-      <div class="sec-label">Group produces</div>
-      <ul class="prod-list">
-        <li>High-resolution sub-canopy climate datasets</li>
-        <li>Deadwood forecasting maps</li>
-        <li>Groundwater nitrate products</li>
-      </ul>
-    </div>
-    <div class="sec">
-      <div class="sec-label">Meeting planning</div>
-      <div class="terminplanner">To plan the meetings of this group fill the Terminplanner:<br>
-        <a href="https://terminplaner6.dfn.de/p/47edb7d4b82bdc0ce3a6def8b5166768-1815860" target="_blank">→ Open Terminplanner</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- 4 PARTICIPATORY -->
+<!-- 2 PARTICIPATORY -->
 <div class="col pa">
   <div class="col-head">
-    <div class="col-num">Group 4</div>
+    <div class="col-num">Group 2</div>
     <div class="col-name">Participatory landscape modelling</div>
   </div>
   <div class="col-body">
@@ -300,17 +206,17 @@ footer p{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#556f8a;lette
     </div>
     <div class="sec">
       <div class="sec-label">Meeting planning</div>
-      <div class="terminplanner">To plan the meetings of this group fill the Terminplanner:<br>
-        <a href="https://terminplaner6.dfn.de/p/c1736918cea6ed7b8155ae98be8d0a6e-1816384" target="_blank">→ Open Terminplanner</a>
+      <div class="terminplanner">To plan the meetings of this group fill the Terminplaner:<br>
+        <a href="https://terminplaner6.dfn.de/p/c1736918cea6ed7b8155ae98be8d0a6e-1816384" target="_blank">→ Open Terminplaner</a>
       </div>
     </div>
   </div>
 </div>
 
-<!-- 5 BIOECONOMY -->
+<!-- 3 BIOECONOMY -->
 <div class="col ec">
   <div class="col-head">
-    <div class="col-num">Group 5</div>
+    <div class="col-num">Group 3</div>
     <div class="col-name">Social metabolism/industrial ecology of wood and wood products</div>
   </div>
   <div class="col-body">
@@ -342,8 +248,8 @@ footer p{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#556f8a;lette
     </div>
     <div class="sec">
       <div class="sec-label">Meeting planning</div>
-      <div class="terminplanner">To plan the meetings of this group fill the Terminplanner:<br>
-        <a href="https://terminplaner6.dfn.de/p/190be32b3b660bd37c86f6d44c33e9a5-1816440" target="_blank">→ Open Terminplanner</a>
+      <div class="terminplanner">To plan the meetings of this group fill the Terminplaner:<br>
+        <a href="https://terminplaner6.dfn.de/p/190be32b3b660bd37c86f6d44c33e9a5-1816440" target="_blank">→ Open Terminplaner</a>
       </div>
     </div>
   </div>
@@ -351,7 +257,6 @@ footer p{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#556f8a;lette
 
 </div><!-- grid -->
 </div><!-- grid-wrap -->
-
 
 </body>
 </html>
