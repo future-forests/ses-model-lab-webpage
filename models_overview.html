@@ -374,6 +374,43 @@
     </td>
   </tr>
 
+  <tr>
+    <td>
+      <div class="mname">FINN</div>
+      <span class="pi">Käber · Pichler</span>
+      <span class="lang">R / torch</span>
+      <!-- finnverse.github.io/FINN: "FINN is an R package designed for modular, dynamic vegetation (forest) models... implemented in torch for R"; Pichler & Käber (2026) Methods Ecol Evol, doi:10.1111/2041-210X.70347; preprint arXiv:2508.01228 -->
+    </td>
+    <td><span class="type-tag t-eco">Hybrid forest gap model</span></td>
+    <td>
+      <span class="io-label">Inputs</span>
+      <table class="io-table">
+        <tr><td class="var">Environment (env_dt)</td><td class="res">site · per timestep</td><td class="desc">siteID, year + any number of predictors in natural units (FIA example: mean/max/min temperature °C, annual precipitation mm, precipitation seasonality, precipitation of warmest quarter); must cover every site × year; z-standardised internally (env_autoscale)</td></tr>
+        <tr><td class="var">Initial cohorts (init_trees)</td><td class="res">patch · year 0</td><td class="desc">siteID, patchID, year, species, dbh (cm), trees (count), living; assembled into a CohortMat of dimensions sites × patches × cohorts</td></tr>
+        <tr><td class="var">Calibration data (obs_dt)</td><td class="res">site × species · per timestep</td><td class="desc">ba (m²), dbh (cm), trees (count), growth (relative growth rate), reg (trees ha⁻¹), and mortality as a count pair n_at_risk / n_died; NAs permitted; year 0 excluded (it is the initial state)</td></tr>
+        <tr><td class="var">Disturbance (dist_dt)</td><td class="res">site · per timestep</td><td class="desc">optional; intensity = fraction of patches destroyed that year (0 = none)</td></tr>
+        <tr><td class="var">Species parameters</td><td class="res">— · static or learned</td><td class="desc">per process: regeneration (shade requirement, environmental modifiers), growth (shade, size dependence), mortality (shade, size dependence, growth dependence), competition (height allometry, competition strength); either fixed by the user or estimated from obs_dt</td></tr>
+        <tr><td class="var">Process specification</td><td class="res">— · per run</td><td class="desc">one R formula per process linking environmental predictors to that process (e.g. ~ 1 + temp); each process supplied as a mechanistic function, a neural network, or a user-written R function</td></tr>
+        <tr><td class="var">Simulation configuration</td><td class="res">— · per run</td><td class="desc">number of species, number of patches per site (default 100), patch_size in ha (default 0.1), number of timesteps, cpu or NVIDIA gpu</td></tr>
+      </table>
+      <span class="note">Timestep length is set by the inventory remeasurement interval and assumed fixed across sites (10 yr in the FIA calibration example).</span>
+    </td>
+    <td>
+      <span class="io-label">Outputs</span>
+      <table class="io-table">
+        <tr><td class="var">Mean DBH</td><td class="res">site × species · per timestep</td><td class="desc">cm; patch-averaged stand-level state</td></tr>
+        <tr><td class="var">Basal area</td><td class="res">site × species · per timestep</td><td class="desc">m² per patch; divided by patch_size for m²/ha</td></tr>
+        <tr><td class="var">Tree numbers</td><td class="res">site × species · per timestep</td><td class="desc">count per patch; divided by patch_size for N/ha</td></tr>
+        <tr><td class="var">Available light</td><td class="res">site × species · per timestep</td><td class="desc">%; output of the competition process</td></tr>
+        <tr><td class="var">Demographic rates</td><td class="res">site × species · per timestep</td><td class="desc">growth (cm/yr), mortality (%), regeneration count and mean (N/ha)</td></tr>
+        <tr><td class="var">Per-patch series</td><td class="res">patch × species · per timestep</td><td class="desc">same variables before patch averaging; gap-model realisations are stochastic</td></tr>
+        <tr><td class="var">Cohort state</td><td class="res">cohort · selected timesteps</td><td class="desc">dbh, trees, species per cohort; optional (all, last, or named timesteps) because storing every step is expensive</td></tr>
+        <tr><td class="var">Calibrated parameters</td><td class="res">species × process · per fit</td><td class="desc">all processes fitted jointly by stochastic gradient descent against a combined likelihood: Gaussian for growth, binomial for mortality, negative binomial for regeneration</td></tr>
+        <tr><td class="var">Process interpretation</td><td class="res">process · per fit</td><td class="desc">Accumulated Local Effects plots of the learned response of each process to environment and state</td></tr>
+      </table>
+    </td>
+  </tr>
+
   <!-- ABM -->
   <tr class="ghead"><td colspan="4">ABM / Social-Ecological</td></tr>
 
