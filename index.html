@@ -230,6 +230,49 @@
   .card.warm .meta { color: var(--accent-blue); }
   .card .venue { color: var(--text-mute); font-size: 0.94rem; margin: 0; }
   .card .mode { color: var(--text-soft); font-size: 0.88rem; margin: 0; font-style: italic; }
+  .card .next {
+    font-family: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--brand-green);
+    font-weight: 500;
+    margin: 0.1rem 0 0;
+  }
+
+  /* Session update block (recap of the last meeting) */
+  .card .update {
+    margin: 0.85rem 0 0;
+    padding: 0.9rem 1rem 1rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+  }
+  .card.warm .update { background: rgba(255,255,255,0.45); border-color: var(--border-warm); }
+  .card .update .update-label {
+    display: block;
+    font-family: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-blue);
+    font-weight: 500;
+    margin: 0 0 0.4rem;
+  }
+  .card .update h4 {
+    margin: 0 0 0.45rem;
+    font-size: 1rem;
+    line-height: 1.3;
+    color: var(--brand-navy);
+    font-weight: 600;
+  }
+  .card .update p {
+    margin: 0.5rem 0 0;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: var(--text);
+  }
+  .card .update p:first-of-type { margin-top: 0; }
 
   /* Link cards (registries) */
   .card.link-card {
@@ -451,7 +494,8 @@
           "title": "Model Lab Café",
           "desc": "Short input from presenters followed by open discussion of modelling concepts across disciplines — uncertainty, scenarios, evaluation, methods.",
           "meta": "Biweekly · Thu 13:00",
-          "venue": "Herderbau building, Tennenbacher Str. 4, 3rd floor",
+          "next": "Next: 3 September · 13:00",
+          "venue": "Herderbau library, Tennenbacher Str. 4",
           "mode": "Hybrid — Zoom option for remote joins.",
           "zoom": "https://uni-freiburg.zoom-x.de/j/68539850684?pwd=9Z3TTXL09IY50hqmbKnZeJN1uN1rCu.1"
         },
@@ -460,9 +504,20 @@
           "title": "Hands on Science",
           "desc": "Monthly working group where participants collectively reproduce a peer-reviewed paper — running the code and checking the analyses.",
           "meta": "Monthly · Thu 13:45",
+          "next": "Next: 10 September · 13:45",
           "venue": "Stadtstraße 5, ground floor seminar room",
           "mode": "Hybrid — Zoom option for remote joins.",
-          "zoom": "https://uni-freiburg.zoom-x.de/j/61026042329?pwd=g5XAb8tMWG2e1XVtxNrVjGNGtunJAx.1"
+          "zoom": "https://uni-freiburg.zoom-x.de/j/61026042329?pwd=g5XAb8tMWG2e1XVtxNrVjGNGtunJAx.1",
+          "update": {
+            "label": "Last session",
+            "title": "Hands-on ReAnalysis: Carle et al. (2025) — completed",
+            "body": [
+              "We have finished our reanalysis of Carle et al. (2025), Nature 646, 611–618, reproducing the study from the authors' published R code.",
+              "The session raised four points where the code and the Methods appear to differ — in the GAM weighting, the standard error for the 2010–2019 mean, the back-transformation of climate anomalies, and the collation of the Fig. 4 contrasts. Two of these change the magnitude of the reported present-day carbon source and the width of its confidence interval, but not its sign: the sink-to-source conclusion and the losses-driven mechanism stand.",
+              "We have put all four to the corresponding author as questions, and await an answer.",
+              "Next: a poll to choose the next paper goes out this week."
+            ]
+          }
         }
       ]
     },
@@ -675,12 +730,20 @@
         card.appendChild(el('h3', {}, c.title));
         if (c.desc) card.appendChild(el('p', { class: 'desc' }, c.desc));
         if (c.meta) card.appendChild(el('p', { class: 'meta' }, c.meta));
+        if (c.next) card.appendChild(el('p', { class: 'next' }, c.next));
         if (c.venue) card.appendChild(el('p', { class: 'venue' }, c.venue));
         if (c.mode) card.appendChild(el('p', { class: 'mode' }, c.mode));
         if (c.zoom) {
           const z = el('a', { class: 'zoom-link', href: c.zoom, target: '_blank', rel: 'noopener' });
           z.append('Join on Zoom ', el('span', { class: 'arr' }, '↗'));
           card.appendChild(z);
+        }
+        if (c.update) {
+          const box = el('div', { class: 'update' });
+          if (c.update.label) box.appendChild(el('span', { class: 'update-label' }, c.update.label));
+          if (c.update.title) box.appendChild(el('h4', {}, c.update.title));
+          (c.update.body || []).forEach(t => box.appendChild(el('p', {}, t)));
+          card.appendChild(box);
         }
         grid.appendChild(card);
       });
