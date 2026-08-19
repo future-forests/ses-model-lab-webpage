@@ -516,6 +516,72 @@
     flex-wrap: wrap;
   }
   footer.site a { color: var(--text-mute); border-bottom-color: var(--border-strong); }
+
+  /* Floating section nav — appears once the hero scrolls away */
+  .floatnav {
+    position: fixed;
+    top: 0.9rem;
+    left: 50%;
+    transform: translate(-50%, -140%);
+    z-index: 50;
+    max-width: calc(100vw - 1.5rem);
+    background: rgba(255, 255, 255, 0.82);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    backdrop-filter: saturate(180%) blur(14px);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    box-shadow: 0 6px 22px rgba(18, 41, 47, 0.11);
+    padding: 0.35rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.24s ease;
+  }
+  .floatnav.is-visible {
+    transform: translate(-50%, 0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .floatnav ul {
+    display: flex;
+    align-items: center;
+    gap: 0.15rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .floatnav ul::-webkit-scrollbar { display: none; }
+  .floatnav a {
+    display: block;
+    white-space: nowrap;
+    padding: 0.4rem 0.75rem;
+    border-radius: 999px;
+    border-bottom: 0;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-mute);
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+  .floatnav a:hover { background: var(--surface-warm); color: var(--brand-navy); }
+  .floatnav a.is-active {
+    background: var(--brand-navy);
+    color: #fff;
+  }
+  .floatnav a:focus-visible { outline: 2px solid var(--brand-green); outline-offset: 2px; }
+
+  /* Anchor targets clear the floating bar */
+  .block { scroll-margin-top: 5rem; }
+
+  @media (max-width: 720px) {
+    .floatnav { top: 0.5rem; border-radius: 1rem; }
+    .floatnav a { padding: 0.35rem 0.6rem; font-size: 0.78rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .floatnav { transition: opacity 0.2s ease; transform: translate(-50%, 0); }
+  }
+
 </style>
 </head>
 <body>
@@ -671,7 +737,7 @@
     },
     {
       "num": "06",
-      "eyebrow": "Methods",
+      "eyebrow": "Courses",
       "title": "Autumn 2026 training",
       "lede": "Introductory course followed by an ongoing code clinic.",
       "type": "cards",
@@ -749,6 +815,7 @@
     return n;
   };
   const wrap = (children) => el('div', { class: 'wrap' }, children);
+  const secId = (sec) => 'sec-' + String(sec.num).replace(/[^a-z0-9]/gi, '');
 
   // --- icons (simple line SVGs) ---
   const ICONS = {
@@ -917,9 +984,64 @@
       body = el('div', { class: 'contact-grid' }, [left, right]);
     }
 
-    const section = el('section', { class: 'block' }, [wrap([head, body])]);
+    const section = el('section', { class: 'block', id: secId(sec) }, [wrap([head, body])]);
     app.appendChild(section);
   });
+
+  // --- floating section nav ---
+  const nav = el('nav', { class: 'floatnav', 'aria-label': 'Sections' });
+  const navList = el('ul');
+  const navLinks = data.sections.map(sec => {
+    const a = el('a', { href: '#' + secId(sec) }, [
+      el('span', { class: 'fn-label' }, sec.eyebrow)
+    ]);
+    a.addEventListener('click', (e) => {
+      const target = document.getElementById(secId(sec));
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      history.replaceState(null, '', '#' + secId(sec));
+    });
+    navList.appendChild(el('li', {}, a));
+    return a;
+  });
+  nav.appendChild(navList);
+  document.body.appendChild(nav);
+
+  // Show the bar once the hero is out of the way
+  const toggleNav = () => {
+    const heroBottom = hero.getBoundingClientRect().bottom;
+    nav.classList.toggle('is-visible', heroBottom < 40);
+  };
+
+  // Highlight the section currently occupying the top of the viewport
+  const sections = data.sections.map(sec => document.getElementById(secId(sec)));
+  const setActive = () => {
+    let current = -1;
+    sections.forEach((s, i) => {
+      if (s && s.getBoundingClientRect().top <= 120) current = i;
+    });
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) {
+      current = sections.length - 1;
+    }
+    navLinks.forEach((a, i) => a.classList.toggle('is-active', i === current));
+    const active = navLinks[current];
+    if (active && navList.scrollWidth > navList.clientWidth) {
+      const l = active.offsetLeft, r = l + active.offsetWidth;
+      if (l < navList.scrollLeft) navList.scrollLeft = l - 8;
+      else if (r > navList.scrollLeft + navList.clientWidth) navList.scrollLeft = r - navList.clientWidth + 8;
+    }
+  };
+
+  let ticking = false;
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { toggleNav(); setActive(); ticking = false; });
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
 
   // --- footer ---
   const fWrap = document.querySelector('footer.site .wrap');
