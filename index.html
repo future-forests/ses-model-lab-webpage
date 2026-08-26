@@ -320,6 +320,16 @@
   }
   .card .zoom-link:hover { border-bottom-color: var(--brand-green); gap: 0.6rem; }
 
+  /* Next-session note, sits under the Zoom link */
+  .card .upcoming {
+    margin: 0.9rem 0 0;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--text);
+    border-left: 2px solid var(--brand-green);
+    padding-left: 0.7rem;
+  }
+
   /* Preview cards — linked page with a miniature screenshot */
   .preview-card {
     display: grid;
@@ -451,6 +461,19 @@
     color: var(--text);
   }
   .info-list li { margin: 0.35rem 0; }
+
+  /* Cooperation groups list */
+  .group-list {
+    margin: 0.25rem 0 0;
+    padding-left: 1.2rem;
+    color: var(--text);
+    max-width: 62ch;
+  }
+  .group-list li { margin: 0.8rem 0; }
+  .group-list .group-name { font-weight: 600; color: var(--brand-navy); }
+  .group-list .group-links { display: block; margin-top: 0.2rem; font-size: 0.94rem; }
+  .group-list .group-links a + a { margin-left: 0.9rem; }
+  .group-list .group-panel { margin: 0.75rem 0 0; }
 
   /* CTA button */
   .cta {
@@ -666,14 +689,15 @@
           "venue": "Stadtstraße 5, ground floor seminar room",
           "mode": "Hybrid — Zoom option for remote joins.",
           "zoom": "https://uni-freiburg.zoom-x.de/j/61026042329?pwd=g5XAb8tMWG2e1XVtxNrVjGNGtunJAx.1",
+          "upcoming": "Next, on 10 September, we turn to Schneider et al. (2026), Rising tree mortality in France is associated with distinct seasonal climate anomalies, Nature Communications 17, 8016 (https://www.nature.com/articles/s41467-026-74613-9).",
           "update": {
             "label": "Last session",
-            "title": "Hands-on ReAnalysis: Carle et al. (2025) — completed",
+            "title": "Hands-on ReAnalysis: Carle et al. (2025) — completed, with a correction agreed with the authors",
             "body": [
-              "We have finished our reanalysis of Carle et al. (2025), Nature 646, 611–618, reproducing the study from the authors' published R code.",
-              "The session raised four points where the code and the Methods appear to differ — in the GAM weighting, the standard error for the 2010–2019 mean, the back-transformation of climate anomalies, and the collation of the Fig. 4 contrasts. Two of these change the magnitude of the reported present-day carbon source and the width of its confidence interval, but not its sign: the sink-to-source conclusion and the losses-driven mechanism stand.",
-              "We have put all four to the corresponding author as questions, and await an answer.",
-              "Next: a poll to choose the next paper goes out this week."
+              "Over the past two Hands on Science sessions we reproduced the analysis of Carle et al. (2025), Nature (https://www.nature.com/articles/s41586-025-09497-8), from the authors' own published code, and raised four points \u2014 small but important errors \u2014 with the corresponding author, Hannah Carle.",
+              "She answered each of them in detail and proposed a joint correction to the journal (a letter to Nature), with our group included and Andrea Ingrosso as our named representative, as he found most of the errors in the code.",
+              "We then re-ran the corrected analysis, and our numbers agree with hers. The corrections affect some of the numbers reported in the abstract and two of the figures; the conclusions of the study are unchanged, but less well supported by the numbers.",
+              "The exchange with the authors was very good, and a fine display of good scientific practice on their part."
             ]
           }
         }
@@ -685,21 +709,44 @@
       "title": "Cooperation groups",
       "lede": "Joint paper and research working groups formed around shared questions.",
       "type": "cooperation",
-      "intro": "The first joint session — Forest Growth, Disturbance and Sub-canopy Microclimate — took place on Thursday 23 July 2026. Several groups formed around a set of shared research questions.",
-      "cta": {
-        "text": "Open the shared list of groups and questions",
-        "url": "https://bwsyncandshare.kit.edu/s/xLgnTRo8iRrR7BT"
-      },
-      "hint": "Please edit the list directly:",
-      "instructions": [
-        "if a topic interests you, add your name — the groups are open",
-        "if you are listed but don't have the time, just remove yourself, that is completely fine",
-        "there is also a list of questions that were raised but never discussed — feel free to comment on them or add your name if you would like to take one further",
-        "if something is missing entirely, please add it"
-      ],
-      "closing": [
-        "The idea is that this stays a live document worked on together, rather than a summary of one meeting.",
-        "In September the smaller groups start working on joint research. Each group can find its own rhythm; SES-ModelLab helps with coordination and follow-up. Emails on the topic will follow at the end of August."
+      "groups": [
+        {
+          "title": "Forest Growth, Disturbance and Sub-canopy Microclimate",
+          "text": "The first joint session took place on Thursday 23 July 2026. Several groups formed around a set of shared research questions.",
+          "panel": {
+            "cta": {
+              "text": "Open the shared list of groups and questions",
+              "url": "https://bwsyncandshare.kit.edu/s/xLgnTRo8iRrR7BT"
+            },
+            "hint": "Please edit the list directly:",
+            "instructions": [
+              "if a topic interests you, add your name \u2014 the groups are open",
+              "if you are listed but don't have the time, just remove yourself, that is completely fine",
+              "there is also a list of questions that were raised but never discussed \u2014 feel free to comment on them or add your name if you would like to take one further",
+              "if something is missing entirely, please add it"
+            ]
+          }
+        },
+        {
+          "title": "Social metabolism / industrial ecology of wood and wood products",
+          "text": "Meeting on Friday 28 August 2026 at 10:00, first floor seminar room, Stadtstra\u00dfe 5, and online.",
+          "links": [
+            {
+              "text": "Join on Zoom \u2197",
+              "url": "https://uni-freiburg.zoom-x.de/j/61830449353?pwd=x4rKyCSo1R6aQpp58r9OFYe2al9vB5.1"
+            }
+          ]
+        },
+        {
+          "title": "Participatory Modeling workshop",
+          "text": "Ground floor seminar room, Stadtstra\u00dfe 5, and online.",
+          "links": [
+            {
+              "text": "Join on Zoom \u2197",
+              "url": "https://uni-freiburg.zoom-x.de/j/65408065645?pwd=AwFJ799ORB2J0MJrpFQ2irQCjGirWp.1"
+            }
+          ]
+        }
       ],
       "sub": {
         "title": "SES Model Lab AGM breakout rooms",
@@ -926,6 +973,7 @@
           z.append('Join on Zoom ', el('span', { class: 'arr' }, '↗'));
           card.appendChild(z);
         }
+        if (c.upcoming) card.appendChild(el('p', { class: 'upcoming' }, c.upcoming));
         if (c.update) {
           const box = el('div', { class: 'update' });
           if (c.update.label) box.appendChild(el('span', { class: 'update-label' }, c.update.label));
@@ -997,19 +1045,35 @@
       ]);
     } else if (sec.type === 'cooperation') {
       body = el('div', {}, [
-        el('div', { class: 'prose' }, el('p', {}, sec.intro)),
         (function () {
-          const card = el('div', { class: 'info-card' });
-          const cta = el('a', { class: 'cta', href: sec.cta.url });
-          cta.append(sec.cta.text + ' ', el('span', { class: 'arr' }, '↗'));
-          card.appendChild(cta);
-          card.appendChild(el('p', { class: 'hint' }, sec.hint));
-          const ul = el('ul', { class: 'info-list' });
-          sec.instructions.forEach(t => ul.appendChild(el('li', {}, t)));
-          card.appendChild(ul);
-          return card;
+          const ul = el('ul', { class: 'group-list' });
+          (sec.groups || []).forEach(g => {
+            const li = el('li', {}, [el('span', { class: 'group-name' }, g.title)]);
+            if (g.text) li.append(' \u2014 ' + g.text);
+            if (g.links && g.links.length) {
+              const wrap = el('span', { class: 'group-links' });
+              g.links.forEach(l => wrap.appendChild(el('a', { href: l.url, target: '_blank', rel: 'noopener' }, l.text)));
+              li.appendChild(wrap);
+            }
+            if (g.panel) {
+              const card = el('div', { class: 'info-card group-panel' });
+              if (g.panel.cta) {
+                const cta = el('a', { class: 'cta', href: g.panel.cta.url });
+                cta.append(g.panel.cta.text + ' ', el('span', { class: 'arr' }, '\u2197'));
+                card.appendChild(cta);
+              }
+              if (g.panel.hint) card.appendChild(el('p', { class: 'hint' }, g.panel.hint));
+              if (g.panel.instructions) {
+                const inner = el('ul', { class: 'info-list' });
+                g.panel.instructions.forEach(t => inner.appendChild(el('li', {}, t)));
+                card.appendChild(inner);
+              }
+              li.appendChild(card);
+            }
+            ul.appendChild(li);
+          });
+          return el('div', { class: 'prose' }, ul);
         })(),
-        el('div', { class: 'prose' }, sec.closing.map(t => el('p', {}, t))),
         sec.sub ? (function () {
           const grid = el('div', { class: 'duo-grid' });
           (sec.sub.cards || []).forEach(c => {
