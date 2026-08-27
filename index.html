@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SES-ModelLab · Future Forests</title>
+<title>Future Forests SES Model Lab</title>
 <meta name="description" content="Coordination and support of modeling activities in the Future Forests Excellence Cluster.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,7 +45,7 @@
 
   /* Top brand line */
   .brand {
-    padding: 1.5rem 0 0;
+    padding: 4.5rem 0 0;
     background: linear-gradient(105deg, #d3ebe6 0%, #d6e6f2 100%);
   }
   .brand .wrap {
@@ -68,6 +68,7 @@
   .brand-right { display: flex; align-items: center; gap: 1rem; }
   .brand-right img { height: 30px; width: auto; display: block; }
   @media (max-width: 620px) {
+    .brand { padding-top: 3.9rem; }
     .brand .wrap { gap: 0.75rem; }
     .brand-lockup img { height: 34px; }
     .brand-right img { height: 24px; }
@@ -119,6 +120,40 @@
     margin: 0;
     max-width: 42ch;
     line-height: 1.5;
+  }
+  .hero-role {
+    margin: 2.75rem 0 0;
+    max-width: 62ch;
+  }
+  .hero-role h2 {
+    font-family: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-blue);
+    font-weight: 500;
+    margin: 0 0 1.1rem;
+  }
+  .hero-role ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 2rem;
+  }
+  @media (max-width: 720px) { .hero-role ul { grid-template-columns: 1fr; } }
+  .hero-role li {
+    margin: 0;
+    padding-left: 0.9rem;
+    border-left: 2px solid var(--brand-green);
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--text);
+  }
+  .hero-role .role-label {
+    font-weight: 600;
+    color: var(--brand-navy);
   }
 
   /* Sections */
@@ -571,29 +606,21 @@
   }
   footer.site a { color: var(--text-mute); border-bottom-color: var(--border-strong); }
 
-  /* Floating section nav — appears once the hero scrolls away */
+  /* Floating section nav — pinned to the top of the window at all times */
   .floatnav {
     position: fixed;
     top: 0.9rem;
     left: 50%;
-    transform: translate(-50%, -140%);
+    transform: translateX(-50%);
     z-index: 50;
     max-width: calc(100vw - 1.5rem);
-    background: rgba(255, 255, 255, 0.82);
+    background: rgba(255, 255, 255, 0.95);
     -webkit-backdrop-filter: saturate(180%) blur(14px);
     backdrop-filter: saturate(180%) blur(14px);
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-strong);
     border-radius: 999px;
-    box-shadow: 0 6px 22px rgba(18, 41, 47, 0.11);
+    box-shadow: 0 8px 26px rgba(18, 41, 47, 0.18);
     padding: 0.35rem;
-    opacity: 0;
-    pointer-events: none;
-    transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.24s ease;
-  }
-  .floatnav.is-visible {
-    transform: translate(-50%, 0);
-    opacity: 1;
-    pointer-events: auto;
   }
   .floatnav ul {
     display: flex;
@@ -612,9 +639,9 @@
     padding: 0.4rem 0.75rem;
     border-radius: 999px;
     border-bottom: 0;
-    font-size: 0.82rem;
+    font-size: 0.85rem;
     font-weight: 500;
-    color: var(--text-mute);
+    color: var(--brand-navy);
     transition: background-color 0.15s ease, color 0.15s ease;
   }
   .floatnav a:hover { background: var(--surface-warm); color: var(--brand-navy); }
@@ -622,6 +649,7 @@
     background: var(--brand-navy);
     color: #fff;
   }
+  .floatnav a.is-active:hover { background: var(--brand-navy); color: #fff; }
   .floatnav a:focus-visible { outline: 2px solid var(--brand-green); outline-offset: 2px; }
 
   /* Anchor targets clear the floating bar */
@@ -629,12 +657,9 @@
 
   @media (max-width: 720px) {
     .floatnav { top: 0.5rem; border-radius: 1rem; }
-    .floatnav a { padding: 0.35rem 0.6rem; font-size: 0.78rem; }
+    .floatnav a { padding: 0.35rem 0.6rem; font-size: 0.8rem; }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .floatnav { transition: opacity 0.2s ease; transform: translate(-50%, 0); }
-  }
 
 </style>
 </head>
@@ -659,8 +684,29 @@
   },
   "hero": {
     "eyebrow": "Universität Freiburg · Excellence Cluster Future Forests",
-    "headline": "Coordination and support of modeling (and related) activities.",
-    "lede": "A shared workspace for the cluster's modelling groups — sessions, joint working groups, and methods training."
+    "headline": "Future Forests SES Model Lab",
+    "lede": "A shared workspace for the cluster's modelling groups — sessions, joint working groups, and methods training.",
+    "role": {
+      "title": "The role of SES Model Lab",
+      "items": [
+        {
+          "label": "Coordinate",
+          "text": "keep an overview of modelling across the Cluster and connect people working on similar questions."
+        },
+        {
+          "label": "Set standards",
+          "text": "open code, version control, comparable validation, and training to support them."
+        },
+        {
+          "label": "Support",
+          "text": "technical and conceptual help with models, plus compute resources."
+        },
+        {
+          "label": "Integrate",
+          "text": "couple models across disciplines and keep their results comparable."
+        }
+      ]
+    }
   },
   "sections": [
     {
@@ -939,7 +985,19 @@
     wrap([
       el('p', { class: 'hero-eyebrow' }, data.hero.eyebrow),
       el('h1', {}, data.hero.headline),
-      data.hero.lede ? el('p', { class: 'hero-lede' }, data.hero.lede) : null
+      data.hero.lede ? el('p', { class: 'hero-lede' }, data.hero.lede) : null,
+      data.hero.role ? (function () {
+        const ul = el('ul');
+        (data.hero.role.items || []).forEach(item => {
+          const li = el('li', {}, [el('span', { class: 'role-label' }, item.label)]);
+          if (item.text) li.append(' \u2014 ' + item.text);
+          ul.appendChild(li);
+        });
+        return el('div', { class: 'hero-role' }, [
+          data.hero.role.title ? el('h2', {}, data.hero.role.title) : null,
+          ul
+        ]);
+      })() : null
     ])
   ]);
   app.appendChild(hero);
@@ -1138,12 +1196,6 @@
   nav.appendChild(navList);
   document.body.appendChild(nav);
 
-  // Show the bar once the hero is out of the way
-  const toggleNav = () => {
-    const heroBottom = hero.getBoundingClientRect().bottom;
-    nav.classList.toggle('is-visible', heroBottom < 40);
-  };
-
   // Highlight the section currently occupying the top of the viewport
   const sections = data.sections.map(sec => document.getElementById(secId(sec)));
   const setActive = () => {
@@ -1167,7 +1219,7 @@
   const onScroll = () => {
     if (ticking) return;
     ticking = true;
-    requestAnimationFrame(() => { toggleNav(); setActive(); ticking = false; });
+    requestAnimationFrame(() => { setActive(); ticking = false; });
   };
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll);
