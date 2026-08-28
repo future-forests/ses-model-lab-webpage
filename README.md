@@ -24,6 +24,7 @@ groups, the coding course, and links to every registry listed below.
 
 - 📊 **[Modelling Registry](https://fufo-modelling-458783.pages.uni-freiburg.de/registry.html)** — Registry of groups directly related to modelling: inputs, outputs, methods, and researchers
 - 🔀 **[Models Overview](https://fufo-modelling-458783.pages.uni-freiburg.de/models_overview.html)** — Inputs and outputs across all FuFo models
+- 🎯 **[Looking at the Cluster from the End](https://fufo-modelling-458783.pages.uni-freiburg.de/AGM_looking_from_the_end.html)** — AGM presentation: an idealised view of the Cluster's areas and transfer pathways, worked backwards from the desirable forest
 
 
 ## Status
