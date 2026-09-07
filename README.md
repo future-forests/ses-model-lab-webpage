@@ -16,6 +16,17 @@ This repository documents the integrated modelling framework of the Future Fores
 - 🔗 **[Interactive Connection Map](https://fufo-modelling-458783.pages.uni-freiburg.de/FuFo_Interactive.html)** — Visual map of model connections and data flows
 - 📋 **[FuFo Survey](https://fufo-modelling-458783.pages.uni-freiburg.de/survey.html)** — Survey for FuFo members and associated researchers
 
+## How to suscribe to the ModelLab calendar
+
+- **Thunderbird:** Calendar tab → right-click in the calendar list → **New Calendar…** → **On the Network** → **iCalendar (ICS)** → paste the link below
+- **Outlook:** Add calendar → Subscribe from web → paste the link below
+- **Apple Calendar:** File → New Calendar Subscription → paste the link below
+- **Google Calendar:** Settings → Add calendar → From URL → paste the link below
+
+**Calendar feed URL:** `https://gitlab.uni-freiburg.de/future-forests/ses_model_lab/fufo-coding-course/-/raw/main/fufo-coding-course.ics`
+
+We recommend to choose the option "Refresh every day".
+
 ## Status
 
 The repository will be updated as groups develop their projects, connections are confirmed, and new information becomes available.
