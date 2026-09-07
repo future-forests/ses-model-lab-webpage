@@ -18,7 +18,7 @@ This repository documents the integrated modelling framework of the Future Fores
 
 ## How to suscribe to the ModelLab calendar
 
-- **Thunderbird:** Calendar tab → right-click in the calendar list → **New Calendar…** → **On the Network** → **iCalendar (ICS)** → paste the link below
+- **Thunderbird:** Calendar tab → right-click in the calendar list → **New Calendar…** → **On the Network** → paste the link below on "Location" and check "This location doesn't require credentials"
 - **Outlook:** Add calendar → Subscribe from web → paste the link below
 - **Apple Calendar:** File → New Calendar Subscription → paste the link below
 - **Google Calendar:** Settings → Add calendar → From URL → paste the link below
