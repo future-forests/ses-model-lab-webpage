@@ -52,4 +52,4 @@ git push origin main
 
 echo
 echo "Pushed. Live in a minute or so at:"
-echo "  https://future-forests.github.io/ses_model_lab_webpage/"
+echo "  https://future-forests.github.io/ses-model-lab-webpage/"

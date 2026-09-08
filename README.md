@@ -3,7 +3,7 @@
 > **Maintained by:** Marta Wenta, Scientific Modelling Coordinator
 > Future Forests Excellence Cluster, Universität Freiburg
 
-Website: **[future-forests.github.io/ses_model_lab_webpage](https://future-forests.github.io/ses_model_lab_webpage/)**
+Website: **[future-forests.github.io/ses-model-lab-webpage](https://future-forests.github.io/ses-model-lab-webpage/)**
 
 This repository holds the SES Model Lab landing page together with the modelling
 framework registry of the Future Forests Excellence Cluster. It describes the
@@ -14,31 +14,14 @@ need and produce.
 
 ## Pages
 
-- 🌐 **[Landing page](https://future-forests.github.io/ses_model_lab_webpage/)** — central entry point: recurring sessions (Model Lab Café, Hands on Science), cooperation groups, the coding course, and links to every registry below
-- 📊 **[Modelling Registry](https://future-forests.github.io/ses_model_lab_webpage/registry.html)** — groups directly related to modelling: inputs, outputs, methods, and researchers
-- 🔀 **[Models Overview](https://future-forests.github.io/ses_model_lab_webpage/models_overview.html)** — inputs and outputs across all FuFo models
-- 🎯 **[Looking at the Cluster from the End](https://future-forests.github.io/ses_model_lab_webpage/AGM_looking_from_the_end.html)** — AGM presentation: an idealised view of the Cluster's areas and transfer pathways, worked backwards from the desirable forest
-- 🇩🇪 German versions: [Registry](https://future-forests.github.io/ses_model_lab_webpage/registry_de.html), [Other groups](https://future-forests.github.io/ses_model_lab_webpage/other_groups_de.html)
-
+- 🌐 **[Landing page](https://future-forests.github.io/ses-model-lab-webpage/)** — central entry point: recurring sessions (Model Lab Café, Hands on Science), cooperation groups, the coding course, and links to every registry below
+- 📊 **[Modelling Registry](https://future-forests.github.io/ses-model-lab-webpage/registry.html)** — groups directly related to modelling: inputs, outputs, methods, and researchers
+- 🔀 **[Models Overview](https://future-forests.github.io/ses-model-lab-webpage/models_overview.html)** — inputs and outputs across all FuFo models
+- 🎯 **[Looking at the Cluster from the End](https://future-forests.github.io/ses-model-lab-webpage/AGM_looking_from_the_end.html)** — AGM presentation: an idealised view of the Cluster's areas and transfer pathways, worked backwards from the desirable forest
+- 🇩🇪 German version of model registry: [Registry](https://future-forests.github.io/ses-model-lab-webpage/registry_de.html)
 ## Previous addresses
 
-This repository replaces two older ones; both now redirect here.
 
-| Old address | Old host |
-| --- | --- |
-| `fufo-ses-model-lab.codeberg.page/SES_Model_Lab/` | Codeberg (`fufo-ses-model-lab/SES_Model_Lab`) |
-| `fufo-modelling-458783.pages.uni-freiburg.de` | GitLab (`future-forests/ses_model_lab/fufo_modelling`) |
-
-## Deploying
-
-Edit the HTML files, then:
-
-```sh
-./deploy.sh "optional commit message"
-```
-
-This commits and pushes `main`; GitHub Pages serves the site from `main` at the
-repository root, so the site is live a minute or so later.
 
 ## How to subscribe to the ModelLab calendar
 
@@ -47,11 +30,11 @@ repository root, so the site is live a minute or so later.
 - **Apple Calendar:** File → New Calendar Subscription → paste the link below
 - **Google Calendar:** Settings → Add calendar → From URL → paste the link below
 
-**Calendar feed URL:** `https://gitlab.uni-freiburg.de/future-forests/ses_model_lab/fufo-coding-course/-/raw/main/fufo-coding-course.ics`
+**Calendar feed URL:** `https://future-forests.github.io/ses-model-lab-webpage/model_lab_calendar.ics`
+
+It covers the Model Lab Café, Hands on Science, the FuFo Coding Course,
+committee and cross-scenario meetings.
 
 We recommend choosing the option "Refresh every day".
 
-## Status
 
-The repository is updated as groups develop their projects, connections are
-confirmed, and new information becomes available.
