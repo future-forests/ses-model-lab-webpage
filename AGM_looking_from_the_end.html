@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Looking at the cluster from the end</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBFAF7; --ink:#191C18; --ink2:#5C6058; --ink3:#93968D; --rule:#E3E1D9;
+    --route:#3D6FA8; --soc:#6F5FA8; --bio:#5C7A2E; --eco:#8C6239;
+    --node:#E0A63C; --nodeink:#5A4110; --dead:#A3453B; --tgt:#2F7D5C;
+    --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;overflow:hidden}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+       display:flex;align-items:center;justify-content:center;-webkit-font-smoothing:antialiased}
+  .deck{width:min(1360px,96vw);display:flex;flex-direction:column;height:100vh;padding:2vh 0 1.2vh;transition:width .25s}
+  body.editing .deck{width:min(1360px,58vw);margin-right:auto;margin-left:2vw}
+
+  .top{display:flex;align-items:baseline;justify-content:space-between;gap:16px}
+  .eyebrow{font-family:var(--mono);font-size:clamp(10px,.95vw,14px);color:var(--ink3);letter-spacing:.04em}
+  .dots{display:flex;gap:5px;align-items:center}
+  .dots span{width:6px;height:6px;border-radius:50%;background:var(--rule);transition:all .3s;cursor:pointer}
+  .dots span.on{background:var(--route);transform:scale(1.6)}
+  .dots i{width:11px;display:inline-block}
+
+  h1{margin-top:.4vh;font-size:clamp(20px,2.5vw,38px);font-weight:600;letter-spacing:-.018em;line-height:1.12}
+  .sub{margin-top:.5vh;font-size:clamp(13px,1.3vw,19px);color:var(--ink2);line-height:1.42;max-width:96ch;min-height:2.85em}
+
+  .stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;margin:.4vh 0}
+  svg{display:block;width:100%;height:100%;max-height:100%}
+
+  .band{fill:none;stroke-width:2.4}
+  .rt{fill:none;stroke-width:3.2;stroke-linecap:round}
+  .stand{fill:none;stroke-width:1.5;stroke-linecap:round;opacity:.72}
+  .lab{font-family:var(--mono);font-size:12.5px}
+  .yr{font-family:var(--mono);font-size:12.5px;fill:var(--ink3)}
+  .pap{font-family:var(--mono);font-size:11px}
+  .nv{font-family:var(--sans);font-size:14px;fill:var(--ink2)}
+  .qk{font-family:var(--mono);font-size:13px}
+  .q{font-family:var(--sans);font-size:15.5px;fill:var(--ink)}
+  .qx{font-family:var(--sans);font-size:12.8px;fill:#7A7D74}
+  #paneltbl{display:flex;flex-direction:column;justify-content:center;gap:10px;height:100%;
+    padding:12px 22px;font-family:var(--sans);box-sizing:border-box;overflow:hidden}
+  #paneltbl .prow{display:flex;align-items:flex-start;gap:12px;line-height:1.32}
+  #paneltbl .pdot{flex:0 0 auto;width:10px;height:10px;border-radius:50%;margin-top:3px}
+  #paneltbl .pk{flex:0 0 118px;font-family:var(--mono);font-size:12.5px}
+  #paneltbl .pt{flex:1;font-size:13.5px;color:var(--ink)}
+  #paneltbl .pt b{font-weight:600}
+  #paneltbl .px{color:#7A7D74;font-size:12.5px}
+  .nnum{font-family:var(--mono);font-size:13px;fill:var(--nodeink);pointer-events:none}
+  .node{cursor:pointer}
+  #a-soc,#a-bio,#e-soc,#e-bio,#g-models,#g-people,#g-hand,#g-past,#g-wait,#g-read,#g-panel,#g-nodes,
+  #g-up,#g-down,#g-fan,#g-tgt,#g-fb,#g-stands,#g-out,#l-soc,#l-bio,.ev{transition:opacity .5s}
+
+  .note{min-height:2.2em;font-size:clamp(12px,1.3vw,18px);line-height:1.35;color:var(--dead)}
+  .bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:.4vh;
+       border-top:1px solid var(--rule);padding-top:.9vh}
+  .acts{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+  button{font-family:var(--sans);font-size:clamp(11px,1vw,14px);color:var(--ink);background:#fff;
+         border:1px solid var(--rule);border-radius:7px;padding:.48em 1em;cursor:pointer;transition:all .15s}
+  button:hover{border-color:var(--ink3)}
+  button.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  button.rm.on{background:var(--dead);border-color:var(--dead);color:#fff}
+  button.hide{visibility:hidden}
+  .slider{display:flex;align-items:center;gap:11px}
+  .slider label{font-family:var(--mono);font-size:clamp(10px,.95vw,13px);color:var(--ink2)}
+  input[type=range]{width:clamp(140px,16vw,240px);accent-color:var(--route)}
+  .nav{display:flex;align-items:center;gap:14px}
+  .count{font-family:var(--mono);font-size:clamp(11px,1vw,14px);color:var(--ink3)}
+
+  #notes{position:fixed;left:0;right:0;bottom:0;max-height:56vh;overflow:auto;
+    background:#191C18;color:#E7E5DE;padding:22px 30px;font-size:15px;line-height:1.58;
+    transform:translateY(102%);transition:transform .3s;z-index:40}
+  #notes.show{transform:translateY(0)}
+  #notes h3{font-family:var(--mono);font-size:12px;color:#93968D;font-weight:400;margin-bottom:10px;letter-spacing:.05em}
+  #notes p{margin-bottom:9px;max-width:104ch}
+  #notes .cite{font-family:var(--mono);font-size:12px;color:#93968D;line-height:1.5;margin-top:10px}
+
+  /* ---------- text editor drawer ---------- */
+  #ed{position:fixed;top:0;right:0;bottom:0;width:38vw;min-width:420px;background:#fff;
+      border-left:1px solid var(--rule);box-shadow:-8px 0 30px rgba(0,0,0,.05);
+      transform:translateX(102%);transition:transform .28s;z-index:60;display:flex;flex-direction:column}
+  #ed.show{transform:translateX(0)}
+  .edhead{padding:16px 20px;border-bottom:1px solid var(--rule);display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .edhead b{font-size:15px;font-weight:600}
+  .edhead .sm{font-family:var(--mono);font-size:11px;color:var(--ink3)}
+  .edbody{flex:1;overflow:auto;padding:16px 20px 30px}
+  .fld{margin-bottom:16px}
+  .fld > label{display:block;font-family:var(--mono);font-size:11px;color:var(--ink3);margin-bottom:5px;letter-spacing:.03em}
+  .fld input,.fld textarea{width:100%;font-family:var(--sans);font-size:14px;line-height:1.45;color:var(--ink);
+    background:#FBFAF7;border:1px solid var(--rule);border-radius:6px;padding:8px 10px;resize:vertical}
+  .fld input:focus,.fld textarea:focus{outline:none;border-color:var(--route);background:#fff}
+  .fld textarea{min-height:58px}
+  .fld textarea.big{min-height:150px;font-size:13px}
+  .rowbox{border:1px solid var(--rule);border-radius:8px;padding:11px 12px;margin-bottom:10px;background:#FCFBF8}
+  .rowbox .tagline{display:flex;align-items:center;gap:7px;margin-bottom:8px}
+  .rowbox .swatch{width:10px;height:10px;border-radius:50%}
+  .rowbox select{font-family:var(--mono);font-size:11px;border:1px solid var(--rule);border-radius:5px;padding:3px 6px;background:#fff}
+  .edfoot{padding:13px 20px;border-top:1px solid var(--rule);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .edfoot .sm{font-family:var(--mono);font-size:11px;color:var(--ink3);margin-left:auto}
+  .hint{font-family:var(--mono);font-size:11px;color:var(--ink3);line-height:1.5;margin-bottom:14px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- ===================================================================
+     ALL THE WORDS LIVE HERE. Nothing below this block needs editing.
+     Edit in a text editor, or open the deck and press  e  to edit in place.
+     Fields:  t = title | s = subtitle | notes = presenter notes (HTML ok)
+              panel = up to 3 rows: [colour, label, statement, explanation]
+              colours: bio (green) soc (purple) eco (brown) route (blue) grey
+     =================================================================== -->
+<script type="application/json" id="content">
+{
+  "slides": [
+    {
+      "t": "The desirable forest",
+      "s": "A future forest state that continues to deliver the ecosystem functions and services demanded of it — over a multi-decadal horizon, and under uncertainty.",
+      "notes": "<p>The talk starts from the desirable forest rather than from the research areas, and works backwards. This is the state the cluster's work is directed at.</p>",
+      "eb": "the objective"
+    },
+    {
+      "t": "Forest owners take a sequence of decisions",
+      "s": "Decisions are taken at discrete points in time, and at each point more than one option is available. The route to the desirable forest is a sequence of such choices.",
+      "notes": "<p>Four routes now exist. Nothing on the diagram distinguishes them.</p><p class='cite'>Illustrative example: one spruce stand converted towards a mixed forest. The sequence is silvicultural; the cluster sets no target date. A real pathway involves many decision-makers at once — private owners, state forest, ministries, citizens. A single manager is used here for tractability.</p>",
+      "eb": "the objective"
+    },
+    {
+      "t": "The desirable forest is not a single point",
+      "s": "Timber, water regulation, carbon sequestration, biodiversity, recreation and health are distinct objectives that trade off against each other. Which one is prioritised is a choice made by stakeholders, not within the model.",
+      "panel": [
+        [
+          "bio",
+          "biophysical",
+          "Maximising carbon sequestration does not maximise biodiversity.",
+          "Prioritising one service generally comes at the expense of another."
+        ],
+        [
+          "soc",
+          "social",
+          "The objective is not easily determined",
+          "Different actors value forests differently, and participatory methods bring these priorities into the models."
+        ],
+        [
+          "eco",
+          "economic",
+          "Timber revenues can be quantified. Most of the other ecosystem services cannot.",
+          "The balance between them depends on how they are valued and who pays for them."
+        ]
+      ],
+      "notes": "<p>The desirable forest was introduced as given. It is not. Every stakeholder group in the case work prioritises a different service.</p><p>The valuation gap is worth stating plainly: of the services on this diagram, only timber has had its market network analysed.</p>",
+      "eb": "the objective"
+    },
+    {
+      "t": "A generation on: continue, or revert",
+      "s": "Working backwards. This is the last decision point before the desirable forest, and three questions have to be answered at it. Each belongs to a different discipline.",
+      "node": 3,
+      "notes": "<p><b>Biophysical.</b> Whether the cohort is thriving under the climate that actually arrived is a question for growth and disturbance modelling.</p><p><b>Social.</b> Acceptability is not fixed. A dieback year or a change of government reopens what counts as good management.</p><p><b>Economic.</b> Water, recreation and protection are already traded, in real markets and in political ones. But only the timber sector's network has been analysed, so the value of a mixed forest is not established.</p><p class='cite'>Growth and disturbance modelling · scenario work · the economic model (ecosystem-service valuation, partial equilibrium) and the structural model of forest ecosystem-service markets.</p>",
+      "eb": "working backwards · the constraints appear behind us"
+    },
+    {
+      "t": "A decade on: underplant, and with which species",
+      "s": "The previous decision point. Answering these three questions closes off two of the four routes that were feasible a moment ago.",
+      "node": 2,
+      "notes": "<p><b>Biophysical.</b> Paired measurements at 98 sites on five continents show canopies cool the understorey, and the offset increases with external temperature. This is the empirical basis for underplanting before clearing.</p><p><b>Social.</b> Interviews on contested species enter the landscape model as exclusions. The stated hypothesis is that this changes species composition and service provision across more than half the area.</p><p><b>Economic.</b> Salvage after beetle outbreaks depresses prices, so one owner's disturbance affects the next owner's returns. The decision is coupled across owners.</p><p class='cite'>De Frenne, Zellweger, Rodríguez-Sánchez et al. 2019, Nature Ecology &amp; Evolution 3: 744–749; the cluster's microclimate work builds on Zellweger et al. 2020 and Govaert et al. 2024 · contested tree species interviews → landscape-model exclusions · game-theoretic analysis of neighbouring owners converting spruce to mixed stands under bark-beetle scenarios, net present value.</p>",
+      "eb": "working backwards · the constraints appear behind us"
+    },
+    {
+      "t": "The limits are estimates, not lines",
+      "s": "Both boundaries are drawn as bands. The band widens with projection length, because uncertainty increases with it.",
+      "models": true,
+      "panel": [
+        [
+          "bio",
+          "biophysical",
+          "The lower bound of the corridor is not agreed on: three models place it differently.",
+          "They share the same input data but differ in structure, and their projections diverge over time. The spread reflects assumptions, not measurement error."
+        ],
+        [
+          "soc",
+          "social",
+          "The upper bound is inferred from interviews and surveys, not measured.",
+          "It carries a range for the same reason: it depends on which assumptions are made."
+        ],
+        [
+          "eco",
+          "economic",
+          "The projection is reported as a range, not a single value.",
+          "A single line would imply a precision that neither the models nor the surveys support."
+        ]
+      ],
+      "notes": "<p>A model can be well calibrated to historical data and still be structurally unsuited to the question being asked. When models disagree about the position of a limit, the disagreement identifies the assumptions the answer depends on.</p><p>This also changes the decision. With a band rather than a single line, spreading the conversion across the estate is preferable to committing everything to the central estimate.</p>",
+      "eb": "working backwards · the constraints appear behind us"
+    },
+    {
+      "t": "Scenarios are not only climate",
+      "s": "Both boundaries of the corridor are positioned by scenarios, and the upper one is not determined by climate at all.",
+      "panel": [
+        [
+          "bio",
+          "biophysical",
+          "Downscaled projections of drought, storm and frost, including compound events.",
+          "These account for much of the observed damage."
+        ],
+        [
+          "soc",
+          "social",
+          "Population, land use, and the services expected of the forest.",
+          "These position the upper boundary."
+        ],
+        [
+          "eco",
+          "economic",
+          "Timber prices fall after large disturbances.",
+          "The resulting constraint on what is feasible is economic rather than climatic."
+        ]
+      ],
+      "notes": "<p>Press <b>t</b>. Both bands shift, and the corridor narrows.</p><p>Event storyline from the cluster proposal: what if the 2018–22 drought recurs in 2050, after adaptation has taken place? The answer depends on socio-economic conditions at that point, not on climate alone.</p><p class='cite'>Hydro-climatic scenarios control the biophysical boundary; socio-economic scenario development controls the normative one. Societal trends and economic risks, including timber-price decline after extreme disturbance, are specified in the cluster proposal.</p>",
+      "eb": "working backwards · the constraints appear behind us",
+      "wall": 0
+    },
+    {
+      "t": "A run of dry years, and one dieback year",
+      "s": "The scenarios do not hold the bands still. A sequence of droughts raises the lower bound, and a dieback event lowers the upper one. The corridor narrows to roughly a third of its width, and both bands are wider the further out we look.",
+      "wall": 1,
+      "eb": "working backwards · the constraints appear behind us",
+      "panel": [
+        [
+          "bio",
+          "biophysical",
+          "A run of dry years raises the lower bound.",
+          "What the site can support shrinks, and it can shrink within a single year."
+        ],
+        [
+          "soc",
+          "social",
+          "A dieback year lowers the upper bound.",
+          "What people will accept changes quickly once the damage becomes visible."
+        ],
+        [
+          "eco",
+          "economic",
+          "Salvage logging after the dieback year lowers timber prices.",
+          "Owners who delayed conversion face a market that has already absorbed the disturbance."
+        ]
+      ],
+      "notes": "<p>This is the same corridor, under the scenario. The boundaries move because the conditions that set them move, not because the models were re-run.</p><p>Event storyline from the cluster proposal: what if the 2018–22 drought recurs in 2050, after adaptation has taken place?</p>"
+    },
+    {
+      "t": "Management changes where the limits sit",
+      "s": "The boundaries are not external to the pathway. Clearing the canopy changes conditions on the ground; salvage logging changes prices; visible clear-cuts change what is accepted. Each of these is a management action, and each moves one of the walls.",
+      "panel": [
+        [
+          "bio",
+          "biophysical",
+          "Removing the mature canopy exposes the ground beneath to higher temperatures and lower humidity.",
+          "Regeneration that would have been possible under the canopy is no longer possible without it."
+        ],
+        [
+          "soc",
+          "social",
+          "Large visible clear-cuts change what the public accepts.",
+          "The change is generally restrictive: what was tolerated before the damage is not tolerated after it."
+        ],
+        [
+          "eco",
+          "economic",
+          "Simultaneous salvage logging by many owners drives timber prices down.",
+          "The market a single owner faces depends on what neighbouring owners do."
+        ]
+      ],
+      "notes": "<p>Scenario → impact → decision is a one-way chain. In the actual system the arrow also runs backwards.</p><p>Consequence for modelling: a pathway cannot be computed against fixed boundaries. The boundaries are endogenous, which is why the agent-based and process models have to be coupled rather than run in sequence.</p>",
+      "eb": "working backwards · the constraints appear behind us",
+      "wall": 2
+    },
+    {
+      "t": "The lines were produced by specific people",
+      "s": "Each boundary on this diagram is the output of a project. Most of those projects are doctoral or postdoctoral.",
+      "panel": [
+        [
+          "soc",
+          "doctoral project",
+          "Ethnography of decision-making practice.",
+          "The same interviews determine which species are acceptable. One project produces two of the lines here."
+        ],
+        [
+          "bio",
+          "doctoral project",
+          "Two hundred below-canopy sensors.",
+          "Quality control and machine learning convert the point measurements into a map."
+        ],
+        [
+          "route",
+          "postdoctoral project",
+          "Downscaled climate and scenario coordination.",
+          "A further doctoral project cannot begin before 2028. It depends on both of the above."
+        ]
+      ],
+      "notes": "<p>The ethnographic project does two things at once: it establishes how the decision is made, and the same interviews establish which species are acceptable. One project, two boundaries.</p><p>The qualitative package alone comprises one postdoctoral and four doctoral projects on decision-making practice. Their results enter the models as behavioural archetypes of forest managers and as stakeholder risk attitudes.</p><p><b>The dependency to state explicitly:</b> one doctoral project cannot begin before 2028. It requires the sensor measurements and the first interpolation from one group, and the downscaled projections from a postdoctoral researcher in another. Its start date is determined by other people's outputs.</p>",
+      "eb": "before the present",
+      "people": true
+    },
+    {
+      "t": "What the work produces along the way",
+      "s": "The questions worth asking are identified at the start, before anything is measured. The work then produces publications at points along the pathway, and each one addresses a specific part of this diagram.",
+      "outputs": true,
+      "panel": [
+        [
+          "grey",
+          "at the start",
+          "Relevant questions are identified before any measurement begins.",
+          "This step determines what the diagram is later able to show."
+        ],
+        [
+          "route",
+          "and outward",
+          "Publications sit at points on the pathway, each addressing a specific part of it.",
+          "They are outputs from work on the pathway, not the pathway itself."
+        ]
+      ],
+      "notes": "<p>The arrows leave the diagram. Each one is a paper, and it is attached to the point on the pathway that it actually addresses, rather than to a research area.</p><p>The marker at the far left is where the questions are chosen. That step is usually invisible, but it constrains what the rest of the work can produce.</p><p>The papers are outputs from work on the pathway. The pathway itself is the integrating object.</p>",
+      "eb": "what comes out"
+    },
+    {
+      "t": "The current stand is the outcome of an earlier pathway",
+      "s": "Norway spruce was planted for good reasons, under limits that nobody had drawn. The same corridor can be constructed backwards, and that gives us a way to test it.",
+      "past": true,
+      "panel": [
+        [
+          "grey",
+          "hindsight",
+          "The stand we manage today is the result of decisions taken a century ago.",
+          "Those decisions were reasonable, given what was known at the time."
+        ],
+        [
+          "grey",
+          "the limit they could not see",
+          "Drought and bark beetle pressure were not part of the planning.",
+          "The lower bound already existed. Nobody had drawn it."
+        ],
+        [
+          "grey",
+          "a test",
+          "Construct the corridor for 1900 and run it forward to today.",
+          "The observed trajectory — spruce monocultures, then present-day dieback — is the reference. Failure to reproduce it is a structural failure of the framework, not a calibration problem."
+        ]
+      ],
+      "notes": "<p>Retrospective pathway analysis is part of the concept. It is also the available validation test. Without it, the corridor is a conceptual framework only, and its projections into the future carry no empirical weight.</p>",
+      "eb": "before the present"
+    },
+    {
+      "t": "Removing one contribution",
+      "s": "Removal does not degrade the pathway uniformly. It produces a specific and identifiable error, and the error differs depending on which contribution is removed.",
+      "notes": "<p>Take each removal in turn. Every research area can identify the specific outcome that follows from its own absence.</p>",
+      "eb": "removal"
+    },
+    {
+      "t": "Without forest measurements",
+      "s": "Without measurements of drought, canopy conditions and tree growth, the lower boundary of the corridor has no empirical basis. The claim that a particular species mix will survive at a particular site becomes a projection with no ground reference.",
+      "remove": "bio",
+      "notes": "<p>The lower band disappears. The corridor is bounded only from above, and any route drawn through it is unconstrained on the biophysical side.</p>",
+      "eb": "removal"
+    },
+    {
+      "t": "Without decision-making research",
+      "s": "Without interviews and surveys, the upper boundary has no empirical basis. Assumptions about which species are acceptable, and about how owners actually decide, are then made by the modeller rather than measured.",
+      "remove": "soc",
+      "notes": "<p>The upper band disappears. What the models produce is then a technical envelope of what is possible, with no correspondence to what will be done.</p>",
+      "eb": "removal"
+    },
+    {
+      "t": "Without scenarios",
+      "s": "Without climate and socio-economic scenarios, both boundaries are static. The pathway can be drawn for present-day conditions, but it cannot be projected forward, and the decision points lose their temporal ordering.",
+      "remove": "sce",
+      "notes": "<p>Both bands disappear. The corridor cannot be placed in time, and the decision points collapse into a single choice made now.</p>",
+      "eb": "removal"
+    },
+    {
+      "t": "Without economics",
+      "s": "Without prices, markets and discounting, the routes that remain between the two boundaries cannot be compared. The manager sees which options are feasible but has no basis for choosing between them.",
+      "remove": "eco",
+      "notes": "<p>The route line fades. The corridor is still bounded, but the pathway through it is no longer determined by anything the model contains.</p>",
+      "eb": "removal"
+    },
+    {
+      "t": "What the pathway is actually for",
+      "s": "In our own concept note the adaptation and transformation pathway is described as much more than a deliverable: a flexible boundary object through which A, B and C integrate their research, and a platform for organising interdisciplinary collaboration. ",
+      "notes": "<p>Close on the diagram, not on a request.</p><p>Our concept note lists the functions of an A&amp;TP explicitly: a flexible boundary object for the disciplines in A, B and C to integrate their research; a tool to track progress towards the overarching cluster goals; a basis for science communication and policy-relevant outputs; a basis for further development of the SES concept; and a platform to organise interdisciplinary collaboration.</p><p>The Vollantrag states it directly: research in B is closely intertwined with and complements the natural science research in A, and is in close, mutual exchange with the interdisciplinary, implementation-related research in C.</p><p>The point of the whole talk is that this is not an aspiration written into a proposal. It is a diagram that only exists once each area has drawn its part of it.</p>",
+      "eb": "what it is for",
+      "panel": [
+        [
+          "route",
+          "boundary object",
+          "The pathway is what the research areas integrate into.",
+          "Each discipline draws a different part of the same diagram, and the diagram does not exist until all of them have."
+        ],
+        [
+          "soc",
+          "mutual exchange",
+          "Research in B complements the natural science research in A, and is in close mutual exchange with C.",
+          "That is the commitment in the proposal. The corridor is what it looks like when the commitment is kept."
+        ],
+        [
+          "grey",
+          "platform",
+          "The pathway also organises the collaboration itself.",
+          "It is the shared reference point for tracking progress, for communicating the work, and for policy-relevant outputs."
+        ]
+      ]
+    }
+  ],
+  "nodes": {
+    "3": [
+      [
+        "bio",
+        "biophysical",
+        "Did the species mix survive the disturbances that occurred?",
+        "The relevant climate is the one that occurred, not the one projected. Forest growth and disturbance models address this."
+      ],
+      [
+        "soc",
+        "social",
+        "Is the resulting forest still acceptable?",
+        "Normative boundaries shift over time, for example after a dieback event or a change of government."
+      ],
+      [
+        "eco",
+        "economic",
+        "Is the mixed stand economically viable over the rotation?",
+        "Timber revenues can be quantified. Most of the other ecosystem services cannot, so the balance depends on how they are valued and who pays for them."
+      ]
+    ],
+    "2": [
+      [
+        "bio",
+        "biophysical",
+        "How long will the mature canopy hold, and what can regenerate beneath it?",
+        "Canopies buffer temperature impact on plants below, and the buffering increases with heat. Clearing the canopy exposes the seedlings to the heat."
+      ],
+      [
+        "soc",
+        "social",
+        "Which species are acceptable?",
+        "Douglas fir, red oak and black cherry are the contested ones. The interview findings translate into species exclusions in the landscape model."
+      ],
+      [
+        "eco",
+        "economic",
+        "Who bears the conversion cost?",
+        "Beetle outbreaks trigger rapid cutting of affected trees, the sudden supply drives prices down, and neighbouring owners respond to that shifted market."
+      ]
+    ],
+    "1": [
+      [
+        "bio",
+        "biophysical",
+        "Is the stress detectable yet?",
+        "Early-warning indicators and remote sensing are needed to detect it before crown damage is visible."
+      ],
+      [
+        "soc",
+        "social",
+        "What prompts a forest owner to act early?",
+        "Belief in climate change and direct experience of it predict adaptation. Risk aversion reduces it more than lack of information."
+      ],
+      [
+        "eco",
+        "economic",
+        "Delay is cheaper in the short term.",
+        "Conversion costs are immediate. The benefit comes a generation later."
+      ]
+    ]
+  },
+  "removals": {
+    "bio": [
+      "No forest measurements",
+      "Without data on drought, canopy microclimate and tree growth, there is no basis for saying where the lower bound lies."
+    ],
+    "soc": [
+      "No decision-making research",
+      "Without interviews and surveys, there is no basis for saying where the upper bound lies."
+    ],
+    "sce": [
+      "No scenarios",
+      "Without climate and socio-economic scenarios, neither bound can be placed in time."
+    ],
+    "eco": [
+      "No economics",
+      "Without prices, markets and discounting, the routes that remain cannot be costed."
+    ]
+  },
+ 
+  "labels": {
+    "wallSoc": "what people will accept",
+    "wallBio": "what the forest can do",
+    "evSoc": "a dieback year",
+    "evBio": "a run of dry years",
+    "target": "the desirable forest",
+    "fan": [
+      "timber",
+      "water",
+      "carbon storage",
+      "biodiversity",
+      "recreation, health"
+    ],
+    "fanAsk": "which one?",
+    "years": [
+      "today",
+      "a decade on",
+      "a generation on",
+      "the desirable forest"
+    ],
+    "people": [
+      "PhD · canopy sensors",
+      "PhD · decision-making",
+      "postdoc · scenarios"
+    ],
+    "past": "the decision sequence that produced this stand",
+    "feedback": "management moves the limits",
+    "researchQuestions": "identifying relevant research questions",
+    "papers": [
+      "microclimate",
+      "acceptance",
+      "owner coupling",
+      "evaluation"
+    ]
+  }
+}
+</script>
+
+<div class="deck">
+  <div class="top">
+    <div class="eyebrow" id="eyebrow"></div>
+    <div class="dots" id="dots"></div>
+  </div>
+
+  <h1 id="title"></h1>
+  <p class="sub" id="sub"></p>
+
+  <div class="stage">
+  <svg viewBox="0 -92 740 596" preserveAspectRatio="xMidYMid meet" role="img" aria-label="A sequential line that becomes a branching pathway inside a corridor bounded by two uncertainty bands">
+    <defs>
+      <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+        <path d="M1 1L9 5L1 9" fill="none" stroke="#93968D" stroke-width="1.7" stroke-linecap="round"/></marker>
+      <marker id="fbm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5.4" markerHeight="5.4" orient="auto-start-reverse">
+        <path d="M1 1L9 5L1 9" fill="none" stroke="#A3453B" stroke-width="1.8" stroke-linecap="round"/></marker>
+      <marker id="pout" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+        <path d="M1 1L9 5L1 9" fill="none" stroke="#7C9BBC" stroke-width="1.8" stroke-linecap="round"/></marker>
+      <clipPath id="reveal"><rect id="cliprect" x="740" y="0" width="0" height="300"/></clipPath>
+    </defs>
+
+    <g id="g-past" opacity="0">
+      <path d="M 44 176 C 58 158, 72 190, 86 168 C 98 150, 112 160, 128 150" fill="none" stroke="#B4B2A9" stroke-width="2"/>
+      <g id="x-past" opacity="0"><line x1="79" y1="170" x2="93" y2="184" stroke="#A3453B" stroke-width="2"/><line x1="93" y1="170" x2="79" y2="184" stroke="#A3453B" stroke-width="2"/></g>
+      <text class="lab" id="lb-past" x="44" y="132" fill="#93968D"></text>
+    </g>
+
+    <g clip-path="url(#reveal)">
+      <path id="a-soc" fill="#6F5FA8" fill-opacity=".13" stroke="none" opacity="0" d=""/>
+      <path id="a-bio" fill="#5C7A2E" fill-opacity=".13" stroke="none" opacity="0" d=""/>
+      <g id="g-models" opacity="0">
+        <path id="m1" class="band" stroke="#5C7A2E" stroke-width="1.2" stroke-dasharray="5 4" opacity=".8"
+          d="M 44 232 C 150 238, 240 222, 320 226 C 420 232, 520 214, 616 198"/>
+        <path id="m2" class="band" stroke="#5C7A2E" stroke-width="1.2" stroke-dasharray="5 4" opacity=".8"
+          d="M 44 236 C 150 242, 240 228, 320 236 C 420 244, 520 232, 616 226"/>
+        <path id="m3" class="band" stroke="#5C7A2E" stroke-width="1.2" stroke-dasharray="5 4" opacity=".8"
+          d="M 44 238 C 150 244, 240 232, 320 242 C 420 250, 520 248, 616 254"/>
+      </g>
+      <path id="e-soc" class="band" stroke="#6F5FA8" opacity="0" d=""/>
+      <path id="e-bio" class="band" stroke="#5C7A2E" opacity="0" d=""/>
+      <text class="lab" id="l-soc" x="470" y="52" text-anchor="middle" fill="#6F5FA8" opacity="0"></text>
+      <text class="lab" id="l-bio" x="470" y="264" text-anchor="middle" fill="#5C7A2E" opacity="0"></text>
+    </g>
+    <text class="lab ev" id="ev-soc" x="614" y="120" text-anchor="end" fill="#6F5FA8" opacity="0"></text>
+    <text class="lab ev" id="ev-bio" x="614" y="196" text-anchor="end" fill="#5C7A2E" opacity="0"></text>
+
+    <g id="g-fb" opacity="0">
+      <path d="M 300 176 C 330 214, 360 224, 400 214" fill="none" stroke="#A3453B" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#fbm)"/>
+      <path d="M 300 140 C 330 112, 366 106, 404 112" fill="none" stroke="#A3453B" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#fbm)"/>
+      <text class="lab" id="lb-fb" x="352" y="242" text-anchor="middle" fill="#A3453B"></text>
+    </g>
+
+    <g id="g-people" opacity="0">
+      <circle cx="185" cy="232" r="5" fill="#5C7A2E"/>
+      <text class="lab" id="lb-p1" x="170" y="256" text-anchor="middle" fill="#5C7A2E"></text>
+      <circle cx="185" cy="79" r="5" fill="#6F5FA8"/>
+      <text class="lab" id="lb-p2" x="170" y="60" text-anchor="middle" fill="#6F5FA8"></text>
+      <circle cx="316" cy="276" r="5" fill="#3D6FA8"/>
+      <text class="lab" id="lb-p3" x="316" y="266" text-anchor="middle" fill="#3D6FA8"></text>
+      <circle cx="128" cy="150" r="19" fill="none" stroke="#5A4110" stroke-width="1.3" stroke-dasharray="3 3"/>
+    </g>
+    <g id="g-hand" opacity="0">
+      <path d="M 193 224 L 249 175" fill="none" stroke="#93968D" stroke-width="1.2" stroke-dasharray="3 3" marker-end="url(#ah)"/>
+      <path d="M 193 88 L 250 144" fill="none" stroke="#93968D" stroke-width="1.2" stroke-dasharray="3 3" marker-end="url(#ah)"/>
+      <path d="M 176 90 L 139 136" fill="none" stroke="#93968D" stroke-width="1.2" stroke-dasharray="3 3" marker-end="url(#ah)"/>
+      <path d="M 310 266 L 283 178" fill="none" stroke="#93968D" stroke-width="1.2" stroke-dasharray="3 3" marker-end="url(#ah)"/>
+    </g>
+
+    <g id="g-up" opacity="0">
+      <path id="p-up" class="rt" d="M 270 158 C 288 132, 298 110, 310 92"/>
+      <g id="x-up" opacity="0"><line x1="303" y1="81" x2="317" y2="95" stroke="#A3453B" stroke-width="2"/><line x1="317" y1="81" x2="303" y2="95" stroke="#A3453B" stroke-width="2"/></g>
+    </g>
+    <g id="g-down" opacity="0">
+      <path id="p-down" class="rt" d=""/>
+      <g id="x-down" opacity="0"><line stroke="#A3453B" stroke-width="2"/><line stroke="#A3453B" stroke-width="2"/></g>
+    </g>
+    <g id="g-wait" opacity="0">
+      <path id="p-wait" class="rt" d=""/>
+      <g id="x-wait" opacity="0"><line stroke="#A3453B" stroke-width="2.2"/><line stroke="#A3453B" stroke-width="2.2"/></g>
+    </g>
+
+    <g id="g-stands" opacity="0"></g>
+    <path id="p-blue" class="rt" stroke="#3D6FA8" opacity="0" d=""/>
+
+
+    <g id="g-nodes" opacity="0">
+      <circle id="r1" cx="128" cy="150" r="19" fill="none" stroke="#E0A63C" stroke-width="1.6" opacity="0"/>
+      <circle id="r2" cx="270" cy="158" r="19" fill="none" stroke="#E0A63C" stroke-width="1.6" opacity="0"/>
+      <circle id="r3" cx="445" cy="150" r="19" fill="none" stroke="#E0A63C" stroke-width="1.6" opacity="0"/>
+      <g class="node" id="n1" onclick="pick(1)"><circle cx="128" cy="150" r="12" fill="#E0A63C" stroke="#5A4110" stroke-width="1.3"/>
+        <text class="nnum" x="128" y="150" text-anchor="middle" dominant-baseline="central">1</text></g>
+      <g class="node" id="n2" onclick="pick(2)"><circle cx="270" cy="158" r="12" fill="#E0A63C" stroke="#5A4110" stroke-width="1.3"/>
+        <text class="nnum" x="270" y="158" text-anchor="middle" dominant-baseline="central">2</text></g>
+      <g class="node" id="n3" onclick="pick(3)"><circle cx="445" cy="150" r="12" fill="#E0A63C" stroke="#5A4110" stroke-width="1.3"/>
+        <text class="nnum" x="445" y="150" text-anchor="middle" dominant-baseline="central">3</text></g>
+    </g>
+
+    <g id="g-tgt">
+      <circle cx="590" cy="146" r="17" fill="none" stroke="#2F7D5C" stroke-width="2"/>
+      <circle cx="590" cy="146" r="6" fill="#2F7D5C"/>
+      <text class="lab" id="lb-tgt" x="590" y="182" text-anchor="middle" fill="#2F7D5C"></text>
+    </g>
+
+    <g id="g-fan" opacity="0">
+      <ellipse cx="592" cy="152" rx="26" ry="58" fill="none" stroke="#2F7D5C" stroke-width="1.2" stroke-dasharray="4 4" opacity=".7"/>
+      <circle cx="592" cy="106" r="4.5" fill="#2F7D5C" opacity=".55"/><text class="lab" id="lb-f1" x="612" y="110" fill="#2F7D5C"></text>
+      <circle cx="592" cy="126" r="4.5" fill="#2F7D5C" opacity=".55"/><text class="lab" id="lb-f2" x="612" y="130" fill="#2F7D5C"></text>
+      <circle cx="592" cy="146" r="6" fill="#2F7D5C"/><text class="lab" id="lb-f3" x="612" y="150" fill="#2F7D5C"></text>
+      <circle cx="592" cy="166" r="4.5" fill="#2F7D5C" opacity=".55"/><text class="lab" id="lb-f4" x="612" y="170" fill="#2F7D5C"></text>
+      <circle cx="592" cy="186" r="4.5" fill="#2F7D5C" opacity=".55"/><text class="lab" id="lb-f5" x="612" y="190" fill="#2F7D5C"></text>
+      <text class="lab" id="lb-fask" x="592" y="228" text-anchor="middle" fill="#2F7D5C"></text>
+    </g>
+
+    <g id="g-out" opacity="0">
+      <path d="M 60 142 C 60 80, 70 -12, 100 -40" fill="none" stroke="#C9C7BE" stroke-width="1.1" stroke-dasharray="3 4"/>
+      <line x1="100" y1="-40" x2="600" y2="-40" stroke="#C9C7BE" stroke-width="1.1" stroke-dasharray="3 4"/>
+      <circle cx="60" cy="150" r="6" fill="#E0A63C" stroke="#5A4110" stroke-width="1.2"/>
+      <text class="lab" id="lb-rq" x="44" y="174" fill="#5A4110"></text>
+
+      <path d="M 132 139 C 155 80, 180 10, 198 -31" fill="none" stroke="#7C9BBC" stroke-width="1.2" stroke-dasharray="3 3" marker-end="url(#pout)"/>
+      <path d="M 276 147 C 300 90, 325 15, 338 -31" fill="none" stroke="#7C9BBC" stroke-width="1.2" stroke-dasharray="3 3" marker-end="url(#pout)"/>
+      <path d="M 447 138 C 455 80, 463 15, 468 -31" fill="none" stroke="#7C9BBC" stroke-width="1.2" stroke-dasharray="3 3" marker-end="url(#pout)"/>
+      <path d="M 562 136 C 570 80, 578 15, 584 -31" fill="none" stroke="#7C9BBC" stroke-width="1.2" stroke-dasharray="3 3" marker-end="url(#pout)"/>
+
+      <circle cx="200" cy="-40" r="4.5" fill="#3D6FA8"/><text class="pap" id="lb-pp1" x="200" y="-56" text-anchor="middle" fill="#3D6FA8"></text>
+      <circle cx="340" cy="-40" r="4.5" fill="#3D6FA8"/><text class="pap" id="lb-pp2" x="340" y="-56" text-anchor="middle" fill="#3D6FA8"></text>
+      <circle cx="470" cy="-40" r="4.5" fill="#3D6FA8"/><text class="pap" id="lb-pp3" x="470" y="-56" text-anchor="middle" fill="#3D6FA8"></text>
+      <circle cx="585" cy="-40" r="4.5" fill="#3D6FA8"/><text class="pap" id="lb-pp4" x="585" y="-56" text-anchor="middle" fill="#3D6FA8"></text>
+    </g>
+
+    <g id="g-read" opacity="0">
+      <line id="readline" x1="740" y1="44" x2="740" y2="284" stroke="#C0BEB4" stroke-width="1.2" stroke-dasharray="3 4"/>
+      <text class="lab" id="readlab" x="746" y="40" fill="#5C6058"></text>
+    </g>
+
+    <line x1="44" y1="276" x2="616" y2="276" stroke="#E3E1D9" stroke-width="1"/>
+    <line x1="100" y1="272" x2="100" y2="280" stroke="#C9C7BE"/><line x1="270" y1="272" x2="270" y2="280" stroke="#C9C7BE"/>
+    <line x1="445" y1="272" x2="445" y2="280" stroke="#C9C7BE"/><line x1="590" y1="272" x2="590" y2="280" stroke="#C9C7BE"/>
+    <text class="yr" id="lb-y1" x="100" y="295" text-anchor="middle"></text>
+    <text class="yr" id="lb-y2" x="270" y="295" text-anchor="middle"></text>
+    <text class="yr" id="lb-y3" x="445" y="295" text-anchor="middle"></text>
+    <text class="yr" id="lb-y4" x="590" y="295" text-anchor="middle"></text>
+
+    <g id="g-panel" opacity="0">
+      <line id="leader" x1="128" y1="171" x2="128" y2="322" stroke="#DCD9CF" stroke-width="1.2" stroke-dasharray="3 4" opacity="0"/>
+      <rect x="28" y="322" width="684" height="172" rx="10" fill="#F4F2EA" stroke="#E3E1D9" stroke-width="1"/>
+      <foreignObject x="28" y="322" width="684" height="172">
+        <div xmlns="http://www.w3.org/1999/xhtml" id="paneltbl"></div>
+      </foreignObject>
+    </g>
+  </svg>
+  </div>
+
+  <div class="note" id="note"></div>
+
+  <div class="bar">
+    <div class="acts" id="acts"></div>
+    <div class="nav">
+      <button id="prev" onclick="step(-1)">&larr;</button>
+      <span class="count" id="count"></span>
+      <button id="next" onclick="step(1)">&rarr;</button>
+    </div>
+  </div>
+</div>
+
+<div id="notes"><h3>presenter notes &mdash; press n to hide</h3><div id="nb"></div></div>
+
+<div id="ed">
+  <div class="edhead">
+    <b>Edit text</b>
+    <span class="sm" id="edslide"></span>
+    <button onclick="toggleEd()">Close</button>
+  </div>
+  <div class="edbody" id="edbody"></div>
+  <div class="edfoot">
+    <button onclick="exportHTML()">Download edited deck</button>
+    <button onclick="copyJSON()">Copy all text as JSON</button>
+    <span class="sm">e = editor &middot; n = notes</span>
+  </div>
+</div>
+
+<script>
+const PRISTINE = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+const C = JSON.parse(document.getElementById('content').textContent);
+const COL = {bio:'#5C7A2E', soc:'#6F5FA8', eco:'#8C6239', route:'#3D6FA8', grey:'#93968D', red:'#A3453B'};
+
+/* ---------- geometry (no text lives here) ---------- */
+const P={
+ aSoc:["M 44 76 C 160 66, 260 82, 340 66 C 420 54, 500 58, 616 44 L 616 100 C 500 96, 420 92, 340 84 C 260 96, 160 80, 44 82 Z",
+       "M 44 76 C 160 66, 260 82, 340 66 C 420 82, 500 92, 616 82 L 616 138 C 500 134, 420 124, 340 84 C 260 96, 160 80, 44 82 Z",
+       "M 44 76 C 160 66, 260 82, 340 66 C 420 74, 500 80, 616 72 L 616 128 C 500 124, 420 116, 340 84 C 260 96, 160 80, 44 82 Z"],
+ eSoc:["M 44 82 C 160 80, 260 96, 340 84 C 420 92, 500 96, 616 100",
+       "M 44 82 C 160 80, 260 96, 340 84 C 420 124, 500 134, 616 138",
+       "M 44 82 C 160 80, 260 96, 340 84 C 420 116, 500 124, 616 128"],
+ aBio:["M 44 234 C 150 240, 240 226, 320 232 C 420 238, 520 222, 616 208 L 616 264 C 520 276, 420 282, 320 240 C 240 234, 150 248, 44 240 Z",
+       "M 44 234 C 150 240, 240 222, 320 210 C 420 196, 520 186, 616 176 L 616 232 C 520 242, 420 248, 320 218 C 240 230, 150 248, 44 240 Z",
+       "M 44 234 C 150 238, 240 206, 320 188 C 420 174, 520 168, 616 162 L 616 218 C 520 224, 420 230, 320 196 C 240 214, 150 246, 44 240 Z"],
+ eBio:["M 44 234 C 150 240, 240 226, 320 232 C 420 238, 520 222, 616 208",
+       "M 44 234 C 150 240, 240 222, 320 210 C 420 196, 520 186, 616 176",
+       "M 44 234 C 150 238, 240 206, 320 188 C 420 174, 520 168, 616 162"],
+ down:["M 270 158 C 284 180, 298 200, 312 222",
+       "M 270 158 C 282 172, 292 188, 302 202",
+       "M 270 158 C 280 168, 288 180, 296 190"],
+ wait:["M 128 150 C 175 168, 215 190, 258 206 C 290 218, 316 226, 340 232",
+       "M 128 150 C 168 162, 200 178, 232 190 C 256 198, 278 204, 296 210",
+       "M 128 150 C 166 160, 194 172, 224 182 C 246 190, 266 194, 282 198"],
+ blue:["M 128 150 C 180 150, 220 150, 270 150 C 330 150, 380 150, 445 150 C 500 148, 555 146, 590 146",
+       "M 128 150 C 180 138, 220 152, 270 158 C 330 165, 380 146, 445 150 C 500 153, 555 146, 590 146"]
+};
+const XP={down:[[312,226],[302,206],[296,194]], wait:[[340,236],[296,214],[282,202]]};
+const CUT=[740,740,740,445,270,100,100,100,100,44,44,44,44,44,44,44,44,44];
+const READ=[null,null,null,[445,2],[270,1],[100,0],[100,0],[100,0],[100,0],[56,"before the present"],null,[56,"the past"],null,null,null,null,null,null];
+const NODEXY={1:[128,150],2:[270,158],3:[445,150]};
+
+function toks(d){ return d.match(/-?[\d.]+|[A-Za-z]/g); }
+function lerpPath(a,b,k){ const ra=toks(a),rb=toks(b);
+  return ra.map((t,n)=>/[A-Za-z]/.test(t)?t:(parseFloat(t)+(parseFloat(rb[n])-parseFloat(t))*k).toFixed(1)).join(' '); }
+function offsetPath(d,dy){ let n=-1;
+  return toks(d).map(t=>{ if(/[A-Za-z]/.test(t)) return t; n++; return (n%2===1)?(parseFloat(t)+dy).toFixed(1):t; }).join(' '); }
+function setX(id,pr,k){
+  const a=pr[0],b=pr[wallTarget],cx=a[0]+(b[0]-a[0])*k,cy=a[1]+(b[1]-a[1])*k,s=7;
+  const l=document.getElementById(id).children;
+  l[0].setAttribute('x1',cx-s);l[0].setAttribute('y1',cy-s);l[0].setAttribute('x2',cx+s);l[0].setAttribute('y2',cy+s);
+  l[1].setAttribute('x1',cx+s);l[1].setAttribute('y1',cy-s);l[1].setAttribute('x2',cx-s);l[1].setAttribute('y2',cy+s);
+}
+
+let i=0, tt=0, wallTarget=1, rm=null, sel=null,
+    anim=null, cutA=null, cut=740;
+const $=id=>document.getElementById(id);
+const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const S=()=>C.slides, cur=()=>C.slides[i];
+
+const dots=$('dots');
+C.slides.forEach((_,k)=>{ if([1,3,5,9,12,17].indexOf(k)>-1){const g=document.createElement('i');dots.appendChild(g);}
+  const d=document.createElement('span'); d.onclick=()=>goto(k); dots.appendChild(d); });
+
+function statics(){
+  const L=C.labels;
+  $('l-soc').textContent=L.wallSoc; $('l-bio').textContent=L.wallBio;
+  $('ev-soc').textContent=L.evSoc;  $('ev-bio').textContent=L.evBio;
+  $('lb-tgt').textContent=L.target;
+  L.fan.forEach((t,k)=>$('lb-f'+(k+1)).textContent=t);
+  $('lb-fask').textContent=L.fanAsk;
+  L.years.forEach((t,k)=>$('lb-y'+(k+1)).textContent=t);
+  $('lb-rq').textContent=L.researchQuestions;
+  L.papers.forEach((t,k)=>$('lb-pp'+(k+1)).textContent=t);
+  $('lb-p1').textContent=L.people[0]; $('lb-p2').textContent=L.people[1]; $('lb-p3').textContent=L.people[2];
+  $('lb-past').textContent=L.past; $('lb-fb').textContent=L.feedback;
+}
+function setCut(v){ cut=v; const r=$('cliprect'); r.setAttribute('x',v); r.setAttribute('width',Math.max(0,740-v)); }
+function tween(get,set,to,dur,ease){
+  const from=get(), t0=performance.now(); let id;
+  (function f(now){ const k=Math.min(1,(now-t0)/dur);
+    set(from+(to-from)*(ease?ease(k):1-Math.pow(1-k,3)));
+    if(k<1) id=requestAnimationFrame(f); })(performance.now());
+  return ()=>cancelAnimationFrame(id);
+}
+function geometry(){
+  const T=wallTarget;
+  $('a-soc').setAttribute('d',lerpPath(P.aSoc[0],P.aSoc[T],tt));
+  $('e-soc').setAttribute('d',lerpPath(P.eSoc[0],P.eSoc[T],tt));
+  $('a-bio').setAttribute('d',lerpPath(P.aBio[0],P.aBio[T],tt));
+  $('e-bio').setAttribute('d',lerpPath(P.eBio[0],P.eBio[T],tt));
+  $('p-down').setAttribute('d',lerpPath(P.down[0],P.down[T],tt));
+  $('p-wait').setAttribute('d',lerpPath(P.wait[0],P.wait[T],tt));
+  $('p-blue').setAttribute('d',P.blue[1]);
+  setX('x-down',XP.down,tt); setX('x-wait',XP.wait,tt);
+  $('l-soc').setAttribute('y',(52+tt*36).toFixed(1));
+  $('l-bio').setAttribute('y',(264-tt*44).toFixed(1));
+  const ev=(cur().wall===1&&!rm)?1:0;
+  $('ev-soc').style.opacity=ev; $('ev-bio').style.opacity=ev;
+}
+function stands(){ $('g-stands').style.opacity=0; }
+function panel(){
+  const s=cur(), g=$('g-panel');
+  let rows,nd;
+  if(sel && i>=1){ rows=C.nodes[sel]; nd=sel; }
+  else if(s.removals && rm){ const r=C.removals[rm];
+    rows=[['red',r[0].toLowerCase(),r[1],''],null,null]; nd=null; }
+  else { rows = s.panel || (s.node?C.nodes[s.node]:null); nd=s.node; }
+  if(!rows){ g.style.opacity=0; $('leader').style.opacity=0; return; }
+  g.style.opacity=1;
+  $('paneltbl').innerHTML = rows.map(r=>{
+    if(!r) return '';
+    const c=COL[r[0]]||r[0];
+    return '<div class="prow">'
+      +'<span class="pdot" style="background:'+c+'"></span>'
+      +'<span class="pk" style="color:'+c+'">'+esc(r[1])+'</span>'
+      +'<span class="pt"><b>'+esc(r[2])+'</b>'
+      +(r[3]?' <span class="px">'+esc(r[3])+'</span>':'')
+      +'</span></div>';
+  }).join('');
+  const ld=$('leader');
+  if(nd){ const xy=NODEXY[nd]; ld.style.opacity=1;
+    ld.setAttribute('x1',xy[0]); ld.setAttribute('x2',xy[0]); ld.setAttribute('y1',xy[1]+21); ld.setAttribute('y2',322); }
+  else ld.style.opacity=0;
+}
+function paint(){
+  const s=cur(), corr=i>=1;
+  $('p-blue').style.opacity=corr?1:0;
+  $('g-nodes').style.opacity=corr?1:0;
+  $('g-up').style.opacity=corr?1:0;
+  $('g-down').style.opacity=corr?1:0;
+  $('g-tgt').style.opacity=(i<=1)?1:0;
+  $('g-fan').style.opacity=(i>=2)?1:0;
+  $('g-out').style.opacity=((s.outputs||i===C.slides.length-1)&&!rm)?1:0;
+
+  const hideBio=(rm==='bio'||rm==='sce'), hideSoc=(rm==='soc'||rm==='sce');
+  const bioOn=(i>=4&&!hideBio), socOn=(i>=3&&!hideSoc);
+  $('a-bio').style.opacity=bioOn?1:0; $('e-bio').style.opacity=bioOn?1:0; $('l-bio').style.opacity=bioOn?1:0;
+  $('a-soc').style.opacity=socOn?1:0; $('e-soc').style.opacity=socOn?1:0; $('l-soc').style.opacity=socOn?1:0;
+  $('g-models').style.opacity=(s.models&&bioOn)?1:0;
+
+  const dD=(i>=4&&!hideBio), dU=(i>=4&&!hideSoc);
+  const st=(p,dead)=>{const e=$(p);
+    e.setAttribute('stroke',dead?'#B9B7AD':COL.route);
+    e.setAttribute('stroke-width',dead?1.8:3.2);
+    e.setAttribute('stroke-dasharray',dead?'3.5 4':'none');};
+  st('p-up',dU); st('p-down',dD);
+  $('x-up').style.opacity=dU?1:0; $('x-down').style.opacity=dD?1:0;
+
+  $('g-wait').style.opacity=(corr&&!rm)?1:0;
+  $('p-wait').setAttribute('stroke',COL.route);
+  $('x-wait').style.opacity=0;
+  if(rm==='eco'){ $('p-blue').setAttribute('stroke-dasharray','4 5'); $('p-blue').style.opacity=0.3; }
+  else $('p-blue').setAttribute('stroke-dasharray','none');
+
+  $('g-fb').style.opacity=(s.wall===2)?1:0;
+  $('g-people').style.opacity=(s.people&&!rm)?1:0;
+  $('g-hand').style.opacity=(s.people&&!rm)?1:0;
+  $('g-past').style.opacity=(s.past)?1:0;
+  $('x-past').style.opacity=s.past?1:0;
+
+  [1,2,3].forEach(k=>$('r'+k).style.opacity=0);
+  const active=(sel&&corr)?sel:s.node;
+  if(active) $('r'+active).style.opacity=1;
+
+  const rd=READ[i];
+  $('g-read').style.opacity=rd?1:0;
+  if(rd){ $('readline').setAttribute('x1',rd[0]); $('readline').setAttribute('x2',rd[0]);
+    $('readlab').setAttribute('x',rd[0]+7);
+    $('readlab').textContent = (typeof rd[1]==='number') ? C.labels.years[rd[1]] : rd[1]; }
+  stands(); panel();
+}
+function acts(){
+  const a=$('acts'); a.innerHTML=''; const s=cur();
+  const mk=(x,f,on,cls)=>{const b=document.createElement('button');b.innerHTML=x;b.onclick=f;
+    if(on)b.classList.add('on'); if(cls)b.classList.add(cls); a.appendChild(b);};
+  if(i>=1&&i<=2){ a.innerHTML='<span class="count">'+C.lines.clickHint+'</span>'; return; }
+  if(s.removals){
+    Object.keys(C.removals).forEach(k=>
+      mk(C.removals[k][0],()=>{rm=(rm===k?null:k);render();},rm===k,'rm'));
+    if(rm) mk('Restore',()=>{rm=null;render();});
+  }
+}
+function note(){
+  const n=$('note'), s=cur(), L=C.lines;
+  if(s.removals&&rm){ n.innerHTML=''; return; }
+  if(s.removals){ n.innerHTML='<span style="color:#5C6058">'+L.removePrompt+'</span>'; return; }
+  if(i===4){ n.innerHTML=L.excluded; return; }
+  if(i===1){ n.innerHTML='<span style="color:'+COL.route+'">'+L.routes+'</span>'; return; }
+  n.innerHTML='';
+}
+function eyebrow(){ return cur().eb||''; }
+function render(){
+  const s=cur();
+  $('title').innerHTML=s.t; $('sub').innerHTML=s.s;
+  $('eyebrow').textContent=eyebrow();
+  [...dots.querySelectorAll('span')].forEach((d,k)=>d.classList.toggle('on',k===i));
+  $('count').textContent=(i+1)+' / '+C.slides.length;
+  $('prev').classList.toggle('hide',i===0);
+  $('next').classList.toggle('hide',i===C.slides.length-1);
+  $('nb').innerHTML=s.notes||'';
+  const w=s.wall||0; wallTarget=w||1; tt=w?1:0;
+  statics(); geometry(); paint(); acts(); note();
+  if($('ed').classList.contains('show')) buildEd();
+}
+function pick(n){ if(i<1) return; sel=(sel===n?null:n); render(); }
+function goto(j){ if(j===i) return; i=j; sel=null; rm=null; tt=0;
+  if(C.slides[i].remove) rm=C.slides[i].remove;
+  if(cutA) cutA(); cutA=tween(()=>cut,setCut,CUT[i],700);
+  render();
+}
+function step(d){ goto(Math.max(0,Math.min(C.slides.length-1,i+d))); }
+
+/* ---------- text editor ---------- */
+function fld(label,val,oninput,big){
+  const d=document.createElement('div'); d.className='fld';
+  d.innerHTML='<label>'+label+'</label>';
+  const el=document.createElement(big?'textarea':'textarea');
+  el.value=val||''; if(big) el.className='big';
+  el.oninput=e=>{oninput(e.target.value); render();};
+  d.appendChild(el); return d;
+}
+function buildEd(){
+  const b=$('edbody'); const scroll=b.scrollTop; b.innerHTML='';
+  const s=cur();
+  $('edslide').textContent='slide '+(i+1)+' / '+C.slides.length;
+  const h=document.createElement('div'); h.className='hint';
+  h.innerHTML='Type and the slide updates live. When you are done, press <b>Download edited deck</b> &mdash; you get a new HTML file with your words baked in.';
+  b.appendChild(h);
+  b.appendChild(fld('title', s.t, v=>s.t=v));
+  b.appendChild(fld('subtitle', s.s, v=>s.s=v));
+
+  const rows = s.panel || (s.node?C.nodes[s.node]:null);
+  if(rows){
+    const t=document.createElement('div'); t.className='fld';
+    t.innerHTML='<label>'+(s.node?'panel (shared with decision point '+s.node+')':'panel')+'</label>';
+    b.appendChild(t);
+    rows.forEach((r,k)=>{
+      const box=document.createElement('div'); box.className='rowbox';
+      const tag=document.createElement('div'); tag.className='tagline';
+      const sw=document.createElement('span'); sw.className='swatch'; sw.style.background=COL[r[0]]||r[0];
+      const sel=document.createElement('select');
+      ['bio','soc','eco','route','grey'].forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;if(c===r[0])o.selected=true;sel.appendChild(o);});
+      sel.onchange=e=>{r[0]=e.target.value; sw.style.background=COL[r[0]]; render();};
+      const lab=document.createElement('input'); lab.value=r[1];
+      lab.oninput=e=>{r[1]=e.target.value; render();};
+      tag.appendChild(sw); tag.appendChild(sel); tag.appendChild(lab);
+      box.appendChild(tag);
+      box.appendChild(fld('statement', r[2], v=>r[2]=v));
+      box.appendChild(fld('explanation', r[3], v=>r[3]=v));
+      b.appendChild(box);
+    });
+  }
+  if(s.removals){
+    Object.keys(C.removals).forEach(k=>{
+      const r=C.removals[k];
+      const box=document.createElement('div'); box.className='rowbox';
+      box.innerHTML='<div class="tagline"><span class="swatch" style="background:#A3453B"></span><span style="font-family:var(--mono);font-size:11px">'+k+'</span></div>';
+      box.appendChild(fld('button label', r[0], v=>r[0]=v));
+      box.appendChild(fld('what follows from the removal', r[1], v=>r[1]=v));
+      b.appendChild(box);
+    });
+  }
+  b.appendChild(fld('presenter notes (HTML allowed)', s.notes, v=>s.notes=v, true));
+  b.scrollTop=scroll;
+}
+function toggleEd(){
+  const e=$('ed'); e.classList.toggle('show');
+  document.body.classList.toggle('editing', e.classList.contains('show'));
+  if(e.classList.contains('show')) buildEd();
+}
+function exportHTML(){
+  const json=JSON.stringify(C,null,2).replace(/<\//g,'<\\/');
+  const out=PRISTINE.replace(/(<script type="application\/json" id="content">)[\s\S]*?(<\/script>)/,
+    (m,a,z)=>a+'\n'+json+'\n'+z);
+  const blob=new Blob([out],{type:'text/html'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob); a.download='looking_from_the_end.html'; a.click();
+  URL.revokeObjectURL(a.href);
+}
+function copyJSON(){ navigator.clipboard.writeText(JSON.stringify(C,null,2)); }
+
+document.addEventListener('keydown',e=>{
+  if(/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)) return;
+  const k=e.key.toLowerCase();
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){step(1);e.preventDefault();}
+  else if(e.key==='ArrowLeft'||e.key==='PageUp'){step(-1);e.preventDefault();}
+  else if(e.key==='Escape'){sel=null;render();}
+  else if('123'.indexOf(k)>-1){pick(+k);}
+  else if(k==='n'){$('notes').classList.toggle('show');}
+  else if(k==='e'){toggleEd();}
+  else if(k==='f'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();}
+});
+setCut(740); render();
+</script>
+</body>
+</html>

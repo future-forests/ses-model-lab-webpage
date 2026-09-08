@@ -1,12 +1,11 @@
 #!/bin/sh
 set -e
 
-REPO="/Users/martawenta/Desktop/SES_Model_Lab_landing_page"
+REPO="/Users/martawenta/Desktop/ses_model_lab_webpage"
 MSG="${1:-Update $(date +%Y-%m-%d)}"
 
 cd "$REPO"
 
-# Commit and push main
 git switch main
 git add -A
 if ! git diff --cached --quiet; then
@@ -17,10 +16,4 @@ else
     echo "No changes on main"
 fi
 
-# Sync pages branch → deploys the site
-git switch pages
-git merge main --ff-only
-git push origin pages
-git switch main
-
-echo "Live: https://fufo-ses-model-lab.codeberg.page/SES_Model_Lab/"
+echo "Live: https://future-forests.github.io/ses_model_lab_webpage/"

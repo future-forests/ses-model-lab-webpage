@@ -1,0 +1,296 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//FuFo Coding Course//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:FuFo Coding Course
+BEGIN:VTIMEZONE
+TZID:Europe/Berlin
+BEGIN:DAYLIGHT
+TZOFFSETFROM:+0100
+TZOFFSETTO:+0200
+TZNAME:CEST
+DTSTART:19700329T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:+0200
+TZOFFSETTO:+0100
+TZNAME:CET
+DTSTART:19701025T030000
+RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:ses-tree-growth-litter@ses-model-lab
+DTSTAMP:20260907T120000Z
+DTSTART;TZID=Europe/Berlin:20260908T150000
+DTEND;TZID=Europe/Berlin:20260908T163000
+SUMMARY:Tree growth → litter\, decomposition and soil carbon
+LOCATION:First Floor Seminar Room\, Stadstrasse 5
+DESCRIPTION:Research questions — smaller working groups
+END:VEVENT
+BEGIN:VEVENT
+UID:ses-hands-on-science@ses-model-lab
+DTSTAMP:20260907T120000Z
+DTSTART;TZID=Europe/Berlin:20260910T134500
+DTEND;TZID=Europe/Berlin:20260910T144500
+SUMMARY:Hands on Science
+LOCATION:Stadstrasse 5
+END:VEVENT
+BEGIN:VEVENT
+UID:ses-cross-scenario-meeting@ses-model-lab
+DTSTAMP:20260907T120000Z
+DTSTART;TZID=Europe/Berlin:20260914T100000
+DTEND;TZID=Europe/Berlin:20260914T110000
+SUMMARY:Cross scenario meeting
+LOCATION:Ground Floor Seminar Room\, Stadstrasse 5
+END:VEVENT
+BEGIN:VEVENT
+UID:ses-model-lab-cafe-sep@ses-model-lab
+DTSTAMP:20260907T120000Z
+DTSTART;TZID=Europe/Berlin:20260917T130000
+DTEND;TZID=Europe/Berlin:20260917T140000
+SUMMARY:Model Lab Cafe
+LOCATION:Herderbau Library\, 3rd floor
+END:VEVENT
+BEGIN:VEVENT
+UID:ses-participatory-modeling@ses-model-lab
+DTSTAMP:20260907T120000Z
+DTSTART;TZID=Europe/Berlin:20260921T103000
+DTEND;TZID=Europe/Berlin:20260921T120000
+SUMMARY:Participatory Modeling workshop
+LOCATION:Ground Floor Seminar Room\, Stadstrasse 5
+DESCRIPTION:Hybrid — online participation possible
+END:VEVENT
+BEGIN:VEVENT
+UID:ses-committee-meeting-sep@ses-model-lab
+DTSTAMP:20260907T120000Z
+DTSTART;TZID=Europe/Berlin:20260921T131500
+DTEND;TZID=Europe/Berlin:20260921T141500
+SUMMARY:SES Model Lab committee meeting
+LOCATION:First Floor Seminar Room\, Stadstrasse 5
+END:VEVENT
+BEGIN:VEVENT
+UID:fufo-class-1@fufo-coding-course
+DTSTAMP:20260901T120000Z
+DTSTART;TZID=Europe/Berlin:20260924T093000
+DTEND;TZID=Europe/Berlin:20260924T103000
+SUMMARY:FuFo Coding Course — Class 1
+DESCRIPTION:Introduction\, terminal navigation (bash)\, remote cluster
+END:VEVENT
+BEGIN:VEVENT
+UID:fufo-clinic-1@fufo-coding-course
+DTSTAMP:20260901T120000Z
+DTSTART;TZID=Europe/Berlin:20260928T140000
+DTEND;TZID=Europe/Berlin:20260928T160000
+SUMMARY:FuFo Coding Course — Drop-in clinic (Class 1)
+DESCRIPTION:Optional drop-in clinic for Class 1\nIntroduction\, terminal navigation (bash)\, remote cluster
+END:VEVENT
+BEGIN:VEVENT
+UID:ses-scenario-wg-sep@ses-model-lab
+DTSTAMP:20260907T120000Z
+DTSTART;TZID=Europe/Berlin:20260928T150000
+DTEND;TZID=Europe/Berlin:20260928T163000
+SUMMARY:Scenario Working Group Meeting
+LOCATION:First Floor Seminar Room\, Stadstrasse 5
+END:VEVENT
+BEGIN:VEVENT
+UID:ses-micro-droughts@ses-model-lab
+DTSTAMP:20260907T120000Z
+DTSTART;TZID=Europe/Berlin:20260929T150000
+DTEND;TZID=Europe/Berlin:20260929T163000
+SUMMARY:Micro-droughts and tree growth/mortality
+LOCATION:Ground Floor Seminar Room\, Stadstrasse 5
+DESCRIPTION:Research questions — smaller working groups
+END:VEVENT
+BEGIN:VEVENT
+UID:fufo-class-2@fufo-coding-course
+DTSTAMP:20260901T120000Z
+DTSTART;TZID=Europe/Berlin:20261001T093000
+DTEND;TZID=Europe/Berlin:20261001T103000
+SUMMARY:FuFo Coding Course — Class 2
+DESCRIPTION:Version control (git) and collaboration (GitLab)
+END:VEVENT
+BEGIN:VEVENT
+UID:fufo-clinic-2@fufo-coding-course
+DTSTAMP:20260901T120000Z
+DTSTART;TZID=Europe/Berlin:20261002T140000
+DTEND;TZID=Europe/Berlin:20261002T160000
+SUMMARY:FuFo Coding Course — Drop-in clinic (Class 2)
+DESCRIPTION:Optional drop-in clinic for Class 2\nVersion control (git) and collaboration (GitLab)
+END:VEVENT
+BEGIN:VEVENT
+UID:fufo-class-3a@fufo-coding-course
+DTSTAMP:20260901T120000Z
+DTSTART;TZID=Europe/Berlin:20261005T083000
+DTEND;TZID=Europe/Berlin:20261005T093000
+SUMMARY:FuFo Coding Course — Class 3a
+DESCRIPTION:Python basics: variables\, types\, built-in functions\, packages
+END:VEVENT
+BEGIN:VEVENT
+UID:fufo-clinic-3a@fufo-coding-course
+DTSTAMP:20260901T120000Z
+DTSTART;TZID=Europe/Berlin:20261007T140000
+DTEND;TZID=Europe/Berlin:20261007T160000
+SUMMARY:FuFo Coding Course — Drop-in clinic (Class 3a)
+DESCRIPTION:Optional drop-in clinic for Class 3a\nPython basics: variables\, types\, built-in functions\, packages
+END:VEVENT
+BEGIN:VEVENT
+UID:fufo-class-3b@fufo-coding-course
+DTSTAMP:20260901T120000Z
+DTSTART;TZID=Europe/Berlin:20261008T093000
+DTEND;TZID=Europe/Berlin:20261008T103000
+SUMMARY:FuFo Coding Course — Class 3b
+DESCRIPTION:Python Basics: NumPy arrays\, loops\, conditions
+END:VEVENT
+BEGIN:VEVENT
+UID:fufo-clinic-3b@fufo-coding-course
+DTSTAMP:20260901T120000Z
+DTSTART;TZID=Europe/Berlin:20261009T140000
+DTEND;TZID=Europe/Berlin:20261009T160000
+SUMMARY:FuFo Coding Course — Drop-in clinic (Class 3b)
+DESCRIPTION:Optional drop-in clinic for Class 3b\nPython Basics: NumPy arrays\, loops\, conditions
+END:VEVENT
+BEGIN:VEVENT
+UID:fufo-class-4@fufo-coding-course
+DTSTAMP:20260901T120000Z
+DTSTART;TZID=Europe/Berlin:20261012T093000
+DTEND;TZID=Europe/Berlin:20261012T103000
+SUMMARY:FuFo Coding Course — Class 4
+DESCRIPTION:Tabular data: vectorisation\, table operations (pandas)\, matplotlib
+END:VEVENT
+BEGIN:VEVENT
+UID:ses-social-metabolism-wood@ses-model-lab
+DTSTAMP:20260907T120000Z
+DTSTART;TZID=Europe/Berlin:20261013T133000
+DTEND;TZID=Europe/Berlin:20261013T143000
+SUMMARY:Social metabolism/industrial ecology of wood and wood products
+LOCATION:First Floor Seminar Room\, Stadstrasse 5
+END:VEVENT
+BEGIN:VEVENT
+UID:ses-decision-making-model@ses-model-lab
+DTSTAMP:20260907T120000Z
+DTSTART;TZID=Europe/Berlin:20261013T150000
+DTEND;TZID=Europe/Berlin:20261013T163000
+SUMMARY:Decision-making in modelling
+LOCATION:Ground Floor Seminar Room\, Stadstrasse 5
+DESCRIPTION:Research questions — smaller working groups
+END:VEVENT
+BEGIN:VEVENT
+UID:ses-iland-uncertainty@ses-model-lab
+DTSTAMP:20260907T120000Z
+DTSTART;TZID=Europe/Berlin:20261020T150000
+DTEND;TZID=Europe/Berlin:20261020T163000
+SUMMARY:iLand community — model uncertainty
+LOCATION:Herderbau Library
+DESCRIPTION:Research questions — smaller working groups
+END:VEVENT
+BEGIN:VEVENT
+UID:fufo-clinic-4@fufo-coding-course
+DTSTAMP:20260901T120000Z
+DTSTART;TZID=Europe/Berlin:20261021T140000
+DTEND;TZID=Europe/Berlin:20261021T160000
+SUMMARY:FuFo Coding Course — Drop-in clinic (Class 4)
+DESCRIPTION:Optional drop-in clinic for Class 4\nTabular data: vectorisation\, table operations (pandas)\, matplotlib
+END:VEVENT
+BEGIN:VEVENT
+UID:fufo-class-5@fufo-coding-course
+DTSTAMP:20260901T120000Z
+DTSTART;TZID=Europe/Berlin:20261022T093000
+DTEND;TZID=Europe/Berlin:20261022T103000
+SUMMARY:FuFo Coding Course — Class 5
+DESCRIPTION:Geospatial data: netCDF\, raster operations (xarray)
+END:VEVENT
+BEGIN:VEVENT
+UID:ses-forest-ses-workshop@ses-model-lab
+DTSTAMP:20260908T120000Z
+DTSTART;TZID=Europe/Berlin:20261026T100000
+DTEND;TZID=Europe/Berlin:20261026T150000
+SUMMARY:Workshop on model based representation of forest SES
+LOCATION:Ground Floor Seminar Room\, Stadstrasse 5
+END:VEVENT
+BEGIN:VEVENT
+UID:fufo-clinic-5@fufo-coding-course
+DTSTAMP:20260901T120000Z
+DTSTART;TZID=Europe/Berlin:20261026T150000
+DTEND;TZID=Europe/Berlin:20261026T170000
+SUMMARY:FuFo Coding Course — Drop-in clinic (Class 5)
+DESCRIPTION:Optional drop-in clinic for Class 5\nGeospatial data: netCDF\, raster operations (xarray)
+END:VEVENT
+BEGIN:VEVENT
+UID:ses-german-forest-sink@ses-model-lab
+DTSTAMP:20260907T120000Z
+DTSTART;TZID=Europe/Berlin:20261027T150000
+DTEND;TZID=Europe/Berlin:20261027T160000
+SUMMARY:German forest from sink to source
+LOCATION:Ground Floor Seminar Room\, Stadstrasse 5
+DESCRIPTION:Research questions — smaller working groups
+END:VEVENT
+BEGIN:VEVENT
+UID:fufo-class-6@fufo-coding-course
+DTSTAMP:20260901T120000Z
+DTSTART;TZID=Europe/Berlin:20261029T093000
+DTEND;TZID=Europe/Berlin:20261029T103000
+SUMMARY:FuFo Coding Course — Class 6
+DESCRIPTION:Advanced Python: user functions\, profiling\, publishing code with a DOI
+END:VEVENT
+BEGIN:VEVENT
+UID:ses-model-lab-cafe-oct@ses-model-lab
+DTSTAMP:20260907T120000Z
+DTSTART;TZID=Europe/Berlin:20261029T130000
+DTEND;TZID=Europe/Berlin:20261029T140000
+SUMMARY:Model Lab Cafe
+LOCATION:Herderbau Library\, 3rd floor
+END:VEVENT
+BEGIN:VEVENT
+UID:fufo-clinic-6@fufo-coding-course
+DTSTAMP:20260901T120000Z
+DTSTART;TZID=Europe/Berlin:20261102T140000
+DTEND;TZID=Europe/Berlin:20261102T160000
+SUMMARY:FuFo Coding Course — Drop-in clinic (Class 6)
+DESCRIPTION:Optional drop-in clinic for Class 6\nAdvanced Python: user functions\, profiling\, publishing code with a DOI
+END:VEVENT
+BEGIN:VEVENT
+UID:ses-storm-damage-modelling@ses-model-lab
+DTSTAMP:20260907T120000Z
+DTSTART;TZID=Europe/Berlin:20261103T150000
+DTEND;TZID=Europe/Berlin:20261103T163000
+SUMMARY:Improving storm damage modelling
+LOCATION:First Floor Seminar Room\, Stadstrasse 5
+DESCRIPTION:Research questions — smaller working groups
+END:VEVENT
+BEGIN:VEVENT
+UID:fufo-class-7@fufo-coding-course
+DTSTAMP:20260901T120000Z
+DTSTART;TZID=Europe/Berlin:20261105T093000
+DTEND;TZID=Europe/Berlin:20261105T103000
+SUMMARY:FuFo Coding Course — Class 7
+DESCRIPTION:Using LLMs in coding: modes\, prompting\, reviewing
+END:VEVENT
+BEGIN:VEVENT
+UID:fufo-clinic-7@fufo-coding-course
+DTSTAMP:20260901T120000Z
+DTSTART;TZID=Europe/Berlin:20261109T140000
+DTEND;TZID=Europe/Berlin:20261109T160000
+SUMMARY:FuFo Coding Course — Drop-in clinic (Class 7)
+DESCRIPTION:Optional drop-in clinic for Class 7\nUsing LLMs in coding: modes\, prompting\, reviewing
+END:VEVENT
+BEGIN:VEVENT
+UID:fufo-class-8@fufo-coding-course
+DTSTAMP:20260901T120000Z
+DTSTART;TZID=Europe/Berlin:20261112T093000
+DTEND;TZID=Europe/Berlin:20261112T103000
+SUMMARY:FuFo Coding Course — Class 8
+DESCRIPTION:Critical thinking about LLMs: limits and bias
+END:VEVENT
+BEGIN:VEVENT
+UID:ses-forest-ses-reanalysis@ses-model-lab
+DTSTAMP:20260907T120000Z
+DTSTART;TZID=Europe/Berlin:20261117T161500
+DTEND;TZID=Europe/Berlin:20261117T171500
+SUMMARY:Forest social-ecological reanalysis (historical assessment)
+LOCATION:First Floor Seminar Room\, Stadstrasse 5
+DESCRIPTION:Research questions — smaller working groups
+END:VEVENT
+END:VCALENDAR

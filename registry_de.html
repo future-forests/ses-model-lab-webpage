@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Future Forests — Modellregister</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'IBM Plex Sans',sans-serif; background:#f8fafc; color:#1e293b; padding:24px 32px; max-width:1300px; margin:0 auto; }
+  .col-head { font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:#94a3b8; margin-bottom:5px; font-weight:700; }
+  .card:hover { box-shadow:0 4px 18px rgba(0,0,0,.08); }
+  .filter-bar { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; align-items:center; }
+  .filter-btn { background:#fff; border:1.5px solid #e2e8f0; border-radius:6px; padding:5px 14px; font-size:12px; font-family:'IBM Plex Mono',monospace; cursor:pointer; transition:all .15s; color:#475569; }
+  .filter-btn:hover, .filter-btn.active { background:#1e3a5f; color:#fff; border-color:#1e3a5f; }
+  @media(max-width:700px) { .card > div > div[style*="grid"] { grid-template-columns:1fr !important; } body { padding:12px 14px; } }
+</style>
+</head>
+<body>
+<div style="border-bottom:2.5px solid #1e3a5f;padding-bottom:10px;margin-bottom:12px;">
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;color:#1a7a4a;text-transform:uppercase;margin-bottom:4px;">Future Forests Excellence Cluster · Universität Freiburg </div>
+  <div style="font-size:24px;font-weight:700;color:#1e3a5f;letter-spacing:-.02em;">SES-Modellregister</div>
+  <div style="font-size:12px;color:#64748b;margin-top:4px;max-width:800px;line-height:1.5;">Dieses Register beschreibt die Modellierungsgruppen, die zu Future Forests beitragen. Für jede Gruppe: das wissenschaftliche Thema, die verantwortliche Person (PI), der methodische Ansatz, benötigte Eingangsdaten und erzeugte Outputs.</div>
+</div>
+<div class="filter-bar">
+  <span style="font-size:11px;color:#94a3b8;font-family:'IBM Plex Mono',monospace">CLUSTER:</span>
+  <button class="filter-btn active" onclick="filterCards('all','all',this)">Alle</button>
+  <button class="filter-btn" onclick="filterCards('cluster','a1',this)">A1</button>
+  <button class="filter-btn" onclick="filterCards('cluster','a3',this)">A3</button>
+  <button class="filter-btn" onclick="filterCards('cluster','b1',this)">B1</button>
+  <button class="filter-btn" onclick="filterCards('cluster','b2',this)">B2</button>
+  <button class="filter-btn" onclick="filterCards('cluster','c1',this)">C1</button>
+  <button class="filter-btn" onclick="filterCards('cluster','c2',this)">C2</button>
+  <button class="filter-btn" onclick="filterCards('cluster','c3',this)">C3</button>
+  <button class="filter-btn" onclick="filterCards('cluster','other',this)">Sonstige</button>
+</div>
+<div class="filter-bar" style="margin-top:-10px;">
+  <span style="font-size:11px;color:#94a3b8;font-family:'IBM Plex Mono',monospace">METHODE:</span>
+  <button class="filter-btn" onclick="filterCards('label','hydro-modelling',this)">Hydrologische Modellierung</button>
+  <button class="filter-btn" onclick="filterCards('label','microclimate',this)">Mikroklima</button>
+  <button class="filter-btn" onclick="filterCards('label','remote-sensing',this)">Fernerkundung</button>
+  <button class="filter-btn" onclick="filterCards('label','machine-learning',this)">Maschinelles Lernen</button>
+  <button class="filter-btn" onclick="filterCards('label','field-data',this)">Felddaten</button>
+  <button class="filter-btn" onclick="filterCards('label','iland',this)">iLand/Waldwachstum</button>
+  <button class="filter-btn" onclick="filterCards('label','abm',this)">ABM</button>
+  <button class="filter-btn" onclick="filterCards('label','economic-modelling',this)">Ökonomische Modellierung</button>
+  <button class="filter-btn" onclick="filterCards('label','scenario',this)">Szenarien</button>
+  <button class="filter-btn" onclick="filterCards('label','ses-theory',this)">SES-Theorie</button>
+  <button class="filter-btn" onclick="filterCards('label','biogeochemistry',this)">Biogeochemie</button>
+</div>
+<div style="margin-bottom:6px;padding:10px 14px;background:#dcfce7;
+            border-radius:6px;border-left:4px solid #1a7a4a;">
+  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;
+               letter-spacing:.14em;color:#1a7a4a;text-transform:uppercase;">A1 — Sensor &amp; Klima</span>
+  <div style="font-size:11.5px;color:#475569;margin-top:3px;">Datengestützte Vorhersage effektiver hydroklimatischer und biogeochemischer Waldbedingungen.</div>
+</div>
+<div class="card" id="card-stahl" data-labels="hydro-modelling field-data"
+     data-cluster="a1" data-layer="1"
+     style="border-left:4px solid #1a7a4a;background:#f0fdf7;border-radius:8px;
+            padding:16px 18px;margin-bottom:12px;transition:box-shadow .15s;">
+  <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:18px;font-weight:700;color:#1a7a4a;letter-spacing:-.01em;margin-bottom:2px;">Water Legacy</div>
+      <div style="font-size:11px;color:#64748b;font-style:italic;margin-bottom:4px;">Nachwirkungen von Waldveränderungen auf den Wasserhaushalt von Einzugsgebieten und hydrologische Extreme</div>
+      <div style="font-size:13px;font-weight:400;color:#1e293b;">Prof. Dr. Kerstin Stahl · Dr. Sebastian Gnann · Prof. Dr. Markus Weiler<span style="font-size:12px;color:#64748b;margin-left:6px">Water Legacy</span></div>
+      
+      <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;"><span style="background:#f1f5f9;color:#475569;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">Methoden: Datenanalyse, hydrologische Modellierung</span></div>
+    </div>
+  </div>
+  <ul style="margin:10px 0 0 0;padding-left:18px;font-size:12px;color:#475569;line-height:1.55;list-style-type:disc;"><li style="margin-bottom:3px;">Untersucht Nachwirkungen von Waldveränderungen auf Einzugsgebiets-Wasserbilanzterme und hydrologische Extreme (Hochwasser, Dürren)</li><li style="margin-bottom:3px;">Stellt Zeitreihen zur Waldentwicklung und Hydrologie zusammen und analysiert sie gemeinsam</li><li style="margin-bottom:3px;">Passt das hydrologische Modell RoGeR an, um konkurrierende Treiber des Systemwandels korrekt abzubilden</li><li style="margin-bottom:3px;">Untersucht Ursachen hydrologischer Waldveränderungen; statistische Analyse hydrologischer Sensitivitäten gegenüber Klima- und Waldveränderungen</li><li style="margin-bottom:3px;">Trägt Prozessverständnis zur Trinkwasserbereitstellung als Ökosystemleistung zum C3-Modellierungsrahmen bei</li></ul>
+  
+  <div style="margin-top:8px;padding-top:6px;border-top:1px solid #f1f5f9;"><span style="font-family:IBM Plex Mono,monospace;font-size:8px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">Forscherin</span><div style="font-size:10.5px;color:#1a7a4a;margin-top:2px;">Johanna von Drachenfels (Doktorandin) · 01.05.2026</div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
+    <div>
+      <div class="col-head">Eingaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Hydrologische Zeitreihen (Bodenfeuchte, Quellen, Grundwasser, Abfluss) aus verfügbaren Quellen der Region</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Waldveränderungsdaten aus anderen FuFo-Themen</span></div>
+    </div>
+    <div>
+      <div class="col-head">Ausgaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Kuratierter Wald-Hydrologie-Datensatz für die FuFo-Region</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Statistische Analyse hydrologischer Sensitivitäten gegenüber Klima- und Waldveränderungen über Jahreszeiten und Abflussregimes</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">RoGeR-Modell mit zeitvariabler Parametrisierung der Walddynamik</span></div>
+    </div>
+  </div>
+</div>
+<div class="card" id="card-christen" data-labels="microclimate machine-learning field-data"
+     data-cluster="a1" data-layer="1"
+     style="border-left:4px solid #1a7a4a;background:#f0fdf7;border-radius:8px;
+            padding:16px 18px;margin-bottom:12px;transition:box-shadow .15s;">
+  <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:18px;font-weight:700;color:#1a7a4a;letter-spacing:-.01em;margin-bottom:2px;">Adaptives Sensornetzwerk</div>
+      <div style="font-size:11px;color:#64748b;font-style:italic;margin-bottom:4px;">Adaptives Sensornetzwerk und ML-basierte Rekonstruktion des Kronenmikroklimas</div>
+      <div style="font-size:13px;font-weight:400;color:#1e293b;">Prof. Dr. Andreas Christen<span style="font-size:12px;color:#64748b;margin-left:6px">Adaptives Sensornetzwerk &amp; Mikroklima-Modell im Kronendach (A1)</span></div>
+      <div style="font-size:10.5px;color:#64748b;margin-top:1px">Auch: Prof. Dr. Markus Weiler · Dr. Florian Schnabel</div>
+      <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;"><span style="background:#f1f5f9;color:#475569;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">Methoden: In-situ-Messungen, Mikroklimamodellierung</span><span style="background:#e0f2fe;color:#0369a1;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">Adaptives Sensornetzwerk + ML-Baumensemble (Python)</span></div>
+    </div>
+  </div>
+  <ul style="margin:10px 0 0 0;padding-left:18px;font-size:12px;color:#475569;line-height:1.55;list-style-type:disc;"><li style="margin-bottom:3px;">Adaptives Sensornetzwerk (200 Unterkronenstationen) — selbstoptimierend ab dem zweiten Jahr</li><li style="margin-bottom:3px;">ML-basiertes Hindcasting von Kronenmikroklimaten über 30 Jahre</li><li style="margin-bottom:3px;">Übertragbares Regionalmodell für Unterküronentemperatur an beliebigen FuFo-Standorten</li></ul>
+  <div style="margin-top:12px;"><div class="col-head">Forschungsziele</div><ol style="margin:0;padding-left:18px;font-size:11px;color:#475569;line-height:1.6;"><li style="margin-bottom:3px;">Qualitätskontrolle entwickeln und Stationseinzigartigkeit bewerten, um die adaptive Netzwerkkonfiguration nach dem ersten vollständigen Betriebsjahr zu informieren</li><li style="margin-bottom:3px;">ML zur Rekonstruktion historischer Kronenmikroklimabedinungen über 30 Jahre (Hindcasting) und Schließung von Datenlücken einsetzen</li><li style="margin-bottom:3px;">Übertragbares Regionalmodell erstellen, das Unterkronentemperaturen und Luftfeuchtigkeit an beliebigen Waldstandorten im FuFo-Gebiet vorhersagt</li></ol></div>
+  <div style="margin-top:8px;padding-top:6px;border-top:1px solid #f1f5f9;"><span style="font-family:IBM Plex Mono,monospace;font-size:8px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">Forscherin</span><div style="font-size:10.5px;color:#1a7a4a;margin-top:2px;">Tabea Wörner (Doktorandin) · 01.04.2026</div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
+    <div>
+      <div class="col-head">Eingaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Grobskalige (~10×10 km) Reanalyseklimasdaten (ERA5-Niveau) — für ML-Training und Hindcasting</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Räumliche Prädiktoren: Waldstruktur (Baumdichte, Clustering, Höhe) und orographische Daten</span></div>
+    </div>
+    <div>
+      <div class="col-head">Ausgaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Qualitätskontrollwerkzeuge und Stationseinzigartigkeitsrankings für das 200-Stationen-Netzwerk</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Standortspezifische Hindcast-Datensätze für Tc, Ts, VPD unter dem Kronendach für ~30 Jahre (1996–2025)</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Übertragbares regionales ML-Modell zur Vorhersage von Unterkronentemperaturen und Luftfeuchtigkeit im gesamten FuFo-Gebiet</span></div>
+    </div>
+  </div>
+</div>
+<div class="card" id="card-canopy_micro" data-labels="microclimate remote-sensing machine-learning field-data"
+     data-cluster="a1" data-layer="1"
+     style="border-left:4px solid #1a7a4a;background:#f0fdf7;border-radius:8px;
+            padding:16px 18px;margin-bottom:12px;transition:box-shadow .15s;">
+  <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:18px;font-weight:700;color:#1a7a4a;letter-spacing:-.01em;margin-bottom:2px;">Kronenmikroenvironment</div>
+      <div style="font-size:11px;color:#64748b;font-style:italic;margin-bottom:4px;">Gelände- und waldkroneninduzierte hydrometeorologische Prozesse und mikroräumliche Umgebungsmuster</div>
+      <div style="font-size:13px;font-weight:400;color:#1e293b;">Prof. Dr. Markus Weiler · Prof. Dr. Andreas Christen · Prof. Dr. Thomas Seifert<span style="font-size:12px;color:#64748b;margin-left:6px">Gelände- und waldkroneninduzierte hydrometeorologische Prozesse</span></div>
+      <div style="font-size:10.5px;color:#64748b;margin-top:1px">Auch: Prof. Dr. Heike Puhlmann (FVA)</div>
+      <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;"><span style="background:#f1f5f9;color:#475569;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">Methoden: In-situ-Messungen, LiDAR, Fernerkundung, ML</span><span style="background:#e0f2fe;color:#0369a1;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">ML-Clustering und räumliche Interpolation (Python); LiDAR-Verarbeitung</span></div>
+    </div>
+  </div>
+  <ul style="margin:10px 0 0 0;padding-left:18px;font-size:12px;color:#475569;line-height:1.55;list-style-type:disc;"><li style="margin-bottom:3px;">Etabliert ein umfassendes Messnetzwerk für hydroklimatische Variablen an 300 Plots in 100–150 Beständen in den Untersuchungsregionen</li><li style="margin-bottom:3px;">Leitet Gelände- und Waldstrukturindizes für die räumliche Interpolation meteorologischer Variablen ab</li><li style="margin-bottom:3px;">Setzt ML und Clustering ein, um Mikroumgebungen zu klassifizieren und hydroklimatische Bedingungen unter dem Kronendach vorherzusagen</li><li style="margin-bottom:3px;">Liefert die Grundlage für die Platzierung des Sensornetzwerks in den Untersuchungsregionen (Rheintal und Schwarzwald)</li></ul>
+  <div style="margin-top:12px;"><div class="col-head">Forschungsziele</div><ol style="margin:0;padding-left:18px;font-size:11px;color:#475569;line-height:1.6;"><li style="margin-bottom:3px;">Gelände- und Waldstrukturindizes für räumliche Interpolation meteorologischer Variablen und Clustering von Mikroumgebungen ableiten</li><li style="margin-bottom:3px;">Landesweite, terrestrische und drohnenbasierte LiDAR-Datensätze kombinieren, um Baum- und Waldstruktur mit hoher Genauigkeit zu bestimmen</li><li style="margin-bottom:3px;">Standorte für ~100–150 Waldbestände mit spezifischen Baumartenzusammensetzungen und Bewirtschaftungstypen festlegen</li><li style="margin-bottom:3px;">ML-Ansätze für räumlich-zeitlich konsistente Datensätze mehrerer hydroklimatischer Variablen entwickeln, um die Mikroklimaregulation durch Wald abzuleiten</li></ol></div>
+  <div style="margin-top:8px;padding-top:6px;border-top:1px solid #f1f5f9;"><span style="font-family:IBM Plex Mono,monospace;font-size:8px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">Forscher</span><div style="font-size:10.5px;color:#94a3b8;margin-top:2px;">Dr. Joschka Geissler (PostDoc) · Techniker (vakant)</div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
+    <div>
+      <div class="col-head">Eingaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Landesweite, terrestrische und drohnenbasierte LiDAR-Daten</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">ERA5-Land-Reanalysedaten</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Geländeparameter: Exposition, Hangneigung, Höhe; Bodenkarten</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Vorhandene Fernerkundungsdatensätze</span></div>
+    </div>
+    <div>
+      <div class="col-head">Ausgaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Erste Mikroklima- und Mikroumgebungskarte für Rheintal und Schwarzwald bei 5-m-Auflösung</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Platzierungsplan für das Sensornetzwerk (~300 Plots in 100–150 Beständen)</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">ML-abgeleitete räumlich-zeitlich konsistente Datensätze mehrerer hydroklimatischer Variablen unter Waldkronen</span></div>
+    </div>
+  </div>
+</div>
+<div class="card" id="card-water_quality" data-labels="field-data"
+     data-cluster="a1" data-layer="1"
+     style="border-left:4px solid #1a7a4a;background:#f0fdf7;border-radius:8px;
+            padding:16px 18px;margin-bottom:12px;transition:box-shadow .15s;">
+  <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:18px;font-weight:700;color:#1a7a4a;letter-spacing:-.01em;margin-bottom:2px;">Wasserqualitätsmonitoring</div>
+      <div style="font-size:11px;color:#64748b;font-style:italic;margin-bottom:4px;">Wasserqualitätsmonitoring an bewaldeten Quelleinzugsgebieten</div>
+      <div style="font-size:13px;font-weight:400;color:#1e293b;">Prof. Dr. Markus Weiler · Dr. Carolin Winter<span style="font-size:12px;color:#64748b;margin-left:6px">Wasserqualitätsmonitoring</span></div>
+      
+      <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;"><span style="background:#f1f5f9;color:#475569;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">Methoden: In-situ-Messungen</span></div>
+    </div>
+  </div>
+  <ul style="margin:10px 0 0 0;padding-left:18px;font-size:12px;color:#475569;line-height:1.55;list-style-type:disc;"><li style="margin-bottom:3px;">Kontinuierliches Monitoring von Wassertemperatur, Trübung, Kohlenstoff (DOC) und Stickstoff am Auslass von 50 bewaldeten Quelleinzugsgebieten</li><li style="margin-bottom:3px;">Erweitert bestehende Probenahmestellen und reagiert auf laufende Waldstörungen</li><li style="margin-bottom:3px;">Legt die Datengrundlage dafür, wie der Waldzustand die Süßwasserqualität auf Einzugsgebietsebene beeinflusst</li></ul>
+  
+  <div style="margin-top:8px;padding-top:6px;border-top:1px solid #f1f5f9;"><span style="font-family:IBM Plex Mono,monospace;font-size:8px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">Forscher/in</span><div style="font-size:10.5px;color:#1a7a4a;margin-top:2px;">Noch nicht besetzt</div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
+    <div>
+      <div class="col-head">Eingaben</div>
+      <span style="color:#94a3b8">—</span>
+    </div>
+    <div>
+      <div class="col-head">Ausgaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Kontinuierliche Wasserqualitätszeitreihen (Temperatur T, Trübung/Schwebstoffe S, Kohlenstoff C, Stickstoff N) an Auslässen von 50 bewaldeten Quelleinzugsgebieten</span></div>
+    </div>
+  </div>
+</div>
+<div class="card" id="card-christen_ml" data-labels="microclimate machine-learning"
+     data-cluster="a1" data-layer="1"
+     style="border-left:4px solid #1a7a4a;background:#f0fdf7;border-radius:8px;
+            padding:16px 18px;margin-bottom:12px;transition:box-shadow .15s;">
+  <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:18px;font-weight:700;color:#1a7a4a;letter-spacing:-.01em;margin-bottom:2px;">ML-basierte Waldklimaprojektionen</div>
+      <div style="font-size:11px;color:#64748b;font-style:italic;margin-bottom:4px;">ML-basierte Mikroklima-Projektion im Kronendach (ab 2028)</div>
+      <div style="font-size:13px;font-weight:400;color:#1e293b;">Prof. Dr. Andreas Christen<span style="font-size:12px;color:#64748b;margin-left:6px">ML-Waldklimaprojektionen — A1-Integration (ab 2028)</span></div>
+      <div style="font-size:10.5px;color:#64748b;margin-top:1px">Auch: Prof. Dr. René Orth</div>
+      <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;"><span style="background:#f1f5f9;color:#475569;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">Methoden: Maschinelles Lernen, prozessbasierte Modellierung</span><span style="background:#e0f2fe;color:#0369a1;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">ML-hybrides physikalisch-statistisches Downscaling (Python)</span></div>
+    </div>
+  </div>
+  <ul style="margin:10px 0 0 0;padding-left:18px;font-size:12px;color:#475569;line-height:1.55;list-style-type:disc;"><li style="margin-bottom:3px;">Erweitert die Sensornetzwerkarbeit durch Einbeziehung der Waldbiologie — wie das Kronendach Temperatur und Luftfeuchtigkeit durch Blattfläche, Stomataöffnung und Photosynthese reguliert</li><li style="margin-bottom:3px;">Kombiniert Sensornetzwerkdaten (Christen A1), Klimaprojektionen (Jung/Schindler C2) und QUINCY-Kronenphysiologie (Orth), um Kronenbedingungen unter zukünftigen Klimaverhältnissen zu projizieren</li><li style="margin-bottom:3px;">Ermöglicht das Verständnis, ob Wälder sich selbst gegen Klimaextreme puffern können</li><li style="margin-bottom:3px;">Startet 2028, aufbauend auf Sensornetzwerkmessungen und C2-Klimaprojektionen</li></ul>
+  <div style="margin-top:12px;"><div class="col-head">Forschungsziele</div><ol style="margin:0;padding-left:18px;font-size:11px;color:#475569;line-height:1.6;"><li style="margin-bottom:3px;">ML-Hindcast des Sensornetzwerks mit Waldphysiologiedaten aus QUINCY erweitern, um Vorhersagen innerhalb des Kronendachs zu verbessern</li><li style="margin-bottom:3px;">Kronenmikroklimate im FuFo-Gebiet unter zukünftigen Klimaszenarien projizieren</li><li style="margin-bottom:3px;">Waldmikroklima-Pufferung quantifizieren — wie stark schützt das Kronendach Bäume vor extremer Hitze und Dürre?</li></ol></div>
+  
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
+    <div>
+      <div class="col-head">Eingaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Kronenmessungen des Sensornetzwerks und initiale ML-Interpolation aus A1</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Von C2 herunterskalierte Klimaprojektionen</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Phänologie: Blattflächenindex aus MODIS und Sentinel-2, Phenocam-Daten aus dem Stationsnetzwerk</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Physiologie: Vegetationsoptische Tiefe aus VODCA2g, stationsbasierte Dendrometer-Messungen</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">QUINCY-Modelloutputs: simulierte Phänologie und Physiologie jenseits des Beobachtungszeitraums</span></div>
+    </div>
+    <div>
+      <div class="col-head">Ausgaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Aktualisierte ML-Mikroklimainterpolation mit Vegetationsphänologie und -physiologie</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Projektionen des Waldmikroklimas in der FF-Region über vergangene und zukünftige Jahrzehnte</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Quantifizierung des Waldmikroklima-Puffereffekts gegen extreme Hitze und Dürre</span></div>
+    </div>
+  </div>
+</div>
+<div style='height:20px'></div>
+<div style="margin-bottom:6px;padding:10px 14px;background:#dcfce7;
+            border-radius:6px;border-left:4px solid #1a7a4a;">
+  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;
+               letter-spacing:.14em;color:#1a7a4a;text-transform:uppercase;">A3 — Waldrisiken</span>
+  <div style="font-size:11.5px;color:#475569;margin-top:3px;">Waldrisiken und Anpassungsoptionen.</div>
+</div>
+<div class="card" id="card-kattenborn" data-labels="remote-sensing machine-learning"
+     data-cluster="a3" data-layer="1"
+     style="border-left:4px solid #1a7a4a;background:#f0fdf7;border-radius:8px;
+            padding:16px 18px;margin-bottom:12px;transition:box-shadow .15s;">
+  <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:18px;font-weight:700;color:#1a7a4a;letter-spacing:-.01em;margin-bottom:2px;">Großräumige Mortalität</div>
+      <div style="font-size:11px;color:#64748b;font-style:italic;margin-bottom:4px;">Fernerkundung von Baummortalität und pflanzlichen Funktionsmerkmalen</div>
+      <div style="font-size:13px;font-weight:400;color:#1e293b;">Prof. Dr. Teja Kattenborn<span style="font-size:12px;color:#64748b;margin-left:6px">Fernerkundung Mortalität und Pflanzenmerkmale</span></div>
+      <div style="font-size:10.5px;color:#64748b;margin-top:1px">Auch: Prof. Dr. Catalina Munteanu · Prof. Dr. Carsten Dormann · Dr. Florian Schnabel</div>
+      <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;"><span style="background:#f1f5f9;color:#475569;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">Methoden: Fernerkundungsdatenanalyse, Modellierung</span><span style="background:#e0f2fe;color:#0369a1;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">CNN-basiertes Deep Learning (Python, PyTorch); Satellitenzeitreihenanalyse</span></div>
+    </div>
+  </div>
+  <ul style="margin:10px 0 0 0;padding-left:18px;font-size:12px;color:#475569;line-height:1.55;list-style-type:disc;"><li style="margin-bottom:3px;">Kartiert Baummortalität im Landschaftsmaßstab mittels konvolutionaler neuronaler Netze auf Drohnen- und Satellitenbildern, beitragenend zur deadtree.earth-Initiative</li><li style="margin-bottom:3px;">Leitet pflanzliche Funktionsmerkmale — Blattflächenindex, Chlorophyll, Kronenfläche — aus Satellitenzeitreihen ab</li><li style="margin-bottom:3px;">Liefert räumlich kontinuierliche Merkmalbeobachtungen für die iLAND-Kalibrierung und -Validierung</li></ul>
+  <div style="margin-top:12px;"><div class="col-head">Forschungsziele</div><ol style="margin:0;padding-left:18px;font-size:11px;color:#475569;line-height:1.6;"><li style="margin-bottom:3px;">Baummortalität im Landschaftsmaßstab mittels konvolutionaler neuronaler Netze auf Drohnen- und Satellitenbildern kartieren</li><li style="margin-bottom:3px;">Räumlich kontinuierliche Karten pflanzlicher Funktionsmerkmale aus Satellitenzeitreihen für die iLAND-Kalibrierung und -Validierung ableiten</li></ol></div>
+  <div style="margin-top:8px;padding-top:6px;border-top:1px solid #f1f5f9;"><span style="font-family:IBM Plex Mono,monospace;font-size:8px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">Forscher</span><div style="font-size:10.5px;color:#1a7a4a;margin-top:2px;">Mattis Pfenning (Doktorand)</div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
+    <div>
+      <div class="col-head">Eingaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">deadtrees.earth-Drohnenarchiv (Zentimeter-Luftbildaufnahmen)</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">ERA5-Klimavariabilitätsdaten</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">SRTM-Topographie und SoilGrids-Bodendaten</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Deklassifizierte Satellitenbilder aus der Zeit des Kalten Krieges (1960er–70er)</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Nationale Baumarten-Verbreitungsdaten</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Bestandsalterdaten</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Waldbiomassedaten</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Landsat-basierte Landbedeckungshistorien GLC_FCS30D</span></div>
+    </div>
+    <div>
+      <div class="col-head">Ausgaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Jährliche Schichten der stehendem Totholzdeckung und Waldbedeckung (%) von 2016 bis heute</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Räumlich explizite Treiber-Attributionskarten mit SHAP-Effektgrößen pro Prädiktor</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Kurzfristige Prognosen erhöhter Mortalitätsrisiken (1–2 Jahre im Voraus)</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Interaktive Webplattform (deadtrees.earth) mit Mortalitätskarten, Treiberbeiträgen und Prognosen</span></div>
+    </div>
+  </div>
+</div>
+<div style='height:20px'></div>
+<div style="margin-bottom:6px;padding:10px 14px;background:#ccfbf1;
+            border-radius:6px;border-left:4px solid #0f766e;">
+  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;
+               letter-spacing:.14em;color:#0f766e;text-transform:uppercase;">B1 — Entscheidungsrahmen</span>
+  <div style="font-size:11.5px;color:#475569;margin-top:3px;">Governance, Evidenz und Entscheidungsrahmen für die Waldbewirtschaftung.</div>
+</div>
+<div class="card" id="card-dormann_evidence" data-labels="level-of-evidence model-comparison iland"
+     data-cluster="b1" data-layer="0"
+     style="border-left:4px solid #0f766e;background:#f0fdfa;border-radius:8px;
+            padding:16px 18px;margin-bottom:12px;transition:box-shadow .15s;">
+  <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:18px;font-weight:700;color:#0f766e;letter-spacing:-.01em;margin-bottom:2px;">Evidenz-Prozess-Modell</div>
+      <div style="font-size:11px;color:#64748b;font-style:italic;margin-bottom:4px;">Abstimmung von Zweck, Modell und Evidenz für die Waldbewirtschaftung</div>
+      <div style="font-size:13px;font-weight:400;color:#1e293b;">Prof. Dr. Carsten Dormann · Yannek Käber · Prof. Dr. Michael Pregernig</div>
+      <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;"><span style="background:#f0fdfa;color:#134e4a;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">Methoden: Evidenzstufenbewertung; Modellvergleich und -katalogisierung</span></div>
+    </div>
+  </div>
+  <ul style="margin:10px 0 0 0;padding-left:18px;font-size:12px;color:#475569;line-height:1.55;list-style-type:disc;">
+    <li style="margin-bottom:3px;">Bewertet Waldwachstumsmodelle dahingehend, wie gut sie für die Waldbewirtschaftung unter Klimawandel relevante Prozesse abbilden — mit einem Evidenzstufenschema in Anlehnung an die evidenzbasierte Medizin</li>
+    <li style="margin-bottom:3px;">Identifiziert wichtige Entscheidungen für die zukünftige Waldbewirtschaftung aus Stakeholderbefragungen und Literatur (mit B1, B2, B3)</li>
+    <li style="margin-bottom:3px;">Katalogisiert, welche Umwelttreiber jedes Modell berücksichtigt (Bewirtschaftung, CO₂-Konzentrationen, Bodenfeuchte, Spätfrost, Schädlinge und Krankheitserreger, Lichtprofile)</li>
+    <li style="margin-bottom:3px;">Prüft für jede Entscheidungs-×-Prozess-Kombination die wissenschaftliche Literatur auf die Evidenzstufe hinter der Prozessdarstellung (mit A1–A5)</li>
+    <li style="margin-bottom:3px;">Trägt Code-Verbesserungen zu Open-Source-Waldwachstumsmodellen für die Entscheidungsunterstützung unter Klimawandel bei (mit C3 und SES ModelLab)</li>
+  </ul>
+  <div style="margin-top:12px;"><div class="col-head">Forschungsziele</div><ol style="margin:0;padding-left:18px;font-size:11px;color:#475569;line-height:1.6;">
+    <li style="margin-bottom:3px;">Evidenzbasis der Prozesse in bestehenden Open-Source-Waldmodellen katalogisieren</li>
+    <li style="margin-bottom:3px;">Temperierte Waldmodelle den Fragen zuordnen, die Entscheidungsträger beantworten wollen</li>
+    <li style="margin-bottom:3px;">Ein FuFo-Waldwachstumsmodell in Aspekten verbessern, die den Anforderungen für Entscheidungsfindung unter Unsicherheit nicht genügen</li>
+  </ol></div>
+  <div style="margin-top:8px;padding-top:6px;border-top:1px solid #f1f5f9;"><span style="font-family:IBM Plex Mono,monospace;font-size:8px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">Forscherin</span><div style="font-size:10.5px;color:#0f766e;margin-top:2px;">Andrea Ingrosso (Doktorandin)</div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
+    <div>
+      <div class="col-head">Eingaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Entscheidungskontexte und Bewirtschaftungsoptionen aus RA B (B1, B2, B3)</span></div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Wissenschaftliche Expertise zu entscheidungsrelevanten Prozessen aus RA A und Literatur</span></div>
+    </div>
+    <div>
+      <div class="col-head">Ausgaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Evidenzstufenbewertungen für Prozessdarstellungen in Waldmodellen (Open Access)</span></div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Katalog der in Open-Source-Waldmodellen abgebildeten Umwelttreiber</span></div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Frage-Modell-Zuordnungsbewertungen für Entscheidungskontexte</span></div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Code-Beiträge zur Verbesserung von Open-Source-Waldmodellen für spezifische Entscheidungskontexte</span></div>
+    </div>
+  </div>
+</div>
+<div style='height:20px'></div>
+<div style="margin-bottom:6px;padding:10px 14px;background:#f3e8ff;
+            border-radius:6px;border-left:4px solid #7c3aed;">
+  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;
+               letter-spacing:.14em;color:#7c3aed;text-transform:uppercase;">B2 — Entscheidungsprinzipien</span>
+  <div style="font-size:11.5px;color:#475569;margin-top:3px;">Prinzipien von Robustheit, Verantwortung, Legitimität und Gerechtigkeit in der Waldentscheidungsfindung.</div>
+</div>
+<div class="card" id="card-hanewinkel_b2" data-labels="iland economic-modelling"
+     data-cluster="b2" data-layer="1"
+     style="border-left:4px solid #7c3aed;background:#faf5ff;border-radius:8px;
+            padding:16px 18px;margin-bottom:12px;transition:box-shadow .15s;">
+  <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:18px;font-weight:700;color:#7c3aed;letter-spacing:-.01em;margin-bottom:2px;">Räumlich robuste Optimierung</div>
+      <div style="font-size:11px;color:#64748b;font-style:italic;margin-bottom:4px;">Robuste räumliche Optimierungsansätze zur Entwicklung adaptiver Bewirtschaftungsstrategien in großen Waldlandschaften</div>
+      <div style="font-size:13px;font-weight:400;color:#1e293b;">Prof. Dr. Marc Hanewinkel<span style="font-size:12px;color:#64748b;margin-left:6px">Räumlich robuste Optimierung — B2 / C2 / C3</span></div>
+      <div style="font-size:10.5px;color:#64748b;margin-top:1px">Auch: Prof. Dr. Stefan Baumgärtner · Prof. Dr. Stefan Pauliuk</div>
+      <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;"><span style="background:#f3e8ff;color:#6b21a8;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">Methoden: iLand-Landschaftsmodellierung · räumlich robuste Optimierung · Pareto-Frontenanalyse · Spieltheorie (Nash-Gleichgewicht)</span></div>
+    </div>
+  </div>
+  <ul style="margin:10px 0 0 0;padding-left:18px;font-size:12px;color:#475569;line-height:1.55;list-style-type:disc;">
+    <li style="margin-bottom:3px;">Identifiziert und quantifiziert räumlich begrenzte Ökosystemleistungen in FuFo-Landschaften mittels iLand unter mehreren Klimaszenarien; entwickelt einen auf andere Landschaften übertragbaren Algorithmus</li>
+    <li style="margin-bottom:3px;">Entwickelt einen räumlich robusten Optimierungsansatz, der räumliche Beschränkungen direkt in die Zielfunktion von Waldbewirtschaftungsproblemen integriert und Robustheitsmetriken als explizite Optimierungskriterien verwendet</li>
+    <li style="margin-bottom:3px;">Analysiert die Pareto-Front, die Trade-offs zwischen wirtschaftlichen, ökologischen und Robustheitszielen für Lösungen abwägt, die unter räumlicher Unsicherheit gut und konsistent abschneiden</li>
+    <li style="margin-bottom:3px;">Wendet Spieltheorie an, um das Verhalten mehrerer privater Waldbesitzer bei der Entscheidung über Transformationsstrategien im Landschaftsmaßstab zu analysieren (Umwandlung von Fichten-Reinbeständen in Mischbestände unter Borkenkäferrisiko)</li>
+    <li style="margin-bottom:3px;">Untersucht, wie Governance-Anreize für die Zusammenarbeit von Waldbesitzern zu einer höheren Gesamt-ÖSL-Bereitstellung auf Landschaftsebene führen; trägt zur Gestaltung von A&amp;TPs bei</li>
+  </ul>
+  <div style="margin-top:12px;"><div class="col-head">Forschungsziele</div><ol style="margin:0;padding-left:18px;font-size:11px;color:#475569;line-height:1.6;">
+    <li style="margin-bottom:3px;">Identifizieren, welche räumlichen Beschränkungen in einer FuFo-Landschaft bestehen, wie sie zu ÖSL-Trade-offs führen und wie Klimaunsicherheiten diese Beschränkungen verschärfen</li>
+    <li style="margin-bottom:3px;">Robuste Bewirtschaftungsstrategien entwerfen, die räumliche Einschränkungen berücksichtigen und in waldadaptive Entscheidungsprozesse integrieren</li>
+    <li style="margin-bottom:3px;">Analysieren, wie robuste räumliche Entscheidungsfindung Mehrbesitzer-Landschaftsentscheidungen verbessert und wie Waldgovernance durch finanzielle Anreize Kooperation unterstützen kann</li>
+  </ol></div>
+  <div style="margin-top:8px;padding-top:6px;border-top:1px solid #f1f5f9;"><span style="font-family:IBM Plex Mono,monospace;font-size:8px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">Forscherin</span><div style="font-size:10.5px;color:#7c3aed;margin-top:2px;">Paulina Friemann (Doktorandin)</div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
+    <div>
+      <div class="col-head">Eingaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">iLand-Ökosystemleistungs-Outputs unter mehreren Klimaszenarien (C2/C3)</span></div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Klimaszenarien aus C2 (mehrere Zukunftszustände)</span></div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Waldbesitz- und Landschaftsdaten aus den Fallstudiengebieten (SES CaseLab)</span></div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Wirtschaftsdaten zu Holzpreisen, Störungsauswirkungen (Borkenkäfer) und Transformationskosten</span></div>
+    </div>
+    <div>
+      <div class="col-head">Ausgaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Algorithmus zur Erkennung und Quantifizierung räumlich begrenzter ÖSL in Waldlandschaften (Artikel 1)</span></div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Räumlich robuster Optimierungsrahmen mit Robustheitsmetriken als expliziten Optimierungszielen und Pareto-Frontenanalyse (Artikel 2)</span></div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Spieltheoretisches Modell der Mehrbesitzer-Waldkooperation unter räumlichen Beschränkungen und Governance-Anreizanalyse (Artikel 3)</span></div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">A&amp;TPs für räumlich orientierte Waldtransformationsstrategien auf Landschaftsebene</span></div>
+    </div>
+  </div>
+</div>
+<div style='height:20px'></div>
+<div style="margin-bottom:6px;padding:10px 14px;background:#ede9fe;
+            border-radius:6px;border-left:4px solid #5b50c4;">
+  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;
+               letter-spacing:.14em;color:#5b50c4;text-transform:uppercase;">C1 — SES-Theorie</span>
+  <div style="font-size:11.5px;color:#475569;margin-top:3px;">SES-Theorie.</div>
+</div>
+<div class="card" id="card-c1_framework" data-labels="ses-theory"
+     data-cluster="c1" data-layer="0"
+     style="border-left:4px solid #5b50c4;background:#f5f3ff;border-radius:8px;
+            padding:16px 18px;margin-bottom:12px;transition:box-shadow .15s;">
+  <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:18px;font-weight:700;color:#5b50c4;letter-spacing:-.01em;margin-bottom:2px;">Weiterentwicklung der SES-Theorie für Waldadaption und -transformation</div>
+      <div style="font-size:11px;color:#64748b;font-style:italic;margin-bottom:4px;">SES-Theorie, konzeptuelle ABMs und interdisziplinärer Rahmen für neuartige Wald-SES</div>
+      <div style="font-size:13px;font-weight:400;color:#1e293b;">Prof. Dr. Maja Schlüter · Dr. Tilman Hertz<span style="font-size:12px;color:#64748b;margin-left:6px">C1 — Weiterentwicklung der SES-Theorie für Waldadaption und -transformation</span></div>
+      <div style="font-size:10.5px;color:#64748b;margin-top:1px">Auch: Prof. Dr. Stefan Pauliuk · Prof. Dr. Tanja Mölders · Prof. Dr. Cathrin Zengerling · Prof. Dr. Sylvia Kruse · Jun.-Prof. Dr. Ana Stritih</div>
+      <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;"></div>
+    </div>
+  </div>
+  <ul style="margin:10px 0 0 0;padding-left:18px;font-size:12px;color:#475569;line-height:1.55;list-style-type:disc;"><li style="margin-bottom:3px;">Kartiert Wald- und A&amp;TP-Konzeptualisierungen über alle FuFo-Themen in den Forschungsbereichen A–C, um die SES-Rahmenentwicklung, interdisziplinäre Theorieintegration und Identifikation disziplinärer Spannungsfelder zu unterstützen</li><li style="margin-bottom:3px;">Organisiert Dialoge und partizipative Aktivitäten zur Förderung von Ko-Lernen und Verständnis komplexer Wald-SES-Dynamiken (Wälder als CAS), mit Blick auf Theorien der Waldadaption und -transformation</li><li style="margin-bottom:3px;">Entwickelt stilisierte SES-Modelle ausgewählter Waldfall­studien zur Unterstützung der Theoriebildung und als Prototypen für die Identifikation von A&amp;TPs in Thema C3</li></ul>
+  <div style="margin-top:12px;"><div class="col-head">Forschungsziele</div><ol style="margin:0;padding-left:18px;font-size:11px;color:#475569;line-height:1.6;"><li style="margin-bottom:3px;">Zur Entwicklung des FuFo-SES-Rahmens beitragen und Orientierung für seine Operationalisierung in den verschiedenen Themen geben</li><li style="margin-bottom:3px;">Die themenübergreifende Entwicklung von A&amp;TPs unterstützen und ihre Konsistenz mit der allgemeinen SES-CAS-Theorie sicherstellen</li><li style="margin-bottom:3px;">Theorien zu ausgewählten Adaptationsherausforderungen entwickeln, die für die Wald-SES-Governance relevant sind</li></ol></div>
+  <div style="margin-top:8px;padding-top:6px;border-top:1px solid #f1f5f9;"><span style="font-family:IBM Plex Mono,monospace;font-size:8px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">Forscherin</span><div style="font-size:10.5px;color:#1a7a4a;margin-top:2px;">Theresa Loch (PostDoc)</div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
+    <div>
+      <div class="col-head">Eingaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">SES-Theorie-Literatur und Schlüsselartikel aus den Cluster-Forschungsbereichen</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Interviews mit Vertreterinnen und Vertretern aller FuFo-Themen zur Erhebung zentraler Konzepte, theoretischer Commitments und A&amp;TP-Konzeptualisierungen</span></div>
+    </div>
+    <div>
+      <div class="col-head">Ausgaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Beiträge zum FuFo-SES-Rahmen</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Konzeptuelle/stilisierte SES-Modelle ausgewählter Fallstudien</span></div>
+    </div>
+  </div>
+</div>
+<div style='height:20px'></div>
+<div style="margin-bottom:6px;padding:10px 14px;background:#ede9fe;
+            border-radius:6px;border-left:4px solid #5b50c4;">
+  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;
+               letter-spacing:.14em;color:#5b50c4;text-transform:uppercase;">C2 — Szenarien</span>
+  <div style="font-size:11.5px;color:#475569;margin-top:3px;">Szenarien.</div>
+</div>
+<div class="card" id="card-jung_schindler" data-labels="scenario"
+     data-cluster="c2" data-layer="1"
+     style="border-left:4px solid #5b50c4;background:#f5f3ff;border-radius:8px;
+            padding:16px 18px;margin-bottom:12px;transition:box-shadow .15s;">
+  <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:18px;font-weight:700;color:#5b50c4;letter-spacing:-.01em;margin-bottom:2px;">HyClim-Szenarien — Klimaanalyse und -modellierung</div>
+      <div style="font-size:11px;color:#64748b;font-style:italic;margin-bottom:4px;">Hochauflösendes Klimaszenario-Downscaling für das FuFo-Gebiet</div>
+      <div style="font-size:13px;font-weight:400;color:#1e293b;">Prof. Dr. Kerstin Stahl · Prof. Dr. Dirk Schindler · Prof. Dr. Andreas Christen · Prof. Dr. René Orth<span style="font-size:12px;color:#64748b;margin-left:6px">HyClimScenarios — Regionale hydroklimatische Szenarien</span></div>
+      
+      <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;"><span style="background:#f1f5f9;color:#475569;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">Methoden: Modellierung</span><span style="background:#e0f2fe;color:#0369a1;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">Statistisches Downscaling mit Baumensemble-Methoden; ERA5-Land / CORDEX / CMIP6</span></div>
+    </div>
+  </div>
+  <ul style="margin:10px 0 0 0;padding-left:18px;font-size:12px;color:#475569;line-height:1.55;list-style-type:disc;"><li style="margin-bottom:3px;">Erzeugt hochauflösende regionalisierte Klima- und Hydrologieszenarien, die Dürren, Stürme und Überschwemmungen für das FuFo-Untersuchungsgebiet abbilden</li><li style="margin-bottom:3px;">Skaliert meteorologische Felder statistisch von ~10–120 km auf ein 100 m × 100 m-Raster herunter</li><li style="margin-bottom:3px;">Verwendet Ereignis-Storyline-Formulierungen, um Extremstörungen neben langfristigen Klimaprojektionen darzustellen</li><li style="margin-bottom:3px;">Liefert die biophysikalischen Randbedingungen für alle C3-Modelle</li></ul>
+  <div style="margin-top:12px;"><div class="col-head">Forschungsziele</div><ol style="margin:0;padding-left:18px;font-size:11px;color:#475569;line-height:1.6;"><li style="margin-bottom:3px;">Regionalisierte Reanalyse- und Zukunftsklimaszenario-Daten bereitstellen, um Clusteraktivitäten — insbesondere Modellierungen in Forschungsbereich C — zu unterstützen</li><li style="margin-bottom:3px;">Szenarien zu waldbezogenen Klima- und Wasserdynamiken entwickeln, mit Fokus auf Extremereignisse, die Waldökosysteme und -leistungen beeinflussen</li><li style="margin-bottom:3px;">100 m × 100 m-meteorologische Antriebsfelder (T, Niederschlag, VPD, Wind, Strahlung, abgeleitete Indizes) unter historischen Bedingungen und CMIP6-Erwärmungsniveaus erzeugen</li></ol></div>
+  <div style="margin-top:8px;padding-top:6px;border-top:1px solid #f1f5f9;"><span style="font-family:IBM Plex Mono,monospace;font-size:8px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">Forscher</span><div style="font-size:10.5px;color:#1a7a4a;margin-top:2px;">Dr. Christopher Jung (PostDoc)</div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
+    <div>
+      <div class="col-head">Eingaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">ERA5-Land-Rasterreanalysedaten</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">CMIP6-Globalklima-Modellensembles und CORDEX-regionales Downscaling</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Verfügbare große Ensembles mit hoher räumlicher Auflösung (z.B. 1 km) zur Biasbewertung</span></div>
+    </div>
+    <div>
+      <div class="col-head">Ausgaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Regionalisierte Reanalysedaten als Ensembles von Rasterklimavariablen (historische Referenzzeiträume)</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Zukunftsklimaszenario-Daten (transiente Spanne von historisch bis zu zukünftigen Erwärmungsniveaus)</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Hochauflösende hydroklimatische Szenarien für Extremereignisse (Dürren, Stürme, Hitzewellen) mit Storyline-Ansatz</span></div>
+    </div>
+  </div>
+</div>
+<div class="card" id="card-stritih" data-labels="abm scenario iland"
+     data-cluster="c2" data-layer="3"
+     style="border-left:4px solid #5b50c4;background:#f5f3ff;border-radius:8px;
+            padding:16px 18px;margin-bottom:12px;transition:box-shadow .15s;">
+  <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:18px;font-weight:700;color:#5b50c4;letter-spacing:-.01em;margin-bottom:2px;">Partizipative Modellierung &amp; Landschaftsszenarien</div>
+      <div style="font-size:11px;color:#64748b;font-style:italic;margin-bottom:4px;">Partizipative Ko-Entwicklung von Walddynamik- und Bewirtschaftungsszenarien</div>
+      <div style="font-size:13px;font-weight:400;color:#1e293b;">Jun.-Prof. Dr. Ana Stritih<span style="font-size:12px;color:#64748b;margin-left:6px">Partizipative Modellierung — iLAND + ABE</span></div>
+      
+      <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;"><span style="background:#f1f5f9;color:#475569;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">Methoden: Modellierung</span><span style="background:#e0f2fe;color:#0369a1;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">iLAND + ABE (agentenbasierte Bewirtschaftungserweiterung)</span></div>
+    </div>
+  </div>
+  <ul style="margin:10px 0 0 0;padding-left:18px;font-size:12px;color:#475569;line-height:1.55;list-style-type:disc;"><li style="margin-bottom:3px;">Bringt Waldbewirtschafter, Ökologen und andere Stakeholder zusammen, um realistische Bewirtschaftungsszenarien für Zukunftswälder ko-zu-entwickeln</li><li style="margin-bottom:3px;">Speist Szenarien in die agentenbasierte Bewirtschaftungserweiterung (ABE) von iLAND ein, um zu simulieren, wie sich verschiedene Bewirtschaftungsentscheidungen im Zeitverlauf auswirken</li><li style="margin-bottom:3px;">Bewertet Glaubwürdigkeit und Legitimität der Szenarien gemeinsam mit den Modellierungsergebnissen</li></ul>
+  <div style="margin-top:12px;"><div class="col-head">Forschungsziele</div><ol style="margin:0;padding-left:18px;font-size:11px;color:#475569;line-height:1.6;"><li style="margin-bottom:3px;">Perspektiven verschiedener Akteure zu Waldbewirtschaftungszielen in ein gekoppeltes Walddynamik-Agentenmodell integrieren</li><li style="margin-bottom:3px;">Ko-Lernen zwischen Wissenschaftlerinnen und Praktikerinnen durch einen iterativen Beobachten-Planen-Handeln-Zyklus ermöglichen</li><li style="margin-bottom:3px;">Einen iterativen, transdisziplinären Prozess zur Bewertung von A&amp;TPs durch Modellierung entwickeln</li><li style="margin-bottom:3px;">Modellglaubwürdigkeit und -legitimität bewerten — steigert Partizipation die wahrgenommene Nützlichkeit von Modellierungsergebnissen?</li></ol></div>
+  <div style="margin-top:8px;padding-top:6px;border-top:1px solid #f1f5f9;"><span style="font-family:IBM Plex Mono,monospace;font-size:8px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">Forscher/innen</span><div style="font-size:10.5px;color:#94a3b8;margin-top:2px;">Christina Dollinger (PI/AI) · 01.05.2026 · Luigi Conte (PostDoc)</div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
+    <div>
+      <div class="col-head">Eingaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Globaler SSP-Szenarienrahmen</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Mentale Modelle der Stakeholder und ko-entwickelte Szenarien</span></div>
+    </div>
+    <div>
+      <div class="col-head">Ausgaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Gekoppeltes Walddynamik-ABM-Modell (iLand + agentenbasiertes Entscheidungsmodul)</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Bewertung von Modellglaubwürdigkeit und -legitimität unter den Stakeholder-Teilnehmenden</span></div>
+    </div>
+  </div>
+</div>
+<div style='height:20px'></div>
+<div style="margin-bottom:6px;padding:10px 14px;background:#dbeafe;
+            border-radius:6px;border-left:4px solid #1a4f8a;">
+  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;
+               letter-spacing:.14em;color:#1a4f8a;text-transform:uppercase;">C3 — Integrierte Modellierung</span>
+  <div style="font-size:11.5px;color:#475569;margin-top:3px;">Integrierte Modellierung.</div>
+</div>
+<div class="card" id="card-orth" data-labels="biogeochemistry"
+     data-cluster="c3" data-layer="1"
+     style="border-left:4px solid #1a4f8a;background:#eff6ff;border-radius:8px;
+            padding:16px 18px;margin-bottom:12px;transition:box-shadow .15s;">
+  <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:18px;font-weight:700;color:#1a4f8a;letter-spacing:-.01em;margin-bottom:2px;">Dürremodellierung</div>
+      <div style="font-size:11px;color:#64748b;font-style:italic;margin-bottom:4px;">Aktualisierung der modellierten Waldreaktion auf atmosphärische und Bodentrockenheit</div>
+      <div style="font-size:13px;font-weight:400;color:#1e293b;">Prof. Dr. René Orth<span style="font-size:12px;color:#64748b;margin-left:6px">Wald-Dürre-Reaktionsfunktionen</span></div>
+      <div style="font-size:10.5px;color:#64748b;margin-top:1px">Auch: Prof. Dr. Teja Kattenborn · Dr. Pia Müller</div>
+      <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;"><span style="background:#f1f5f9;color:#475569;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">Methoden: Modellierung</span><span style="background:#e0f2fe;color:#0369a1;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">QUINCY</span></div>
+    </div>
+  </div>
+  <ul style="margin:10px 0 0 0;padding-left:18px;font-size:12px;color:#475569;line-height:1.55;list-style-type:disc;"><li style="margin-bottom:3px;">Quantifiziert, wie die Waldfunktion mit abnehmender Wasserverfügbarkeit sinkt — mittels globaler Satellitenbeobachtungen, Eddy-Kovarianz-Flussmessungen und der TRY-Pflanzenmerkmal-Datenbank</li><li style="margin-bottom:3px;">Leitet artspezifische Reaktionsfunktionen ab, die Photosynthese und Transpiration mit Bodenwassergehalt und Sättigungsdefizit (VPD) verknüpfen</li><li style="margin-bottom:3px;">Die QUINCY-Aktualisierung kann auf andere prozessbasierte Modelle innerhalb des Forschungsbereichs C übertragen werden, z.B. Waldwachstumsmodelle und SES-Modelle</li></ul>
+  <div style="margin-top:12px;"><div class="col-head">Forschungsziele</div><ol style="margin:0;padding-left:18px;font-size:11px;color:#475569;line-height:1.6;"><li style="margin-bottom:3px;">Funktionale Beziehungen der Vegetationsreaktion auf VPD und Bodenfeuchte auf Rasterebene mithilfe beobachtungsbasierter Datensätze und Pflanzenmerkmalskarten ableiten</li><li style="margin-bottom:3px;">QUINCY durch Integration beobachtungsbasierter Vegetations-Trockenheits-Beziehungen, moduliert durch räumlich variierende Pflanzenmerkmale, verbessern</li><li style="margin-bottom:3px;">QUINCY unter mittleren und extremen Zukunftsklimatrajektorien aus C2 testen und Stresstests unterziehen</li></ol></div>
+  <div style="margin-top:8px;padding-top:6px;border-top:1px solid #f1f5f9;"><span style="font-family:IBM Plex Mono,monospace;font-size:8px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">Forscherin</span><div style="font-size:10.5px;color:#1a7a4a;margin-top:2px;">Pia Müller (Doktorandin) · 01.04.2026</div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
+    <div>
+      <div class="col-head">Eingaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">GPP-Proxies: hochskalierte In-situ-GPP</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Hochskalierte Transpiration</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">ERA5-Reanalyse und MSWX-Produkte</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Vegetationsphänologie</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">CO2 aus Reanalyse</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Pflanzenmerkmale: Leitbahndichte, Holzdichte, SLA, Blatt-N, spezifische Wurzellänge, Wurzeltiefe</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Kronenhöhe</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Bodeneigenschaften aus SoilGrids</span></div>
+    </div>
+    <div>
+      <div class="col-head">Ausgaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Funktionale Beziehungen der Vegetationsreaktion auf VPD und Bodenfeuchte auf Rasterebene</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Aktualisiertes QUINCY-Modell mit neu kalibriertem Stomata-Leitfähigkeitsparameter</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Simulierte Kohlenstoff- und Wasserflussreaktion auf Trockenheit in der FutureForests-Region</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Aktualisierte Wasserstressmodellformulierung für andere C3-Modelle</span></div>
+    </div>
+  </div>
+</div>
+<div class="card" id="card-iland" data-labels="iland"
+     data-cluster="c3" data-layer="2"
+     style="border-left:4px solid #1a4f8a;background:#eff6ff;border-radius:8px;
+            padding:16px 18px;margin-bottom:12px;transition:box-shadow .15s;">
+  <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:18px;font-weight:700;color:#1a4f8a;letter-spacing:-.01em;margin-bottom:2px;">iLAND</div>
+      <div style="font-size:11px;color:#64748b;font-style:italic;margin-bottom:4px;">Einzelbaumbasierte Waldlandschafts-Wachstums- und Störungsmodellierung</div>
+      <div style="font-size:13px;font-weight:400;color:#1e293b;">Prof. Dr. Thomas Seifert<span style="font-size:12px;color:#64748b;margin-left:6px">iLAND — Einzelbaumbasiertes Waldlandschafts- und Störungsmodell</span></div>
+      
+      <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;"><span style="background:#f1f5f9;color:#475569;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">Methoden: Modellierung</span><span style="background:#e0f2fe;color:#0369a1;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">iLAND</span></div>
+    </div>
+  </div>
+  <ul style="margin:10px 0 0 0;padding-left:18px;font-size:12px;color:#475569;line-height:1.55;list-style-type:disc;"><li style="margin-bottom:3px;">Distanzabhängiger, einzelbaumbasierter Waldwachstumssimulator auf Basis ökophysiologischer Prozesse</li><li style="margin-bottom:3px;">Skala: Einzelbaum bis kleine Einzugsgebiete (~10.000 ha) bei 100 m × 100 m-Auflösung</li><li style="margin-bottom:3px;">Agentenbasierte Bewirtschaftungserweiterung (ABE) für Bewirtschaftungsentscheidungen</li><li style="margin-bottom:3px;">Bidirektional gekoppelt mit RoGeR</li></ul>
+  <div style="margin-top:12px;"><div class="col-head">Forschungsziele</div><ol style="margin:0;padding-left:18px;font-size:11px;color:#475569;line-height:1.6;"><li style="margin-bottom:3px;">Modellrahmen für Szenariosimulationen zur Waldentwicklung unter verschiedenen Störungsregimes und Umweltstress für A&amp;TPs bereitstellen</li><li style="margin-bottom:3px;">Lichtmodellierung für Gebirgsgelände (Schwarzwald-Exposition und Hangneigung) verbessern</li><li style="margin-bottom:3px;">Aktualisiertes Dürremortalitätsmodul implementieren (WEHAM-Modell für BW/Deutschland)</li><li style="margin-bottom:3px;">Bidirektionale Kopplung mit dem hydrologischen Modell für wasserabhängiges Wachstum</li></ol></div>
+  <div style="margin-top:8px;padding-top:6px;border-top:1px solid #f1f5f9;"><span style="font-family:IBM Plex Mono,monospace;font-size:8px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">Forscher/in</span><div style="font-size:10.5px;color:#94a3b8;margin-top:2px;">PostDoc ausstehend · 01.07.2026 (?)</div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
+    <div>
+      <div class="col-head">Eingaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Digitaler Waldzwilling-Daten aus A1</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Klimaszenarien aus C2</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Waldinventurdaten (Waldzustandserhebung)</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Terrestrische und luftgestützte Fernerkundungsdaten und Klimabeobachtungen aus A1</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Langzeit-Waldwachstumsversuchsdaten der FVA</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Neue Artenparametrisierungen</span></div>
+    </div>
+    <div>
+      <div class="col-head">Ausgaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Kalibriertes prozessbasiertes Waldwachstumsmodell mit aktualisierten Modulen (Gelände, Mortalität, Forstwirtschaft)</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Szenariosimulationen zur Waldentwicklung, Bewirtschaftungsauswirkungen und Ökosystemleistungsprojektionen</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Kopplungsschnittstelle mit RoGeR für integrierte Simulation von Evapotranspiration, Infiltration, Abfluss und Wasserdarbietung</span></div>
+    </div>
+  </div>
+</div>
+<div class="card" id="card-roger" data-labels="hydro-modelling"
+     data-cluster="c3" data-layer="2"
+     style="border-left:4px solid #1a4f8a;background:#eff6ff;border-radius:8px;
+            padding:16px 18px;margin-bottom:12px;transition:box-shadow .15s;">
+  <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:18px;font-weight:700;color:#1a4f8a;letter-spacing:-.01em;margin-bottom:2px;">Wasserumverteilung</div>
+      <div style="font-size:11px;color:#64748b;font-style:italic;margin-bottom:4px;">Wasserumverteilung als Vermittler lokaler Transpiration und Dürrevulnerabilität</div>
+      <div style="font-size:13px;font-weight:400;color:#1e293b;">Prof. Dr. Markus Weiler<span style="font-size:12px;color:#64748b;margin-left:6px">RoGeR — Abflussgenerations-Forschungsmodell (modularer Baukasten)</span></div>
+      
+      <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;"><span style="background:#f1f5f9;color:#475569;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">Methoden: GIS-Analyse, hydrologische Modellierung</span><span style="background:#e0f2fe;color:#0369a1;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">RoGeR (Suite: RoGeR_WB, RoGeR_WB_Dyn)</span></div>
+    </div>
+  </div>
+  <ul style="margin:10px 0 0 0;padding-left:18px;font-size:12px;color:#475569;line-height:1.55;list-style-type:disc;"><li style="margin-bottom:3px;">Modelliert Wasserumverteilung an Oberfläche und Untergrund in Plateaus, Hanglagen und Auen</li><li style="margin-bottom:3px;">Alle Parameter sind physikalisch messbar — keine Kalibrierung erforderlich; skaliert von 1 m bis mehrere tausend km²</li><li style="margin-bottom:3px;">Wird im Rahmen von FuFo mit einer Grundwassermodellkopplung erweitert</li></ul>
+  <div style="margin-top:12px;"><div class="col-head">Forschungsziele</div><ol style="margin:0;padding-left:18px;font-size:11px;color:#475569;line-height:1.6;"><li style="margin-bottom:3px;">Bodenwasserumverteilung in verschiedenen topographischen Kontexten (Plateau, Hang, Aue/Tal) modellieren, um baum-individuelle Dürreunterschiede zu erklären</li><li style="margin-bottom:3px;">Kopplung mit MODFLOW für unterirdische Wasserdynamik und kapillaren Aufstieg</li><li style="margin-bottom:3px;">Boden- und satellitengestützte Daten kombiniert für Waldmonitoring</li></ol></div>
+  <div style="margin-top:8px;padding-top:6px;border-top:1px solid #f1f5f9;"><span style="font-family:IBM Plex Mono,monospace;font-size:8px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">Forscher</span><div style="font-size:10.5px;color:#1a7a4a;margin-top:2px;">Sheikh Muhammad Asad (Doktorand) · 01.05.2026</div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
+    <div>
+      <div class="col-head">Eingaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Bodenfeuchte- und Saftstromdaten aus dem A1-Messnetzwerk</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Baum- und Bestandsmortalitätsmuster aus der Fernerkundung</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Bohrkern- und Zuwachsdaten</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Räumliche Datensätze zum Baumabsterben</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Standortdaten der Waldzustandserhebung (WZE) und der Bodenzustandserhebung (BZE)</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Schäd­lings- und Krankheitsdaten, Einschlag- und Windwurfereignisse</span></div>
+    </div>
+    <div>
+      <div class="col-head">Ausgaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Gekoppeltes RoGeR–MODFLOW-Modell (Wasserbilanz plus Grundwasserdynamik)</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Bodenwasserverfügbarkeitsvorhersagen in der Wurzelzone über topographische Kontexte (Plateau, Hang, Aue) bei 5-m-Auflösung</span></div>
+    </div>
+  </div>
+</div>
+<div class="card" id="card-hanewinkel" data-labels="economic-modelling"
+     data-cluster="c3" data-layer="3"
+     style="border-left:4px solid #1a4f8a;background:#eff6ff;border-radius:8px;
+            padding:16px 18px;margin-bottom:12px;transition:box-shadow .15s;">
+  <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:18px;font-weight:700;color:#1a4f8a;letter-spacing:-.01em;margin-bottom:2px;">Integratives Wirtschaftsmodell</div>
+      <div style="font-size:11px;color:#64748b;font-style:italic;margin-bottom:4px;">Integrierte ökonomische Modellierung für Future Forests</div>
+      <div style="font-size:13px;font-weight:400;color:#1e293b;">Prof. Dr. Marc Hanewinkel<span style="font-size:12px;color:#64748b;margin-left:6px">Forstökonomie- und Risikomodell (GFPM-SW)</span></div>
+      <div style="font-size:10.5px;color:#64748b;margin-top:1px">Auch: Prof. Dr. Stefan Pauliuk · Jun.-Prof. Dr. Ana Stritih · Prof. Dr. Thomas Seifert</div>
+      <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;"><span style="background:#f1f5f9;color:#475569;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">Methoden: Modellierung</span><span style="background:#e0f2fe;color:#0369a1;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">GFPM / GAMS (Partialgleichgewichtsmodell)</span></div>
+    </div>
+  </div>
+  <ul style="margin:10px 0 0 0;padding-left:18px;font-size:12px;color:#475569;line-height:1.55;list-style-type:disc;"><li style="margin-bottom:3px;">Entwickelt einen ökonomischen Modellierungs- und Bewertungsrahmen für Ökosystemleistungen unter Risiko und Unsicherheit</li><li style="margin-bottom:3px;">Passt das Global Forest Products Model (GFPM) für Südwestdeutschland als Partialgleichgewichtsmodell in GAMS an</li><li style="margin-bottom:3px;">Übernimmt Ökosystemleistungs-Outputs aus iLAND und modelliert deren Fluss durch Angebot, Nachfrage, Industrie und Marktnetzwerke</li><li style="margin-bottom:3px;">Verwendet Value at Risk- und Conditional Value at Risk-Metriken zur Erzeugung optimierter robuster Bewirtschaftungsstrategien</li><li style="margin-bottom:3px;">Liefert vorläufige A&amp;TPs für Wälder in SW-Deutschland als wirtschaftlichen Input für C4</li></ul>
+  <div style="margin-top:12px;"><div class="col-head">Forschungsziele</div><ol style="margin:0;padding-left:18px;font-size:11px;color:#475569;line-height:1.6;"><li style="margin-bottom:3px;">Ökonomischen Modellierungs- und Bewertungsrahmen für Ökosystemleistungen unter Risiko und Unsicherheit für A&amp;TPs entwickeln</li><li style="margin-bottom:3px;">Rahmen auf prozessbasierte Wachstumsmodell-Outputs unter C2-Szenarien für robuste Bewirtschaftungsstrategien anwenden</li><li style="margin-bottom:3px;">GFPM für SW-Deutschland anpassen, um Marktdynamiken von ÖSL jenseits des Holzes zu modellieren</li><li style="margin-bottom:3px;">Vorläufige A&amp;TPs für SW-Deutsche Wälder als Input für C4 entwickeln</li></ol></div>
+  
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
+    <div>
+      <div class="col-head">Eingaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Ökosystemleistungs-Outputs aus dem prozessbasierten Wachstumsmodell (iLAND)</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Szenarien aus C2 (Preise, Kosten, Technologieentwicklungspfade)</span></div>
+    </div>
+    <div>
+      <div class="col-head">Ausgaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Ökonomischer Modellierungs- und Bewertungsrahmen für ÖSL unter Risiko und Unsicherheit</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Partialgleichgewichtsmodell für Südwestdeutschland (angepasstes GFPM, implementiert in GAMS)</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Optimierte robuste Bewirtschaftungsstrategien auf Basis von VaR/CVaR-Metriken</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Vorläufige A&amp;TPs für Wälder in SW-Deutschland als Input für C4</span></div>
+    </div>
+  </div>
+</div>
+<div class="card" id="card-pauliuk" data-labels="economic-modelling abm"
+     data-cluster="c3" data-layer="3"
+     style="border-left:4px solid #1a4f8a;background:#eff6ff;border-radius:8px;
+            padding:16px 18px;margin-bottom:12px;transition:box-shadow .15s;">
+  <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:18px;font-weight:700;color:#1a4f8a;letter-spacing:-.01em;margin-bottom:2px;">Holzkaskadenmodellierung</div>
+      <div style="font-size:11px;color:#64748b;font-style:italic;margin-bottom:4px;">A&amp;TPs für Holzverwendung und Kaskadennutzung von Holzprodukten</div>
+      <div style="font-size:13px;font-weight:400;color:#1e293b;">Prof. Dr. Stefan Pauliuk<span style="font-size:12px;color:#64748b;margin-left:6px">Holzkaskade und Kohlenstoffbilanzierung (A&amp;TPs)</span></div>
+      <div style="font-size:10.5px;color:#64748b;margin-top:1px">Auch: Dr. Simon Schulte · Prof. Dr. Heiner Schanz · Jun.-Prof. Dr. Ana Stritih · Prof. Dr. Marc Hanewinkel · Prof. Dr. Maja Schlüter</div>
+      <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;"><span style="background:#f1f5f9;color:#475569;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">Methoden: Modellierung</span><span style="background:#e0f2fe;color:#0369a1;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">RECC (bestandsflusskonsistentes Prozessmodell)</span></div>
+    </div>
+  </div>
+  <ul style="margin:10px 0 0 0;padding-left:18px;font-size:12px;color:#475569;line-height:1.55;list-style-type:disc;"><li style="margin-bottom:3px;">Entwickelt einen Modellierungs- und Stakeholder-Engagement-Rahmen zur Identifikation und Bewertung von A&amp;TPs für Holzverwendung und Kaskadennutzung</li><li style="margin-bottom:3px;">Definiert A&amp;TPs als Entscheidungssequenzen von Akteuren im Holzverwendungssystem, die vorgegebene Ziele erfüllen und Verantwortungs- und Legitimitätsprinzipien einhalten</li><li style="margin-bottom:3px;">Drei Schritte: Kartierung des Optionenraums via Szenarien; Kombination von Verarbeitungsdaten und Stakeholder-Input zur Identifikation von Pfaden; Bewertung der Erreichbarkeit unter Unsicherheit</li></ul>
+  <div style="margin-top:12px;"><div class="col-head">Forschungsziele</div><ol style="margin:0;padding-left:18px;font-size:11px;color:#475569;line-height:1.6;"><li style="margin-bottom:3px;">Entscheidungsprinzipien aus B in Akteursbeschreibungen und Modellierungsprinzipien für Holzindustrie-A&amp;TPs übersetzen</li><li style="margin-bottom:3px;">Kreislaufwirtschaftspotenzial und Klimanutzen der Holzverwendung und Kaskadennutzung in der Untersuchungsregion quantifizieren</li><li style="margin-bottom:3px;">Robustheit der holzverarbeitenden Industrie gegenüber Störungsereignissen und Technologien bewerten</li><li style="margin-bottom:3px;">Pfade zu einem neuen SES-informierten Regime der Holzverarbeitung und -nutzung entwickeln</li></ol></div>
+  <div style="margin-top:8px;padding-top:6px;border-top:1px solid #f1f5f9;"><span style="font-family:IBM Plex Mono,monospace;font-size:8px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">Forscher</span><div style="font-size:10.5px;color:#1a7a4a;margin-top:2px;">Simon Schulte (PostDoc) · 01.06.2026 · Christian Hauenstein (PostDoc) · Juni–Sept. 2026</div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
+    <div>
+      <div class="col-head">Eingaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Holzversorgungsinformationen aus Waldwachstumsmodellen in C3</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">SSP-Szenario-Storylines (für Nachfrageabschätzungen)</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Stakeholder-Input aus dem SES-CaseLab (Forstleute, Holzverarbeiter, Architekten, Bauingenieure, Abfallwirtschaftsbetriebe)</span></div>
+    </div>
+    <div>
+      <div class="col-head">Ausgaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Holz-(Kohlenstoff-)Bestände und -Flüsse modelliert via RECC-Prozessmodell</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Abschätzungen des Kreislaufwirtschafts- und Kaskadennutzungspotenzials</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Kohlenstofffluss- und Opportunitätskostenanalysen</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">A&amp;TPs für Holzverwendung und Kaskadennutzung für Akteure in der Holzkaskade</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Python-ABM-Paket gekoppelt mit RECC-Bestandsflussmodell</span></div>
+    </div>
+  </div>
+</div>
+<div class="card" id="card-schanz" data-labels="economic-modelling"
+     data-cluster="c3" data-layer="3"
+     style="border-left:4px solid #1a4f8a;background:#eff6ff;border-radius:8px;
+            padding:16px 18px;margin-bottom:12px;transition:box-shadow .15s;">
+  <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:18px;font-weight:700;color:#1a4f8a;letter-spacing:-.01em;margin-bottom:2px;">Wald-Ökosystemleistungsmärkte (FESMarkets)</div>
+      <div style="font-size:11px;color:#64748b;font-style:italic;margin-bottom:4px;">Strukturelle Modellierung von Wald-Ökosystemleistungsmärkten</div>
+      <div style="font-size:13px;font-weight:400;color:#1e293b;">Prof. Dr. Heiner Schanz<span style="font-size:12px;color:#64748b;margin-left:6px">FESMarkets — Wald-Ökosystemleistungsmärkte</span></div>
+      
+      <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;"><span style="background:#f1f5f9;color:#475569;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">Methoden: Modellierung</span><span style="background:#e0f2fe;color:#0369a1;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">NoMFES (Netzwerk von Märkten für Wald-Ökosystemleistungen)</span></div>
+    </div>
+  </div>
+  <ul style="margin:10px 0 0 0;padding-left:18px;font-size:12px;color:#475569;line-height:1.55;list-style-type:disc;"><li style="margin-bottom:3px;">Analysiert die strukturelle Architektur von Wald-Ökosystemleistungsnetzwerken für Wasser, Erholung, Schutz und Holz</li><li style="margin-bottom:3px;">Charakterisiert, wie Angebot und Nachfrage über reale Märkte (Waren, Verträge) und politische Märkte (Subventionen) entlang komplexer Wertschöpfungsketten verknüpft sind</li><li style="margin-bottom:3px;">Systemdynamikmodell erfasst Bestände und Flüsse auf Makroebene; Kausalschleifendiagramme bilden Akteursperspektiven und Governance-Interventionen auf Mikroebene ab</li></ul>
+  <div style="margin-top:12px;"><div class="col-head">Forschungsziele</div><ol style="margin:0;padding-left:18px;font-size:11px;color:#475569;line-height:1.6;"><li style="margin-bottom:3px;">Strukturelle Modellierung aller Wald-ÖSL-Märkte — wirtschaftliche und politische — erweitert aus dem bestehenden NoMWood (177 Knoten, 1582 Kanten)</li><li style="margin-bottom:3px;">Systemrelevante Märkte anhand von Netzwerkmetriken und Kantengravitation identifizieren</li><li style="margin-bottom:3px;">Governance-Dynamiken wichtiger Märkte als Grundlage für das Systemdynamikmodell modellieren</li></ol></div>
+  <div style="margin-top:8px;padding-top:6px;border-top:1px solid #f1f5f9;"><span style="font-family:IBM Plex Mono,monospace;font-size:8px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">Forscher/innen</span><div style="font-size:10.5px;color:#1a7a4a;margin-top:2px;">Steffi Peuckert (Doktorandin) · 01.04.2026 · Mateo Mohr Reija (RA) · Joonseo Kim (RA)</div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
+    <div>
+      <div class="col-head">Eingaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Angebots- und Nachfragedaten für alle waldbasierten Sektoren</span></div>
+    </div>
+    <div>
+      <div class="col-head">Ausgaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Strukturelles NoMFES-Netzwerkmodell aller wirtschaftlichen und politischen ÖSL-Märkte</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Entwurf eines Systemdynamikmodells zur Simulation von Waldbewirtschaftungsregime-Auswirkungen auf ÖSL-Bereitstellung und -Nutzung</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Kausalschleifendiagramme für wichtige Märkte und Governance-Dynamiken</span></div>
+    </div>
+  </div>
+</div>
+<div class="card" id="card-brown" data-labels="abm"
+     data-cluster="c3" data-layer="3"
+     style="border-left:4px solid #1a4f8a;background:#eff6ff;border-radius:8px;
+            padding:16px 18px;margin-bottom:12px;transition:box-shadow .15s;">
+  <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:18px;font-weight:700;color:#1a4f8a;letter-spacing:-.01em;margin-bottom:2px;">Großräumiges ABM</div>
+      <div style="font-size:11px;color:#64748b;font-style:italic;margin-bottom:4px;">Skalierung neuartiger Waldökosysteme in zukünftigen europäischen Landsystemen</div>
+      <div style="font-size:13px;font-weight:400;color:#1e293b;">Dr. Calum Brown<span style="font-size:12px;color:#64748b;margin-left:6px">CRAFTY-EU — Europäisches Landnutzungs-Agentenmodell</span></div>
+      <div style="font-size:10.5px;color:#64748b;margin-top:1px">Auch: Prof. Dr. Marc Hanewinkel · Jun.-Prof. Dr. Ana Stritih · Prof. Dr. Maja Schlüter · Prof. Dr. Stefan Pauliuk</div>
+      <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;"><span style="background:#f1f5f9;color:#475569;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">Methoden: Modellierung</span><span style="background:#e0f2fe;color:#0369a1;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">CRAFTY-EU (innerhalb von LandSyMM)</span></div>
+    </div>
+  </div>
+  <ul style="margin:10px 0 0 0;padding-left:18px;font-size:12px;color:#475569;line-height:1.55;list-style-type:disc;"><li style="margin-bottom:3px;">Agentenbasiertes Modell auf EU27+3-Ebene bei 1-km-Auflösung, eingebettet in den globalen LandSyMM-Rahmen</li><li style="margin-bottom:3px;">Koppelt Landnutzungsentscheidungen mit Makroökonomie, Handel, Ökosystemprozessen, Biodiversität und dem Klimasystem</li><li style="margin-bottom:3px;">Liefert kontinentalmaßstäblichen Kontext für C3-Modelle, skaliert lokale Bewirtschaftungsmuster und Ökosystemleistungsergebnisse auf globale Szenarien (SSPs, RCPs, NFF) hoch</li></ul>
+  <div style="margin-top:12px;"><div class="col-head">Forschungsziele</div><ol style="margin:0;padding-left:18px;font-size:11px;color:#475569;line-height:1.6;"><li style="margin-bottom:3px;">Chancen und Risiken neuartiger Waldsysteme zur Bereitstellung multipler Leistungen unter zukünftigem Wandel testen</li><li style="margin-bottom:3px;">Potenzial für die Ausbreitung gewünschter Waldsysteme in Europa erkunden, einschließlich Konkurrenz mit anderen Landnutzungen</li><li style="margin-bottom:3px;">Zu Szenarien und Pfaden beitragen, die unterschiedliche Politiken, Bewirtschaftungsmaßnahmen sowie klimatische und sozioökonomische Szenarien einbeziehen</li></ol></div>
+  <div style="margin-top:8px;padding-top:6px;border-top:1px solid #f1f5f9;"><span style="font-family:IBM Plex Mono,monospace;font-size:8px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;">Forscher/in</span><div style="font-size:10.5px;color:#94a3b8;margin-top:2px;">PostDoc ausstehend · Ende 2026</div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
+    <div>
+      <div class="col-head">Eingaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Zukünftige klimatische und sozioökonomische Szenarioparameter</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Globale LandSyMM-Randbedingungen</span></div>
+    </div>
+    <div>
+      <div class="col-head">Ausgaben</div>
+      <div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Landnutzungs- und Bewirtschaftungsaktivitätsszenarien auf EU27+3-Ebene bei 1-km-Auflösung</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Ökosystemleistungs-Bereitstellungsergebnisse unter verschiedenen Bewirtschaftungsszenarien</span></div><div style="margin-bottom:6px;"><span style="font-weight:600;font-size:11.5px">Transformations- und Anpassungspfade unter verhaltens-, sozioökonomischen, politischen und klimatischen Veränderungen</span></div>
+    </div>
+  </div>
+</div>
+<div class="cluster-head" data-cluster="other" style="display:none;margin-bottom:6px;padding:10px 14px;background:#fef3c7;border-radius:6px;border-left:4px solid #b45309;">
+  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.14em;color:#b45309;text-transform:uppercase;">Sonstige — Externe Dateninfrastruktur</span>
+  <div style="font-size:11.5px;color:#475569;margin-top:3px;">Externe Partner und Datenressourcen, die für den FuFo-Modellierungsrahmen relevant sind.</div>
+</div>
+<div class="card" id="card-lfvbw" data-labels="" data-cluster="other" data-layer="0"
+     style="border-left:4px solid #b45309;background:#fffbeb;border-radius:8px;
+            padding:16px 18px;margin-bottom:12px;transition:box-shadow .15s;display:none;">
+  <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:18px;font-weight:700;color:#b45309;letter-spacing:-.01em;margin-bottom:2px;">Wissensgraph für Walddaten (WWW 4.0)</div>
+      <div style="font-size:11px;color:#64748b;font-style:italic;margin-bottom:4px;">Semantisches Modell für Walddaten in Baden-Württemberg</div>
+      <div style="font-size:13px;font-weight:400;color:#1e293b;">PD Dr. Tobias Schlechtriemen · Prof. Dr. Hannah Bast<span style="font-size:12px;color:#64748b;margin-left:6px">Universität Freiburg · WWW 4.0 Wissensgraph · 2024–2026</span></div>
+      <div style="font-size:11.5px;color:#475569;margin-top:5px;"><span style="font-weight:600;">Projektpartner:</span> Ministerium für Ernährung, Ländlichen Raum und Verbraucherschutz Baden-Württemberg (MLR), Forstdirektion Freiburg, Forstliche Versuchs- und Forschungsanstalt Baden-Württemberg (FVA), Institut für Informatik und Institut für Soziologie der Universität Freiburg</div>
+      <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:4px;"><span style="background:#fef3c7;color:#92400e;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">Wissensgraph</span><span style="background:#fef3c7;color:#92400e;border-radius:3px;padding:2px 8px;font-size:10.5px;font-family:IBM Plex Mono,monospace;">Semantische Datenintegration</span></div>
+    </div>
+  </div>
+  <div style="margin:10px 0 6px 0;font-size:12px;color:#475569;line-height:1.6;">
+    <span style="font-weight:600;">Methode:</span> Integration heterogener Datenformate in eine gemeinsame semantische Struktur. Auf diese Weise werden Daten nicht nur über verschiedene Quellen und Formate hinweg verknüpft, sondern auch gemäß den expliziten Beziehungen zwischen Entitäten organisiert, was kontextsensitive Abfragen und Analysen ermöglicht.
+  </div>
+  <ul style="margin:6px 0 0 0;padding-left:18px;font-size:12px;color:#475569;line-height:1.55;list-style-type:disc;">
+    <li style="margin-bottom:3px;">Waldstandortskartierung: Bodeneigenschaften, Wasserhaushalt, Topologie</li>
+    <li style="margin-bottom:3px;">Zehnjährige Forsteinrichtungsplanung</li>
+    <li style="margin-bottom:3px;">Baumarteneignungsbewertungen und klimainformierte Artprognosen (FVA-Modelloutputs)</li>
+    <li style="margin-bottom:3px;">Digitales Geländemodell</li>
+    <li style="margin-bottom:3px;">Pflanzenzahlen und Pflanzabstandsrichtlinien</li>
+    <li style="margin-bottom:3px;">Waldbau-Handbuch (WET)</li>
+    <li style="margin-bottom:3px;">Naturschutzausweisungen und Zertifizierungsstatus</li>
+    <li style="margin-bottom:3px;">Fördergrammsdaten</li>
+    <li style="margin-bottom:3px;">Operative Waldbewirtschaftungsdaten</li>
+  </ul>
+  <div style="margin:10px 0 6px 0;font-size:12px;color:#475569;line-height:1.6;">
+    <span style="font-weight:600;">Output:</span> Der Wissensgraph kann sowohl als Grundlage für Modellierungs- und Simulationsansätze dienen als auch als Umgebung für weitergehende graphinterne Analysen, wie die Identifikation von Mustern, Abhängigkeiten und komplexen Beziehungen zwischen Entitäten.
+  </div>
+  <div style="margin-top:8px;font-size:11.5px;"><a href="https://uni-freiburg.de/www40/" target="_blank" style="color:#b45309;">↗ uni-freiburg.de/www40</a></div>
+</div>
+<div style='height:20px'></div>
+<div style="text-align:center;font-size:10px;color:#94a3b8;font-family:'IBM Plex Mono',monospace;margin-top:20px;padding-top:12px;border-top:1px solid #e2e8f0;">
+  SES-ModelLab · Future Forests · <a href="FuFo_Interactive.html" style="color:#1a4f8a">↗ Interaktive Verbindungskarte</a>
+</div>
+<script>
+function filterCards(type, value, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.card').forEach(card => {
+    if (value === 'all') {
+      card.style.display = card.dataset.cluster === 'other' ? 'none' : '';
+    } else if (type === 'cluster') {
+      card.style.display = card.dataset.cluster === value ? '' : 'none';
+    } else {
+      const labels = (card.dataset.labels || '').split(' ');
+      card.style.display = labels.includes(value) ? '' : 'none';
+    }
+  });
+  document.querySelectorAll('.cluster-head').forEach(h => {
+    if (value === 'all') {
+      h.style.display = 'none';
+    } else if (type === 'cluster') {
+      h.style.display = h.dataset.cluster === value ? '' : 'none';
+    } else {
+      h.style.display = 'none';
+    }
+  });
+}
+</script>
+</body>
+</html>
