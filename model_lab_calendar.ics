@@ -28,6 +28,7 @@ DTSTART;TZID=Europe/Berlin:20260908T150000
 DTEND;TZID=Europe/Berlin:20260908T163000
 SUMMARY:Tree growth → litter\, decomposition and soil carbon
 LOCATION:First Floor Seminar Room\, Stadstrasse 5
+DESCRIPTION:Research questions — smaller working groups
 END:VEVENT
 BEGIN:VEVENT
 UID:ses-hands-on-science@ses-model-lab
@@ -101,6 +102,7 @@ DTSTART;TZID=Europe/Berlin:20260929T150000
 DTEND;TZID=Europe/Berlin:20260929T163000
 SUMMARY:Micro-droughts and tree growth/mortality
 LOCATION:Ground Floor Seminar Room\, Stadstrasse 5
+DESCRIPTION:Research questions — smaller working groups
 END:VEVENT
 BEGIN:VEVENT
 UID:fufo-class-2@fufo-coding-course
@@ -173,6 +175,7 @@ DTSTART;TZID=Europe/Berlin:20261013T150000
 DTEND;TZID=Europe/Berlin:20261013T163000
 SUMMARY:Decision-making in modelling
 LOCATION:Ground Floor Seminar Room\, Stadstrasse 5
+DESCRIPTION:Research questions — smaller working groups
 END:VEVENT
 BEGIN:VEVENT
 UID:ses-iland-uncertainty@ses-model-lab
@@ -181,6 +184,7 @@ DTSTART;TZID=Europe/Berlin:20261020T150000
 DTEND;TZID=Europe/Berlin:20261020T163000
 SUMMARY:iLand community — model uncertainty
 LOCATION:Herderbau Library
+DESCRIPTION:Research questions — smaller working groups
 END:VEVENT
 BEGIN:VEVENT
 UID:fufo-clinic-4@fufo-coding-course
@@ -199,10 +203,18 @@ SUMMARY:FuFo Coding Course — Class 5
 DESCRIPTION:Geospatial data: netCDF\, raster operations (xarray)
 END:VEVENT
 BEGIN:VEVENT
+UID:ses-forest-ses-workshop@ses-model-lab
+DTSTAMP:20260908T120000Z
+DTSTART;TZID=Europe/Berlin:20261026T100000
+DTEND;TZID=Europe/Berlin:20261026T150000
+SUMMARY:Workshop on model based representation of forest SES
+LOCATION:Ground Floor Seminar Room\, Stadstrasse 5
+END:VEVENT
+BEGIN:VEVENT
 UID:fufo-clinic-5@fufo-coding-course
 DTSTAMP:20260901T120000Z
-DTSTART;TZID=Europe/Berlin:20261026T140000
-DTEND;TZID=Europe/Berlin:20261026T160000
+DTSTART;TZID=Europe/Berlin:20261026T150000
+DTEND;TZID=Europe/Berlin:20261026T170000
 SUMMARY:FuFo Coding Course — Drop-in clinic (Class 5)
 DESCRIPTION:Optional drop-in clinic for Class 5\nGeospatial data: netCDF\, raster operations (xarray)
 END:VEVENT
@@ -213,6 +225,7 @@ DTSTART;TZID=Europe/Berlin:20261027T150000
 DTEND;TZID=Europe/Berlin:20261027T160000
 SUMMARY:German forest from sink to source
 LOCATION:Ground Floor Seminar Room\, Stadstrasse 5
+DESCRIPTION:Research questions — smaller working groups
 END:VEVENT
 BEGIN:VEVENT
 UID:fufo-class-6@fufo-coding-course
@@ -245,6 +258,7 @@ DTSTART;TZID=Europe/Berlin:20261103T150000
 DTEND;TZID=Europe/Berlin:20261103T163000
 SUMMARY:Improving storm damage modelling
 LOCATION:First Floor Seminar Room\, Stadstrasse 5
+DESCRIPTION:Research questions — smaller working groups
 END:VEVENT
 BEGIN:VEVENT
 UID:fufo-class-7@fufo-coding-course
@@ -277,5 +291,6 @@ DTSTART;TZID=Europe/Berlin:20261117T161500
 DTEND;TZID=Europe/Berlin:20261117T171500
 SUMMARY:Forest social-ecological reanalysis (historical assessment)
 LOCATION:First Floor Seminar Room\, Stadstrasse 5
+DESCRIPTION:Research questions — smaller working groups
 END:VEVENT
 END:VCALENDAR
