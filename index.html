@@ -365,6 +365,9 @@
     padding-left: 0.7rem;
   }
 
+  .card .upcoming strong { font-weight: 650; }
+  .card .upcoming u { text-decoration-thickness: 1px; text-underline-offset: 2px; }
+
   /* Preview cards — linked page with a miniature screenshot */
   .preview-card {
     display: grid;
@@ -732,19 +735,17 @@
           "title": "Hands on Science",
           "desc": "Monthly working group where participants collectively reproduce a peer-reviewed paper — running the code and checking the analyses.",
           "meta": "Monthly · Thu 13:45",
-          "next": "Next: 10 September · 13:45",
+          "next": "Next: 5 November · 15:30",
           "venue": "Stadtstraße 5, ground floor seminar room",
           "mode": "Hybrid — Zoom option for remote joins.",
           "zoom": "https://uni-freiburg.zoom-x.de/j/61026042329?pwd=g5XAb8tMWG2e1XVtxNrVjGNGtunJAx.1",
-          "upcoming": "Next, on 10 September, we turn to Schneider et al. (2026), Rising tree mortality in France is associated with distinct seasonal climate anomalies, Nature Communications 17, 8016 (https://www.nature.com/articles/s41467-026-74613-9).",
+          "upcoming": "Our next meeting will take place on <strong>5 November at 15:30, Stadtstraße 5, ground floor seminar room</strong>, when we reconvene after having a look into the code of Schneider et al. (2026), <em>Rising tree mortality in France is associated with distinct seasonal climate anomalies</em>, Nature Communications 17, 8016 (https://www.nature.com/articles/s41467-026-74613-9). <u>Note: we then plan to take a break and to resume the activity in 2027 in a slightly changed, more open format. What you should know now is that if you see an interesting paper in which the data and code are openly available — note it down!</u>",
           "update": {
             "label": "Last session",
             "title": "Hands-on ReAnalysis: Carle et al. (2025) — completed, with a correction agreed with the authors",
             "body": [
-              "Over the past two Hands on Science sessions we reproduced the analysis of Carle et al. (2025), Nature (https://www.nature.com/articles/s41586-025-09497-8), from the authors' own published code, and raised four points \u2014 small but important errors \u2014 with the corresponding author, Hannah Carle.",
-              "She answered each of them in detail and proposed a joint correction to the journal (a letter to Nature), with our group included and Andrea Ingrosso as our named representative, as he found most of the errors in the code.",
-              "We then re-ran the corrected analysis, and our numbers agree with hers. The corrections affect some of the numbers reported in the abstract and two of the figures; the conclusions of the study are unchanged, but less well supported by the numbers.",
-              "The exchange with the authors was very good, and a fine display of good scientific practice on their part."
+              "In the first round we looked at and reproduced the analysis of Carle et al. (2025), Nature (https://www.nature.com/articles/s41586-025-09497-8), from the authors' own published code, and raised four points — small but important errors — with the corresponding author, Hannah Carle.",
+              "The exchange with the authors was very good, and a fine display of good scientific practice on their part, resulting in a correction of the article communicated to Nature."
             ]
           }
         }
@@ -1039,7 +1040,7 @@
           z.append('Join on Zoom ', el('span', { class: 'arr' }, '↗'));
           card.appendChild(z);
         }
-        if (c.upcoming) card.appendChild(el('p', { class: 'upcoming' }, c.upcoming));
+        if (c.upcoming) card.appendChild(el('p', { class: 'upcoming', html: c.upcoming }));
         if (c.update) {
           const box = el('div', { class: 'update' });
           if (c.update.label) box.appendChild(el('span', { class: 'update-label' }, c.update.label));
