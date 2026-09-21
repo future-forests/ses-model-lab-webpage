@@ -195,12 +195,20 @@ SUMMARY:FuFo Coding Course — Drop-in clinic (Class 4)
 DESCRIPTION:Optional drop-in clinic for Class 4\nTabular data: vectorisation\, table operations (pandas)\, matplotlib
 END:VEVENT
 BEGIN:VEVENT
-UID:fufo-class-5@fufo-coding-course
+UID:fufo-class-5a@fufo-coding-course
 DTSTAMP:20260901T120000Z
 DTSTART;TZID=Europe/Berlin:20261022T093000
 DTEND;TZID=Europe/Berlin:20261022T103000
-SUMMARY:FuFo Coding Course — Class 5
+SUMMARY:FuFo Coding Course — Class 5a
 DESCRIPTION:Geospatial data: netCDF\, raster operations (xarray)
+END:VEVENT
+BEGIN:VEVENT
+UID:fufo-class-5b@fufo-coding-course
+DTSTAMP:20260901T120000Z
+DTSTART;TZID=Europe/Berlin:20261022T133000
+DTEND;TZID=Europe/Berlin:20261022T143000
+SUMMARY:FuFo Coding Course — Class 5b
+DESCRIPTION:Survey data
 END:VEVENT
 BEGIN:VEVENT
 UID:ses-forest-ses-workshop@ses-model-lab
