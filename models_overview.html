@@ -197,6 +197,7 @@
   }
 
   footer {
+    position: relative;
     padding: 12px 36px;
     border-top: 1px solid var(--border);
     font-size: 10px;
@@ -204,6 +205,14 @@
     font-family: 'IBM Plex Mono', monospace;
     background: var(--surface);
   }
+  .footer-imprint {
+    position: absolute;
+    right: 36px;
+    bottom: 12px;
+    color: #bbb;
+    text-decoration: none;
+  }
+  .footer-imprint:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
@@ -538,6 +547,7 @@
 </div>
 
 <footer>
+  <a class="footer-imprint" href="https://uni-freiburg.de/impressum/" target="_blank" rel="noopener noreferrer">Impressum</a>
 </footer>
 
 </body>
