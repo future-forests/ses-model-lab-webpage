@@ -14,7 +14,7 @@ need and produce.
 
 ## Pages
 
-- 🌐 **[Landing page](https://future-forests.github.io/ses-model-lab-webpage/)** — central entry point: recurring sessions (Model Lab Café, Hands on Science), cooperation groups, the coding course, and links to every registry below
+- 🌐 **[Landing page](https://future-forests.github.io/ses-model-lab-webpage/)** — central entry point: upcoming dates (read live from the calendar file), recurring sessions (Model Lab Café, Hands on Science), research groups, SES Model Lab at AGM 2026, HPC resources, the coding course, and links to every registry below
 - 📊 **[Modelling Registry](https://future-forests.github.io/ses-model-lab-webpage/registry.html)** — groups directly related to modelling: inputs, outputs, methods, and researchers
 - 🔀 **[Models Overview](https://future-forests.github.io/ses-model-lab-webpage/models_overview.html)** — inputs and outputs across all FuFo models
 - 🎯 **[Looking at the Cluster from the End](https://future-forests.github.io/ses-model-lab-webpage/AGM_looking_from_the_end.html)** — AGM presentation: an idealised view of the Cluster's areas and transfer pathways, worked backwards from the desirable forest
