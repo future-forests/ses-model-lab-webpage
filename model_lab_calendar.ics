@@ -370,9 +370,9 @@ DESCRIPTION:Research study meeting
 END:VEVENT
 BEGIN:VEVENT
 UID:ses-social-metabolism-wood-dec@ses-model-lab
-DTSTAMP:20261015T120000Z
-DTSTART;TZID=Europe/Berlin:20261208T133000
-DTEND;TZID=Europe/Berlin:20261208T143000
+DTSTAMP:20261016T120000Z
+DTSTART;TZID=Europe/Berlin:20261208T130000
+DTEND;TZID=Europe/Berlin:20261208T140000
 SUMMARY:Social metabolism/industrial ecology of wood and wood products
 LOCATION:First Floor Seminar Room\, Stadtstraße 5
 DESCRIPTION:Group meeting
