@@ -194,15 +194,6 @@ SUMMARY:SES Model Lab committee meeting (steering board focused)
 LOCATION:Herderbau Library\, 3rd floor
 END:VEVENT
 BEGIN:VEVENT
-UID:ses-iland-uncertainty@ses-model-lab
-DTSTAMP:20261015T120000Z
-DTSTART;TZID=Europe/Berlin:20261020T150000
-DTEND;TZID=Europe/Berlin:20261020T163000
-SUMMARY:iLand community — model uncertainty (to be moved)
-LOCATION:Herderbau Library
-DESCRIPTION:Research questions — smaller working groups\nWhere does uncertainty in iLand simulations come from — parameters\, internal model logic\, climate drivers\, management assumptions — and which sources of uncertainty do forest managers actually care about?
-END:VEVENT
-BEGIN:VEVENT
 UID:fufo-clinic-4@fufo-coding-course
 DTSTAMP:20260901T120000Z
 DTSTART;TZID=Europe/Berlin:20261021T140000
@@ -315,6 +306,15 @@ DTSTART;TZID=Europe/Berlin:20261112T093000
 DTEND;TZID=Europe/Berlin:20261112T103000
 SUMMARY:FuFo Coding Course — Class 8
 DESCRIPTION:Critical thinking about LLMs: limits and bias
+END:VEVENT
+BEGIN:VEVENT
+UID:ses-iland-uncertainty@ses-model-lab
+DTSTAMP:20261019T120000Z
+DTSTART;TZID=Europe/Berlin:20261117T150000
+DTEND;TZID=Europe/Berlin:20261117T161500
+SUMMARY:iLand community — model uncertainty
+LOCATION:First Floor Seminar Room\, Stadtstraße 5
+DESCRIPTION:Research questions — smaller working groups\nWhere does uncertainty in iLand simulations come from — parameters\, internal model logic\, climate drivers\, management assumptions — and which sources of uncertainty do forest managers actually care about?
 END:VEVENT
 BEGIN:VEVENT
 UID:ses-forest-ses-reanalysis@ses-model-lab
