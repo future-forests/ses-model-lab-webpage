@@ -21,10 +21,9 @@
     /* ---- PALETTE: edit these to recolour the whole page ---- */
     --bg: #eaf1f5;              /* page background — cool blue-grey */
     --surface: #ffffff;          /* card background */
-    --surface-warm: #dbe9f2;     /* accent card — soft blue */
+    --surface-warm: #dbe9f2;     /* hover surface — soft blue */
     --border: #c3d8e4;           /* default border */
     --border-strong: #94b9cd;    /* border on hover */
-    --border-warm: #a9c8dc;      /* accent card border */
     --text: #12292f;             /* body text — deep blue-black */
     --text-mute: #3d6472;        /* secondary text — slate blue */
     --text-soft: #416b76;        /* quiet labels */
@@ -51,7 +50,6 @@
     --surface-warm: #1c323c;
     --border: #2a4552;
     --border-strong: #3d6273;
-    --border-warm: #355968;
     --text: #e4eef2;
     --text-mute: #9bb4bf;
     --text-soft: #8aa3af;
@@ -275,14 +273,11 @@
     transition: border-color 0.15s ease, transform 0.15s ease;
   }
   .card:hover { border-color: var(--border-strong); transform: translateY(-1px); }
-  .card.warm { background: var(--surface-warm); border-color: var(--border-warm); }
-  .card.warm:hover { border-color: #7ba9c6; }
 
   .card .icon {
     color: var(--brand-green);
     margin-bottom: 0.35rem;
   }
-  .card.warm .icon { color: var(--accent-blue); }
   .card .icon svg { width: 1.5rem; height: 1.5rem; display: block; }
   .card .card-logo {
     height: 58px;
@@ -323,7 +318,6 @@
     font-weight: 500;
     margin: 0.2rem 0 0;
   }
-  .card.warm .meta { color: var(--accent-blue); }
   .card .venue { color: var(--text-mute); font-size: 0.94rem; margin: 0; }
   .card .mode { color: var(--text-soft); font-size: 0.88rem; margin: 0; font-style: italic; }
   .card .next {
@@ -344,7 +338,6 @@
     border: 1px solid var(--border);
     border-radius: 5px;
   }
-  .card.warm .update { background: rgba(255,255,255,0.45); border-color: var(--border-warm); }
   .card .update .update-label {
     display: block;
     font-family: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
@@ -500,14 +493,6 @@
     margin: 2rem 0;
     max-width: 720px;
   }
-  .info-card p.hint { margin: 1rem 0 0.6rem; color: var(--text); }
-  .info-list {
-    margin: 0.25rem 0 0;
-    padding-left: 1.2rem;
-    color: var(--text);
-  }
-  .info-list li { margin: 0.35rem 0; }
-
   /* Research groups */
   .group-intro {
     display: flex;
@@ -701,37 +686,6 @@
   .cta .arr {
     font-family: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
     opacity: 0.75;
-  }
-
-  /* Course */
-  .info-card p.pdf-link { margin: 1rem 0 0; color: var(--text); font-size: 0.95rem; }
-  .info-card p.pdf-link .arr {
-    font-family: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
-    opacity: 0.7;
-  }
-  .calendar { margin: 2.75rem 0 0; }
-  .calendar h3 {
-    font-family: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--accent-blue);
-    font-weight: 500;
-    margin: 0 0 0.85rem;
-  }
-  .calendar img {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-  }
-  .calendar figcaption {
-    margin: 0.8rem 0 0;
-    color: var(--text-mute);
-    font-size: 0.9rem;
-    line-height: 1.5;
-    max-width: 62ch;
   }
 
   /* Contact */
@@ -1296,13 +1250,8 @@
 
   // --- icons (simple line SVGs) ---
   const ICONS = {
-    coffee: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>',
-    beaker: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v6L4 20a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1L15 9V3"/><line x1="7" y1="3" x2="17" y2="3"/><line x1="6.5" y1="14" x2="17.5" y2="14"/></svg>',
-    terminal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>',
-    wrench: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
     layers: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>',
-    network: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="18" r="2.5"/><circle cx="19" cy="18" r="2.5"/><line x1="10.6" y1="7.1" x2="6.4" y2="15.9"/><line x1="13.4" y1="7.1" x2="17.6" y2="15.9"/><line x1="7.5" y1="18" x2="16.5" y2="18"/></svg>',
-    server: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>'
+    network: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="18" r="2.5"/><circle cx="19" cy="18" r="2.5"/><line x1="10.6" y1="7.1" x2="6.4" y2="15.9"/><line x1="13.4" y1="7.1" x2="17.6" y2="15.9"/><line x1="7.5" y1="18" x2="16.5" y2="18"/></svg>'
   };
   const iconEl = (name) => {
     const span = el('span', { class: 'icon', 'aria-hidden': 'true' });
@@ -1508,7 +1457,7 @@
     if (sec.type === 'cards') {
       const grid = el('div', { class: 'cards' });
       sec.cards.forEach(c => {
-        const card = el('div', { class: 'card' + (c.warm ? ' warm' : '') });
+        const card = el('div', { class: 'card' });
         if (c.logo) card.appendChild(el('img', { class: 'card-logo', src: c.logo, alt: '' }));
         else if (c.icon) card.appendChild(iconEl(c.icon));
         if (c.stage) card.appendChild(el('p', { class: 'stage' }, c.stage));
@@ -1541,26 +1490,9 @@
         cta.append(sec.cta.text + ' ', el('span', { class: 'arr' }, '\u2197'));
         card.appendChild(cta);
       }
-      if (sec.pdf && sec.pdf.url) {
-        const a = el('a', { href: sec.pdf.url });
-        a.append(sec.pdf.text || 'Course programme (PDF)', el('span', { class: 'arr' }, ' \u2197'));
-        card.appendChild(el('p', { class: 'pdf-link' }, ['More detail in the ', a, '.']));
-      }
-      if (sec.hint) card.appendChild(el('p', { class: 'hint' }, sec.hint));
-      if (sec.points) {
-        const ul = el('ul', { class: 'info-list' });
-        sec.points.forEach(t => ul.appendChild(el('li', {}, t)));
-        card.appendChild(ul);
-      }
-      const cal = sec.calendar;
       body = el('div', {}, [
         el('div', { class: 'prose' }, (sec.intro || []).map(t => el('p', {}, t))),
-        card,
-        cal ? el('figure', { class: 'calendar' }, [
-          cal.title ? el('h3', {}, cal.title) : null,
-          el('img', { src: cal.img, alt: cal.alt || '', loading: 'lazy' }),
-          cal.caption ? el('figcaption', {}, cal.caption) : null
-        ]) : null
+        card
       ]);
     } else if (sec.type === 'links') {
       const colClass = sec.columns === 3 ? ' three' : (sec.columns === 2 ? ' two' : '');

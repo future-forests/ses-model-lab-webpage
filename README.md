@@ -19,9 +19,6 @@ need and produce.
 - 🔀 **[Models Overview](https://future-forests.github.io/ses-model-lab-webpage/models_overview.html)** — inputs and outputs across all FuFo models
 - 🎯 **[Looking at the Cluster from the End](https://future-forests.github.io/ses-model-lab-webpage/AGM_looking_from_the_end.html)** — AGM presentation: an idealised view of the Cluster's areas and transfer pathways, worked backwards from the desirable forest
 - 🇩🇪 German version of model registry: [Registry](https://future-forests.github.io/ses-model-lab-webpage/registry_de.html)
-## Previous addresses
-
-
 
 ## How to subscribe to the ModelLab calendar
 
