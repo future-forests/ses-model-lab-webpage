@@ -372,20 +372,40 @@
 
   /* Link cards (AGM pages, resources) — optionally with a screenshot thumbnail */
   .cards.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .cards.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (max-width: 720px) { .cards.two { grid-template-columns: 1fr; } }
+  .card.link-card.is-pending {
+    cursor: default;
+    pointer-events: none;
+    opacity: 0.92;
+  }
+  .card.link-card.is-pending:hover {
+    border-color: var(--border);
+    transform: none;
+  }
+  .card.link-card.is-pending .go { color: var(--text-soft); }
+
   @media (max-width: 760px) {
-    .cards.three { grid-template-columns: 1fr; }
+    .cards.three,
+    .cards.two { grid-template-columns: 1fr; }
     /* Phones: small thumbnail beside the text instead of above it */
-    .cards.three .card.link-card {
+    .cards.three .card.link-card,
+    .cards.two .card.link-card {
       display: grid;
       grid-template-columns: 6.5rem minmax(0, 1fr);
       column-gap: 1rem;
       align-content: start;
     }
-    .cards.three .card.link-card > * { grid-column: 1 / -1; }
+    .cards.three .card.link-card > *,
+    .cards.two .card.link-card > * { grid-column: 1 / -1; }
     .cards.three .card.link-card > .thumb,
-    .cards.three .card.link-card > .thumb-icon { grid-column: 1; grid-row: 1 / span 2; margin: 0; }
+    .cards.three .card.link-card > .thumb-icon,
+    .cards.two .card.link-card > .thumb,
+    .cards.two .card.link-card > .thumb-icon { grid-column: 1; grid-row: 1 / span 2; margin: 0; }
     .cards.three .card.link-card > .stage,
-    .cards.three .card.link-card > h3 { grid-column: 2; }
+    .cards.three .card.link-card > h3,
+    .cards.two .card.link-card > .stage,
+    .cards.two .card.link-card > h3 { grid-column: 2; }
   }
   .card.link-card {
     text-decoration: none;
@@ -1145,16 +1165,67 @@
         },
         {
           "title": "HPC resources",
-          "desc": "An overview of the high-performance computing resources available for modelling in Future Forests. Get in touch if you need help getting set up.",
-          "action": "Open the HPC overview",
-          "url": "https://bwsyncandshare.kit.edu/apps/files/files/5885123701?dir=/ModelLab&editing=false&openfile=true",
-          "icon": "server",
+          "desc": "An overview of the high-performance computing resources available for modelling in Future Forests — access, SSH, security and capacity. Get in touch if you need help getting set up.",
+          "action": "Open the HPC wiki page",
+          "url": "https://wiki.futureforests.uni-freiburg.de/en/03_Central_facilities/SES_ModelLab/hpc-ressources",
+          "shot": "assets/hpc-resources.png",
           "external": true
         }
       ]
     },
     {
       "num": "06",
+      "eyebrow": "Support",
+      "title": "Help with modelling and analysis",
+      "lede": "Beyond coordination, the Model Lab helps members with modelling development, data analysis, and high coding standards (see the Coding Course below). Reach out when you need a second pair of eyes, a workflow review, or a place to start.",
+      "type": "links",
+      "columns": 2,
+      "cards": [
+        {
+          "title": "Element / Matrix",
+          "desc": "Team chat for Future Forests: Spaces, rooms and threads. Use Element to join the Model Lab channel and ask for help.",
+          "action": "Open the Element quick guide",
+          "url": "https://wiki.futureforests.uni-freiburg.de/en/03_Central_facilities/SES_ModelLab/element",
+          "shot": "assets/element-matrix.png",
+          "external": true
+        },
+        {
+          "title": "Minting a DOI",
+          "desc": "How to get a DOI for (1) a paper, (2) a model or tool with a dynamic DOI, or (3) a dataset. Guide in progress.",
+          "stage": "In progress",
+          "action": "Coming soon",
+          "icon": "layers"
+        }
+      ]
+    },
+    {
+      "num": "07",
+      "eyebrow": "Research projects",
+      "title": "Predictions and challenges",
+      "lede": "Cluster-wide efforts the Model Lab is helping to shape — both still under construction.",
+      "type": "links",
+      "columns": 2,
+      "cards": [
+        {
+          "title": "Prediction webpage",
+          "desc": "A community-authored, interactive resource for designing, running and communicating rigorous quantitative predictions in ecology and environmental science.",
+          "stage": "In progress",
+          "action": "View on GitHub",
+          "url": "https://github.com/future-forests/prediction-webpage",
+          "icon": "beaker",
+          "external": true
+        },
+        {
+          "title": "Forecast Challenge",
+          "desc": "A model–observation forecast challenge for forest dynamics: shared inventory inputs and environmental drivers, comparable model outputs (growth, mortality, volume and more), and a webpage for data and submissions — like a MIP, but scored against observations.",
+          "stage": "In progress",
+          "action": "Coming soon",
+          "icon": "network"
+        }
+      ]
+    },
+    {
+      "num": "08",
       "eyebrow": "Courses",
       "title": "Future Forests Coding Course",
       "lede": "Next run: January or February 2027 — registration opens end of November.",
@@ -1169,7 +1240,7 @@
       }
     },
     {
-      "num": "07",
+      "num": "09",
       "eyebrow": "Contact",
       "title": "Get in touch",
       "lede": "Join the conversation on Matrix or reach out directly.",
@@ -1503,13 +1574,18 @@
         ]) : null
       ]);
     } else if (sec.type === 'links') {
-      const grid = el('div', { class: 'cards' + (sec.columns === 3 ? ' three' : '') });
+      const colClass = sec.columns === 3 ? ' three' : (sec.columns === 2 ? ' two' : '');
+      const grid = el('div', { class: 'cards' + colClass });
       // In a row with screenshots, an icon becomes a tile of the same size
       const hasShots = sec.cards.some(c => c.shot);
       sec.cards.forEach(c => {
-        const attrs = { class: 'card link-card', href: c.url };
-        if (c.external) Object.assign(attrs, { target: '_blank', rel: 'noopener' });
-        const card = el('a', attrs);
+        const pending = !c.url;
+        const attrs = { class: 'card link-card' + (pending ? ' is-pending' : '') };
+        if (!pending) {
+          attrs.href = c.url;
+          if (c.external) Object.assign(attrs, { target: '_blank', rel: 'noopener' });
+        }
+        const card = el(pending ? 'div' : 'a', attrs);
         if (c.shot) card.appendChild(el('img', { class: 'thumb', src: c.shot, alt: '', loading: 'lazy' }));
         else if (c.icon && hasShots) {
           const tile = el('span', { class: 'thumb-icon', 'aria-hidden': 'true' });
@@ -1520,7 +1596,8 @@
         card.appendChild(el('h3', {}, c.title));
         if (c.desc) card.appendChild(el('p', { class: 'desc' }, c.desc));
         const go = el('p', { class: 'go' });
-        go.append(c.action || 'Open', el('span', { class: 'arr' }, c.external ? '↗' : '→'));
+        if (pending) go.append(c.action || 'Coming soon');
+        else go.append(c.action || 'Open', el('span', { class: 'arr' }, c.external ? '↗' : '→'));
         card.appendChild(go);
         grid.appendChild(card);
       });
