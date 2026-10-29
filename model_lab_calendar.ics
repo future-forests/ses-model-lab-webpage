@@ -308,6 +308,14 @@ SUMMARY:FuFo Coding Course — Class 8
 DESCRIPTION:Critical thinking about LLMs: limits and bias
 END:VEVENT
 BEGIN:VEVENT
+UID:ses-model-lab-cafe-nov@ses-model-lab
+DTSTAMP:20261029T120000Z
+DTSTART;TZID=Europe/Berlin:20261112T130000
+DTEND;TZID=Europe/Berlin:20261112T140000
+SUMMARY:Model Lab Café: Ethics and AI
+LOCATION:Herderbau Library\, 3rd floor
+END:VEVENT
+BEGIN:VEVENT
 UID:ses-iland-uncertainty@ses-model-lab
 DTSTAMP:20261019T120000Z
 DTSTART;TZID=Europe/Berlin:20261117T150000
@@ -341,15 +349,6 @@ DTSTART;TZID=Europe/Berlin:20261124T143000
 DTEND;TZID=Europe/Berlin:20261124T153000
 SUMMARY:SES Model Lab committee meeting (all members)
 LOCATION:First Floor Seminar Room\, Stadtstraße 5
-END:VEVENT
-BEGIN:VEVENT
-UID:ses-tree-growth-litter-nov@ses-model-lab
-DTSTAMP:20261015T120000Z
-DTSTART;TZID=Europe/Berlin:20261124T160000
-DTEND;TZID=Europe/Berlin:20261124T173000
-SUMMARY:Tree growth → litter\, decomposition and soil carbon
-LOCATION:First Floor Seminar Room\, Stadtstraße 5
-DESCRIPTION:Follow-up meeting
 END:VEVENT
 BEGIN:VEVENT
 UID:ses-scenarios-working-group-nov@ses-model-lab
