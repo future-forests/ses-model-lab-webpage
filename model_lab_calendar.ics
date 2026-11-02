@@ -309,11 +309,12 @@ DESCRIPTION:Critical thinking about LLMs: limits and bias
 END:VEVENT
 BEGIN:VEVENT
 UID:ses-model-lab-cafe-nov@ses-model-lab
-DTSTAMP:20261029T120000Z
+DTSTAMP:20261102T120000Z
 DTSTART;TZID=Europe/Berlin:20261112T130000
 DTEND;TZID=Europe/Berlin:20261112T140000
-SUMMARY:Model Lab Café: Ethics and AI
+SUMMARY:Model Lab Café: AI and Ethics from a global perspective
 LOCATION:Herderbau Library\, 3rd floor
+DESCRIPTION:Led by Leonie Buß
 END:VEVENT
 BEGIN:VEVENT
 UID:ses-iland-uncertainty@ses-model-lab
