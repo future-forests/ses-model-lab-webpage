@@ -34,4 +34,20 @@ committee and cross-scenario meetings.
 
 We recommend choosing the option "Refresh every day".
 
+## Next dates on the landing page
+
+The "Next: …" lines on the Recurring formats cards and the "Next meeting · …" lines
+on the Research groups cards are filled in from `model_lab_calendar.ics` — add the
+event to the calendar and the page updates itself; there is nothing to edit in
+`index.html`.
+
+- A card is linked to its events by the `calendar` keyword in its entry in `index.html`
+  (e.g. `"calendar": "Model Lab Café"`). An event matches when its title contains the
+  keyword; case, accents, spaces and punctuation are ignored, so "Model Lab Cafe" works too.
+- The card shows the first event that has not ended yet, with its `LOCATION` as the venue.
+  With no upcoming event, it shows "Next date to be announced" / "Next meeting to be announced".
+- On the Model Lab Café and Hands on Science cards, the topic comes from the event:
+  the part of the title after a colon (`Model Lab Café: Sensitivity Analysis`) in bold,
+  followed by the `DESCRIPTION`.
+
 
