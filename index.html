@@ -722,7 +722,7 @@
   /* Footer */
   footer.site {
     border-top: 1px solid var(--border);
-    padding: 2rem 0 3.5rem; /* bottom room keeps the text clear of the theme toggle */
+    padding: 2rem 0;
     margin-top: 2rem;
     color: var(--text-mute);
     font-size: 0.85rem;
@@ -742,7 +742,7 @@
     left: 50%;
     transform: translateX(-50%);
     z-index: 50;
-    max-width: calc(100vw - 1.5rem);
+    max-width: calc(100vw - 6.5rem); /* leaves room for the theme toggle on the right */
     background: var(--nav-bg);
     -webkit-backdrop-filter: saturate(180%) blur(14px);
     backdrop-filter: saturate(180%) blur(14px);
@@ -753,7 +753,7 @@
   }
   .theme-toggle {
     position: fixed;
-    bottom: 1rem;
+    top: 1.2rem;
     right: 1rem;
     z-index: 51;
     width: 2.25rem;
@@ -810,6 +810,7 @@
 
   @media (max-width: 720px) {
     .floatnav { top: 0.5rem; border-radius: 1rem; }
+    .theme-toggle { top: 0.65rem; right: 0.75rem; }
     .floatnav a { padding: 0.35rem 0.6rem; font-size: 0.8rem; }
   }
 
