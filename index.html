@@ -1352,8 +1352,7 @@
       const e = nextEvent(events, keyword);
       if (!e) { line.textContent = none; return; }
       line.textContent = label + ' ' + eventWhen(e, opts);
-      if (venue && e.location) { venue.textContent = e.location; venue.hidden = false; }
-      if (!topic) return;
+      if (e.location) { venue.textContent = e.location; venue.hidden = false; }
       // Topic: the part of the title after the colon, then the event description
       const colon = (e.title || '').indexOf(':');
       const subject = colon >= 0 ? e.title.slice(colon + 1).trim() : '';
@@ -1598,11 +1597,13 @@
         const status = g.calendar ? el('p', { class: 'next' }) : (g.status ? el('p', { class: 'next' }, g.status) : null);
         const venue = el('p', { class: 'venue' }, g.venue || '');
         venue.hidden = !g.venue;
-        if (g.calendar) fillFromCalendar(g.calendar, { line: status, label: 'Next meeting ·', none: 'Next meeting to be announced', opts: { weekday: true }, venue });
+        const topic = g.calendar ? el('p', { class: 'upcoming', hidden: '' }) : null;
+        if (g.calendar) fillFromCalendar(g.calendar, { line: status, label: 'Next meeting ·', none: 'Next meeting to be announced', opts: { weekday: true }, venue, topic });
         if (status) card.appendChild(status);
         card.appendChild(el('h3', {}, g.title));
         if (g.people) card.appendChild(el('p', { class: 'people' }, g.people));
         card.appendChild(venue);
+        if (topic) card.appendChild(topic);
         [].concat(g.text || []).forEach(t => card.appendChild(el('p', { class: 'desc' }, t)));
         partNodes(g.parts || []).forEach(n => card.appendChild(n));
         if (g.highlight) {

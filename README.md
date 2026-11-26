@@ -46,8 +46,8 @@ event to the calendar and the page updates itself; there is nothing to edit in
   keyword; case, accents, spaces and punctuation are ignored, so "Model Lab Cafe" works too.
 - The card shows the first event that has not ended yet, with its `LOCATION` as the venue.
   With no upcoming event, it shows "Next date to be announced" / "Next meeting to be announced".
-- On the Model Lab Café and Hands on Science cards, the topic comes from the event:
-  the part of the title after a colon (`Model Lab Café: Sensitivity Analysis`) in bold,
-  followed by the `DESCRIPTION`.
+- Every linked card also shows the event's topic: the part of the title after a colon
+  (`Model Lab Café: Sensitivity Analysis`) in bold, followed by the `DESCRIPTION`
+  (the "Notes" field in most calendar apps).
 
 
